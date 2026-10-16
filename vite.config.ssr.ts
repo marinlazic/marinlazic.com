@@ -15,6 +15,9 @@ export default defineConfig({
     },
   },
   envDir: import.meta.dirname,
+  // Bundle every dependency into the SSR entry so the Vercel function only
+  // needs this one file at runtime.
+  ssr: { noExternal: true },
   build: {
     ssr: path.resolve(import.meta.dirname, "client/src/entry-server.tsx"),
     outDir: path.resolve(import.meta.dirname, "dist/server-ssr"),

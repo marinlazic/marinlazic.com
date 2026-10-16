@@ -86,20 +86,39 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
+// The built site lives in dist/ at the project root. Resolve it from the
+// project root (not from this file) so the same code works when run from
+// the esbuild bundle, from tsx, or inside a Vercel function.
+function resolveDist(): string {
+  const candidates = [
+    process.env.DIST_DIR,
+    path.resolve(process.cwd(), "dist"),
+    path.resolve(import.meta.dirname, "../../dist"),
+    path.resolve(import.meta.dirname, ".."),
+  ].filter((p): p is string => Boolean(p));
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, "public", "index.html"))) return dir;
+  }
+  return candidates[1];
+}
+
 export function serveStatic(app: Express) {
-  const distPath =
-    process.env.NODE_ENV === "development"
-      ? path.resolve(import.meta.dirname, "../../dist/public")
-      : path.resolve(import.meta.dirname, "public");
-  const entryPath =
-    process.env.NODE_ENV === "development"
-      ? path.resolve(
-          import.meta.dirname,
-          "../../dist/server-ssr/entry-server.js"
-        )
-      : path.resolve(import.meta.dirname, "server-ssr/entry-server.js");
+  const dist = resolveDist();
+  const distPath = path.join(dist, "public");
+  const entryPath = path.join(dist, "server-ssr", "entry-server.js");
   app.use(normalizePublicUrl);
-  app.use(express.static(distPath, { index: false, redirect: false }));
+  app.use(
+    express.static(distPath, {
+      index: false,
+      redirect: false,
+      maxAge: "1h",
+      setHeaders: (res, filePath) => {
+        if (filePath.includes(`${path.sep}assets${path.sep}`) || /\.(webp|jpg|jpeg|png|svg|woff2?)$/.test(filePath)) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        }
+      },
+    })
+  );
   app.use("*", async (req, res) => {
     const template = await fs.promises.readFile(
       path.join(distPath, "index.html"),

@@ -1,13 +1,8 @@
 import "dotenv/config";
-import express from "express";
 import { createServer } from "http";
 import net from "net";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerAuthRoutes } from "./oauth";
-import { stripeWebhookRouter } from "../stripeWebhook";
-import { appRouter } from "../routers";
-import { createContext } from "./context";
-import { serveStatic, setupVite } from "./vite";
+import express from "express";
+import { createApp } from "./app";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -29,37 +24,17 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
-  const app = express();
-  const server = createServer(app);
-  // Stripe webhook must be registered BEFORE body parsers (needs raw body)
-  app.use(stripeWebhookRouter);
-  // Configure body parser with larger size limit for file uploads
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  // Admin password login at /api/auth/login
-  registerAuthRoutes(app);
-  // tRPC API
-  app.use(
-    "/api/trpc",
-    createExpressMiddleware({
-      router: appRouter,
-      createContext,
-    })
-  );
-  // development mode uses Vite, production mode uses static files
-  if (process.env.NODE_ENV === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
+  // A placeholder app owns the http server so Vite's HMR can attach to it in dev.
+  const shell = express();
+  const server = createServer(shell);
+  const app = await createApp({ httpServer: server });
+  shell.use(app);
 
   const preferredPort = parseInt(process.env.PORT || "3000");
   const port = await findAvailablePort(preferredPort);
-
   if (port !== preferredPort) {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
-
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
   });
