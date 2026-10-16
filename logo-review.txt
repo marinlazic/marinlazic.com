@@ -1,0 +1,6 @@
+Logo Processing Results:
+- AOC: Black kangaroo/emu/Olympic rings on transparent, 52x60px - looks great
+- Otion: Black "Otion" text on transparent, 168x50px - clean
+- Paris 2024: Black text/rings on transparent, 139x60px - clean, lost the gold flame face but text and rings are clear
+All three are black on transparent, consistent with Swiss Design aesthetic.
+Ready to upload to CDN.

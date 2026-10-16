@@ -1,0 +1,21 @@
+Visual Review Notes:
+
+1. Hero Section: Clean, large MARIN LAZIC heading, red square accent, grayscale headshot, Work With Me + Learn More CTAs. Scroll indicator at bottom. Looks great.
+
+2. About Section: Asymmetric 3/9 grid layout. Red accent + "ABOUT" label on left, bio paragraphs on right with border-left divider. Credentials listed in 2-column grid with red dot bullets. Clean and professional.
+
+3. Experience Timeline: Light gray background (#FAFAFA). Same 3/9 grid. Career entries with year on left, role/org/description on right. Organization names in red. Clean divider lines between entries. All 6 entries visible.
+
+4. Services Section: $1,500/MONTH pricing prominent. 4 service items in 2-column grid with red dot bullets. "Inquire About Coaching" CTA button.
+
+5. Testimonials Section: Black background, white text. Carousel with prev/next controls and counter (01/04). Auto-advances. Quote with attribution.
+
+6. Contact Section: Email input + "Get in Touch" red button. Clean copy.
+
+7. Footer: ML name, email, social icons (Instagram, LinkedIn, Twitter), copyright.
+
+8. Cookie consent banner at bottom.
+
+9. Navigation: Fixed top nav with ML logo, section links, Work With Me CTA. Scrolled state has white background with border.
+
+Overall: Swiss Design aesthetic is well-executed. Red accents are used sparingly. Typography is clean. Layout is asymmetric and grid-based. Lots of white space.

@@ -1,0 +1,35 @@
+STOKE RECOVERY SITE AUDIT - Initial Observations
+==================================================
+
+HERO SECTION:
+- Title: The "Stoke Tank" Recovery System
+- Subtitle: (Your "Stoke Tank" is your personal reserve of energy, focus, and readiness...)
+- CTA: "See The Model" (purple/blue gradient button)
+- Stats: Paris 2024 Olympics | 4+ International Campaigns | EXOS Recovery Framework
+- Nav: Marin Lazic | The Model | About Marin | Book Marin to Speak | Contact
+- Scroll indicator present
+
+VISUAL STYLE:
+- White background, black text (similar to portfolio)
+- BUT: Purple/blue gradient accent in top-right corner (NOT matching portfolio's red)
+- Green dot accent next to "EVIDENCE-BASED RECOVERY" label (NOT matching portfolio's red)
+- Purple/gradient CTA button (NOT matching portfolio's black CTAs)
+- Typography appears to be a serif/display font for headings (different from portfolio's DM Sans)
+
+CONTENT SECTIONS FOUND:
+1. Hero with Stoke Tank definition
+2. The biology/stress model explanation
+3. Work > Rest > Adapt cycle
+4. Functional State (4 systems: Neural, Mechanical, Metabolic, Psychological)
+5. Four Types of Stress (with sport/work examples)
+6. Targeted Recovery for Each Stress Type
+7. Nutrition as Recovery Strategy
+8. About Marin section
+9. Contact/CTA
+
+LANGUAGE OBSERVATIONS:
+- More formal/educational tone than portfolio
+- Uses "you" directly but less humor
+- Some Chad/JT-style lines ("Your brain is absolutely cooked", "bro, I need fuel and rest")
+- But inconsistent - switches between formal and casual
+- Uses em dashes (portfolio removed all of them)

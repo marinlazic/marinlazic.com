@@ -1,0 +1,39 @@
+SPEAKER SITE CONTENT REFERENCE
+================================
+
+HERO:
+- Title: "Health & Performance Speaker"
+- Headline: "Olympic Level Performance Science for the Boardroom"
+- Sub: "Marin brings the same science used to prepare athletes for the Paris 2024 Olympics into the world of high performing executives. Practical, research backed, and built for leaders who value substance."
+
+ABOUT:
+- Heading: "Where elite sport science meets executive performance"
+- Key identity: "health and performance coach who works at the intersection of Olympic sport and high performance business"
+- Role: "Strength and Conditioning Coach for the Australian Men's Water Polo Team"
+- Events: Paris 2024 Olympics, World Championships ('23, '24, '25), World Cup ('22)
+- Known for: "understanding the science, drawing from leading researchers in neuroscience, exercise physiology, and sleep science, and then putting it into practice"
+- Specialty: "reducing recovery time, avoiding illness, and eliminating performance drop off through protocols around eye, breath, and movement training that go far beyond conventional gym work"
+- Otion: "corporate health and performance company that brings Olympic level coaching principles to C Suite executives"
+- Accreditation: "ASCA accredited"
+- Clients: "CEOs and business owners"
+- Value prop: "translates complex sport science into practical strategies that busy leaders can apply immediately"
+
+CREDENTIALS:
+- S&C Coach, Australian Men's Water Polo Team, Paris 2024 Olympics
+- World Championships: 2023, 2024, 2025
+- World Cup: 2022
+- ASCA accredited
+- Private coaching clients include CEOs and business owners
+- Founder of Otion
+- Research backed approach grounded in neuroscience, exercise physiology, and sleep science
+
+KEY MESSAGING THEMES:
+1. Olympic-level science applied to business/executive performance
+2. Practical, evidence-based, not theoretical
+3. Intersection of elite sport and corporate world
+4. Data-driven, measurable results
+5. Recovery as strategy, not reward
+6. Beyond conventional training (eye, breath, movement)
+7. Trusted by both Olympic athletes and C-Suite executives
+
+TONE: Confident, authoritative, minimal, substance-over-hype

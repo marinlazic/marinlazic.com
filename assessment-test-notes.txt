@@ -1,0 +1,19 @@
+Assessment Flow Test Notes
+==========================
+
+INTRO SCREEN: ✅ 
+- Clean Swiss Design layout
+- 5 category icons displayed (Sleep, Stress, Recovery, Energy, Movement)
+- "Start the Assessment" and "Back to Site" buttons work
+- Red progress bar at top
+
+QUIZ SCREEN (Q1 - Sleep): ✅
+- Shows "1 / 10" counter in header
+- Category badge "SLEEP" with moon icon
+- Question: "How many hours of sleep do you average per night?"
+- Subtext: "Think about the last 2 weeks, not your best night."
+- 5 options displayed with labels and descriptions
+- Previous button (disabled on Q1) and Exit link
+- Red progress bar visible
+
+Now testing: clicking through all 10 questions with mixed answers to test scoring

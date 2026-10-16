@@ -1,0 +1,8 @@
+# Public pages are crawlable. Search permission is separate from model training.
+# Robots exclusions are discovery guidance, not access control.
+User-agent: *
+Disallow: /admin
+Disallow: /api/
+Disallow: /payment/
+
+Sitemap: https://marinlazic.com/sitemap.xml
