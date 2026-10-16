@@ -4,8 +4,6 @@ import { type Server } from "node:http";
 import { nanoid } from "nanoid";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { createServer as createViteServer } from "vite";
-import viteConfig from "../../vite.config";
 import { buildSsrPrefetch } from "./ssrCaller";
 import { composeHtml } from "../seoHtml";
 import {
@@ -36,6 +34,12 @@ const normalizePublicUrl: RequestHandler = (req, res, next) => {
 };
 
 export async function setupVite(app: Express, server: Server) {
+  // Loaded only in development. The module names are variables so bundlers
+  // and the Vercel file tracer leave Vite out of the production function.
+  const viteModule = "vite";
+  const configModule = "../../vite.config";
+  const { createServer: createViteServer } = await import(viteModule);
+  const viteConfig = (await import(configModule)).default;
   const vite = await createViteServer({
     ...viteConfig,
     configFile: false,
