@@ -1,53 +1,50 @@
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import type { Express, Request, Response } from "express";
-import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
 
-function getQueryParam(req: Request, key: string): string | undefined {
-  const value = req.query[key];
-  return typeof value === "string" ? value : undefined;
+// Admin sign in. POST /api/auth/login with { password }.
+// Rate limited per IP so the password cannot be brute forced.
+
+const attempts = new Map<string, { count: number; resetAt: number }>();
+const WINDOW_MS = 15 * 60 * 1000;
+const MAX_ATTEMPTS = 8;
+
+function tooManyAttempts(key: string): boolean {
+  const now = Date.now();
+  const entry = attempts.get(key);
+  if (!entry || now > entry.resetAt) {
+    attempts.set(key, { count: 1, resetAt: now + WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > MAX_ATTEMPTS;
 }
 
-export function registerOAuthRoutes(app: Express) {
-  app.get("/api/oauth/callback", async (req: Request, res: Response) => {
-    const code = getQueryParam(req, "code");
-    const state = getQueryParam(req, "state");
-
-    if (!code || !state) {
-      res.status(400).json({ error: "code and state are required" });
+export function registerAuthRoutes(app: Express) {
+  app.post("/api/auth/login", async (req: Request, res: Response) => {
+    const key = req.ip || req.headers["x-forwarded-for"]?.toString() || "unknown";
+    if (tooManyAttempts(key)) {
+      res.status(429).json({ error: "Too many attempts. Try again in 15 minutes." });
       return;
     }
-
+    const password = typeof req.body?.password === "string" ? req.body.password : "";
     try {
-      const tokenResponse = await sdk.exchangeCodeForToken(code, state);
-      const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
-
-      if (!userInfo.openId) {
-        res.status(400).json({ error: "openId missing from user info" });
-        return;
-      }
-
-      await db.upsertUser({
-        openId: userInfo.openId,
-        name: userInfo.name || null,
-        email: userInfo.email ?? null,
-        loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-        lastSignedIn: new Date(),
-      });
-
-      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
-        name: userInfo.name || "",
+      const user = await sdk.loginWithPassword(password);
+      const token = await sdk.createSessionToken(user.openId, {
+        name: user.name || "",
         expiresInMs: ONE_YEAR_MS,
       });
-
-      const cookieOptions = getSessionCookieOptions(req);
-      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
-
-      res.redirect(302, "/");
+      res.cookie(COOKIE_NAME, token, {
+        ...getSessionCookieOptions(req),
+        maxAge: ONE_YEAR_MS,
+      });
+      res.json({ ok: true });
     } catch (error) {
-      console.error("[OAuth] Callback failed", error);
-      res.status(500).json({ error: "OAuth callback failed" });
+      res.status(401).json({ error: "Incorrect password" });
     }
   });
 }
+
+// Kept for callers that still import the old name.
+export const registerOAuthRoutes = registerAuthRoutes;

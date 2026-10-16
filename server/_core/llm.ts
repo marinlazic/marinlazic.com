@@ -209,14 +209,16 @@ const normalizeToolChoice = (
   return toolChoice;
 };
 
+// Google's OpenAI compatible endpoint for Gemini. Same request and response
+// shape as before, so the rest of this file is unchanged.
 const resolveApiUrl = () =>
-  ENV.forgeApiUrl && ENV.forgeApiUrl.trim().length > 0
-    ? `${ENV.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions`
-    : "https://forge.manus.im/v1/chat/completions";
+  (process.env.LLM_API_URL?.replace(/\/$/, "") ||
+    "https://generativelanguage.googleapis.com/v1beta/openai") +
+  "/chat/completions";
 
 const assertApiKey = () => {
-  if (!ENV.forgeApiKey) {
-    throw new Error("OPENAI_API_KEY is not configured");
+  if (!ENV.geminiApiKey) {
+    throw new Error("GEMINI_API_KEY is not configured");
   }
 };
 
@@ -280,7 +282,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   } = params;
 
   const payload: Record<string, unknown> = {
-    model: "gemini-2.5-flash",
+    model: ENV.geminiModel,
     messages: messages.map(normalizeMessage),
   };
 
@@ -296,10 +298,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     payload.tool_choice = normalizedToolChoice;
   }
 
-  payload.max_tokens = 32768
-  payload.thinking = {
-    "budget_tokens": 128
-  }
+  payload.max_tokens = 8192;
 
   const normalizedResponseFormat = normalizeResponseFormat({
     responseFormat,
@@ -316,7 +315,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${ENV.forgeApiKey}`,
+      authorization: `Bearer ${ENV.geminiApiKey}`,
     },
     body: JSON.stringify(payload),
   });

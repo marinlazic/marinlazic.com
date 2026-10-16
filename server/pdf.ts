@@ -1,4 +1,36 @@
 import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
+import fs from "node:fs";
+
+// On Vercel (and any Lambda style host) use the bundled headless Chromium.
+// Elsewhere use a local Chromium binary.
+async function launchBrowser() {
+  const serverless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  if (serverless) {
+    return puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    });
+  }
+  const candidates = [
+    process.env.PUPPETEER_EXECUTABLE_PATH,
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+    "/usr/bin/google-chrome",
+    "/opt/pw-browsers/chromium",
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  ].filter((p): p is string => Boolean(p));
+  const executablePath = candidates.find(p => fs.existsSync(p));
+  if (!executablePath) {
+    throw new Error("No Chromium found. Set PUPPETEER_EXECUTABLE_PATH.");
+  }
+  return puppeteer.launch({
+    executablePath,
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu"],
+  });
+}
 
 // ─── Score Calculation (mirrors frontend logic) ────────
 interface CategoryScore {
@@ -1392,11 +1424,7 @@ export async function generateAssessmentPDF(params: {
     solutions,
   });
 
-  const browser = await puppeteer.launch({
-    executablePath: "/usr/bin/chromium",
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu"],
-  });
+  const browser = await launchBrowser();
 
   try {
     const page = await browser.newPage();

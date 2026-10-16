@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
-import { getLoginUrl } from "@/const";
+import { loginWithPassword } from "@/const";
 import { useState, useMemo } from "react";
 import {
   ArrowLeft,
@@ -52,8 +52,51 @@ function StatCard({
 }
 
 // ─── Main Dashboard ───────────────────────────────────────
+function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <form
+        className="text-center max-w-sm w-full px-6"
+        onSubmit={async e => {
+          e.preventDefault();
+          setBusy(true);
+          setError("");
+          const ok = await loginWithPassword(password);
+          setBusy(false);
+          if (ok) onSuccess();
+          else setError("Incorrect password.");
+        }}
+      >
+        <div className="w-3 h-3 bg-[#E53935] mx-auto mb-6" />
+        <h1 className="font-heading font-bold text-2xl mb-3">Admin</h1>
+        <p className="text-sm text-black/50 mb-8">Enter the admin password to open the dashboard.</p>
+        <input
+          type="password"
+          autoComplete="current-password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          className="w-full border border-black/20 px-4 py-3 text-sm mb-4 focus:outline-none focus:border-black"
+          placeholder="Password"
+          aria-label="Password"
+        />
+        {error && <p className="text-xs text-[#E53935] mb-4">{error}</p>}
+        <button
+          type="submit"
+          disabled={busy || !password}
+          className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium disabled:opacity-50"
+        >
+          {busy ? "Signing in" : "Sign In"}
+        </button>
+      </form>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout, refresh } = useAuth();
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -95,21 +138,7 @@ export default function AdminDashboard() {
 
   // Not authenticated
   if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center max-w-sm">
-          <div className="w-3 h-3 bg-[#E53935] mx-auto mb-6" />
-          <h1 className="font-heading font-bold text-2xl mb-3">Admin Access Required</h1>
-          <p className="text-sm text-black/50 mb-8">Sign in with your admin account to access the dashboard.</p>
-          <a
-            href={getLoginUrl()}
-            className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium"
-          >
-            Sign In
-          </a>
-        </div>
-      </div>
-    );
+    return <AdminLogin onSuccess={() => refresh()} />;
   }
 
   // Not admin

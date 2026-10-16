@@ -1,70 +1,15 @@
-// Preconfigured storage helpers for Manus WebDev templates
-// Uses the Biz-provided storage proxy (Authorization: Bearer <token>)
+// File storage on Vercel Blob. Used for saved assessment reports (PDF).
+// Needs BLOB_READ_WRITE_TOKEN, which Vercel sets when a Blob store is linked.
+// Keys are private: files are fetched through the server, never by public URL.
 
-import { ENV } from './_core/env';
-
-type StorageConfig = { baseUrl: string; apiKey: string };
-
-function getStorageConfig(): StorageConfig {
-  const baseUrl = ENV.forgeApiUrl;
-  const apiKey = ENV.forgeApiKey;
-
-  if (!baseUrl || !apiKey) {
-    throw new Error(
-      "Storage proxy credentials missing: set BUILT_IN_FORGE_API_URL and BUILT_IN_FORGE_API_KEY"
-    );
-  }
-
-  return { baseUrl: baseUrl.replace(/\/+$/, ""), apiKey };
-}
-
-function buildUploadUrl(baseUrl: string, relKey: string): URL {
-  const url = new URL("v1/storage/upload", ensureTrailingSlash(baseUrl));
-  url.searchParams.set("path", normalizeKey(relKey));
-  return url;
-}
-
-async function buildDownloadUrl(
-  baseUrl: string,
-  relKey: string,
-  apiKey: string
-): Promise<string> {
-  const downloadApiUrl = new URL(
-    "v1/storage/downloadUrl",
-    ensureTrailingSlash(baseUrl)
-  );
-  downloadApiUrl.searchParams.set("path", normalizeKey(relKey));
-  const response = await fetch(downloadApiUrl, {
-    method: "GET",
-    headers: buildAuthHeaders(apiKey),
-  });
-  return (await response.json()).url;
-}
-
-function ensureTrailingSlash(value: string): string {
-  return value.endsWith("/") ? value : `${value}/`;
-}
+import { del, get, put } from "@vercel/blob";
 
 function normalizeKey(relKey: string): string {
   return relKey.replace(/^\/+/, "");
 }
 
-function toFormData(
-  data: Buffer | Uint8Array | string,
-  contentType: string,
-  fileName: string
-): FormData {
-  const blob =
-    typeof data === "string"
-      ? new Blob([data], { type: contentType })
-      : new Blob([data as any], { type: contentType });
-  const form = new FormData();
-  form.append("file", blob, fileName || "file");
-  return form;
-}
-
-function buildAuthHeaders(apiKey: string): HeadersInit {
-  return { Authorization: `Bearer ${apiKey}` };
+export function storageConfigured(): boolean {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 }
 
 export async function storagePut(
@@ -72,31 +17,36 @@ export async function storagePut(
   data: Buffer | Uint8Array | string,
   contentType = "application/octet-stream"
 ): Promise<{ key: string; url: string }> {
-  const { baseUrl, apiKey } = getStorageConfig();
-  const key = normalizeKey(relKey);
-  const uploadUrl = buildUploadUrl(baseUrl, key);
-  const formData = toFormData(data, contentType, key.split("/").pop() ?? key);
-  const response = await fetch(uploadUrl, {
-    method: "POST",
-    headers: buildAuthHeaders(apiKey),
-    body: formData,
-  });
-
-  if (!response.ok) {
-    const message = await response.text().catch(() => response.statusText);
-    throw new Error(
-      `Storage upload failed (${response.status} ${response.statusText}): ${message}`
-    );
+  if (!storageConfigured()) {
+    throw new Error("BLOB_READ_WRITE_TOKEN is not set; storage is not configured");
   }
-  const url = (await response.json()).url;
-  return { key, url };
+  const key = normalizeKey(relKey);
+  const body = typeof data === "string" ? Buffer.from(data, "utf8") : Buffer.from(data);
+  const blob = await put(key, body, {
+    access: "private",
+    contentType,
+    addRandomSuffix: false,
+    allowOverwrite: true,
+  });
+  return { key, url: blob.url };
 }
 
-export async function storageGet(relKey: string): Promise<{ key: string; url: string; }> {
-  const { baseUrl, apiKey } = getStorageConfig();
+export async function storageGetBuffer(relKey: string): Promise<Buffer | null> {
+  if (!storageConfigured()) return null;
   const key = normalizeKey(relKey);
-  return {
-    key,
-    url: await buildDownloadUrl(baseUrl, key, apiKey),
-  };
+  const result = await get(key, { access: "private" });
+  if (!result || result.statusCode !== 200 || !result.stream) return null;
+  const chunks: Uint8Array[] = [];
+  const reader = result.stream.getReader();
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    if (value) chunks.push(value);
+  }
+  return Buffer.concat(chunks.map(c => Buffer.from(c)));
+}
+
+export async function storageDelete(relKey: string): Promise<void> {
+  if (!storageConfigured()) return;
+  await del(normalizeKey(relKey));
 }

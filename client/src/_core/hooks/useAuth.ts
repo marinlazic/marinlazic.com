@@ -41,10 +41,6 @@ export function useAuth(options?: UseAuthOptions) {
     }
   }, [logoutMutation, utils]);
 
-  useEffect(() => {
-    try { localStorage.setItem("manus-runtime-user-info", JSON.stringify(meQuery.data)); } catch { /* Storage is optional. */ }
-  }, [meQuery.data]);
-
   const state = useMemo(() => {
     return {
       user: meQuery.data ?? null,
