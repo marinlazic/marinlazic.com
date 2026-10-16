@@ -5,16 +5,22 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "functions": {
-    "api/index.ts": {
+    "api/index.js": {
       "includeFiles": "dist/**",
       "maxDuration": 300,
       "memory": 1769
     }
   },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api" }
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
   ],
   "crons": [
-    { "path": "/api/cron/daily", "schedule": "0 22 * * *" }
+    {
+      "path": "/api/cron/daily",
+      "schedule": "0 22 * * *"
+    }
   ]
 }
