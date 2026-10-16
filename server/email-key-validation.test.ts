@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { Resend } from "resend";
 
-describe("Resend API key validation", () => {
+describe.skipIf(!process.env.RESEND_API_KEY)("Resend API key validation", () => {
   it("can authenticate and send a test email with the Resend API", async () => {
     const apiKey = process.env.RESEND_API_KEY;
     expect(apiKey).toBeTruthy();

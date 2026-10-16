@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-describe("Kit API key validation", () => {
+describe.skipIf(!process.env.KIT_API_KEY)("Kit API key validation", () => {
   it("can authenticate with the Kit v4 API", async () => {
     const apiKey = process.env.KIT_API_KEY;
     expect(apiKey).toBeTruthy();

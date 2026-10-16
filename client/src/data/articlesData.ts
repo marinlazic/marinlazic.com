@@ -22,7 +22,7 @@ export const CATEGORIES = [
   "Nutrition & Lifestyle",
 ] as const;
 export const HERO_IMAGE =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/cxMcrzYhUbqUgeiFnnR2fs/insights-hero-bwvACFKZNH25ufFn36wzkx.webp";
+  "/images/articles/insights-hero-bwvACFKZNH25ufFn36wzkx.webp";
 export const articles: Article[] = [
   {
     slug: "creatine-complete-guide-for-executives",
@@ -38,7 +38,7 @@ export const articles: Article[] = [
       "German Sourced",
     ],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/cxMcrzYhUbqUgeiFnnR2fs/article-creatine-5giFpzQjpgqto9YBXHnBnX.webp",
+      "/images/articles/article-creatine-5giFpzQjpgqto9YBXHnBnX.webp",
     excerpt:
       "How creatine monohydrate may support training and energy, how to use it, what the evidence says about cognition, and when to ask a clinician.",
     content:
@@ -55,7 +55,7 @@ export const articles: Article[] = [
     readTime: "5 min read",
     tags: ["Sleep", "Recovery", "HRV", "Founders", "Data-Driven"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/cxMcrzYhUbqUgeiFnnR2fs/article-sleep-ZtL5PUR6qiiNBvcLXErBcT.webp",
+      "/images/articles/article-sleep-ZtL5PUR6qiiNBvcLXErBcT.webp",
     excerpt:
       "Improve sleep with a regular wake time, a calm bedroom, sensible light and caffeine habits, and clear guidance on when to seek medical help.",
     content:
@@ -72,7 +72,7 @@ export const articles: Article[] = [
     readTime: "4 min read",
     tags: ["HRV", "Data-Driven", "Stress", "Recovery", "Founders"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/cxMcrzYhUbqUgeiFnnR2fs/article-hrv-DJBmMMRC2AyjSdYsnke7aH.webp",
+      "/images/articles/article-hrv-DJBmMMRC2AyjSdYsnke7aH.webp",
     excerpt:
       "Learn how to track HRV sensibly and support it with sleep, breathing, movement, alcohol awareness and safe recovery habits.",
     content:
@@ -95,7 +95,7 @@ export const articles: Article[] = [
       "Data-Driven",
     ],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/cxMcrzYhUbqUgeiFnnR2fs/insights-hero-bwvACFKZNH25ufFn36wzkx.webp",
+      "/images/articles/insights-hero-bwvACFKZNH25ufFn36wzkx.webp",
     excerpt:
       "A practical, evidence-informed guide to losing fat while supporting strength, recovery and day-to-day performance.",
     content:
@@ -113,7 +113,7 @@ export const articles: Article[] = [
     readTime: "5 min read",
     tags: ["Strength Training", "Chin-Up", "Bodyweight", "Founders"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/cxMcrzYhUbqUgeiFnnR2fs/article-chinup-b3w94tbnjqHCj5eJMpGWRR.webp",
+      "/images/articles/article-chinup-b3w94tbnjqHCj5eJMpGWRR.webp",
     excerpt:
       "Learn safe chin-up technique, progress from hangs and rows to full reps, and adjust training for your current strength, grip and shoulder comfort.",
     content:
@@ -130,7 +130,7 @@ export const articles: Article[] = [
     readTime: "5 min read",
     tags: ["VO2 Max", "Longevity", "Cardio", "Executives"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-vo2max-MLepkJc5Xo8tvTbdeNGm5X.webp",
+      "/images/articles/article-vo2max-MLepkJc5Xo8tvTbdeNGm5X.webp",
     excerpt:
       "VO2 max is a useful measure of aerobic fitness. Learn what it shows, how to test it, and how to build fitness safely around a busy schedule.",
     content:
@@ -147,7 +147,7 @@ export const articles: Article[] = [
     readTime: "4 min read",
     tags: ["Stress Management", "HRV", "Founders", "Nervous System"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-stress-FpEMk5MfHkqRzb7BWPiKEY.webp",
+      "/images/articles/article-stress-FpEMk5MfHkqRzb7BWPiKEY.webp",
     excerpt:
       "A practical stress review for founders, covering workload, recovery habits, wearable limits and when to seek healthcare support.",
     content:
@@ -164,7 +164,7 @@ export const articles: Article[] = [
     readTime: "4 min read",
     tags: ["Zone 2", "Cardio", "Aerobic", "Executives"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-zone2-LN7HkbGvgQW45DUWj9D4zX.webp",
+      "/images/articles/article-zone2-LN7HkbGvgQW45DUWj9D4zX.webp",
     excerpt:
       "A practical, evidence-aware guide to Zone 2 training, intensity cues, weekly planning, recovery tracking and safe progression for busy professionals.",
     content:
@@ -181,7 +181,7 @@ export const articles: Article[] = [
     readTime: "5 min read",
     tags: ["Morning Routine", "Sleep", "Cortisol", "Executives"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-morning-FYrEKKJ4PY5r5Smq5Niq9s.webp",
+      "/images/articles/article-morning-FYrEKKJ4PY5r5Smq5Niq9s.webp",
     excerpt:
       "A practical, evidence-aware morning routine for executives. Protect sleep, use morning light, track useful trends, and adjust the plan to your own needs.",
     content:
@@ -199,7 +199,7 @@ export const articles: Article[] = [
     readTime: "5 min read",
     tags: ["Fitness Program", "Strength", "Cardio", "Recovery"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-executive-fitness-7smAuKbB8VnoomqQR4MdYo.webp",
+      "/images/articles/article-executive-fitness-7smAuKbB8VnoomqQR4MdYo.webp",
     excerpt:
       "A practical, evidence-aware fitness framework for busy executives over 40, covering strength, cardio, sleep, supplements, HRV and when to seek clinical help.",
     content:
@@ -217,7 +217,7 @@ export const articles: Article[] = [
     readTime: "4 min read",
     tags: ["Burnout", "Recovery", "HRV", "CEO"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-burnout-oKVqLKRv2GVDMseTkNsZfo.webp",
+      "/images/articles/article-burnout-oKVqLKRv2GVDMseTkNsZfo.webp",
     excerpt:
       "A practical starting point for workplace exhaustion, covering workload, sleep, training, wearable limits and when to seek clinical care.",
     content:
@@ -234,7 +234,7 @@ export const articles: Article[] = [
     readTime: "4 min read",
     tags: ["Olympic", "Periodisation", "Performance", "Leadership"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-olympic-gpLGKvxLbp5dFAxegeMPbR.webp",
+      "/images/articles/article-olympic-gpLGKvxLbp5dFAxegeMPbR.webp",
     excerpt:
       "Use training, recovery and load-management principles to plan work and exercise without treating athletic success as a business guarantee.",
     content:
@@ -251,7 +251,7 @@ export const articles: Article[] = [
     readTime: "4 min read",
     tags: ["WHOOP", "Wearables", "HRV", "Data"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-whoop-aPcJLKrMSwjXphtA9QV7Yq.webp",
+      "/images/articles/article-whoop-aPcJLKrMSwjXphtA9QV7Yq.webp",
     excerpt:
       "Use WHOOP trends to guide sleep, training and workload decisions without treating wearable scores as diagnoses or guarantees.",
     content:
@@ -268,7 +268,7 @@ export const articles: Article[] = [
     readTime: "5 min read",
     tags: ["Alcohol", "Recovery", "HRV", "Sleep"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-alcohol-XAdYToDwCdzKmEgmZQPSMn.webp",
+      "/images/articles/article-alcohol-XAdYToDwCdzKmEgmZQPSMn.webp",
     excerpt:
       "Alcohol can affect sleep, coordination and recovery. Learn what the evidence supports and how to make lower-risk choices around training.",
     content:
@@ -286,7 +286,7 @@ export const articles: Article[] = [
     readTime: "5 min read",
     tags: ["Periodisation", "Training", "Programming", "Strength"],
     image:
-      "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/article-periodisation-EvdvYK7AKq2qNs5Tup927x.webp",
+      "/images/articles/article-periodisation-EvdvYK7AKq2qNs5Tup927x.webp",
     excerpt:
       "Periodisation gives busy adults a flexible way to plan training, manage fatigue and review progress without treating a template as a promise.",
     content:

@@ -9,7 +9,7 @@ const PREVIOUS_CONTENT_DATE = "2026-10-12";
 export const HOME_DESCRIPTION =
   "Performance coach for founders, training and recovery. Marin Lazic is the Strength and Conditioning Coach for the Australian Men's Water Polo Team and coaches founders from Sydney, online.";
 export const DEFAULT_IMAGE =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/og-homepage-5TTgpTWqZd2uZue4W5vq6e.png";
+  "/images/site/og-homepage-5TTgpTWqZd2uZue4W5vq6e.png";
 const PERSON_ID = `${CANONICAL_ORIGIN}/#person`;
 const WEBSITE_ID = `${CANONICAL_ORIGIN}/#website`;
 
@@ -188,8 +188,7 @@ const person = {
   "@id": "https://marinlazic.com/#person",
   name: "Marin Lazic",
   url: "https://marinlazic.com/about",
-  image:
-    "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/marin-about-photo_5aa64d77.jpg",
+  image: `${CANONICAL_ORIGIN}/images/site/marin-about-photo_5aa64d77.jpg`,
   jobTitle:
     "Performance Coach for Founders, Training and Recovery; Strength and Conditioning Coach, Australian Men's Water Polo Team; Founder, Otion",
   description:
@@ -373,7 +372,7 @@ export function getPageMeta(url: string): HeadMeta {
       "@id": `${CANONICAL_ORIGIN}${path}#article`,
       headline: record.title,
       description: record.excerpt,
-      image: record.image,
+      image: record.image.startsWith("/") ? `${CANONICAL_ORIGIN}${record.image}` : record.image,
       keywords: [...record.tags],
       isAccessibleForFree: true,
       wordCount: articleWordCount(record.content),

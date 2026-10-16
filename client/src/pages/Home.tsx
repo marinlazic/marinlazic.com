@@ -17,7 +17,7 @@ import { articles as insightsData } from "@/data/articlesData";
 import { HOME_FAQS } from "@shared/siteFaq";
 
 const HEADSHOT_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/marin-about-photo_5aa64d77.jpg";
+  "/images/site/marin-about-photo_5aa64d77.jpg";
 
 const HTML_ENTITIES: Record<string, string> = {
   amp: "&",
@@ -311,11 +311,11 @@ function Hero() {
 
 // ─── QUICK WIN #3: Trust Bar / Credential Logos ──────────
 const LOGO_AOC =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/logo-aoc_4dbb2319.png";
+  "/images/site/logo-aoc_4dbb2319.png";
 const LOGO_OTION =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/logo-otion_f3da2ae0.png";
+  "/images/site/logo-otion_f3da2ae0.png";
 const LOGO_PARIS =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663387317800/L68QSugUYhE6sXa5LsjJEh/logo-paris2024_5f63ac2a.png";
+  "/images/site/logo-paris2024_5f63ac2a.png";
 
 function TrustBar() {
   const logos = [
