@@ -2,6 +2,7 @@ import { articles } from "./articlesData";
 import { articleCitations, articleWordCount } from "./articleMetadata";
 import { resources } from "../pages/ResourcePage";
 import { HOME_FAQS, APPLY_FAQS } from "@shared/siteFaq";
+import { MEDIA_TITLE, MEDIA_DESCRIPTION, mediaSubjects, YOUTUBE_URL } from "./mediaData";
 
 export const SITE_NAME = "Marin Lazic";
 export const CANONICAL_ORIGIN = "https://marinlazic.com";
@@ -94,7 +95,15 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     description:
       "Nine practical training templates and checklists for movement, protein, aerobic fitness, sleep and recovery. Free coaching resources.",
     label: "Resources",
-    modified: PREVIOUS_CONTENT_DATE,
+    modified: "2026-10-16",
+  },
+  "/media": {
+    title: MEDIA_TITLE,
+    description: MEDIA_DESCRIPTION,
+    socialTitle: MEDIA_TITLE,
+    socialDescription: MEDIA_DESCRIPTION,
+    label: "Media",
+    modified: "2026-10-15",
   },
   "/apply": {
     title: "Apply for Executive Performance Coaching | Marin Lazic",
@@ -256,18 +265,10 @@ const person = {
     "https://www.instagram.com/marinlazic",
     "https://x.com/marinlazic",
     "https://marinlazic.substack.com",
-    "https://www.youtube.com/@WaterPoloFit",
+    YOUTUBE_URL,
     "https://thereadystate.com/trs_podcast/solving-performance-anxiety-happy-athletes-marin-lazic/",
   ],
-  subjectOf: {
-    "@type": "PodcastEpisode",
-    name: "Happy Athletes Perform Better: A Coach's Guide to Beating Performance Anxiety",
-    url: "https://thereadystate.com/trs_podcast/solving-performance-anxiety-happy-athletes-marin-lazic/",
-    partOfSeries: {
-      "@type": "PodcastSeries",
-      name: "The Ready State Podcast",
-    },
-  },
+  subjectOf: mediaSubjects,
 };
 function faqGraph(faqs: { q: string; a: string }[], path: string) {
   return {
@@ -403,6 +404,7 @@ export function getPageMeta(url: string): HeadMeta {
     [
       "/about",
       "/resources",
+      "/media",
       "/executive-health-performance",
       "/corporate-health-performance",
       "/training-for-long-term-health",
@@ -414,6 +416,19 @@ export function getPageMeta(url: string): HeadMeta {
         { name: page!.label, path },
       ])
     );
+  }
+  if (path === "/media") {
+    (graph[2] as Record<string, unknown>).about = { "@id": PERSON_ID };
+    graph.push({
+      "@type": "ItemList",
+      "@id": `${CANONICAL_ORIGIN}/media#list`,
+      name: "Media and interviews with Marin Lazic",
+      itemListElement: mediaSubjects.map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item,
+      })),
+    });
   }
   if (path === "/") graph.push(faqGraph(HOME_FAQS, path));
   if (path === "/apply") graph.push(faqGraph(APPLY_FAQS, path));

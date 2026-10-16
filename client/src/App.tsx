@@ -48,6 +48,7 @@ function Routes() {
       <Route path="/hrv-conditioning" component={HrvConditioning} />
       <Route path="/hrv-program" component={HrvConditioning} />
       <Route path="/resources" component={InformationPage} />
+      <Route path="/media" component={InformationPage} />
       <Route path="/resources/:slug" component={ResourcePage} />
       <Route path="/about" component={InformationPage} />
       <Route path="/executive-health-performance" component={InformationPage} />

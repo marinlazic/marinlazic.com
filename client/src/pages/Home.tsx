@@ -74,6 +74,7 @@ export function Nav() {
     { label: "Executive", href: "/executive-health-performance" },
     { label: "Corporate", href: "/corporate-health-performance" },
     { label: "Resources", href: "/resources" },
+    { label: "Media", href: "/media" },
     { label: "Contact", href: "#contact" },
   ];
 
@@ -1452,12 +1453,10 @@ function Footer() {
                 Resources
               </a>
               <a
-                href="https://thereadystate.com/trs_podcast/solving-performance-anxiety-happy-athletes-marin-lazic/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/media"
                 className="text-xs tracking-[0.1em] uppercase text-black/50 hover:text-black transition-colors"
               >
-                Media: Ready State interview
+                Media and interviews
               </a>
             </div>
           </div>

@@ -1,16 +1,38 @@
 import { useLocation } from "wouter";
+import {
+  resourcePhoto,
+  resourcesHero,
+  srcSet,
+  resourceImagePath,
+  type ResourcePhoto,
+} from "@/data/resourceImages";
+import {
+  MEDIA_CLOSING,
+  MEDIA_DESCRIPTION,
+  MEDIA_INTRO,
+  INSTAGRAM_URL,
+  SUBSTACK_URL,
+  YOUTUBE_URL,
+  mediaItems,
+} from "@/data/mediaData";
 
 export type InformationLink = {
   label: string;
   href: string;
   description?: string;
   external?: boolean;
+  /** Short alias of a resource whose square photo illustrates this link. */
+  photo?: string;
 };
 
 export type InformationSection = {
   heading: string;
+  /** Small label line under the heading, for dates and episode names. */
+  meta?: string;
   content: string[];
   links?: InformationLink[];
+  /** Render links as a grid of square photo cards instead of a list. */
+  cards?: boolean;
 };
 
 export type InformationPageConfig = {
@@ -18,8 +40,10 @@ export type InformationPageConfig = {
   h1: string;
   description: string;
   label: string;
+  hero?: ResourcePhoto;
   sections: InformationSection[];
   cta?: InformationLink;
+  closing?: string;
 };
 
 export const informationPages: Record<string, InformationPageConfig> = {
@@ -202,6 +226,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
     description:
       "Nine short, educational training, recovery, nutrition and sleep resources from Marin Lazic.",
     label: "Resources",
+    hero: resourcesHero,
     sections: [
       {
         heading: "Short guides for practice",
@@ -213,58 +238,68 @@ export const informationPages: Record<string, InformationPageConfig> = {
       {
         heading: "Resource library",
         content: ["Choose a guide to read the full resource."],
+        cards: true,
         links: [
           {
             label: "The 5-Movement Training Template",
             href: "/resources/template",
+            photo: "template",
             description:
               "A simple push, pull, hinge, squat and carry template.",
           },
           {
             label: "Greasing the Groove Guide",
             href: "/resources/groove",
+            photo: "groove",
             description:
               "Low-effort practice for a movement such as a pull-up or push-up.",
           },
           {
             label: "5-Minute Daily Maintenance Routine",
             href: "/resources/routine",
+            photo: "routine",
             description:
               "A brief movement and balance check with scaled options.",
           },
           {
             label: "Multi-Direction Warm-Up",
             href: "/resources/move",
+            photo: "move",
             description:
               "Warm-up movements for forward, lateral and rotational work.",
           },
           {
             label: "High-Protein Meals List",
             href: "/resources/protein",
+            photo: "protein",
             description:
               "Meal ideas and protein amounts to discuss with your needs in mind.",
           },
           {
             label: "4-Week Base-Building Plan",
             href: "/resources/engine",
+            photo: "engine",
             description:
               "A flexible example for building easy aerobic work gradually.",
           },
           {
             label: "Daily Recovery Checklist",
             href: "/resources/recover",
+            photo: "recover",
             description:
               "Sleep, food, fluids, movement and stress prompts for reflection.",
           },
           {
             label: "The Week-3 Dip Guide",
             href: "/resources/week3",
+            photo: "week3",
             description:
               "Ways to respond when a new routine feels harder to maintain.",
           },
           {
             label: "The Sleep Checklist",
             href: "/resources/sleep",
+            photo: "sleep",
             description:
               "A checklist for timing, light, environment and wind-down habits.",
           },
@@ -272,7 +307,68 @@ export const informationPages: Record<string, InformationPageConfig> = {
       },
     ],
   },
+  "/media": {
+    title: "Media and Interviews | Marin Lazic",
+    h1: "Media and interviews",
+    description: MEDIA_INTRO,
+    label: "Media",
+    sections: [
+      ...mediaItems.map(item => ({
+        heading: item.heading,
+        meta: item.meta,
+        content: item.paragraphs,
+        links: item.links.map(l => ({ label: l.label, href: l.href, external: true })),
+      })),
+      {
+        heading: "My own channels",
+        content: [],
+        links: [
+          { label: "YouTube", href: YOUTUBE_URL, external: true, description: YOUTUBE_URL },
+          {
+            label: "Substack, long form writing on training and recovery",
+            href: SUBSTACK_URL,
+            external: true,
+            description: SUBSTACK_URL,
+          },
+          { label: "Instagram", href: INSTAGRAM_URL, external: true, description: INSTAGRAM_URL },
+        ],
+      },
+    ],
+    closing: MEDIA_CLOSING,
+  },
 };
+
+void MEDIA_DESCRIPTION;
+
+function Picture({
+  photo,
+  sizes,
+  className,
+  eager,
+}: {
+  photo: ResourcePhoto;
+  sizes: string;
+  className: string;
+  eager?: boolean;
+}) {
+  const largest = photo.widths[photo.widths.length - 1];
+  return (
+    <picture>
+      <source type="image/webp" srcSet={srcSet(photo, "webp")} sizes={sizes} />
+      <img
+        src={resourceImagePath(photo.base, largest, "jpg")}
+        srcSet={srcSet(photo, "jpg")}
+        sizes={sizes}
+        alt={photo.alt}
+        className={className}
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+        width={largest}
+        height={photo.base === "resources-hero" ? largest / 2 : largest}
+      />
+    </picture>
+  );
+}
 
 function Navigation() {
   return (
@@ -303,6 +399,12 @@ function Navigation() {
             className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
           >
             Resources
+          </a>
+          <a
+            href="/media"
+            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
+          >
+            Media
           </a>
           <a
             href="/apply"
@@ -346,7 +448,17 @@ export default function InformationPage() {
     <div className="min-h-screen bg-white text-black flex flex-col">
       <Navigation />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
-        <div className="max-w-2xl mx-auto">
+        {page.hero && (
+          <div className="max-w-[1280px] mx-auto mb-12">
+            <Picture
+              photo={page.hero}
+              sizes="(min-width: 1280px) 1200px, 100vw"
+              className="w-full aspect-[2/1] object-cover block"
+              eager
+            />
+          </div>
+        )}
+        <div className={page.hero || page.sections.some(s => s.cards) ? "max-w-[1280px] mx-auto" : "max-w-2xl mx-auto"}>
           <Breadcrumbs label={page.label} />
           <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
           <p className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-semibold mb-4">
@@ -355,7 +467,7 @@ export default function InformationPage() {
           <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
             {page.h1}
           </h1>
-          <p className="text-base sm:text-lg text-black/65 leading-relaxed mb-12">
+          <p className="text-base sm:text-lg text-black/65 leading-relaxed mb-12 max-w-2xl">
             {page.description}
           </p>
 
@@ -368,7 +480,10 @@ export default function InformationPage() {
                 <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
                   {section.heading}
                 </h2>
-                <div className="space-y-4">
+                {section.meta && (
+                  <p className="text-xs text-black/50 mb-4 max-w-2xl">{section.meta}</p>
+                )}
+                <div className="space-y-4 max-w-2xl">
                   {section.content.map(paragraph => (
                     <p
                       key={paragraph}
@@ -378,8 +493,38 @@ export default function InformationPage() {
                     </p>
                   ))}
                 </div>
-                {section.links && (
-                  <ul className="mt-6 border-t border-black/10">
+                {section.links && section.cards && (
+                  <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {section.links.map(link => {
+                      const photo = link.photo ? resourcePhoto(link.photo) : undefined;
+                      return (
+                        <li key={link.href} className="border border-black/10">
+                          <a href={link.href} className="group block">
+                            {photo && (
+                              <Picture
+                                photo={photo}
+                                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                                className="w-full aspect-square object-cover block"
+                              />
+                            )}
+                            <span className="block p-5">
+                              <span className="block text-sm font-semibold text-black group-hover:text-[#E53935] transition-colors">
+                                {link.label}
+                              </span>
+                              {link.description && (
+                                <span className="block mt-1 text-sm text-black/55 leading-relaxed">
+                                  {link.description}
+                                </span>
+                              )}
+                            </span>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                {section.links && !section.cards && (
+                  <ul className="mt-6 border-t border-black/10 max-w-2xl">
                     {section.links.map(link => (
                       <li
                         key={link.href}
@@ -408,6 +553,12 @@ export default function InformationPage() {
               </section>
             ))}
           </div>
+
+          {page.closing && (
+            <p className="mt-12 text-sm sm:text-base text-black/70 leading-relaxed max-w-2xl border-t border-black/10 pt-7">
+              {page.closing}
+            </p>
+          )}
 
           {page.cta && (
             <div className="mt-12">

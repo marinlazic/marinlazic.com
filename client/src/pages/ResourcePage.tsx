@@ -1,5 +1,6 @@
 import { useParams } from "wouter";
 import NotFound from "./NotFound";
+import { resourcePhoto, resourceImagePath, srcSet } from "@/data/resourceImages";
 
 export type Resource = {
   slug: string;
@@ -446,6 +447,12 @@ function ResourceNavigation() {
             Resources
           </a>
           <a
+            href="/media"
+            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
+          >
+            Media
+          </a>
+          <a
             href="/apply"
             className="bg-[#E53935] text-white text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-[#C62828] transition-colors font-medium"
           >
@@ -464,6 +471,7 @@ export default function ResourcePage() {
   );
 
   if (!resource) return <NotFound />;
+  const photo = resourcePhoto(resource.aliases[0]);
 
   return (
     <div className="min-h-screen bg-white text-black flex flex-col">
@@ -514,6 +522,23 @@ export default function ResourcePage() {
           <p className="text-base sm:text-lg text-black/65 leading-relaxed mb-10">
             {resource.intro}
           </p>
+
+          {photo && (
+            <picture>
+              <source type="image/webp" srcSet={srcSet(photo, "webp")} sizes="(min-width: 768px) 672px, 100vw" />
+              <img
+                src={resourceImagePath(photo.base, 1200, "jpg")}
+                srcSet={srcSet(photo, "jpg")}
+                sizes="(min-width: 768px) 672px, 100vw"
+                alt={photo.alt}
+                width={1200}
+                height={1200}
+                loading="eager"
+                decoding="async"
+                className="w-full aspect-square object-cover block mb-12"
+              />
+            </picture>
+          )}
 
           <aside
             className="border-l-2 border-[#E53935] bg-black/[0.025] px-5 py-4 mb-12"

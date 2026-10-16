@@ -389,6 +389,7 @@ function InsightsNav() {
     },
     { label: "Insights", href: "/insights" },
     { label: "Resources", href: "/resources" },
+    { label: "Media", href: "/media" },
     { label: "Contact", href: "/#contact" },
   ];
 
