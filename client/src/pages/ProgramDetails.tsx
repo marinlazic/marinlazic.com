@@ -1,3 +1,5 @@
+import { ProgrammeCheckout } from "./Assessment";
+
 export default function ProgramDetails() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -117,6 +119,10 @@ export default function ProgramDetails() {
                 Coaching supports training decisions and does not treat illness.
               </p>
             </div>
+          </div>
+
+          <div className="mb-12">
+            <ProgrammeCheckout source="program_page" />
           </div>
 
           <div className="flex flex-wrap gap-4">

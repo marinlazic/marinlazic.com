@@ -1256,6 +1256,7 @@ function Contact() {
         ? "corporate-enquiry"
         : getAttribution().utm_source || getAttribution().referrer || "direct",
       message: message.trim() || undefined,
+      corporate: corporateEnquiry,
     });
   };
 

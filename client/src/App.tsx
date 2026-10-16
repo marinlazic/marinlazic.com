@@ -21,6 +21,7 @@ import InformationPage from "./pages/InformationPage";
 import { Head } from "./components/Head";
 import { RouteAnalytics } from "./components/RouteAnalytics";
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const Report = lazy(() => import("./pages/Report"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentCancel = lazy(() => import("./pages/PaymentCancel"));
 const Loading = () => (
@@ -59,6 +60,11 @@ function Routes() {
       />
       <Route path="/insights" component={Insights} />
       <Route path="/insights/:slug" component={ArticleDetail} />
+      <Route path="/report/:token">
+        <Suspense fallback={<Loading />}>
+          <Report />
+        </Suspense>
+      </Route>
       <Route path="/admin">
         <Suspense fallback={<Loading />}>
           <AdminDashboard />

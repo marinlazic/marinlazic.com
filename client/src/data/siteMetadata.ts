@@ -297,7 +297,8 @@ export function getPageMeta(url: string): HeadMeta {
   if (
     path === "/admin" ||
     path.startsWith("/admin/") ||
-    path.startsWith("/payment/")
+    path.startsWith("/payment/") ||
+    path.startsWith("/report/")
   ) {
     return {
       title: SITE_NAME,

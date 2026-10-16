@@ -20,6 +20,7 @@ function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
     new: "bg-[#E53935]/10 text-[#E53935]",
     contacted: "bg-blue-100 text-blue-700",
+    applied: "bg-amber-100 text-amber-800",
     converted: "bg-green-100 text-green-700",
     archived: "bg-black/5 text-black/40",
   };
@@ -161,31 +162,86 @@ export default function AdminDashboard() {
   const stats = statsQuery.data;
   const analytics = analyticsQuery.data;
 
-  // CSV export
-  const exportCSV = () => {
-    const headers = ["ID", "Email", "Source", "Status", "Notes", "Created At", "Updated At"];
-    const rows = leads.map((l) => [
-      l.id,
-      l.email,
-      l.source || "",
-      l.status,
-      l.notes || "",
-      l.createdAt ? format(new Date(l.createdAt), "yyyy-MM-dd HH:mm:ss") : "",
-      l.updatedAt ? format(new Date(l.updatedAt), "yyyy-MM-dd HH:mm:ss") : "",
-    ]);
+  const applicationsQuery = trpc.leads.applications.useQuery(undefined, {
+    enabled: !!user && user.role === "admin",
+  });
+  const progressQuery = trpc.leads.assessmentProgress.useQuery(undefined, {
+    enabled: !!user && user.role === "admin",
+  });
 
+  const downloadCSV = (name: string, headers: string[], rows: unknown[][]) => {
     const csvContent = [headers, ...rows]
-      .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+      .map((row) => row.map((cell) => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(","))
       .join("\n");
-
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `leads_export_${format(new Date(), "yyyy-MM-dd")}.csv`;
+    link.download = `${name}_${format(new Date(), "yyyy-MM-dd")}.csv`;
     link.click();
     URL.revokeObjectURL(url);
   };
+  const stamp = (d: Date | string | null | undefined) =>
+    d ? format(new Date(d), "yyyy-MM-dd HH:mm:ss") : "";
+
+  // CSV exports
+  const exportCSV = () =>
+    downloadCSV(
+      "leads_export",
+      ["ID", "Name", "Email", "Source", "Status", "Product", "Amount", "Paid At", "Report", "Notes", "Created At", "Updated At"],
+      leads.map((l) => [
+        l.id,
+        l.name || "",
+        l.email,
+        l.source || "",
+        l.status,
+        l.product || "",
+        l.amountCents != null ? (l.amountCents / 100).toFixed(2) + " " + (l.currency || "").toUpperCase() : "",
+        stamp(l.paidAt),
+        l.reportToken ? `${window.location.origin}/report/${l.reportToken}` : "",
+        l.notes || "",
+        stamp(l.createdAt),
+        stamp(l.updatedAt),
+      ])
+    );
+  const exportApplicationsCSV = () =>
+    downloadCSV(
+      "applications_export",
+      ["ID", "Name", "Email", "90 day goal", "Obstacle", "Investment", "Anything else", "Assessment", "UTM source", "UTM medium", "UTM campaign", "Created At"],
+      (applicationsQuery.data || []).map((a) => [
+        a.id,
+        a.name,
+        a.email,
+        a.q1_90day_goal,
+        a.q2_obstacle,
+        a.q3_investment,
+        a.q4_anything_else || "",
+        a.assessmentData || "",
+        a.utmSource || "",
+        a.utmMedium || "",
+        a.utmCampaign || "",
+        stamp(a.createdAt),
+      ])
+    );
+  const exportProgressCSV = () =>
+    downloadCSV(
+      "assessment_progress_export",
+      ["ID", "Name", "Email", "Answered", "Total", "Completed", "Reminder sent", "Last activity", "UTM source", "UTM medium", "UTM campaign", "Created At"],
+      (progressQuery.data || []).map((p) => [
+        p.id,
+        p.name || "",
+        p.email,
+        p.answeredCount ?? 0,
+        p.totalQuestions ?? 0,
+        p.completed ? "yes" : "no",
+        stamp(p.reminderSentAt),
+        stamp(p.lastActivityAt),
+        p.utmSource || "",
+        p.utmMedium || "",
+        p.utmCampaign || "",
+        stamp(p.createdAt),
+      ])
+    );
 
   // Analytics event summary
   const eventSummary = useMemo(() => {
@@ -272,6 +328,7 @@ export default function AdminDashboard() {
                 <option value="">All Statuses</option>
                 <option value="new">New</option>
                 <option value="contacted">Contacted</option>
+                <option value="applied">Applied</option>
                 <option value="converted">Converted</option>
                 <option value="archived">Archived</option>
               </select>
@@ -301,7 +358,21 @@ export default function AdminDashboard() {
                 className="flex items-center gap-2 bg-black text-white text-[10px] tracking-[0.15em] uppercase px-4 py-2 hover:bg-black/80 transition-colors font-medium"
               >
                 <Download className="w-3 h-3" />
-                Export CSV
+                Leads CSV
+              </button>
+              <button
+                onClick={exportApplicationsCSV}
+                className="flex items-center gap-2 border border-black text-black text-[10px] tracking-[0.15em] uppercase px-4 py-2 hover:bg-black hover:text-white transition-colors font-medium"
+              >
+                <Download className="w-3 h-3" />
+                Applications CSV
+              </button>
+              <button
+                onClick={exportProgressCSV}
+                className="flex items-center gap-2 border border-black text-black text-[10px] tracking-[0.15em] uppercase px-4 py-2 hover:bg-black hover:text-white transition-colors font-medium"
+              >
+                <Download className="w-3 h-3" />
+                Progress CSV
               </button>
             </div>
 
@@ -310,9 +381,11 @@ export default function AdminDashboard() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-black/10 bg-[#FAFAFA]">
+                    <th className="text-left px-4 py-3 text-[10px] tracking-[0.15em] uppercase text-black/40 font-medium">Name</th>
                     <th className="text-left px-4 py-3 text-[10px] tracking-[0.15em] uppercase text-black/40 font-medium">Email</th>
                     <th className="text-left px-4 py-3 text-[10px] tracking-[0.15em] uppercase text-black/40 font-medium">Source</th>
                     <th className="text-left px-4 py-3 text-[10px] tracking-[0.15em] uppercase text-black/40 font-medium">Status</th>
+                    <th className="text-left px-4 py-3 text-[10px] tracking-[0.15em] uppercase text-black/40 font-medium">Report</th>
                     <th className="text-left px-4 py-3 text-[10px] tracking-[0.15em] uppercase text-black/40 font-medium">Date</th>
                     <th className="text-left px-4 py-3 text-[10px] tracking-[0.15em] uppercase text-black/40 font-medium">Actions</th>
                   </tr>
@@ -320,19 +393,39 @@ export default function AdminDashboard() {
                 <tbody>
                   {leadsQuery.isLoading ? (
                     <tr>
-                      <td colSpan={5} className="text-center py-12 text-black/30 text-xs">Loading leads...</td>
+                      <td colSpan={7} className="text-center py-12 text-black/30 text-xs">Loading leads...</td>
                     </tr>
                   ) : leads.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="text-center py-12 text-black/30 text-xs">No leads found</td>
+                      <td colSpan={7} className="text-center py-12 text-black/30 text-xs">No leads found</td>
                     </tr>
                   ) : (
                     leads.map((lead) => (
                       <tr key={lead.id} className="border-b border-black/5 hover:bg-[#FAFAFA] transition-colors">
+                        <td className="px-4 py-3 text-sm">{lead.name || <span className="text-black/30">Unknown</span>}</td>
                         <td className="px-4 py-3 font-medium text-sm">{lead.email}</td>
                         <td className="px-4 py-3 text-black/50 text-xs">{lead.source || "direct"}</td>
                         <td className="px-4 py-3">
                           <StatusBadge status={lead.status} />
+                          {lead.status === "converted" && lead.amountCents != null && (
+                            <span className="block mt-1 text-[10px] text-black/40">
+                              {(lead.amountCents / 100).toFixed(0)} {(lead.currency || "").toUpperCase()} {lead.product || ""}
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-xs">
+                          {lead.reportToken ? (
+                            <a
+                              href={`/report/${lead.reportToken}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#E53935] hover:underline"
+                            >
+                              Open
+                            </a>
+                          ) : (
+                            <span className="text-black/30">None</span>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-black/50 text-xs">
                           {lead.createdAt ? format(new Date(lead.createdAt), "MMM d, yyyy HH:mm") : "Unavailable"}
@@ -350,6 +443,7 @@ export default function AdminDashboard() {
                           >
                             <option value="new">New</option>
                             <option value="contacted">Contacted</option>
+                            <option value="applied">Applied</option>
                             <option value="converted">Converted</option>
                             <option value="archived">Archived</option>
                           </select>

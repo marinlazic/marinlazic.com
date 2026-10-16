@@ -7,6 +7,7 @@ import { stripeWebhookRouter } from "../stripeWebhook";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { registerJobRoutes } from "../jobs";
 
 /**
  * Builds the Express app. Used by the local server (index.ts) and by the
@@ -23,6 +24,9 @@ export async function createApp(options: { httpServer?: Server } = {}): Promise<
 
   // Admin password login at /api/auth/login
   registerAuthRoutes(app);
+
+  // Scheduled job endpoint and report PDF download
+  registerJobRoutes(app);
 
   // tRPC API
   app.use(

@@ -2,6 +2,7 @@ import { useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import {
   CheckCircle, Loader2, ArrowRight, Mail, Dumbbell, Moon,
   Utensils, Heart, Calendar, MessageSquare, BarChart3, Zap
@@ -96,9 +97,11 @@ export default function PaymentSuccess() {
   );
 
   const isPaid = session?.paymentStatus === "paid";
+  const { track } = useAnalytics();
 
   useEffect(() => {
     if (isPaid) {
+      track("purchase_completed", { product: session?.productId || "kickstart-4-week" });
       setShowConfetti(true);
       const timer = setTimeout(() => setShowConfetti(false), 4000);
       return () => clearTimeout(timer);
@@ -183,7 +186,7 @@ export default function PaymentSuccess() {
                 I'm going to personally review every answer from your assessment and build a program that's specific to where you are right now, not where some generic template thinks you should be.
               </p>
               <p className="text-sm text-white/80 leading-relaxed">
-                Expect to hear from me within 24 hours. In the meantime, get some sleep. You're going to need the energy.
+                I will be in touch within one business day. In the meantime, get some sleep. You're going to need the energy.
               </p>
               <div className="mt-6 pt-4 border-t border-white/10">
                 <p className="text-xs text-white/40 italic">Marin Lazic</p>

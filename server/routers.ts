@@ -12,17 +12,23 @@ import {
   trackEvent,
   getAnalyticsStats,
   createApplication,
+  getApplications,
   saveAssessmentProgress,
   markAssessmentCompleted,
   getAssessmentByResumeToken,
-  getStaleAssessments,
-  markAssessmentNotified,
   getCompletedAssessmentByEmail,
+  getAllAssessmentProgress,
+  createAssessmentReport,
+  getAssessmentReportByToken,
+  getReportTokensByEmails,
+  upsertApplicantLead,
+  getLatestLeadByEmail,
 } from "./db";
 import {
   kitOnEmailCapture,
   kitOnAssessmentComplete,
   kitOnApplicationSubmit,
+  kitOnEnquiry,
 } from "./kit";
 import { z } from "zod/v4";
 import { XMLParser } from "fast-xml-parser";
@@ -33,7 +39,23 @@ import {
   sendApplicationNotificationEmail,
   sendAssessmentNotificationEmail,
   sendApplicantConfirmationEmail,
+  sendEnquiryConfirmationEmail,
 } from "./email";
+import { generateAssessmentPDF } from "./pdf";
+import { storagePut, storageConfigured } from "./storage";
+import { calculateScores, getScoreBand } from "@shared/assessment";
+import { ENV } from "./_core/env";
+import { randomBytes } from "node:crypto";
+
+const REPORT_TTL_DAYS = 90;
+
+function newToken(bytes = 24) {
+  return randomBytes(bytes).toString("base64url");
+}
+
+function reportUrlFor(token: string) {
+  return `${ENV.siteOrigin}/report/${token}`;
+}
 
 // ─── Substack RSS Feed ───────────────────────────────────
 const SUBSTACK_FEED_URL = "https://marinlazic.substack.com/feed";
@@ -241,7 +263,7 @@ export const appRouter = router({
           .join(" | ");
 
         // Save lead to database
-        await createLead({
+        const leadId = await createLead({
           email,
           name: name || null,
           source: "performance-assessment-v2",
@@ -250,6 +272,47 @@ export const appRouter = router({
 
         // Generate LLM analysis
         const analysis = await generatePerformanceAnalysis(answers);
+
+        // One scoring function for the screen, the PDF and Kit.
+        const scores = calculateScores(answers);
+
+        // Build the PDF once, store it, and save the report behind a token.
+        let pdfBuffer: Buffer | undefined;
+        let reportToken: string | undefined;
+        try {
+          pdfBuffer = await generateAssessmentPDF({ name: name || "Your Results", analysis, answers });
+        } catch (e) {
+          console.warn("[Assessment] PDF generation failed:", e);
+        }
+        try {
+          const token = newToken();
+          let pdfKey: string | null = null;
+          if (pdfBuffer && storageConfigured()) {
+            const stored = await storagePut(`reports/${token}.pdf`, pdfBuffer, "application/pdf");
+            pdfKey = stored.key;
+          }
+          const expiresAt = new Date(Date.now() + REPORT_TTL_DAYS * 24 * 60 * 60 * 1000);
+          await createAssessmentReport({
+            token,
+            email,
+            name: name || null,
+            answers,
+            scores: {
+              overallPct: scores.overallPct,
+              band: getScoreBand(scores.overallPct),
+              categories: scores.categories,
+            },
+            analysis,
+            pdfKey,
+            utmSource: utmSource || null,
+            utmMedium: utmMedium || null,
+            utmCampaign: utmCampaign || null,
+            expiresAt,
+          });
+          reportToken = token;
+        } catch (e) {
+          console.warn("[Assessment] Failed to save report:", e);
+        }
 
         // Notify owner via Resend email (from results@marinlazic.com)
         try {
@@ -288,106 +351,15 @@ export const appRouter = router({
           console.warn("[Assessment] Failed to mark progress completed:", e);
         }
 
-        // Kit: tag assessment-completed and write custom fields (async, non-blocking)
+        // Kit: tag assessment-completed and write custom fields
         try {
           const occupation = (answers.occupation as string) || "";
           const primaryGoal = (answers["primary-goal"] as string) || "";
           const commitment = (answers.commitment as string) || "";
-
-          // Calculate score server-side for Kit custom fields
-          const SCORED_SECTIONS = [
-            "sleep",
-            "stress",
-            "training",
-            "nutrition",
-            "recovery",
-          ];
-          let totalScore = 0;
-          let totalMax = 0;
-          const sectionScores: Record<string, number> = {};
-
-          // Simple scoring: map known answer values to scores
-          const scoreMap: Record<string, number> = {
-            "under-5": 1,
-            "5-6": 2,
-            "6-7": 3,
-            "7-8": 4,
-            "8+": 5,
-            terrible: 1,
-            poor: 2,
-            average: 3,
-            good: 4,
-            excellent: 5,
-            none: 1,
-            sometimes: 2,
-            inconsistent: 3,
-            mostly: 4,
-            "locked-in": 5,
-            daily: 1,
-            "most-days": 2,
-            "few-times": 3,
-            rarely: 4,
-            never: 5,
-            aware: 2,
-            reactive: 3,
-            regular: 4,
-            fog: 1,
-            scattered: 2,
-            "morning-only": 3,
-            sharp: 5,
-            "0-1": 1,
-            "2": 2,
-            "3": 3,
-            "4-5": 4,
-            "6+": 5,
-            random: 2,
-            loose: 3,
-            programmed: 4,
-            periodised: 5,
-            minor: 4,
-            moderate: 2,
-            significant: 1,
-            multiple: 1,
-            zombie: 1,
-            caffeine: 2,
-            dip: 3,
-            productive: 4,
-            same: 5,
-            "under-1": 1,
-            "1-2": 2,
-            "2-3": 4,
-            "3+": 5,
-            occasional: 3,
-            systematic: 5,
-            collapse: 1,
-            "checked-out": 2,
-            depends: 3,
-            usually: 4,
-            absolutely: 5,
-          };
-
-          for (const [key, val] of Object.entries(answers)) {
-            if (typeof val === "string" && scoreMap[val] !== undefined) {
-              totalScore += scoreMap[val];
-              totalMax += 5;
-            }
-          }
-
-          const overallPct =
-            totalMax > 0 ? Math.round((totalScore / totalMax) * 100) : 0;
-
-          // Determine weakest/strongest from LLM analysis sections
-          const weakestArea = analysis.includes("### Sleep")
-            ? "sleep"
-            : "training";
-          const strongestArea = analysis.includes("Elite")
-            ? "recovery"
-            : "training";
-
           kitOnAssessmentComplete(email, {
-            score: overallPct,
-            weakestArea,
-            strongestArea,
+            score: scores.overallPct,
+            weakestArea: scores.weakest?.id ?? "",
+            strongestArea: scores.strongest?.id ?? "",
             primaryGoal,
             role: occupation,
             commitmentLevel: commitment,
@@ -406,12 +378,21 @@ export const appRouter = router({
             name,
             analysis,
             answers,
+            pdfBuffer,
+            reportUrl: reportToken ? reportUrlFor(reportToken) : undefined,
           });
         } catch (e) {
           console.warn("[Assessment] Failed to send results email:", e);
         }
 
-        return { success: true, analysis };
+        return {
+          success: true,
+          analysis,
+          reportToken: reportToken ?? null,
+          reportUrl: reportToken ? reportUrlFor(reportToken) : null,
+          leadId: leadId ?? null,
+          scores: { overallPct: scores.overallPct, categories: scores.categories },
+        };
       }),
 
     saveProgress: publicProcedure
@@ -473,6 +454,7 @@ export const appRouter = router({
           name: z.string().optional(),
           source: z.string().optional(),
           message: z.string().optional(),
+          corporate: z.boolean().optional(),
         })
       )
       .mutation(async ({ input, ctx }) => {
@@ -484,12 +466,20 @@ export const appRouter = router({
           throw new Error("Too many submissions. Please try again later.");
         }
 
+        const corporate = Boolean(input.corporate) || /corporate/i.test(input.source || "");
         await createLead({
           email: input.email,
           name: input.name || null,
           source: input.source || "direct",
           message: input.message || null,
         });
+
+        kitOnEnquiry(input.email, input.name, corporate);
+        try {
+          await sendEnquiryConfirmationEmail({ email: input.email, name: input.name, corporate });
+        } catch (e) {
+          console.warn("[Leads] Failed to send enquiry confirmation:", e);
+        }
 
         try {
           const nameLine = input.name ? `Name: ${input.name}\n` : "";
@@ -516,18 +506,23 @@ export const appRouter = router({
           .optional()
       )
       .query(async ({ input }) => {
-        return getLeads({
+        const rows = await getLeads({
           status: input?.status,
           startDate: input?.startDate ? new Date(input.startDate) : undefined,
           endDate: input?.endDate ? new Date(input.endDate) : undefined,
         });
+        const tokens = await getReportTokensByEmails(rows.map(r => r.email));
+        return rows.map(r => ({
+          ...r,
+          reportToken: tokens.get(r.email.toLowerCase()) ?? null,
+        }));
       }),
 
     updateStatus: adminProcedure
       .input(
         z.object({
           id: z.number(),
-          status: z.enum(["new", "contacted", "converted", "archived"]),
+          status: z.enum(["new", "contacted", "applied", "converted", "archived"]),
           notes: z.string().optional(),
         })
       )
@@ -539,6 +534,31 @@ export const appRouter = router({
     stats: adminProcedure.query(async () => {
       return getLeadStats();
     }),
+
+    applications: adminProcedure.query(async () => getApplications()),
+
+    assessmentProgress: adminProcedure.query(async () =>
+      (await getAllAssessmentProgress()).map(row => ({ ...row, answers: undefined }))
+    ),
+  }),
+
+  report: router({
+    get: publicProcedure
+      .input(z.object({ token: z.string().min(10).max(80) }))
+      .query(async ({ input }) => {
+        const report = await getAssessmentReportByToken(input.token);
+        if (!report) return null;
+        return {
+          name: report.name,
+          email: report.email,
+          analysis: report.analysis,
+          scores: report.scores as { overallPct: number; band: string; categories: { id: string; name: string; percentage: number }[] },
+          createdAt: report.createdAt,
+          expiresAt: report.expiresAt,
+          hasPdf: Boolean(report.pdfKey),
+          pdfUrl: `/api/report/${report.token}/pdf`,
+        };
+      }),
   }),
 
   articles: router({
@@ -571,10 +591,12 @@ export const appRouter = router({
           throw new Error(`Unknown product: ${input.productId}`);
         }
 
+        const lead = await getLatestLeadByEmail(input.email).catch(() => null);
         const result = await createCheckoutSession({
           productId: productKey,
           customerEmail: input.email,
           customerName: input.name,
+          leadId: lead?.id,
           origin: input.origin,
         });
 
@@ -629,80 +651,10 @@ export const appRouter = router({
           const assessment = await getCompletedAssessmentByEmail(input.email);
           if (assessment && assessment.answers) {
             const answers = JSON.parse(assessment.answers);
-            // Calculate score
-            const scoreMap: Record<string, number> = {
-              "under-5": 1,
-              "5-6": 2,
-              "6-7": 3,
-              "7-8": 4,
-              "8+": 5,
-              terrible: 1,
-              poor: 2,
-              average: 3,
-              good: 4,
-              excellent: 5,
-              none: 1,
-              sometimes: 2,
-              inconsistent: 3,
-              mostly: 4,
-              "locked-in": 5,
-              daily: 1,
-              "most-days": 2,
-              "few-times": 3,
-              rarely: 4,
-              never: 5,
-              aware: 2,
-              reactive: 3,
-              regular: 4,
-              fog: 1,
-              scattered: 2,
-              "morning-only": 3,
-              sharp: 5,
-              "0-1": 1,
-              "2": 2,
-              "3": 3,
-              "4-5": 4,
-              "6+": 5,
-              random: 2,
-              loose: 3,
-              programmed: 4,
-              periodised: 5,
-              minor: 4,
-              moderate: 2,
-              significant: 1,
-              multiple: 1,
-              zombie: 1,
-              caffeine: 2,
-              dip: 3,
-              productive: 4,
-              same: 5,
-              "under-1": 1,
-              "1-2": 2,
-              "2-3": 4,
-              "3+": 5,
-              occasional: 3,
-              systematic: 5,
-              collapse: 1,
-              "checked-out": 2,
-              depends: 3,
-              usually: 4,
-              absolutely: 5,
-            };
-            let totalScore = 0;
-            let totalMax = 0;
-            for (const [, val] of Object.entries(answers)) {
-              if (typeof val === "string" && scoreMap[val] !== undefined) {
-                totalScore += scoreMap[val];
-                totalMax += 5;
-              }
-            }
-            const overallPct =
-              totalMax > 0
-                ? Math.round((totalScore / totalMax) * 100)
-                : undefined;
+            const scores = calculateScores(answers);
             assessmentData = {
-              score: overallPct,
-              weakestArea: (answers["primary-goal"] as string) || undefined,
+              score: scores.overallPct,
+              weakestArea: scores.weakest?.id,
               primaryGoal:
                 (answers["primary-goal"] as string) ||
                 (answers["goals-detail"] as string) ||
@@ -729,8 +681,19 @@ export const appRouter = router({
           utmCampaign: input.utmCampaign || null,
         });
 
-        // Kit: tag application-submitted (async, non-blocking)
-        kitOnApplicationSubmit(input.email);
+        // Every applicant appears in the leads table.
+        try {
+          await upsertApplicantLead({
+            email: input.email,
+            name: input.name,
+            message: `Coaching application. 90 day goal: ${input.q1_90day_goal.slice(0, 300)}`,
+          });
+        } catch (e) {
+          console.warn("[Application] Failed to upsert applicant lead:", e);
+        }
+
+        // Kit: tag application-submitted
+        kitOnApplicationSubmit(input.email, input.name);
 
         // Send formatted application notification email with reply-to set to applicant
         try {

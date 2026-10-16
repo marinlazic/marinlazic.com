@@ -33,6 +33,7 @@ import { getCampaignValue } from "@/lib/attribution";
 import {
   QUESTIONS,
   calculateScores,
+  getScoreBand as scoreBandOf,
   type Question,
   type Option,
 } from "@shared/assessment";
@@ -293,7 +294,7 @@ function ShareResults({
 }
 
 // ─── Collapsible Analysis Section ──────────────────────
-function AnalysisSection({
+export function AnalysisSection({
   analysisResult,
   analysisError,
 }: {
@@ -452,14 +453,17 @@ function AnalysisSection({
 }
 
 // ─── Kickstart Checkout Button ─────────────────────────
-function KickstartCheckoutButton({
+export function KickstartCheckoutButton({
   email,
   name,
+  source,
 }: {
   email: string;
   name: string;
+  source: string;
 }) {
   const createSession = trpc.checkout.createSession.useMutation();
+  const { track } = useAnalytics();
   const [loading, setLoading] = useState(false);
 
   async function handleCheckout() {
@@ -468,6 +472,7 @@ function KickstartCheckoutButton({
       return;
     }
     setLoading(true);
+    track("checkout_started", { product: "kickstart-4-week", source });
     try {
       const result = await createSession.mutateAsync({
         productId: "kickstart-4-week",
@@ -476,15 +481,14 @@ function KickstartCheckoutButton({
         origin: window.location.origin,
       });
       if (result.url) {
-        toast.info("Redirecting you to checkout...");
-        window.open(result.url, "_blank");
+        window.location.href = result.url;
       } else {
         toast.error("Failed to create checkout session. Please try again.");
+        setLoading(false);
       }
     } catch (err: any) {
       console.error("Checkout error:", err);
       toast.error("Something went wrong. Please try again or contact us.");
-    } finally {
       setLoading(false);
     }
   }
@@ -493,18 +497,53 @@ function KickstartCheckoutButton({
     <button
       onClick={handleCheckout}
       disabled={loading}
-      className="block w-full border border-black text-black px-6 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-white transition-colors text-center disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      className="w-full sm:w-auto bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
     >
       {loading ? (
         <>
-          <Loader2 className="w-4 h-4 animate-spin" /> Processing...
+          <Loader2 className="w-4 h-4 animate-spin" /> Opening checkout
         </>
       ) : (
         <>
-          <CreditCard className="w-4 h-4" /> Get the 4-Week Program
+          <CreditCard className="w-4 h-4" /> Start the 4 week programme, $299 AUD
         </>
       )}
     </button>
+  );
+}
+
+/** Email capture form plus the checkout button, for pages without a known email. */
+export function ProgrammeCheckout({ source }: { source: string }) {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  return (
+    <div className="border border-black/10 p-6 sm:p-8">
+      <p className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-semibold mb-3">
+        Start now
+      </p>
+      <p className="text-sm text-black/60 leading-relaxed mb-6 max-w-xl">
+        Four weeks, built from your assessment answers. One payment of $299 AUD. Marin will be in touch within one business day of your payment.
+      </p>
+      <div className="grid sm:grid-cols-2 gap-3 mb-4 max-w-xl">
+        <input
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder="Your name"
+          aria-label="Your name"
+          className="border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-black"
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="Your email"
+          aria-label="Your email"
+          className="border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-black"
+        />
+      </div>
+      <KickstartCheckoutButton email={email.trim()} name={name.trim()} source={source} />
+    </div>
   );
 }
 
@@ -517,6 +556,7 @@ export default function Assessment() {
   >("intro");
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
+  const [reportUrl, setReportUrl] = useState<string | null>(null);
   const [validationError, setValidationError] = useState("");
   const [textInput, setTextInput] = useState("");
   const [resumeToken, setResumeToken] = useState<string | null>(null);
@@ -526,6 +566,7 @@ export default function Assessment() {
 
   const submitAssessment = trpc.assessment.submit.useMutation();
   const saveProgress = trpc.assessment.saveProgress.useMutation();
+  const { track } = useAnalytics();
 
   // Parse URL params for resume token and UTM
   const urlParams = new URLSearchParams(searchString);
@@ -637,6 +678,7 @@ export default function Assessment() {
       if (shouldShowQuestion(QUESTIONS[nextQ])) break;
       nextQ++;
     }
+    track("assessment_question", { question: currentQ + 1, questionId: question.id });
     if (nextQ >= totalQuestions) {
       handleSubmit(currentAnswers);
     } else {
@@ -681,6 +723,11 @@ export default function Assessment() {
         utmCampaign: utmCampaign || undefined,
       });
       setAnalysisResult(result.analysis);
+      setReportUrl(result.reportUrl ?? null);
+      track("assessment_completed", {
+        score: result.scores?.overallPct,
+        band: result.scores ? scoreBandOf(result.scores.overallPct) : undefined,
+      });
       setPhase("results");
     } catch (err: any) {
       console.error("Assessment submission failed:", err);
@@ -737,7 +784,10 @@ export default function Assessment() {
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <button
-                onClick={() => setPhase("quiz")}
+                onClick={() => {
+                  track("assessment_started");
+                  setPhase("quiz");
+                }}
                 className="bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors"
               >
                 Start the Assessment
@@ -1571,6 +1621,41 @@ export default function Assessment() {
               analysisResult={analysisResult}
               analysisError={analysisError}
             />
+
+            {reportUrl && (
+              <div className="border border-black/10 p-6 sm:p-8 mb-12">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-3">
+                  Your saved report
+                </p>
+                <p className="text-sm text-black/60 leading-relaxed mb-4">
+                  This page is not saved in your browser. Your report and the PDF are at the link below for 90 days, and the same link is in your email.
+                </p>
+                <a
+                  href={reportUrl}
+                  className="text-sm font-semibold text-black underline underline-offset-4 hover:text-[#E53935] transition-colors break-all"
+                >
+                  {reportUrl}
+                </a>
+              </div>
+            )}
+
+            {/* Four week programme */}
+            <div className="mb-16">
+              <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
+                Act on your results
+              </h3>
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-4 leading-tight">
+                The 4 week programme
+              </h2>
+              <p className="text-sm sm:text-base text-black/60 leading-relaxed mb-6 max-w-2xl">
+                A structured four week programme built from these answers. Periodised training, sleep, recovery and nutrition guidance, with weekly email check ins. One payment of $299 AUD.
+              </p>
+              <KickstartCheckoutButton
+                email={(answers.email as string) || ""}
+                name={(answers.name as string) || ""}
+                source="assessment_results"
+              />
+            </div>
 
             {/* ── This Is Where Most People Stop ── */}
             <div className="border-t border-black/10 pt-12 mb-16">

@@ -45,12 +45,15 @@ function markdownToHtml(md: string): string {
 }
 
 // ─── Build Assessment Results Email HTML ────────────────
-function buildAssessmentEmailHtml(name: string, email: string, analysis: string, hasPdf: boolean = false): string {
+function buildAssessmentEmailHtml(name: string, email: string, analysis: string, hasPdf: boolean = false, reportUrl?: string): string {
   const analysisHtml = markdownToHtml(analysis);
   const firstName = name.split(" ")[0] || "there";
   const pdfLine = hasPdf
     ? "Your full report is also attached as a PDF for easy reference."
     : "Your full report is below.";
+  const reportLinkBlock = reportUrl
+    ? `<p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;"><a href="${reportUrl}" style="color:#C8102E; font-weight:600; text-decoration:none;">View your report online</a>. The link works for 90 days and includes the PDF download.</p>`
+    : "";
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -79,6 +82,7 @@ function buildAssessmentEmailHtml(name: string, email: string, analysis: string,
               <p style="color:#1a1a1a; font-size:18px; font-weight:600; margin:0 0 16px 0; font-family:'DM Sans','Inter',sans-serif;">Hi ${firstName},</p>
               <p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;">Here is your personalised performance analysis based on your recent assessment. This is the same framework I use with Olympic athletes and high-performing executives. ${pdfLine}</p>
               <p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;">Read it carefully. There are specific protocols in here you can start implementing today.</p>
+              ${reportLinkBlock}
             </td>
           </tr>
 
@@ -136,8 +140,12 @@ export async function sendAssessmentResultsEmail(params: {
   name: string;
   analysis: string;
   answers?: Record<string, unknown>;
+  /** Already generated PDF. When absent one is generated from the answers. */
+  pdfBuffer?: Buffer;
+  /** Link to the saved report page, shown near the top of the email. */
+  reportUrl?: string;
 }): Promise<boolean> {
-  const { email, name, analysis, answers } = params;
+  const { email, name, analysis, answers, reportUrl } = params;
 
   if (!email) {
     console.warn("[Email] No email address provided, skipping email send");
@@ -160,13 +168,15 @@ export async function sendAssessmentResultsEmail(params: {
     // Generate PDF attachment if answers are provided
     let attachments: Array<{ filename: string; content: Buffer; contentType: string }> | undefined;
 
-    if (answers && Object.keys(answers).length > 0) {
+    if (params.pdfBuffer || (answers && Object.keys(answers).length > 0)) {
       try {
-        const pdfBuffer = await generateAssessmentPDF({
-          name: name || "Your Results",
-          analysis,
-          answers,
-        });
+        const pdfBuffer =
+          params.pdfBuffer ??
+          (await generateAssessmentPDF({
+            name: name || "Your Results",
+            analysis,
+            answers: answers ?? {},
+          }));
 
         attachments = [
           {
@@ -185,7 +195,7 @@ export async function sendAssessmentResultsEmail(params: {
     }
 
     // Build HTML after PDF attempt so we know whether to say "attached" or "below"
-    const html = buildAssessmentEmailHtml(name || "there", email, analysis, hasPdf);
+    const html = buildAssessmentEmailHtml(name || "there", email, analysis, hasPdf, reportUrl);
 
     const emailPayload: {
       from: string;
@@ -462,6 +472,139 @@ export async function sendApplicantConfirmationEmail(params: {
     return true;
   } catch (err) {
     console.error("[Email] Failed to send applicant confirmation:", err);
+    return false;
+  }
+}
+
+// ─── Shared plain email layout ──────────────────────────
+function plainEmailHtml(firstName: string, paragraphs: string[], cta?: { label: string; href: string }): string {
+  const body = paragraphs
+    .map(
+      p =>
+        `<p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;">${p}</p>`
+    )
+    .join("");
+  const button = cta
+    ? `<p style="margin:24px 0 0 0;"><a href="${cta.href}" style="display:inline-block; background-color:#C8102E; color:#ffffff; font-size:14px; font-weight:600; text-decoration:none; padding:12px 28px; border-radius:2px; font-family:'DM Sans','Inter',sans-serif; letter-spacing:0.5px;">${cta.label}</a></p>`
+    : "";
+  return `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Inter','DM Sans',Helvetica,Arial,sans-serif;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f5f5f5;"><tr><td align="center" style="padding:32px 16px;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:4px; overflow:hidden;">
+      <tr><td style="background-color:#1a1a1a; padding:24px 40px;"><span style="font-family:'DM Sans','Inter',sans-serif; font-size:28px; font-weight:700; color:#ffffff; letter-spacing:-0.5px;">ML<span style="color:#C8102E;">.</span></span></td></tr>
+      <tr><td style="padding:36px 40px 32px 40px;">
+        <p style="color:#1a1a1a; font-size:18px; font-weight:600; margin:0 0 16px 0; font-family:'DM Sans','Inter',sans-serif;">Hi ${firstName},</p>
+        ${body}${button}
+        <p style="color:#333; font-size:15px; line-height:1.7; margin:24px 0 0 0; font-family:'Inter',sans-serif;">Marin</p>
+      </td></tr>
+      <tr><td style="background-color:#1a1a1a; padding:20px 40px; text-align:center;"><p style="color:#999; font-size:12px; margin:0; font-family:'Inter',sans-serif;">Marin Lazic | <a href="https://marinlazic.com" style="color:#999; text-decoration:none;">marinlazic.com</a></p></td></tr>
+    </table>
+  </td></tr></table>
+</body></html>`;
+}
+
+const RESULTS_SENDER = "Marin Lazic <results@marinlazic.com>";
+const OWNER_REPLY_TO = "marin@marinlazic.coach";
+
+function firstNameOf(name?: string | null) {
+  return (name || "").trim().split(" ")[0] || "there";
+}
+
+// ─── Purchase confirmation to the buyer ─────────────────
+export async function sendPurchaseConfirmationEmail(params: {
+  email: string;
+  name?: string | null;
+  productName: string;
+  amountFormatted: string;
+}): Promise<boolean> {
+  if (!ENV.resendApiKey) return false;
+  try {
+    const resend = getResendClient();
+    const { error } = await resend.emails.send({
+      from: ENV.resendFromEmail || RESULTS_SENDER,
+      to: [params.email],
+      replyTo: OWNER_REPLY_TO,
+      subject: `Your ${params.productName} is confirmed`,
+      html: plainEmailHtml(firstNameOf(params.name), [
+        `Thanks. Your payment of ${params.amountFormatted} for the ${params.productName} has gone through.`,
+        "I will be in touch within one business day with your programme and how we start. If you have a question before then, reply to this email.",
+      ]),
+    });
+    if (error) {
+      console.error("[Email] Purchase confirmation failed:", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[Email] Purchase confirmation failed:", err);
+    return false;
+  }
+}
+
+// ─── Abandoned assessment reminder ──────────────────────
+export async function sendAssessmentReminderEmail(params: {
+  email: string;
+  name?: string | null;
+  resumeUrl: string;
+}): Promise<boolean> {
+  if (!ENV.resendApiKey) return false;
+  try {
+    const resend = getResendClient();
+    const { error } = await resend.emails.send({
+      from: ENV.resendFromEmail || RESULTS_SENDER,
+      to: [params.email],
+      replyTo: OWNER_REPLY_TO,
+      subject: "Your performance assessment is waiting",
+      html: plainEmailHtml(
+        firstNameOf(params.name),
+        [
+          "You started the performance assessment and did not get to the end. Your answers are saved, so you can pick it up where you left off.",
+          "It takes about five minutes to finish and you get a written report on your sleep, stress, training, nutrition and recovery.",
+          "If now is not the time, no problem. The link stays open.",
+        ],
+        { label: "Finish your assessment", href: params.resumeUrl }
+      ),
+    });
+    if (error) {
+      console.error("[Email] Reminder failed:", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[Email] Reminder failed:", err);
+    return false;
+  }
+}
+
+// ─── Enquiry confirmation ───────────────────────────────
+export async function sendEnquiryConfirmationEmail(params: {
+  email: string;
+  name?: string | null;
+  corporate?: boolean;
+}): Promise<boolean> {
+  if (!ENV.resendApiKey) return false;
+  try {
+    const resend = getResendClient();
+    const { error } = await resend.emails.send({
+      from: ENV.resendFromEmail || RESULTS_SENDER,
+      to: [params.email],
+      replyTo: OWNER_REPLY_TO,
+      subject: "Got your message",
+      html: plainEmailHtml(firstNameOf(params.name), [
+        params.corporate
+          ? "Thanks for the enquiry about corporate health and performance. I have your note and will reply by email within one business day."
+          : "Thanks for your message. I have it and will reply by email within one business day.",
+        "If it is quicker, reply to this email with any detail you want to add.",
+      ]),
+    });
+    if (error) {
+      console.error("[Email] Enquiry confirmation failed:", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[Email] Enquiry confirmation failed:", err);
     return false;
   }
 }

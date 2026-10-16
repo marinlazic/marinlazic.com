@@ -6,9 +6,9 @@ describe("products", () => {
     const product = PRODUCTS.KICKSTART_4_WEEK;
     expect(product).toBeDefined();
     expect(product.id).toBe("kickstart-4-week");
-    expect(product.name).toBe("4-Week Kickstart Program");
+    expect(product.name).toBe("4 Week Programme");
     expect(product.priceInCents).toBe(29900);
-    expect(product.currency).toBe("usd");
+    expect(product.currency).toBe("aud");
     expect(product.mode).toBe("payment");
   });
 

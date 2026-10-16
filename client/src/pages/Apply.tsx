@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { trpc } from "@/lib/trpc";
 import { APPLY_FAQS } from "@shared/siteFaq";
 import { getCampaignValue } from "@/lib/attribution";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { CheckCircle, Loader2, ArrowRight } from "lucide-react";
 
 function isValidEmail(email: string): boolean {
@@ -21,6 +22,7 @@ export default function Apply() {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   const submitApplication = trpc.application.submit.useMutation();
+  const { track } = useAnalytics();
 
   // Pre-fill from URL params (coming from assessment or nurture emails)
   useEffect(() => {
@@ -88,6 +90,7 @@ export default function Apply() {
         utmMedium,
         utmCampaign,
       });
+      track("apply_submitted", { investment: q3 });
       try {
         sessionStorage.setItem("ml_application_received", "true");
       } catch {

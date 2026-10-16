@@ -16,6 +16,8 @@ vi.mock("./db", () => ({
       updatedAt: new Date("2026-01-15"),
     },
   ]),
+  getReportTokensByEmails: vi.fn().mockResolvedValue(new Map()),
+  getLatestLeadByEmail: vi.fn().mockResolvedValue(null),
   updateLeadStatus: vi.fn().mockResolvedValue(undefined),
   getLeadStats: vi.fn().mockResolvedValue({
     total: 5,

@@ -23,6 +23,7 @@ export interface CreateCheckoutParams {
   customerEmail: string;
   customerName?: string;
   assessmentId?: string;
+  leadId?: number;
   origin: string;
   metadata?: Record<string, string>;
 }
@@ -60,6 +61,7 @@ export async function createCheckoutSession(params: CreateCheckoutParams) {
       customer_email: params.customerEmail,
       customer_name: params.customerName || "",
       assessment_id: params.assessmentId || "",
+      lead_id: params.leadId ? String(params.leadId) : "",
       ...params.metadata,
     },
   });
