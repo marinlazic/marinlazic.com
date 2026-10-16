@@ -1,6 +1,12 @@
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 import fs from "node:fs";
+import {
+  calculateScores as calculateSharedScores,
+  getScoreBand,
+  getScoreLabel,
+  type CategoryScore,
+} from "@shared/assessment";
 
 // On Vercel (and any Lambda style host) use the bundled headless Chromium.
 // Elsewhere use a local Chromium binary.
@@ -32,108 +38,16 @@ async function launchBrowser() {
   });
 }
 
-// ─── Score Calculation (mirrors frontend logic) ────────
-interface CategoryScore {
-  name: string;
-  id: string;
-  percentage: number;
-}
-
-const SCORED_SECTIONS = [
-  { id: "sleep", title: "Sleep" },
-  { id: "stress", title: "Stress & Mental" },
-  { id: "training", title: "Training" },
-  { id: "injuries", title: "Injuries & Health" },
-  { id: "nutrition", title: "Nutrition & Energy" },
-  { id: "recovery", title: "Recovery" },
-];
-
-const SCORE_MAP: Record<string, Record<string, number>> = {
-  "sleep-hours": { "under-5": 1, "5-6": 2, "6-7": 3, "7-8": 4, "8+": 5 },
-  "sleep-quality": { terrible: 1, poor: 2, average: 3, good: 4, excellent: 5 },
-  "sleep-routine": { none: 1, sometimes: 2, inconsistent: 3, mostly: 4, "locked-in": 5 },
-  "stress-level": { daily: 1, "most-days": 2, "few-times": 3, rarely: 4, never: 5 },
-  "stress-management": { none: 1, aware: 2, reactive: 3, regular: 4, daily: 5 },
-  "mental-clarity": { fog: 1, scattered: 2, "morning-only": 3, good: 4, sharp: 5 },
-  "training-frequency": { none: 1, "1-2": 2, "3-4": 3, "5-6": 4, daily: 5 },
-  "training-type": { none: 1, cardio: 2, weights: 3, mixed: 4, programmed: 5 },
-  "training-intensity": { low: 1, moderate: 2, mixed: 3, high: 4, periodised: 5 },
-  "current-injuries": { major: 1, moderate: 2, minor: 3, past: 4, none: 5 },
-  "nutrition-quality": { poor: 1, inconsistent: 2, average: 3, good: 4, dialled: 5 },
-  "energy-level": { crashed: 1, low: 2, average: 3, good: 4, high: 5 },
-  hydration: { poor: 1, low: 2, moderate: 3, good: 4, excellent: 5 },
-  "recovery-practices": { none: 1, basic: 2, some: 3, regular: 4, comprehensive: 5 },
-  "recovery-quality": { terrible: 1, poor: 2, average: 3, good: 4, excellent: 5 },
-};
-
-const QUESTION_SECTION_MAP: Record<string, string> = {
-  "sleep-hours": "sleep",
-  "sleep-quality": "sleep",
-  "sleep-routine": "sleep",
-  "stress-level": "stress",
-  "stress-management": "stress",
-  "mental-clarity": "stress",
-  "training-frequency": "training",
-  "training-type": "training",
-  "training-intensity": "training",
-  "current-injuries": "injuries",
-  "nutrition-quality": "nutrition",
-  "energy-level": "nutrition",
-  hydration: "nutrition",
-  "recovery-practices": "recovery",
-  "recovery-quality": "recovery",
-};
+// ─── Score Calculation ─────────────────────────────────
+// One shared scoring function (shared/assessment.ts) so the PDF, the screen
+// and Kit all show the same numbers.
 
 function calculateScores(answers: Record<string, unknown>): {
   categories: CategoryScore[];
   overallPct: number;
 } {
-  const sectionScores: Record<string, { total: number; max: number }> = {};
-
-  for (const section of SCORED_SECTIONS) {
-    sectionScores[section.id] = { total: 0, max: 0 };
-  }
-
-  for (const [qId, scoreMap] of Object.entries(SCORE_MAP)) {
-    const sectionId = QUESTION_SECTION_MAP[qId];
-    if (!sectionId) continue;
-
-    const answerVal = answers[qId] as string | undefined;
-    if (answerVal && scoreMap[answerVal] !== undefined) {
-      sectionScores[sectionId].total += scoreMap[answerVal];
-      sectionScores[sectionId].max += 5;
-    }
-  }
-
-  const categories: CategoryScore[] = SCORED_SECTIONS.map((s) => ({
-    name: s.title,
-    id: s.id,
-    percentage:
-      sectionScores[s.id].max > 0
-        ? Math.round((sectionScores[s.id].total / sectionScores[s.id].max) * 100)
-        : 0,
-  }));
-
-  const totalScore = Object.values(sectionScores).reduce((sum, s) => sum + s.total, 0);
-  const totalMax = Object.values(sectionScores).reduce((sum, s) => sum + s.max, 0);
-  const overallPct = totalMax > 0 ? Math.round((totalScore / totalMax) * 100) : 0;
-
+  const { categories, overallPct } = calculateSharedScores(answers);
   return { categories, overallPct };
-}
-
-function getScoreLabel(pct: number): string {
-  if (pct >= 80) return "STRONG HABITS";
-  if (pct >= 60) return "STEADY BASE";
-  if (pct >= 50) return "FOCUS AREA";
-  return "STARTING POINT";
-}
-
-function getScoreBand(pct: number): string {
-  if (pct >= 80) return "80-100";
-  if (pct >= 60) return "60-79";
-  if (pct >= 50) return "50-59";
-  if (pct >= 40) return "40-49";
-  return "0-39";
 }
 
 function getScoreColour(pct: number): string {

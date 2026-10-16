@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { calculateScores, getScoreLabel, getScoreColour, getSolutions, getCategorySummary, buildPdfHtml, buildRadarSvg } from "./pdf";
+import { QUESTIONS, calculateScores as sharedCalculateScores } from "../shared/assessment";
 
 describe("calculateScores", () => {
   it("returns 0 for empty answers", () => {
@@ -9,44 +10,29 @@ describe("calculateScores", () => {
     categories.forEach((c) => expect(c.percentage).toBe(0));
   });
 
-  it("calculates perfect scores", () => {
-    const answers = {
-      "sleep-hours": "8+",
-      "sleep-quality": "excellent",
-      "sleep-routine": "locked-in",
-      "stress-level": "never",
-      "stress-management": "daily",
-      "mental-clarity": "sharp",
-      "training-frequency": "daily",
-      "training-type": "programmed",
-      "training-intensity": "periodised",
-      "current-injuries": "none",
-      "nutrition-quality": "dialled",
-      "energy-level": "high",
-      hydration: "excellent",
-      "recovery-practices": "comprehensive",
-      "recovery-quality": "excellent",
-    };
+  it("calculates perfect scores from the real question options", () => {
+    const answers: Record<string, string> = {};
+    for (const q of QUESTIONS) {
+      const best = q.options?.filter(o => o.score !== undefined).sort((a, b) => b.score! - a.score!)[0];
+      if (best) answers[q.id] = best.value;
+    }
     const { categories, overallPct } = calculateScores(answers);
     expect(overallPct).toBe(100);
     categories.forEach((c) => expect(c.percentage).toBe(100));
   });
 
-  it("calculates mixed scores correctly", () => {
-    const answers = {
-      "sleep-hours": "7-8",
-      "sleep-quality": "good",
-      "sleep-routine": "mostly",
-      "stress-level": "few-times",
-      "stress-management": "reactive",
-      "training-frequency": "5-6",
-    };
-    const { categories, overallPct } = calculateScores(answers);
-    expect(overallPct).toBeGreaterThan(0);
-    expect(overallPct).toBeLessThan(100);
-
-    const sleep = categories.find((c) => c.id === "sleep");
-    expect(sleep?.percentage).toBe(80);
+  it("scores the same way the screen does (shared function)", () => {
+    const answers: Record<string, string> = {};
+    for (const q of QUESTIONS) {
+      const opts = q.options?.filter(o => o.score !== undefined);
+      if (opts?.length) answers[q.id] = opts[Math.min(1, opts.length - 1)].value;
+    }
+    const pdf = calculateScores(answers);
+    const shared = sharedCalculateScores(answers);
+    expect(pdf.overallPct).toBe(shared.overallPct);
+    expect(pdf.overallPct).toBeGreaterThan(0);
+    expect(pdf.overallPct).toBeLessThan(100);
+    pdf.categories.forEach((c, i) => expect(c.percentage).toBe(shared.categories[i].percentage));
   });
 
   it("handles unknown answer values gracefully", () => {
