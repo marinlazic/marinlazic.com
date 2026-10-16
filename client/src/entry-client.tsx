@@ -12,7 +12,12 @@ import { Router } from "wouter";
 import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
+import { inject as injectVercelAnalytics } from "@vercel/analytics";
 import "./index.css";
+
+// Vercel Web Analytics (page views). Custom funnel events are sent from
+// useAnalytics alongside the site's own first party event log.
+injectVercelAnalytics({ mode: import.meta.env.PROD ? "production" : "development" });
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000 } },

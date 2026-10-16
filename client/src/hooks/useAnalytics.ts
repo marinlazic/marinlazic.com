@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { nanoid } from "nanoid";
+import { track as vercelTrack } from "@vercel/analytics";
 import { trpc } from "@/lib/trpc";
 import { getAttribution, sanitizePath, sanitizeReferrer } from "@/lib/attribution";
 
@@ -132,6 +133,18 @@ export function useAnalytics() {
         pruneRecentEvents(now);
         if ((recentlyTracked.get(key) ?? 0) > now - DEDUPE_WINDOW_MS) return;
         recentlyTracked.set(key, now);
+
+        if (eventType !== "page_view") {
+          try {
+            const flat: Record<string, string | number | boolean> = {};
+            for (const [k, v] of Object.entries(sanitizeEventData(eventData))) {
+              if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") flat[k] = v;
+            }
+            vercelTrack(eventType.slice(0, 100), flat);
+          } catch {
+            // Vercel analytics is optional.
+          }
+        }
 
         trackMutation.mutate({
           eventType: eventType.slice(0, 100),
