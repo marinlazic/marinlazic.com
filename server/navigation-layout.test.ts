@@ -53,6 +53,7 @@ describe("Homepage logo and navigation separation", () => {
       "/executive-health-performance",
       "/corporate-health-performance",
       "/resources",
+      "/media",
       "#contact",
       "/assessment",
       "/apply",
