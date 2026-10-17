@@ -69,6 +69,11 @@ function Routes() {
           <AdminDashboard />
         </Suspense>
       </Route>
+      <Route path="/admin/:section">
+        <Suspense fallback={<Loading />}>
+          <AdminDashboard />
+        </Suspense>
+      </Route>
       <Route path="/payment/success">
         <Suspense fallback={<Loading />}>
           <PaymentSuccess />

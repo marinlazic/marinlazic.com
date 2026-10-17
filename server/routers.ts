@@ -2,6 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
+import { adminRouter } from "./adminRouter";
 import { notifyOwner } from "./_core/notification";
 import { invokeLLM } from "./_core/llm";
 import {
@@ -220,6 +221,7 @@ Remember: Write as Marin Lazic. Be specific to THEIR answers. This should feel l
 }
 
 export const appRouter = router({
+  admin: adminRouter,
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

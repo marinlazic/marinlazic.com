@@ -1,5 +1,6 @@
 import {
   boolean,
+  index,
   integer,
   jsonb,
   pgEnum,
@@ -53,12 +54,32 @@ export const leads = pgTable("leads", {
   amountCents: integer("amount_cents"),
   currency: varchar("currency", { length: 3 }),
   paidAt: ts("paid_at"),
+  // CRM fields used by the dashboard.
+  followUpAt: ts("follow_up_at"),
+  lastContactedAt: ts("last_contacted_at"),
+  tags: text("tags").array(),
   createdAt: ts("created_at").defaultNow().notNull(),
   updatedAt: ts("updated_at").defaultNow().notNull().$onUpdate(() => new Date()),
-});
+}, table => [
+  index("leads_email_idx").on(table.email),
+  index("leads_created_at_idx").on(table.createdAt),
+]);
 
 export type Lead = typeof leads.$inferSelect;
 export type InsertLead = typeof leads.$inferInsert;
+
+/** Timestamped notes on a lead, written from the dashboard. */
+export const leadNotes = pgTable("lead_notes", {
+  id: serial("id").primaryKey(),
+  leadId: integer("lead_id")
+    .notNull()
+    .references(() => leads.id, { onDelete: "cascade" }),
+  body: text("body").notNull(),
+  createdAt: ts("created_at").defaultNow().notNull(),
+}, table => [index("lead_notes_lead_id_idx").on(table.leadId)]);
+
+export type LeadNote = typeof leadNotes.$inferSelect;
+export type InsertLeadNote = typeof leadNotes.$inferInsert;
 
 export const analyticsEvents = pgTable("analytics_events", {
   id: serial("id").primaryKey(),
@@ -68,7 +89,10 @@ export const analyticsEvents = pgTable("analytics_events", {
   userAgent: varchar("user_agent", { length: 500 }),
   referrer: varchar("referrer", { length: 500 }),
   createdAt: ts("created_at").defaultNow().notNull(),
-});
+}, table => [
+  index("analytics_events_created_at_idx").on(table.createdAt),
+  index("analytics_events_type_created_at_idx").on(table.eventType, table.createdAt),
+]);
 
 export type AnalyticsEvent = typeof analyticsEvents.$inferSelect;
 export type InsertAnalyticsEvent = typeof analyticsEvents.$inferInsert;

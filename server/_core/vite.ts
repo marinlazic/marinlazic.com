@@ -135,6 +135,16 @@ export function serveStatic(app: Express) {
   );
   app.use("*", async (req, res) => {
     const template = await fs.promises.readFile(templatePath, "utf-8");
+    // The dashboard is private and client only. Serve the shell straight away
+    // instead of a server render that would only produce a loading state.
+    if (/^\/admin(\/|$)/.test(req.path)) {
+      res
+        .status(200)
+        .set("Cache-Control", "no-store")
+        .type("html")
+        .end(composeHtml(template, "", getPageMeta(req.originalUrl), { mutations: [], queries: [] }));
+      return;
+    }
     try {
       const { render } = await import(pathToFileURL(entryPath).href);
       const result = await render(
