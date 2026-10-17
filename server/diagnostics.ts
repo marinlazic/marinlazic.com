@@ -56,11 +56,17 @@ async function checkResend(): Promise<Check> {
         headers: { authorization: `Bearer ${ENV.resendApiKey}` },
       })
     );
-    if (res.status === 401) return { ok: false, detail: "key rejected (401)" };
-    if (res.status === 403) return { ok: true, detail: "key accepted (sending only, cannot list domains)" };
+    const body: any = await res.json().catch(() => null);
+    // A key restricted to sending cannot list domains. That is the normal
+    // setup for this site, and the key is proven by every email it sends.
+    if (res.status === 401 || res.status === 403) {
+      const name = String(body?.name || "");
+      if (name === "restricted_api_key") return { ok: true, detail: "key accepted (sending only)" };
+      return { ok: false, detail: `key rejected (${res.status}${name ? " " + name : ""})` };
+    }
     if (!res.ok) return { ok: false, detail: `unexpected status ${res.status}` };
-    const body: any = await res.json();
-    const fromDomain = ENV.resendFromEmail.split("@")[1]?.toLowerCase() ?? "";
+    const address = ENV.resendFromEmail.match(/<([^>]+)>/)?.[1] ?? ENV.resendFromEmail;
+    const fromDomain = address.trim().split("@")[1]?.toLowerCase() ?? "";
     const domains: any[] = body?.data ?? [];
     const match = domains.find(d => String(d.name).toLowerCase() === fromDomain);
     if (!match) return { ok: false, detail: `key works but the from domain ${fromDomain} is not in Resend` };
