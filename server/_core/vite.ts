@@ -101,14 +101,24 @@ function resolveDist(): string {
     path.resolve(import.meta.dirname, ".."),
   ].filter((p): p is string => Boolean(p));
   for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, "template.html"))) return dir;
     if (fs.existsSync(path.join(dir, "public", "index.html"))) return dir;
   }
   return candidates[1];
 }
 
+// The HTML template is moved out of dist/public after the build (see
+// scripts/postbuild.mjs) so Vercel's CDN cannot serve it as a static home page.
+function resolveTemplate(dist: string): string {
+  const moved = path.join(dist, "template.html");
+  if (fs.existsSync(moved)) return moved;
+  return path.join(dist, "public", "index.html");
+}
+
 export function serveStatic(app: Express) {
   const dist = resolveDist();
   const distPath = path.join(dist, "public");
+  const templatePath = resolveTemplate(dist);
   const entryPath = path.join(dist, "server-ssr", "entry-server.js");
   app.use(normalizePublicUrl);
   app.use(
@@ -124,10 +134,7 @@ export function serveStatic(app: Express) {
     })
   );
   app.use("*", async (req, res) => {
-    const template = await fs.promises.readFile(
-      path.join(distPath, "index.html"),
-      "utf-8"
-    );
+    const template = await fs.promises.readFile(templatePath, "utf-8");
     try {
       const { render } = await import(pathToFileURL(entryPath).href);
       const result = await render(

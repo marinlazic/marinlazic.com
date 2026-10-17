@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "tsx scripts/migrate.ts && tsx scripts/generate-seo.ts && NODE_ENV=production vite build && NODE_ENV=production vite build --config vite.config.ssr.ts && pnpm run build:server",
+    "build": "tsx scripts/migrate.ts && tsx scripts/generate-seo.ts && NODE_ENV=production vite build && NODE_ENV=production vite build --config vite.config.ssr.ts && pnpm run build:server && node scripts/postbuild.mjs",
     "start": "NODE_ENV=production tsx server/_core/index.ts",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
