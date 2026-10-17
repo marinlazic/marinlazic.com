@@ -50,13 +50,13 @@ export const informationPages: Record<string, InformationPageConfig> = {
     title: "About Marin Lazic | Strength, health and performance coaching",
     h1: "About Marin Lazic",
     description:
-      "Marin Lazic is a Sydney-based health and performance coach, founder of Otion, and Strength and Conditioning Coach for the Australian Men's Water Polo team.",
+      "Marin Lazic is a Sydney based health and performance coach, founder of Otion, and Strength and Conditioning Coach for the Australian Men's Water Polo team.",
     label: "About",
     sections: [
       {
         heading: "Work",
         content: [
-          "Marin Lazic is a Sydney-based health and performance coach. He is the Strength and Conditioning Coach for the Australian Men's Water Polo team, with the Paris 2024 Olympic campaign behind him and the Los Angeles 2028 campaign ahead.",
+          "Marin Lazic is a Sydney based health and performance coach. He is the Strength and Conditioning Coach for the Australian Men's Water Polo team, with the Paris 2024 Olympic campaign behind him and the Los Angeles 2028 campaign ahead.",
           "He also founded Otion, a health and performance business that works with people and teams on practical training, recovery and health behaviours.",
         ],
       },
@@ -75,7 +75,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
       {
         heading: "Coaching",
         content: [
-          "The work brings strength and conditioning practice into a personal health and performance context. Training, recovery, sleep, aerobic work and day-to-day habits are considered together, then adjusted to the person's goals and circumstances.",
+          "The work brings strength and conditioning practice into a personal health and performance context. Training, recovery, sleep, aerobic work and day to day habits are considered together, then adjusted to the person's goals and circumstances.",
           "Coaching is not medical care. Marin does not diagnose conditions, prescribe treatment or replace a doctor, physiotherapist, dietitian or other qualified clinician. New, severe or persistent symptoms should be discussed with an appropriate health professional.",
         ],
       },
@@ -100,14 +100,14 @@ export const informationPages: Record<string, InformationPageConfig> = {
     title: "Executive health and performance coaching | Marin Lazic",
     h1: "Executive health and performance",
     description:
-      "One-to-one health and performance coaching for executives, based around training, recovery, sleep and aerobic fitness.",
+      "One to one health and performance coaching for executives, based around training, recovery, sleep and aerobic fitness.",
     label: "Executive health and performance",
     sections: [
       {
-        heading: "One-to-one coaching",
+        heading: "One to one coaching",
         content: [
-          "This is one-to-one health and performance coaching for executives who want a clear training and recovery plan that fits the reality of work and life.",
-          "Coaching is $2,400 AUD per month with a minimum three-month commitment. The programme is agreed after an application, so the scope is appropriate for the person and their context.",
+          "This is one to one health and performance coaching for executives who want a clear training and recovery plan that fits the reality of work and life.",
+          "Coaching is $2,400 AUD per month with a minimum three month commitment. The programme is agreed after an application, so the scope is appropriate for the person and their context.",
         ],
       },
       {
@@ -152,7 +152,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
         heading: "Privacy and scope",
         content: [
           "Personal health information is not shared with an employer. Corporate work is education and behaviour support, not individual medical assessment or treatment.",
-          "Use the contact form to begin an enquiry. Follow-up is by email once the enquiry is received.",
+          "Use the contact form to begin an enquiry. Follow up is by email once the enquiry is received.",
         ],
       },
     ],
@@ -162,16 +162,16 @@ export const informationPages: Record<string, InformationPageConfig> = {
     },
   },
   "/training-for-long-term-health": {
-    title: "Training for long-term health | Marin Lazic",
-    h1: "Training for long-term health",
+    title: "Training for long term health | Marin Lazic",
+    h1: "Training for long term health",
     description:
       "An educational hub on strength, aerobic fitness, recovery and sleep for health across the years.",
-    label: "Training for long-term health",
+    label: "Training for long term health",
     sections: [
       {
         heading: "A practical education hub",
         content: [
-          "This is an educational hub for training that supports health over time. It covers strength, aerobic fitness, recovery and sleep using evidence-informed ideas that can be adapted to real life.",
+          "This is an educational hub for training that supports health over time. It covers strength, aerobic fitness, recovery and sleep using evidence informed ideas that can be adapted to real life.",
           "Fitness supports healthy ageing, but no training plan can promise a particular lifespan or prevent illness. Match training to your starting point, history and current health, and seek clinical advice where needed.",
         ],
       },
@@ -199,10 +199,10 @@ export const informationPages: Record<string, InformationPageConfig> = {
               "An example framework that combines strength, cardio and recovery.",
           },
           {
-            label: "How to do a chin-up",
+            label: "How to do a chin up",
             href: "/insights/how-to-do-a-chin-up",
             description:
-              "A progression for building a chin-up from your current level.",
+              "A progression for building a chin up from your current level.",
           },
           {
             label: "Improve sleep quality",

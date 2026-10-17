@@ -80,7 +80,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     title: "Training for Long-Term Health | Marin Lazic",
     description:
       "Practical guides to strength, aerobic fitness, VO2 max, sleep and sustainable training. Evidence and clear limits, without lifespan promises.",
-    label: "Training for long-term health",
+    label: "Training for long term health",
     modified: PREVIOUS_CONTENT_DATE,
   },
   "/insights": {
@@ -108,14 +108,14 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/apply": {
     title: "Apply for Executive Performance Coaching | Marin Lazic",
     description:
-      "Apply for 1:1 coaching with Marin Lazic. $2,400 AUD per month, minimum 3 months. Personal email follow-up, no sales call required.",
+      "Apply for 1:1 coaching with Marin Lazic. $2,400 AUD per month, minimum 3 months. Personal email follow up, no sales call required.",
     label: "Apply for coaching",
     modified: PREVIOUS_CONTENT_DATE,
   },
   "/assessment": {
     title: "Free Performance Assessment | Marin Lazic",
     description:
-      "Review your training, sleep, stress, nutrition and recovery. Get a coaching score and AI-assisted report from your answers, not a medical diagnosis.",
+      "Review your training, sleep, stress, nutrition and recovery. Get a coaching score and AI assisted report from your answers, not a medical diagnosis.",
     label: "Performance assessment",
     modified: PREVIOUS_CONTENT_DATE,
   },
@@ -320,7 +320,7 @@ export function getPageMeta(url: string): HeadMeta {
     };
   const head: HeadMeta = {
     title: record
-      ? `${record.title} | ${SITE_NAME}`
+      ? `${record.seoTitle ?? record.title} | ${SITE_NAME}`
       : resource
         ? `${resource.title} | ${SITE_NAME}`
         : page!.title,

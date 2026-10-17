@@ -176,7 +176,7 @@ export default function Apply() {
             Apply for Coaching
           </h1>
           <p className="text-base text-black/50 leading-relaxed mb-8 max-w-xl">
-            Short application. Personal email follow-up.
+            Short application. Personal email follow up.
           </p>
 
           {/* Proof Block */}

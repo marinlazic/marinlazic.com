@@ -51,11 +51,11 @@ Coaching is education and training support. It is not medical diagnosis or treat
 
 ## Articles
 
-- [Creatine for Executives: A Practical, Evidence-Based Guide](https://marinlazic.com/insights/creatine-complete-guide-for-executives)
+- [Creatine for Executives: A Practical, Evidence Based Guide](https://marinlazic.com/insights/creatine-complete-guide-for-executives)
 - [How to Improve Sleep Quality: Practical Steps That Help](https://marinlazic.com/insights/how-to-improve-sleep-quality)
-- [How to Boost Your HRV: A Practical, Evidence-Aware Guide](https://marinlazic.com/insights/how-to-boost-your-hrv)
+- [How to Boost Your HRV: A Practical, Evidence Aware Guide](https://marinlazic.com/insights/how-to-boost-your-hrv)
 - [How to Lose Fat Without Losing Performance](https://marinlazic.com/insights/how-to-lose-fat-without-losing-performance)
-- [How to Do a Chin-Up: A Practical Progression](https://marinlazic.com/insights/how-to-do-a-chin-up)
+- [How to Do a Chin Up: A Practical Progression](https://marinlazic.com/insights/how-to-do-a-chin-up)
 - [VO2 Max for Executives: A Useful Fitness and Longevity Metric](https://marinlazic.com/insights/vo2-max-for-executives-longevity-metric)
 - [A Founder's Guide to a Practical Stress Management System](https://marinlazic.com/insights/founder-guide-stress-management-system)
 - [Zone 2 Training for Busy Professionals](https://marinlazic.com/insights/zone-2-training-busy-professionals)
@@ -104,24 +104,24 @@ A: Otion is Marin Lazic's health and performance company, founded in 2023. It de
 
 ## Article reference content
 
-### Creatine for Executives: A Practical, Evidence-Based Guide
+### Creatine for Executives: A Practical, Evidence Based Guide
 
 Source: https://marinlazic.com/insights/creatine-complete-guide-for-executives
 Published: 2026-03-14. Revised: 2026-10-14.
 
 Creatine monohydrate at 3 to 5 grams a day is the best studied supplement in sport. It supports strength training, and the evidence on thinking and memory is early but promising.
 
-Creatine is a compound stored mainly in muscle, with smaller stores in the brain. Phosphocreatine helps regenerate adenosine triphosphate (ATP) during short, demanding efforts. Food provides creatine, especially meat and fish, and the body also makes it. Supplementation can raise muscle creatine stores and support repeated high-intensity exercise. It is useful, but it is not a substitute for sleep, food, training or medical care.
+Creatine is a compound stored mainly in muscle, with smaller stores in the brain. Phosphocreatine helps regenerate adenosine triphosphate (ATP) during short, demanding efforts. Food provides creatine, especially meat and fish, and the body also makes it. Supplementation can raise muscle creatine stores and support repeated high intensity exercise. It is useful, but it is not a substitute for sleep, food, training or medical care.
 
 ## What does the evidence say creatine does?
 
-Creatine monohydrate is the most studied form. Research supports benefits for repeated high-intensity exercise, strength and training adaptations when it is paired with suitable training. The [International Society of Sports Nutrition position stand](https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/) describes creatine monohydrate as well studied and reports that muscle stores can be maintained with a daily dose after saturation.
+Creatine monohydrate is the most studied form. Research supports benefits for repeated high intensity exercise, strength and training adaptations when it is paired with suitable training. The [International Society of Sports Nutrition position stand](https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/) describes creatine monohydrate as well studied and reports that muscle stores can be maintained with a daily dose after saturation.
 
 Cognitive findings are promising but less settled than the exercise evidence. Some studies report benefits in memory or demanding tasks, with effects that may depend on diet, age, sleep loss and the task being tested. A review of common creatine questions notes that the evidence is mixed across outcomes and groups, so creatine should not be presented as a guaranteed focus aid or a treatment for fatigue. Better sleep remains the first response to regular sleep restriction.
 
 ## Which creatine should you buy?
 
-Choose plain creatine monohydrate from a reputable seller. A brand does not need to be German-made to be suitable, and country of origin alone does not prove purity or risk. Avoid claims that one country is automatically safe and another is automatically contaminated.
+Choose plain creatine monohydrate from a reputable seller. A brand does not need to be German made to be suitable, and country of origin alone does not prove purity or risk. Avoid claims that one country is automatically safe and another is automatically contaminated.
 
 Quality control matters because supplement manufacturing and labelling standards vary. In a survey of 33 products sold in Italy and produced in several countries, [Moret and colleagues](https://doi.org/10.1016/j.foodchem.2010.12.028) found creatinine above 100 mg/kg in 44% of samples. About 15% had detectable dihydro-1,3,5-triazine, with a maximum of 8.0 mg/kg, and some had dicyandiamide above 50 mg/kg. This study does not justify claims about all products from a particular country, and it does not establish that a specific brand is unsafe today.
 
@@ -130,9 +130,9 @@ Look for:
 - A short ingredient list containing creatine monohydrate.
 - A lot or batch number and a clear manufacturer or importer.
 - Accessible testing or quality documentation where available.
-- For tested athletes, a recognised programme such as [Informed Sport](https://sport.wetestyoutrust.com/), which says it tests every certified sports-supplement batch for banned substances before release. This reduces one category of risk. It is not a guarantee of performance or medical safety.
+- For tested athletes, a recognised programme such as [Informed Sport](https://sport.wetestyoutrust.com/), which says it tests every certified sports supplement batch for banned substances before release. This reduces one category of risk. It is not a guarantee of performance or medical safety.
 
-Third-party testing is a useful quality signal, not proof that one trade-marked source is the only suitable choice.
+Third party testing is a useful quality signal, not proof that one trademarked source is the only suitable choice.
 
 ## How much creatine should you take and when?
 
@@ -144,7 +144,7 @@ Drink to thirst and maintain normal hydration. Creatine can increase water held 
 
 ## Is creatine safe, and who should check with a doctor first?
 
-Evidence in healthy adults generally finds no harmful change in kidney function at recommended doses, but that does not make creatine suitable for everyone. Speak with a GP or pharmacist before using it if you have kidney disease, abnormal kidney tests, are pregnant or breastfeeding, are under 18, have a relevant medical condition, or take medicines that may affect kidney function or fluid balance. A clinician may want baseline or follow-up tests. Tell them that you use creatine, because creatine can affect blood creatinine readings without necessarily indicating a loss of kidney function.
+Evidence in healthy adults generally finds no harmful change in kidney function at recommended doses, but that does not make creatine suitable for everyone. Speak with a GP or pharmacist before using it if you have kidney disease, abnormal kidney tests, are pregnant or breastfeeding, are under 18, have a relevant medical condition, or take medicines that may affect kidney function or fluid balance. A clinician may want baseline or follow up tests. Tell them that you use creatine, because creatine can affect blood creatinine readings without necessarily indicating a loss of kidney function.
 
 Do not use this article to diagnose symptoms or replace prescribed treatment. Seek clinical care for ongoing exhaustion, mood changes, sleep problems, breathlessness, chest symptoms, marked swelling or other new symptoms.
 
@@ -156,7 +156,7 @@ Creatine may help some people with demanding cognitive work, but the size and re
 
 1. Choose plain creatine monohydrate with clear batch information.
 2. Start with 3 grams daily for a week, then consider 5 grams if it suits you and is appropriate for your circumstances.
-3. Keep the timing simple and record tolerance, training and body-weight changes.
+3. Keep the timing simple and record tolerance, training and body weight changes.
 4. Review the plan with a clinician when health conditions or medicines are relevant.
 
 For related recovery and training context, see [how to boost your HRV](/insights/how-to-boost-your-hrv) and the [Performance Assessment](/assessment). You can also explore the wider [insights](/insights) library.
@@ -170,7 +170,7 @@ For related recovery and training context, see [how to boost your HRV](/insights
 
 ## Related resources
 
-- [High-protein meal ideas](/resources/protein)
+- [High protein meal ideas](/resources/protein)
 
 
 ### How to Improve Sleep Quality: Practical Steps That Help
@@ -206,11 +206,11 @@ A strict screen ban is not required. Content, brightness, timing and sensitivity
 
 ### 4. Check caffeine, alcohol and exercise
 
-Caffeine can remain active for several hours, and sensitivity varies. If sleep is difficult, test moving coffee, energy drinks and pre-workout products earlier in the day. Alcohol may make you drowsy at first while disturbing sleep later. Large meals close to bed can also be uncomfortable.
+Caffeine can remain active for several hours, and sensitivity varies. If sleep is difficult, test moving coffee, energy drinks and pre workout products earlier in the day. Alcohol may make you drowsy at first while disturbing sleep later. Large meals close to bed can also be uncomfortable.
 
 Regular exercise may help sleep. Finish hard training early enough that it does not leave you overheated or alert at bedtime. A short walk, gentle stretching or easy breathing can suit the final part of the evening.
 
-### 5. Build a low-stimulation wind-down
+### 5. Build a low stimulation wind down
 
 Use the final 30 to 60 minutes for a repeatable routine. Reading, a shower, light stretching, music or writing down tomorrow's tasks can help create a boundary around the day. If you are awake and frustrated, get out of bed for a quiet activity in low light. Return when sleepy rather than turning the bed into a place for worry.
 
@@ -218,13 +218,13 @@ Slow breathing can be a reasonable relaxation exercise. In a randomised study, f
 
 ## How should you track sleep without chasing scores?
 
-For two weeks, record bedtime, estimated time asleep, wake time, night waking, naps, caffeine, alcohol, exercise and how you felt during the day. Compare weekly patterns rather than reacting to one night. A wearable can add context, but its sleep-stage estimates are less reliable than a clinical sleep study. Focus on function: alertness, mood, concentration and whether sleep feels refreshing.
+For two weeks, record bedtime, estimated time asleep, wake time, night waking, naps, caffeine, alcohol, exercise and how you felt during the day. Compare weekly patterns rather than reacting to one night. A wearable can add context, but its sleep stage estimates are less reliable than a clinical sleep study. Focus on function: alertness, mood, concentration and whether sleep feels refreshing.
 
 A template or session example in this article is **illustrative, not a real client result**. Your response may be different.
 
 ## When should you see a doctor about sleep?
 
-Speak with a GP or qualified health professional if sleep problems persist, affect daily life, or occur with loud snoring, gasping, witnessed pauses in breathing, morning headaches, restless legs or severe daytime sleepiness. These signs can occur with sleep disorders that need assessment. Do not use sleep hygiene alone to manage suspected sleep apnoea, persistent insomnia, unusual movements or medication-related sleep problems. The [CDC advises speaking with a healthcare provider for regular sleep problems](https://www.cdc.gov/sleep/about/index.html).
+Speak with a GP or qualified health professional if sleep problems persist, affect daily life, or occur with loud snoring, gasping, witnessed pauses in breathing, morning headaches, restless legs or severe daytime sleepiness. These signs can occur with sleep disorders that need assessment. Do not use sleep hygiene alone to manage suspected sleep apnoea, persistent insomnia, unusual movements or medication related sleep problems. The [CDC advises speaking with a healthcare provider for regular sleep problems](https://www.cdc.gov/sleep/about/index.html).
 
 Breathing exercises should be comfortable. Stop if you feel faint, distressed or short of breath. Seek urgent care for severe or sudden breathing difficulty, chest pain or other emergency symptoms.
 
@@ -244,7 +244,7 @@ Start with one or two changes: a stable wake time, less evening light, earlier c
 - [The sleep checklist](/resources/sleep)
 
 
-### How to Boost Your HRV: A Practical, Evidence-Aware Guide
+### How to Boost Your HRV: A Practical, Evidence Aware Guide
 
 Source: https://marinlazic.com/insights/how-to-boost-your-hrv
 Published: 2026-03-07. Revised: 2026-10-14.
@@ -267,21 +267,21 @@ Give sleep a consistent opportunity and keep your wake time reasonably stable. A
 
 A few minutes of slow breathing can change HRV during the session. You could try a gentle inhale for four seconds and exhale for six, without straining or holding your breath. Stop if you feel dizzy, breathless or distressed.
 
-Longer-term effects are less certain than the immediate change. In a randomised month-long study, five minutes of daily breathing improved mood and reduced respiratory rate, but it did **not** significantly change HRV, resting heart rate or sleep. See the [published trial](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/) for the full results. Treat breathing as a low-risk practice that may help calm you, not as a guaranteed way to raise your baseline HRV.
+Longer term effects are less certain than the immediate change. In a randomised month long study, five minutes of daily breathing improved mood and reduced respiratory rate, but it did **not** significantly change HRV, resting heart rate or sleep. See the [published trial](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/) for the full results. Treat breathing as a low risk practice that may help calm you, not as a guaranteed way to raise your baseline HRV.
 
 ### 3. Build a steady aerobic base
 
-Regular walking, cycling, swimming or rowing can support cardiovascular fitness. Use a pace at which you can speak in full sentences, then increase duration gradually. Public health activity guidance and your current fitness, injuries and medical history should shape the plan. There is no universal “Zone 2” heart-rate number that fits everyone.
+Regular walking, cycling, swimming or rowing can support cardiovascular fitness. Use a pace at which you can speak in full sentences, then increase duration gradually. Public health activity guidance and your current fitness, injuries and medical history should shape the plan. There is no universal “Zone 2” heart rate number that fits everyone.
 
 ### 4. Manage total load, not one score
 
 Training, work pressure, travel, illness and reduced sleep can all affect recovery. If your HRV trend is lower than usual and you also feel unwell or unusually fatigued, choose an easier session, a walk or rest. Do not follow a rigid percentage rule. Consider your symptoms, performance, resting heart rate and recent workload together.
 
-Burnout is not simply a low-HRV state. The [World Health Organization defines burn-out](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases) as an occupational phenomenon linked to chronic workplace stress, with exhaustion, mental distance or cynicism about work, and reduced professional efficacy. Persistent low mood, anxiety, severe exhaustion, substance reliance or thoughts of self-harm need qualified healthcare support rather than a wearable protocol.
+Burnout is not simply a low HRV state. The [World Health Organization defines burnout](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases) as an occupational phenomenon linked to chronic workplace stress, with exhaustion, mental distance or cynicism about work, and reduced professional efficacy. Persistent low mood, anxiety, severe exhaustion, substance reliance or thoughts of self harm need qualified healthcare support rather than a wearable protocol.
 
 ### 5. Be realistic about alcohol and stimulants
 
-Alcohol can disrupt sleep and may affect overnight HRV, but the size and duration of the effect vary with dose, timing and the person. Instead of promising a fixed percentage change, compare your own readings after alcohol-free periods and record what else changed. Keep caffeine earlier if it affects your sleep. If cutting down alcohol is difficult, speak with a GP or alcohol and other drug service.
+Alcohol can disrupt sleep and may affect overnight HRV, but the size and duration of the effect vary with dose, timing and the person. Instead of promising a fixed percentage change, compare your own readings after alcohol free periods and record what else changed. Keep caffeine earlier if it affects your sleep. If cutting down alcohol is difficult, speak with a GP or alcohol and other drug service.
 
 ## How should you track HRV week to week?
 
@@ -298,7 +298,7 @@ For a structured review of training, sleep and recovery, use the [Performance As
 - [An Overview of Heart Rate Variability Metrics and Norms](https://pmc.ncbi.nlm.nih.gov/articles/PMC5624990/)
 - [Heart Rate Variability Measurement through a Smart Wearable Device](https://pmc.ncbi.nlm.nih.gov/articles/PMC10742885/)
 - [The effects of breathwork on stress, mood and physiological measures](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
-- [WHO: Burn-out as an occupational phenomenon](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases)
+- [WHO: Burnout as an occupational phenomenon](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases)
 
 ## Related resources
 
@@ -318,7 +318,7 @@ Fat loss requires an energy deficit over time. The eating pattern can vary, but 
 
 ## How big should the calorie deficit be?
 
-Estimate your usual intake and body-weight trend before changing anything. Tracking food, drinks, activity and sleep for several days can reveal where small changes are realistic. Apps such as [Cronometer](https://cronometer.com/) can help, although their calorie estimates are still estimates.
+Estimate your usual intake and body weight trend before changing anything. Tracking food, drinks, activity and sleep for several days can reveal where small changes are realistic. Apps such as [Cronometer](https://cronometer.com/) can help, although their calorie estimates are still estimates.
 
 Choose a small change that you can maintain. This may mean smaller portions, fewer liquid calories, more filling foods, or a little more walking. A gradual rate is generally easier to maintain than rapid loss. The [CDC guidance on weight loss](https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html) also notes that medicines, health conditions, stress, hormones and age can affect weight management.
 
@@ -326,13 +326,13 @@ Use a weekly average of body weight, plus waist measurements and gym performance
 
 ## How much protein and carbohydrate do you need while losing fat?
 
-Protein helps support muscle protein synthesis and can make a calorie-controlled diet easier to manage. For many people who train, **1.4 to 2.0 grams of protein per kilogram of body weight per day** is a reasonable evidence-informed range. Higher intakes may be useful in some hypocaloric, resistance-trained settings, but they are not mandatory for everyone. These figures come from the [International Society of Sports Nutrition position stand on protein and exercise](https://pubmed.ncbi.nlm.nih.gov/28642676/).
+Protein helps support muscle protein synthesis and can make a calorie controlled diet easier to manage. For many people who train, **1.4 to 2.0 grams of protein per kilogram of body weight per day** is a reasonable evidence informed range. Higher intakes may be useful in some hypocaloric, resistance trained settings, but they are not mandatory for everyone. These figures come from the [International Society of Sports Nutrition position stand on protein and exercise](https://pubmed.ncbi.nlm.nih.gov/28642676/).
 
 Spread protein across meals that suit your routine. Meat, fish, eggs, yoghurt, tofu, beans and milk are useful options. Keep carbohydrate around demanding training when it helps you train well. Include vegetables, fruit, wholegrains and fats you enjoy.
 
 ## Should you keep lifting while losing fat?
 
-Resistance training gives your body a reason to retain muscle while weight is coming down. Keep familiar lifts where possible, and use a range of movements that cover the major muscle groups. Squats, hinges, presses, rows and [chin-ups](/insights/how-to-do-a-chin-up) are examples, not a compulsory list.
+Resistance training gives your body a reason to retain muscle while weight is coming down. Keep familiar lifts where possible, and use a range of movements that cover the major muscle groups. Squats, hinges, presses, rows and [chin ups](/insights/how-to-do-a-chin-up) are examples, not a compulsory list.
 
 Train two to four times per week if that fits your schedule. Keep effort reasonably high, but adjust sets, repetitions or exercise choices if recovery falls. Do not force planned numbers when technique is deteriorating, pain is increasing, or sleep and energy are poor. The right training load depends on your history, schedule and current health.
 
@@ -340,19 +340,19 @@ Cardio can support health and energy expenditure. Walking, cycling, swimming and
 
 ## Why do sleep and stress matter for fat loss?
 
-Aim for a regular sleep routine and enough time in bed for you to function well. The [CDC weight-management guidance](https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html) includes sleep and stress management as part of a healthy approach. Poor sleep can affect appetite, mood and training, but individual responses differ. Avoid claims that one breathing routine or sleep change will produce a fixed percentage improvement.
+Aim for a regular sleep routine and enough time in bed for you to function well. The [CDC weight management guidance](https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html) includes sleep and stress management as part of a healthy approach. Poor sleep can affect appetite, mood and training, but individual responses differ. Avoid claims that one breathing routine or sleep change will produce a fixed percentage improvement.
 
-Short walks, planned breaks, daylight, enjoyable movement and slow breathing may help some people manage stress. Wearable HRV readings can be useful for observing **your own** device-specific trend over time. They are not a diagnosis and cannot provide certain readiness, recovery or health conclusions. A cold plunge has no guaranteed fat-loss, recovery or performance outcome.
+Short walks, planned breaks, daylight, enjoyable movement and slow breathing may help some people manage stress. Wearable HRV readings can be useful for observing **your own** device specific trend over time. They are not a diagnosis and cannot provide certain readiness, recovery or health conclusions. A cold plunge has no guaranteed fat loss, recovery or performance outcome.
 
 ## Should you take creatine while losing fat?
 
-Creatine monohydrate can improve high-intensity training capacity for some people. A common adult maintenance approach is **3 to 5 grams per day**, if it is suitable for you. A loading phase is optional, not compulsory. Choose a product with clear ingredient information and, where possible, independent batch testing. Supplement quality can vary.
+Creatine monohydrate can improve high intensity training capacity for some people. A common adult maintenance approach is **3 to 5 grams per day**, if it is suitable for you. A loading phase is optional, not compulsory. Choose a product with clear ingredient information and, where possible, independent batch testing. Supplement quality can vary.
 
 Creatine may increase scale weight through water stored in muscle. That is different from fat gain. Evidence for cognitive benefits is still developing, and effects may depend on the person and situation. Creatine is not a guarantee of better focus or performance. People with kidney disease, pregnancy, relevant medical conditions, or medicines that affect kidney function should speak with a clinician before using it. The [ISSN creatine position stand](https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/) reviews safety evidence in healthy populations and the need for clinical context.
 
 ## What does a fat loss training day look like?
 
-The following is an **illustrative template, not a real client result**: include protein-rich foods and produce across the day, keep carbohydrate around hard training, and use controlled sets of a squat, press, row, hinge and chin-up variation.
+The following is an **illustrative template, not a real client result**: include protein rich foods and produce across the day, keep carbohydrate around hard training, and use controlled sets of a squat, press, row, hinge and chin up variation.
 
 ## When should you get professional help with fat loss?
 
@@ -368,17 +368,17 @@ Track a few useful measures, make one change at a time, and allow enough time to
 
 ## Related resources
 
-- [High-protein meal ideas](/resources/protein)
+- [High protein meal ideas](/resources/protein)
 
 
-### How to Do a Chin-Up: A Practical Progression From Your First Rep to More Reps
+### How to Do a Chin Up: A Practical Progression From Your First Rep to More Reps
 
 Source: https://marinlazic.com/insights/how-to-do-a-chin-up
 Published: 2026-02-28. Revised: 2026-10-14.
 
 Most adults can get their first chin up in 8 to 12 weeks with three short sessions a week. The route is dead hangs, then rows, then negatives, then the first rep.
 
-A chin-up uses an underhand grip with palms facing you. It trains the lats, biceps, forearms and trunk. The timeline varies with body mass, training history, grip strength, shoulder comfort and practice. Treat this plan as a starting point, not a promise.
+A chin up uses an underhand grip with palms facing you. It trains the lats, biceps, forearms and trunk. The timeline varies with body mass, training history, grip strength, shoulder comfort and practice. Treat this plan as a starting point, not a promise.
 
 ## How do you set up for a chin up?
 
@@ -414,7 +414,7 @@ Do two or three sets of 4 to 8 repetitions. Reduce assistance gradually, without
 
 ### 4. Test an unassisted rep
 
-After your warm-up, try one unassisted repetition while fresh. Keep the attempt clean. If you miss, return to assisted work rather than repeating maximal attempts until your grip or shoulders are tired.
+After your warm up, try one unassisted repetition while fresh. Keep the attempt clean. If you miss, return to assisted work rather than repeating maximal attempts until your grip or shoulders are tired.
 
 Once you have one controlled rep, use small sets. For example, you might perform several sets of one repetition, then add a repetition to one set when that feels manageable. Rest as needed. The example is **illustrative, not a real client result or a guaranteed programme**.
 
@@ -422,13 +422,13 @@ Once you have one controlled rep, use small sets. For example, you might perform
 
 Progressive resistance training is the basis for getting stronger. The American College of Sports Medicine position stand recommends that programme choices reflect your goal, physical capacity and training status, rather than a single compulsory set, rep or frequency rule. [Read the ACSM position stand](https://pubmed.ncbi.nlm.nih.gov/19204579/).
 
-For chin-ups, progress one variable at a time. You could use less band assistance, add one controlled repetition, add a set, or improve your range. Keep one or two repetitions in reserve when technique starts to deteriorate. When you can perform several sets of controlled repetitions, a small amount of added load may be appropriate. Build it gradually and keep the same standards for the start, finish and lowering phase.
+For chin ups, progress one variable at a time. You could use less band assistance, add one controlled repetition, add a set, or improve your range. Keep one or two repetitions in reserve when technique starts to deteriorate. When you can perform several sets of controlled repetitions, a small amount of added load may be appropriate. Build it gradually and keep the same standards for the start, finish and lowering phase.
 
 Record your grip, assistance, repetitions and any symptoms. Compare your own sessions rather than treating a device score or a single workout as a diagnosis of readiness.
 
 ## What if chin ups hurt your elbows or shoulders?
 
-Muscle effort and mild next-day soreness can occur. Sharp pain, increasing joint pain, numbness, unusual weakness or a feeling of instability is a reason to stop and seek assessment from a qualified health professional. Stop exercise and seek prompt medical help for chest pain, unusual shortness of breath or light-headedness. [Harvard Health lists these as warning signs that should not be pushed through](https://www.health.harvard.edu/pain/safe-exercise-know-the-warning-signs-of-pushing-too-hard).
+Muscle effort and mild next day soreness can occur. Sharp pain, increasing joint pain, numbness, unusual weakness or a feeling of instability is a reason to stop and seek assessment from a qualified health professional. Stop exercise and seek prompt medical help for chest pain, unusual shortness of breath or light headedness. [Harvard Health lists these as warning signs that should not be pushed through](https://www.health.harvard.edu/pain/safe-exercise-know-the-warning-signs-of-pushing-too-hard).
 
 If you have a recent shoulder, elbow, wrist or neck injury, a diagnosed condition, or medicines that affect exercise tolerance, ask your doctor or physiotherapist how to modify the movement. This article is general education, not an individual diagnosis or treatment plan.
 
@@ -441,7 +441,7 @@ For related training context, read the [performance insights](/insights). If you
 
 ## Related resources
 
-- [Low-effort movement practice](/resources/groove)
+- [Low effort movement practice](/resources/groove)
 
 
 ### VO2 Max for Executives: A Useful Fitness and Longevity Metric
@@ -455,7 +455,7 @@ VO2 max is the strongest single fitness predictor of how long you live. Two to t
 
 VO2 max, or maximal oxygen uptake, measures how much oxygen your body can use during hard exercise. It is reported in millilitres of oxygen per kilogram of body weight per minute (ml/kg/min).
 
-Higher cardiorespiratory fitness is associated with lower long-term mortality. A large retrospective study of 122,007 adults referred for treadmill testing found a graded association between fitness and survival. The study does not prove that raising VO2 max will extend an individual’s life, and its patients may not represent every executive or healthy adult. [Read the JAMA Network Open study](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2707428).
+Higher cardiorespiratory fitness is associated with lower long term mortality. A large retrospective study of 122,007 adults referred for treadmill testing found a graded association between fitness and survival. The study does not prove that raising VO2 max will extend an individual’s life, and its patients may not represent every executive or healthy adult. [Read the JAMA Network Open study](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2707428).
 
 VO2 max is useful data, not a verdict on your health, leadership or lifespan. There is no universal minimum score that guarantees longevity. Age, sex, training history, body size, health conditions and the test method all affect the result.
 
@@ -463,30 +463,30 @@ VO2 max is useful data, not a verdict on your health, leadership or lifespan. Th
 
 During exercise, your lungs take in oxygen, your heart and blood vessels deliver it, and your muscles use it to produce energy. VO2 max reflects the combined capacity of that system. It is one part of fitness. It does not directly diagnose stress, cognitive performance, burnout or disease.
 
-A higher result can make everyday aerobic work feel easier, but it does not guarantee better concentration, stress tolerance or work output. Sleep, nutrition, strength, workload and mental health also matter. For related strength work, see [how to do a chin-up](/insights/how-to-do-a-chin-up).
+A higher result can make everyday aerobic work feel easier, but it does not guarantee better concentration, stress tolerance or work output. Sleep, nutrition, strength, workload and mental health also matter. For related strength work, see [how to do a chin up](/insights/how-to-do-a-chin-up).
 
 ## What is a good VO2 max for your age?
 
 Laboratory testing with a graded exercise test and metabolic cart gives a direct measurement. A watch or other wearable usually provides an estimate based on heart rate, pace, power and personal data. These estimates can be useful for trends, but their absolute accuracy varies.
 
-Age-based tables can offer broad context, but they are not a personal prescription. Compare results from the same method, under similar conditions, and allow for normal day-to-day variation. A small change may reflect hydration, illness, heat, fatigue or device error.
+Age based tables can offer broad context, but they are not a personal prescription. Compare results from the same method, under similar conditions, and allow for normal day to day variation. A small change may reflect hydration, illness, heat, fatigue or device error.
 
 A field test such as a timed walk or run can be practical for some people. It is still an estimate and may be unsuitable if you have symptoms, an injury or limited exercise experience. A qualified clinician or exercise professional can help choose a test.
 
 ## How do you improve VO2 max around a busy schedule?
 
-There is no single session plan that suits every executive. Start with a workload you can repeat and progress gradually. The American Heart Association recommends at least 150 minutes of moderate aerobic activity per week, or 75 minutes of vigorous activity, plus muscle-strengthening work on at least two days. Build towards that level if you are currently inactive. [See the AHA adult activity recommendations](https://www.heart.org/en/healthy-living/fitness/fitness-basics/aha-recs-for-physical-activity-in-adults).
+There is no single session plan that suits every executive. Start with a workload you can repeat and progress gradually. The American Heart Association recommends at least 150 minutes of moderate aerobic activity per week, or 75 minutes of vigorous activity, plus muscle strengthening work on at least two days. Build towards that level if you are currently inactive. [See the AHA adult activity recommendations](https://www.heart.org/en/healthy-living/fitness/fitness-basics/aha-recs-for-physical-activity-in-adults).
 
 A simple structure is:
 
-1. **Easy aerobic work.** Use brisk walking, cycling, rowing, swimming or another low-impact option. You should be able to speak in short sentences. Begin with two sessions of 20 to 40 minutes and add time slowly.
+1. **Easy aerobic work.** Use brisk walking, cycling, rowing, swimming or another low impact option. You should be able to speak in short sentences. Begin with two sessions of 20 to 40 minutes and add time slowly.
 2. **Strength training.** Train major movement patterns two or more days each week. Strength supports daily function and helps you tolerate aerobic training, but it is not a prerequisite for a particular VO2 max score.
 3. **Harder intervals.** After several consistent weeks, consider one interval session each week. For example, complete four short efforts at a hard but controlled pace, with easy recovery between them. The duration and intensity should match your experience and health status. More intensity is not always better.
 4. **Recovery.** Keep easy days between demanding sessions. Check how you are sleeping, moving and feeling. Do not force a hard session when you are unwell or unusually fatigued.
 
 **Illustrative session example, not a real client result:** 10 minutes easy, four repetitions of 3 minutes at a hard controlled effort with 3 minutes easy between them, then 5 to 10 minutes easy. This is a template, not a guarantee of improvement. A coach or clinician should adapt it to your history and goals.
 
-Track attendance, duration, perceived effort and, where useful, a consistent test result. HRV and resting heart rate are best treated as within-person, device-specific trends. They do not provide a certain diagnosis of readiness or recovery. A cold plunge cannot guarantee a better HRV, VO2 max or work performance. For context on using HRV data, see [this HRV guide](/insights/how-to-boost-your-hrv).
+Track attendance, duration, perceived effort and, where useful, a consistent test result. HRV and resting heart rate are best treated as within person, device specific trends. They do not provide a certain diagnosis of readiness or recovery. A cold plunge cannot guarantee a better HRV, VO2 max or work performance. For context on using HRV data, see [this HRV guide](/insights/how-to-boost-your-hrv).
 
 ## Is VO2 max training safe for executives over 40?
 
@@ -494,7 +494,7 @@ Speak with a healthcare professional before vigorous training if you have known 
 
 ## What should you do first?
 
-VO2 max is a valuable measure of cardiorespiratory fitness and a sensible trend to monitor when the testing method is consistent. It is associated with long-term health outcomes, but it cannot predict an individual’s lifespan or replace clinical care.
+VO2 max is a valuable measure of cardiorespiratory fitness and a sensible trend to monitor when the testing method is consistent. It is associated with long term health outcomes, but it cannot predict an individual’s lifespan or replace clinical care.
 
 Start with regular aerobic movement, add strength work, introduce intensity gradually and protect recovery. If you want help interpreting your data and building a plan, [take the Performance Assessment](/assessment) or [apply for coaching](/apply). Any plan should be based on your history, current capacity, schedule and goals.
 
@@ -505,8 +505,8 @@ Start with regular aerobic movement, add strength work, introduce intensity grad
 
 ## Related resources
 
-- [4-week base-building example](/resources/engine)
-- [Training for long-term health](/training-for-long-term-health)
+- [4 week base building example](/resources/engine)
+- [Training for long term health](/training-for-long-term-health)
 
 
 ### A Founder’s Guide to a Practical Stress Management System
@@ -516,7 +516,7 @@ Published: 2025-11-28. Revised: 2026-10-14.
 
 Founders do not need a mindset. They need a review process: workload, sleep, training and recovery looked at together every week.
 
-Stress is a normal response to challenge. It becomes a concern when it stays high, feels overwhelming, or starts to affect sleep, mood, work or relationships. A useful system makes those signals easier to notice and gives you a few low-risk actions to try.
+Stress is a normal response to challenge. It becomes a concern when it stays high, feels overwhelming, or starts to affect sleep, mood, work or relationships. A useful system makes those signals easier to notice and gives you a few low risk actions to try.
 
 This guide is educational. It is not a diagnosis or a substitute for medical or mental health care.
 
@@ -526,11 +526,11 @@ Allostatic load describes the cumulative cost of adapting to repeated stress. It
 
 Heart rate variability (HRV) is the variation in time between heartbeats. It can provide context about autonomic regulation, but it is not a standalone stress biomarker. There is no agreed normal HRV range. A reading is most useful as a trend against your own baseline, collected with the same device and similar conditions. Wearable measurements can differ from ECG measurements, especially during movement or mental stress. [Research review on HRV applications in strength and conditioning](https://pmc.ncbi.nlm.nih.gov/articles/PMC11204851/)
 
-Use HRV as one input alongside sleep, resting heart rate, training load, mood and your own symptoms. A low reading does not prove that you are unwell, and a high reading does not prove that you are ready for hard work. Avoid using arbitrary cut-offs such as “below 40” or “above 70” as universal labels.
+Use HRV as one input alongside sleep, resting heart rate, training load, mood and your own symptoms. A low reading does not prove that you are unwell, and a high reading does not prove that you are ready for hard work. Avoid using arbitrary cut offs such as “below 40” or “above 70” as universal labels.
 
 ## What does a daily stress management system look like?
 
-### Morning check-in
+### Morning check in
 
 Take two minutes to record:
 
@@ -541,7 +541,7 @@ Take two minutes to record:
 
 If several signals look worse than usual, reduce optional intensity. Keep essential work, eat regularly, take a short walk and plan an earlier night. One difficult morning is information, not a verdict.
 
-### Micro-resets during work
+### Micro resets during work
 
 Choose one practice for one to five minutes:
 
@@ -550,7 +550,7 @@ Choose one practice for one to five minutes:
 - Relax your jaw and shoulders, then name the next small task.
 - Use a brief mindfulness or progressive muscle relaxation practice.
 
-In a randomised 28-day trial, brief breathing practices were linked with better daily mood and lower state anxiety. The study also reported improvements in respiratory measures. It did not find significant changes in HRV, resting heart rate or sleep, so do not promise a sleep or recovery result from a breathing drill. [Cell Reports Medicine trial](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
+In a randomised 28 day trial, brief breathing practices were linked with better daily mood and lower state anxiety. The study also reported improvements in respiratory measures. It did not find significant changes in HRV, resting heart rate or sleep, so do not promise a sleep or recovery result from a breathing drill. [Cell Reports Medicine trial](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
 
 ### Evening recovery
 
@@ -558,13 +558,13 @@ Keep the last part of the day quieter where possible. Dim lights, reduce stimula
 
 ### Movement and training
 
-Regular aerobic and resistance exercise can support physical and mental health. Start at a level you can repeat. Brisk walking, cycling, strength training and outdoor time are reasonable options. Zone 2 is a coaching label, not a universal prescription. You do not need to chase a particular heart-rate percentage to benefit from steady movement.
+Regular aerobic and resistance exercise can support physical and mental health. Start at a level you can repeat. Brisk walking, cycling, strength training and outdoor time are reasonable options. Zone 2 is a coaching label, not a universal prescription. You do not need to chase a particular heart rate percentage to benefit from steady movement.
 
 ## When is it burnout, and when should you see a professional?
 
 The World Health Organization classifies burnout as an occupational phenomenon, not a medical condition. It relates specifically to chronic workplace stress that has not been successfully managed and includes exhaustion, mental distance or cynicism about work, and reduced professional efficacy. [WHO definition of burnout](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases)
 
-Coaching habits may help with planning and behaviour. They cannot diagnose depression, anxiety, trauma, sleep disorders or other medical conditions. Speak with a GP or mental health professional if distress persists, functioning declines, sleep or appetite changes significantly, or you rely on alcohol or other substances to cope. Seek urgent help for thoughts of self-harm. In Australia, call 000 in an emergency, or contact [healthdirect](https://www.healthdirect.gov.au/stress) for health advice and referral options.
+Coaching habits may help with planning and behaviour. They cannot diagnose depression, anxiety, trauma, sleep disorders or other medical conditions. Speak with a GP or mental health professional if distress persists, functioning declines, sleep or appetite changes significantly, or you rely on alcohol or other substances to cope. Seek urgent help for thoughts of self harm. In Australia, call 000 in an emergency, or contact [healthdirect](https://www.healthdirect.gov.au/stress) for health advice and referral options.
 
 ## How do you run a weekly stress review?
 
@@ -598,31 +598,31 @@ Zone 2 is the pace where you can still speak in full sentences. Two 45 minute se
 
 ## Key takeaways
 
-Zone 2 is a useful name for steady, low-intensity aerobic exercise below the first lactate threshold. It can support cardiorespiratory fitness and provide an easier way to add regular movement. It is not proven to be the single best intensity for every goal. A 2025 review found that current evidence does not support Zone 2 as the optimal intensity for mitochondrial or fat-oxidation outcomes, especially when total training time is low. [Read the review on PubMed](https://pubmed.ncbi.nlm.nih.gov/40560504/)
+Zone 2 is a useful name for steady, low intensity aerobic exercise below the first lactate threshold. It can support cardiorespiratory fitness and provide an easier way to add regular movement. It is not proven to be the single best intensity for every goal. A 2025 review found that current evidence does not support Zone 2 as the optimal intensity for mitochondrial or fat oxidation outcomes, especially when total training time is low. [Read the review on PubMed](https://pubmed.ncbi.nlm.nih.gov/40560504/)
 
-Use Zone 2 as one part of a training week. Adults should aim for at least 150 minutes of moderate activity across the week, plus muscle-strengthening work on two or more days, according to the [World Health Organization](https://www.who.int/initiatives/behealthy/physical-activity). Any amount is better than none. Your best starting dose is one you can repeat without worsening pain, illness or excessive fatigue.
+Use Zone 2 as one part of a training week. Adults should aim for at least 150 minutes of moderate activity across the week, plus muscle strengthening work on two or more days, according to the [World Health Organization](https://www.who.int/initiatives/behealthy/physical-activity). Any amount is better than none. Your best starting dose is one you can repeat without worsening pain, illness or excessive fatigue.
 
 ## What should Zone 2 feel like?
 
-The label varies between heart-rate systems. Fixed percentages of maximum heart rate can misclassify intensity because people differ in fitness, medication, heat response and measurement accuracy. A practical cue is the talk test. At moderate intensity, you can talk but not sing, as explained by the [US Centers for Disease Control and Prevention](https://www.cdc.gov/physical-activity-basics/measuring/index.html). For an easier aerobic session, keep the effort comfortable and controlled. If speech becomes broken, reduce resistance or pace.
+The label varies between heart rate systems. Fixed percentages of maximum heart rate can misclassify intensity because people differ in fitness, medication, heat response and measurement accuracy. A practical cue is the talk test. At moderate intensity, you can talk but not sing, as explained by the [US Centers for Disease Control and Prevention](https://www.cdc.gov/physical-activity-basics/measuring/index.html). For an easier aerobic session, keep the effort comfortable and controlled. If speech becomes broken, reduce resistance or pace.
 
-A laboratory test can estimate thresholds more precisely, but it is not necessary for most people. Wrist heart-rate data can help you notice patterns. Treat it as an estimate, not a medical measurement. Choose a bike, brisk walk, rower, incline treadmill or similar activity. The best mode is the one that fits your schedule and does not aggravate an injury.
+A laboratory test can estimate thresholds more precisely, but it is not necessary for most people. Wrist heart rate data can help you notice patterns. Treat it as an estimate, not a medical measurement. Choose a bike, brisk walk, rower, incline treadmill or similar activity. The best mode is the one that fits your schedule and does not aggravate an injury.
 
 ## How many Zone 2 sessions a week do you need?
 
-Start with two sessions of 30 to 45 minutes, including an easy warm-up and cool-down. After two or three weeks, add time only if recovery is good. A longer session is optional. It is not a requirement for progress.
+Start with two sessions of 30 to 45 minutes, including an easy warm up and cool down. After two or three weeks, add time only if recovery is good. A longer session is optional. It is not a requirement for progress.
 
 This **illustrative template is not a real client result**:
 
-- Monday: full-body strength training.
+- Monday: full body strength training.
 - Tuesday: 35 to 45 minutes of easy aerobic work at a conversational effort.
 - Wednesday: rest or an easy walk.
-- Thursday: full-body strength training.
+- Thursday: full body strength training.
 - Friday or Saturday: 40 to 60 minutes of steady aerobic work.
-- One optional higher-intensity session, only when sleep, health and recovery are stable.
+- One optional higher intensity session, only when sleep, health and recovery are stable.
 - At least one complete rest day.
 
-You can split a session into shorter blocks when work is busy. Consistency matters more than a perfect schedule. Keep strength training in the week because aerobic work does not replace muscle-strengthening exercise.
+You can split a session into shorter blocks when work is busy. Consistency matters more than a perfect schedule. Keep strength training in the week because aerobic work does not replace muscle strengthening exercise.
 
 ## What adaptations can you expect?
 
@@ -649,7 +649,7 @@ Begin with two repeatable sessions, use the talk test, and record how training f
 
 ## Related resources
 
-- [4-week base-building example](/resources/engine)
+- [4 week base building example](/resources/engine)
 
 
 ### Morning Routines for Executives: Use Data, Not Podcasts
@@ -675,9 +675,9 @@ You do not need to measure cortisol to build a useful morning. Avoid presenting 
 
 ## How much morning light do you need?
 
-Light is a major timing cue for the body clock. Daylight helps synchronise the circadian system, while bright light at night can affect sleep timing. Research reviews support daylight as a useful part of a regular sleep-wake pattern, but the response depends on intensity, timing and the person. [Review of light, circadian rhythms, sleep and mood](https://pmc.ncbi.nlm.nih.gov/articles/PMC6751071/)
+Light is a major timing cue for the body clock. Daylight helps synchronise the circadian system, while bright light at night can affect sleep timing. Research reviews support daylight as a useful part of a regular sleep wake pattern, but the response depends on intensity, timing and the person. [Review of light, circadian rhythms, sleep and mood](https://pmc.ncbi.nlm.nih.gov/articles/PMC6751071/)
 
-Try going outside soon after waking when practical. Stay out long enough to get useful daylight, and repeat the habit across the week. Do not stare at the sun. On dark mornings, indoors, or in unsafe weather, use ordinary safe lighting and ask a clinician before using a bright-light device, especially if you have an eye condition or a history of mood episodes.
+Try going outside soon after waking when practical. Stay out long enough to get useful daylight, and repeat the habit across the week. Do not stare at the sun. On dark mornings, indoors, or in unsafe weather, use ordinary safe lighting and ask a clinician before using a bright light device, especially if you have an eye condition or a history of mood episodes.
 
 Light is a cue, not a guarantee. Judge the habit by your sleep and daytime function over several weeks.
 
@@ -691,11 +691,11 @@ This is an **illustrative template, not a real client result or a prescription**
 - **Next 10 minutes:** Review the day. Choose one important task and identify the first small step.
 - **Remaining time:** Eat if hungry, prepare for work, or begin a focused block without opening every communication channel at once.
 
-Breakfast is optional. Some people prefer food soon after waking. Others do not. A protein-containing meal can be useful for people who enjoy it or train in the morning, but skipping breakfast is not automatically harmful and a protein-rich breakfast is not essential for everyone. Caffeine timing and amount should reflect your sensitivity, sleep and medical context. If caffeine worsens anxiety, palpitations or sleep, discuss it with a health professional.
+Breakfast is optional. Some people prefer food soon after waking. Others do not. A protein containing meal can be useful for people who enjoy it or train in the morning, but skipping breakfast is not automatically harmful and a protein rich breakfast is not essential for everyone. Caffeine timing and amount should reflect your sensitivity, sleep and medical context. If caffeine worsens anxiety, palpitations or sleep, discuss it with a health professional.
 
 ## How should you track whether the routine works?
 
-HRV from a wearable can help you observe within-person trends. Readings are device-specific and affected by sleep, alcohol, illness, training, stress and measurement conditions. A single low value does not diagnose a problem or prove that you are unready to work or train. Use the same device and similar conditions, then compare the trend with how you feel and perform. HRV is not a substitute for medical assessment.
+HRV from a wearable can help you observe within person trends. Readings are device specific and affected by sleep, alcohol, illness, training, stress and measurement conditions. A single low value does not diagnose a problem or prove that you are unready to work or train. Use the same device and similar conditions, then compare the trend with how you feel and perform. HRV is not a substitute for medical assessment.
 
 A simple weekly note can include bedtime, wake time, daylight, caffeine, training, mood and energy. Change one variable at a time when possible.
 
@@ -703,7 +703,7 @@ Do not use cold exposure as a promise of better focus, recovery or health. It ma
 
 ## How do you keep a morning routine going?
 
-Start with two actions: protect a realistic sleep window and get daylight when practical. Add movement or planning only if it helps. Review the routine after two to four weeks using sleep, energy, concentration and work quality rather than a social-media standard.
+Start with two actions: protect a realistic sleep window and get daylight when practical. Add movement or planning only if it helps. Review the routine after two to four weeks using sleep, energy, concentration and work quality rather than a social media standard.
 
 For a broader review of sleep habits, read [how to improve sleep quality](/insights/how-to-improve-sleep-quality). For an individual performance discussion, visit the [assessment](/assessment) page or read about how to [apply for coaching](/apply). Coaching does not replace medical care, diagnosis or treatment.
 
@@ -737,20 +737,20 @@ Muscle strength, power and bone density can change across adulthood, particularl
 
 The following is an **illustrative session template, not a real client result or a guaranteed prescription**. Adjust it to your training history, technique, schedule and health status.
 
-- **Day 1, full-body strength:** squat or leg press, bench press or push-up, row, hip hinge and a loaded carry or plank. Use controlled sets with a load that leaves a few good repetitions in reserve.
+- **Day 1, full body strength:** squat or leg press, bench press or push up, row, hip hinge and a loaded carry or plank. Use controlled sets with a load that leaves a few good repetitions in reserve.
 - **Day 2, aerobic work:** 25 to 45 minutes at a conversational pace, such as brisk walking, cycling or rowing. Add short harder intervals only if you already tolerate them and have no relevant medical concerns.
-- **Day 3, full-body strength:** split squat or step-up, overhead press, pulldown or chin-up progression, Romanian deadlift and an anti-rotation core exercise.
+- **Day 3, full body strength:** split squat or step up, overhead press, pulldown or chin up progression, Romanian deadlift and an anti rotation core exercise.
 - **Other days:** easy walking, mobility work or complete rest. Keep at least one easier day between demanding strength sessions when possible.
 
 Begin with two strength sessions if three are unrealistic. Two consistent sessions are more useful than an ambitious plan that gets skipped. See our guide on [how to do a chin up](/insights/how-to-do-a-chin-up).
 
-Choose a weight you can lift with steady technique. A useful starting point is two to four sets of roughly 5 to 12 repetitions for most exercises. Power work needs extra care: use simple, low-risk movements such as fast but controlled medicine-ball throws or step-ups, and stop before technique deteriorates. A coach can help select safer variations.
+Choose a weight you can lift with steady technique. A useful starting point is two to four sets of roughly 5 to 12 repetitions for most exercises. Power work needs extra care: use simple, low risk movements such as fast but controlled medicine ball throws or step ups, and stop before technique deteriorates. A coach can help select safer variations.
 
 ## How do you progress without chasing numbers?
 
 Track exercises, sets, repetitions, effort and symptoms. When repetitions feel controlled, add a small amount of weight, one repetition, or a set. Change one variable at a time. If sleep, work stress or joint symptoms worsen, reduce volume or intensity.
 
-Progressive overload means gradually asking the body to do more over time. It does not require maximal lifts. Good technique, repeatable sessions and appropriate recovery matter more than testing a one-repetition maximum every week.
+Progressive overload means gradually asking the body to do more over time. It does not require maximal lifts. Good technique, repeatable sessions and appropriate recovery matter more than testing a one repetition maximum every week.
 
 ## How much cardio do you need after 40?
 
@@ -758,17 +758,17 @@ Cardio trains the heart, lungs and working muscles. Choose activities you can re
 
 Protect a regular sleep opportunity. A common target is 7 to 9 hours, but sleep need varies. Keep wake time consistent, limit late caffeine and alcohol, and seek assessment for loud snoring, breathing pauses or persistent daytime sleepiness.
 
-Slow breathing may help you pause during a demanding day. In a randomised trial of five-minute daily practice, mood measures improved, but HRV, resting heart rate and sleep did not change significantly. [Read the trial report](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/).
+Slow breathing may help you pause during a demanding day. In a randomised trial of five minute daily practice, mood measures improved, but HRV, resting heart rate and sleep did not change significantly. [Read the trial report](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/).
 
 Treat wearable HRV as a personal trend. Sleep, alcohol, illness, training, stress and hydration can all affect it. Do not use one score to establish readiness or diagnose a problem. [Wearable HRV measurement has limits](https://pmc.ncbi.nlm.nih.gov/articles/PMC10742885/).
 
 ## What should an executive over 40 eat, and is creatine worth it?
 
-Eat enough food to support training. Include protein-rich foods, vegetables, fruit, wholegrains and fluids. Protein targets should reflect body size, training, diet and medical needs. A dietitian can help with kidney disease, gastrointestinal illness or weight-management concerns.
+Eat enough food to support training. Include protein rich foods, vegetables, fruit, wholegrains and fluids. Protein targets should reflect body size, training, diet and medical needs. A dietitian can help with kidney disease, gastrointestinal illness or weight management concerns.
 
-Creatine is optional. The most studied form is **creatine monohydrate**. For a healthy adult who chooses to use it, a common maintenance approach is 3 to 5 g per day, with individual suitability considered. A loading phase is not mandatory, and there is no universal requirement to use 0.1 g/kg per day. The [International Society of Sports Nutrition position stand](https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/) and [NIH Office of Dietary Supplements guidance](https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/) describe its strongest evidence in repeated, high-intensity exercise and note that responses vary.
+Creatine is optional. The most studied form is **creatine monohydrate**. For a healthy adult who chooses to use it, a common maintenance approach is 3 to 5 g per day, with individual suitability considered. A loading phase is not mandatory, and there is no universal requirement to use 0.1 g/kg per day. The [International Society of Sports Nutrition position stand](https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/) and [NIH Office of Dietary Supplements guidance](https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/) describe its strongest evidence in repeated, high intensity exercise and note that responses vary.
 
-Choose a product with transparent ingredients and independent, third-party batch testing where available. Evidence for cognitive benefits remains uncertain. If you have kidney disease, abnormal kidney tests, are pregnant, or take medicines that may affect kidney function, discuss creatine with a clinician. Creatinine blood results may change with creatine use without proving kidney injury.
+Choose a product with transparent ingredients and independent, third party batch testing where available. Evidence for cognitive benefits remains uncertain. If you have kidney disease, abnormal kidney tests, are pregnant, or take medicines that may affect kidney function, discuss creatine with a clinician. Creatinine blood results may change with creatine use without proving kidney injury.
 
 ## When should you see a doctor before training?
 
@@ -781,14 +781,14 @@ For a tailored starting point, use the [Performance Assessment](/assessment) or 
 - [International Society of Sports Nutrition position stand on creatine](https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049/)
 - [NIH Office of Dietary Supplements: Dietary Supplements for Exercise and Athletic Performance](https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/)
 - [Randomised trial of brief structured respiration practices](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
-- [Review of wearable heart-rate variability measurement](https://pmc.ncbi.nlm.nih.gov/articles/PMC10742885/)
+- [Review of wearable heart rate variability measurement](https://pmc.ncbi.nlm.nih.gov/articles/PMC10742885/)
 
 ## Related resources
 
-- [Five-movement training template](/resources/template)
+- [Five movement training template](/resources/template)
 
 
-### CEO Burnout Recovery Protocol: A Practical, Evidence-Aware Starting Point
+### CEO Burnout Recovery Protocol: A Practical, Evidence Aware Starting Point
 
 Source: https://marinlazic.com/insights/ceo-burnout-recovery-protocol
 Published: 2026-01-18. Revised: 2026-10-14.
@@ -799,7 +799,7 @@ Burnout is a workload problem before it is a fitness problem. Cut the load first
 
 Burnout is not simply low fitness or a lack of discipline. The [World Health Organization describes burnout](https://www.who.int/standards/classifications/frequently-asked-questions/burn-out-an-occupational-phenomenon) as an occupational phenomenon linked to chronic workplace stress that has not been managed successfully. It involves exhaustion, greater mental distance or cynicism about work, and reduced professional efficacy. It is not classified as a medical condition in ICD-11.
 
-That distinction matters. A coach can help with routines, training, workload habits and recovery. A coach cannot diagnose depression, anxiety, sleep disorders, cardiovascular disease or other causes of fatigue. If symptoms are persistent, severe or worsening, speak with a GP or qualified mental health professional. Seek urgent help for thoughts of self-harm, chest pain, fainting or severe breathlessness.
+That distinction matters. A coach can help with routines, training, workload habits and recovery. A coach cannot diagnose depression, anxiety, sleep disorders, cardiovascular disease or other causes of fatigue. If symptoms are persistent, severe or worsening, speak with a GP or qualified mental health professional. Seek urgent help for thoughts of self harm, chest pain, fainting or severe breathlessness.
 
 ## What is the order of recovery from burnout?
 
@@ -809,19 +809,19 @@ Next, establish a simple baseline. Record sleep duration, energy, training, alco
 
 Build training around recovery capacity. Two or three moderate resistance sessions each week may be appropriate for some people. Easy aerobic work, walking and light mobility can support regular movement without creating another performance test. Keep hard intervals and maximal lifting limited while sleep and energy are unstable. Progress gradually when daily function, mood and sleep are improving.
 
-An illustrative session example, not a real client result, might be a 30-minute easy cycle followed by two moderate sets each of a squat pattern, press and row. Stop or reduce the session for pain, dizziness or unusual breathlessness.
+An illustrative session example, not a real client result, might be a 30 minute easy cycle followed by two moderate sets each of a squat pattern, press and row. Stop or reduce the session for pain, dizziness or unusual breathlessness.
 
 ## How do sleep and breathing help burnout recovery?
 
-Keep a consistent wake time and reduce late caffeine, alcohol and bright screens when they interfere with sleep. The existing guide on [how to improve sleep quality](/insights/how-to-improve-sleep-quality) can help with the routine side of this work. Snoring, gasping, witnessed pauses in breathing, persistent insomnia or marked daytime sleepiness warrant a GP discussion rather than a self-directed sleep challenge.
+Keep a consistent wake time and reduce late caffeine, alcohol and bright screens when they interfere with sleep. The existing guide on [how to improve sleep quality](/insights/how-to-improve-sleep-quality) can help with the routine side of this work. Snoring, gasping, witnessed pauses in breathing, persistent insomnia or marked daytime sleepiness warrant a GP discussion rather than a self directed sleep challenge.
 
-Brief breathing practice may be a low-risk way to create a pause during a demanding day. In a randomised study, 5 minutes a day of structured breathing over one month improved mood measures and reduced respiratory rate. The study found no significant change in HRV, resting heart rate or sleep measures, so it does not support claims of a guaranteed sleep or recovery result. Read the [full trial](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/) for its methods and limits. Avoid forceful breath holding or rapid breathing if it causes dizziness, panic or other symptoms.
+Brief breathing practice may be a low risk way to create a pause during a demanding day. In a randomised study, 5 minutes a day of structured breathing over one month improved mood measures and reduced respiratory rate. The study found no significant change in HRV, resting heart rate or sleep measures, so it does not support claims of a guaranteed sleep or recovery result. Read the [full trial](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/) for its methods and limits. Avoid forceful breath holding or rapid breathing if it causes dizziness, panic or other symptoms.
 
 ## Can HRV tell you if you are burnt out?
 
 Heart rate variability is the variation in time between heartbeats. Treat it as a personal trend, not a score for health, burnout or readiness. Measurements vary with the device, position, time of day, illness, alcohol, sleep and breathing pattern. Compare readings under similar conditions and look for a sustained change alongside sleep, mood, resting heart rate and training response.
 
-A low reading on one morning does not prove that you are overtrained. A higher reading does not prove that you are recovered. Ask whether the trend agrees with how you feel and function. If the signals disagree, choose the safer training option and seek medical advice when symptoms persist. The guide on [how to boost HRV](/insights/how-to-boost-your-hrv) is best read as a routine guide, not a diagnostic tool. Cold-water exposure may feel refreshing for some people, but it has no guarantee of improving HRV, burnout or long-term health.
+A low reading on one morning does not prove that you are overtrained. A higher reading does not prove that you are recovered. Ask whether the trend agrees with how you feel and function. If the signals disagree, choose the safer training option and seek medical advice when symptoms persist. The guide on [how to boost HRV](/insights/how-to-boost-your-hrv) is best read as a routine guide, not a diagnostic tool. Cold water exposure may feel refreshing for some people, but it has no guarantee of improving HRV, burnout or long term health.
 
 ## When is coaching the right step, and when is it a doctor?
 
@@ -831,7 +831,7 @@ A useful first step is a [Performance Assessment](/assessment). Bring your goals
 
 ## Sources
 
-- [World Health Organization: Burn-out an occupational phenomenon](https://www.who.int/standards/classifications/frequently-asked-questions/burn-out-an-occupational-phenomenon)
+- [World Health Organization: Burnout an occupational phenomenon](https://www.who.int/standards/classifications/frequently-asked-questions/burn-out-an-occupational-phenomenon)
 - [Balban et al., 2023: Brief structured respiration practices enhance mood](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
 
 ## Related resources
@@ -850,14 +850,14 @@ Olympic athletes train in blocks with planned easy weeks. Executives who copy th
 
 - Elite sport offers useful planning ideas for demanding work, but business is not an Olympic event. Adapt the principles rather than copying an athlete’s programme.
 - Plan periods of focused work, lighter work and review. Protect sleep, movement, food and time away from work.
-- Use training load, mood, sleep and heart-rate data as prompts for reflection. They are not proof of readiness, illness or performance.
+- Use training load, mood, sleep and heart rate data as prompts for reflection. They are not proof of readiness, illness or performance.
 - Burnout is an occupational phenomenon linked to chronic workplace stress. Persistent or severe symptoms need qualified health support.
 
 ## What can business learn from Olympic training?
 
 Athletes work towards a clear event, with a defined plan and planned recovery. Leaders and teams also face periods of high demand. The useful parallel is the planning process, not a claim that business and sport have the same risks or goals.
 
-A practical performance plan names the outcome, preparation work, work to reduce or delegate, and the point for recovery and review. This makes trade-offs visible to a team.
+A practical performance plan names the outcome, preparation work, work to reduce or delegate, and the point for recovery and review. This makes trade offs visible to a team.
 
 ## How do you periodise a business year?
 
@@ -865,7 +865,7 @@ In sport, periodisation means organising training stress and recovery over time.
 
 - **Preparation:** clarify priorities, set decision rules, build skills and remove avoidable work.
 - **Focus:** give a small number of important projects protected attention. Keep meetings and new commitments under control.
-- **Deload and review:** reduce non-essential work after a demanding push. Review what worked, repair relationships and update the plan.
+- **Deload and review:** reduce non essential work after a demanding push. Review what worked, repair relationships and update the plan.
 - **Renewal:** take proper time away from work. Return with a short list of priorities rather than a full backlog.
 
 These phases are an **illustrative template, not a real client result or a universal prescription**. Organisations have different constraints, so do not force a fixed annual cycle onto continuous service.
@@ -876,17 +876,17 @@ A weekly version may be more useful. Choose one or two priority outcomes, schedu
 
 Recovery includes sleep, regular meals, movement, social contact and time with no work demands. A short walk or quiet break may help, but no routine guarantees better performance. For practical sleep guidance, read [how to improve sleep quality](/insights/how-to-improve-sleep-quality).
 
-Track the load of work as well as the hours. Useful questions include: How many high-stakes decisions did I make? How often was my attention interrupted? Did I have enough control and support? Have I had several nights of poor sleep?
+Track the load of work as well as the hours. Useful questions include: How many high stakes decisions did I make? How often was my attention interrupted? Did I have enough control and support? Have I had several nights of poor sleep?
 
 The World Health Organization describes burnout as a syndrome resulting from chronic workplace stress that has not been successfully managed. It includes exhaustion, mental distance or cynicism about the job, and reduced professional efficacy. WHO classifies it as an occupational phenomenon, not a medical condition, and says it should not be used for every form of distress. [Read the WHO definition.](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases)
 
-Coaching can help with habits, workload conversations and planning. It cannot diagnose depression, anxiety, sleep disorders, heart disease or other health conditions. Seek a GP or appropriately qualified mental health professional for persistent low mood, panic, severe exhaustion, major sleep problems, thoughts of self-harm, chest pain, fainting or unusual breathlessness. A workplace should address unreasonable demands and provide appropriate support.
+Coaching can help with habits, workload conversations and planning. It cannot diagnose depression, anxiety, sleep disorders, heart disease or other health conditions. Seek a GP or appropriately qualified mental health professional for persistent low mood, panic, severe exhaustion, major sleep problems, thoughts of self harm, chest pain, fainting or unusual breathlessness. A workplace should address unreasonable demands and provide appropriate support.
 
 ## Which recovery tools transfer from sport to work?
 
 Slow breathing or a brief breathing practice may be a reasonable way to pause and settle. In a randomised study of daily breathing exercises, mood and some breathing measures improved, while there were **no significant changes in HRV, resting heart rate or measured sleep outcomes** over the study period. [See the trial in *Cell Reports Medicine*.](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
 
-Heart-rate variability (HRV) is the variation in time between heartbeats. Wearable readings depend on the device, measurement conditions and the person. Use the same device and similar conditions, and look at your own trend alongside sleep, illness, training and how you feel. A single score is not a diagnosis or a certain readiness decision. For more context, see [how to boost your HRV](/insights/how-to-boost-your-hrv). Do not use HRV to delay medical care.
+Heart rate variability (HRV) is the variation in time between heartbeats. Wearable readings depend on the device, measurement conditions and the person. Use the same device and similar conditions, and look at your own trend alongside sleep, illness, training and how you feel. A single score is not a diagnosis or a certain readiness decision. For more context, see [how to boost your HRV](/insights/how-to-boost-your-hrv). Do not use HRV to delay medical care.
 
 Cold water exposure may feel refreshing for some people. It does not guarantee recovery, resilience or better business results. People with cardiovascular conditions, fainting history or other health concerns should ask a clinician before trying it.
 
@@ -898,12 +898,12 @@ A performance assessment can help organise these questions, but it is not a medi
 
 ## Sources
 
-- [World Health Organization: Burn-out as an occupational phenomenon](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases)
+- [World Health Organization: Burnout as an occupational phenomenon](https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases)
 - [Cell Reports Medicine: Randomised breathing exercise trial](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
 
 ## Related resources
 
-- [Multi-direction warm-up](/resources/move)
+- [Multi direction warm up](/resources/move)
 
 
 ### WHOOP for Business: A Practical Guide to Performance Data
@@ -917,13 +917,13 @@ WHOOP is useful for trends over weeks, not for daily decisions. Use it to catch 
 
 WHOOP can help you notice patterns in sleep, heart rate, respiratory rate, activity strain and its Recovery score. It is a personal tracking tool, not a medical test. Scores are estimates produced by a commercial device and should be read with symptoms, training history and your actual workload.
 
-The useful question is not “What does today’s score predict?” It is “What has changed for me, and what low-risk response is worth testing?” A single reading can be noisy. Look for repeated patterns under similar conditions.
+The useful question is not “What does today’s score predict?” It is “What has changed for me, and what low risk response is worth testing?” A single reading can be noisy. Look for repeated patterns under similar conditions.
 
 ## What do the WHOOP recovery, strain and sleep scores mean?
 
 **Heart rate variability (HRV)** describes variation in the time between heartbeats. HRV is influenced by recording length, breathing, posture, recent exercise, illness, alcohol, stress and the sensor method. A major review notes that context is crucial and that values from different recording periods are not interchangeable ([Shaffer and Ginsberg, 2017](https://pmc.ncbi.nlm.nih.gov/articles/PMC5624990/)).
 
-Use your own, device-specific baseline and watch multi-day trends. A lower value can accompany fatigue or illness, but it does not prove either one. A higher value does not certify readiness. Do not use HRV to diagnose a heart condition or override concerning symptoms. See [how to boost your HRV](/insights/how-to-boost-your-hrv).
+Use your own, device specific baseline and watch multi day trends. A lower value can accompany fatigue or illness, but it does not prove either one. A higher value does not certify readiness. Do not use HRV to diagnose a heart condition or override concerning symptoms. See [how to boost your HRV](/insights/how-to-boost-your-hrv).
 
 **Resting heart rate and respiratory rate** can add context. A sustained change from your usual pattern may be worth checking against sleep, training, stress or an emerging illness. It is not a diagnosis. Seek medical advice for persistent or concerning changes, especially with chest pain, fainting, unusual breathlessness or palpitations.
 
@@ -931,7 +931,7 @@ Use your own, device-specific baseline and watch multi-day trends. A lower value
 
 ## How should you use WHOOP to decide on training and work?
 
-Use a three-part check before changing your day:
+Use a three part check before changing your day:
 
 1. **Data:** What changed across the last several days in Recovery, HRV, resting heart rate, respiratory rate and sleep?
 2. **Experience:** How do you feel? Check energy, soreness, concentration, mood and any symptoms.
@@ -939,7 +939,7 @@ Use a three-part check before changing your day:
 
 A lower Recovery score does not require a full rest day, and a high score does not require hard training. Consider an easier session, technique work, walking or normal training at reduced volume. Avoid making major decisions from a colour band alone.
 
-**Illustrative session example, not a real client result:** If a person has three nights of shorter sleep, a lower-than-usual HRV and unusual fatigue, they could swap intervals for an easy walk, move demanding work to a clearer period and review the pattern tomorrow. That is an experiment, not proof that WHOOP identified the cause.
+**Illustrative session example, not a real client result:** If a person has three nights of shorter sleep, a lower than usual HRV and unusual fatigue, they could swap intervals for an easy walk, move demanding work to a clearer period and review the pattern tomorrow. That is an experiment, not proof that WHOOP identified the cause.
 
 ## How often should you review WHOOP data?
 
@@ -947,9 +947,9 @@ Spend 10 to 15 minutes reviewing weekly trends and journal notes. Record sleep t
 
 ## Do breathing and cold exposure improve WHOOP recovery?
 
-Breathing practice may be a reasonable low-risk experiment for some adults, but claims should stay modest. In a randomised study, one month of brief breathing exercises improved daily mood measures and reduced respiratory rate more than the comparison condition. The study found **no significant changes in HRV, resting heart rate or WHOOP sleep measures** ([Balban et al., 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)). It does not support a guaranteed HRV, sleep or performance improvement.
+Breathing practice may be a reasonable low risk experiment for some adults, but claims should stay modest. In a randomised study, one month of brief breathing exercises improved daily mood measures and reduced respiratory rate more than the comparison condition. The study found **no significant changes in HRV, resting heart rate or WHOOP sleep measures** ([Balban et al., 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)). It does not support a guaranteed HRV, sleep or performance improvement.
 
-Cold-water exposure also has no universal “readiness” or resilience guarantee. Treat it as optional. Avoid it or seek clinical advice first if you have cardiovascular disease, fainting, cold sensitivity or another relevant condition. Stop if you feel unwell, confused, excessively breathless or develop chest pain.
+Cold water exposure also has no universal “readiness” or resilience guarantee. Treat it as optional. Avoid it or seek clinical advice first if you have cardiovascular disease, fainting, cold sensitivity or another relevant condition. Stop if you feel unwell, confused, excessively breathless or develop chest pain.
 
 ## Sources
 
@@ -968,21 +968,21 @@ Published: 2026-02-20. Revised: 2026-10-14.
 
 Two drinks in the evening measurably reduce sleep quality and overnight HRV in most people. The effect is dose dependent and clears in one to two nights.
 
-Alcohol can affect sleep, coordination, recovery and decision-making. Effects vary with dose, timing, food, medicines, health and sleep.
+Alcohol can affect sleep, coordination, recovery and decision making. Effects vary with dose, timing, food, medicines, health and sleep.
 
 ## What does alcohol do to sleep, recovery and performance?
 
 ### Sleep and recovery
 
-Alcohol may help some people fall asleep faster, but that does not mean it improves sleep. A review of sleep studies found more disruption in the second half of the night. It also found delayed first REM sleep, with total-night REM reduction more consistent at moderate and high doses. Low-dose findings were less consistent. [Alcohol and sleep review](https://pubmed.ncbi.nlm.nih.gov/23347102/)
+Alcohol may help some people fall asleep faster, but that does not mean it improves sleep. A review of sleep studies found more disruption in the second half of the night. It also found delayed first REM sleep, with total night REM reduction more consistent at moderate and high doses. Low dose findings were less consistent. [Alcohol and sleep review](https://pubmed.ncbi.nlm.nih.gov/23347102/)
 
 Poorer or shorter sleep can make a hard session feel harder and can affect concentration, mood and training choices. This is a practical reason to avoid treating alcohol as a sleep aid. It is not evidence that one drink guarantees a poor session or that every person will respond in the same way.
 
-Alcohol also affects fluid balance and temperature regulation. The exercise literature describes possible effects on hydration, carbohydrate handling and post-exercise muscle protein synthesis, while human evidence on whole-body recovery and performance is mixed. The review of alcohol, athletic performance and recovery notes that results differ by dose, timing and outcome measured. [Alcohol, athletic performance and recovery](https://doi.org/10.3390/nu2080781)
+Alcohol also affects fluid balance and temperature regulation. The exercise literature describes possible effects on hydration, carbohydrate handling and post exercise muscle protein synthesis, while human evidence on whole body recovery and performance is mixed. The review of alcohol, athletic performance and recovery notes that results differ by dose, timing and outcome measured. [Alcohol, athletic performance and recovery](https://doi.org/10.3390/nu2080781)
 
-### Coordination, judgement and next-day training
+### Coordination, judgement and next day training
 
-Alcohol impairs balance, reaction time, memory and fine motor skills in a dose-related way. That matters for driving, water activities, lifting near failure and any sport that needs precise movement. A hangover can also affect how ready you feel the next day. If you feel impaired, do not train, drive or operate equipment.
+Alcohol impairs balance, reaction time, memory and fine motor skills in a dose related way. That matters for driving, water activities, lifting near failure and any sport that needs precise movement. A hangover can also affect how ready you feel the next day. If you feel impaired, do not train, drive or operate equipment.
 
 A hard training session is not a reason to drink more water and assume the risk has gone. Water can help with thirst, but it does not speed alcohol clearance or reverse impairment.
 
@@ -990,16 +990,16 @@ A hard training session is not a reason to drink more water and assume the risk 
 
 Heart rate variability (HRV) is the variation in time between heartbeats. It can be useful when you compare your own readings under similar conditions. It is not a diagnosis, and a single reading does not prove that you are recovered or unwell. Alcohol, sleep loss, stress, illness, training load and measurement conditions can all affect it.
 
-Use your wearable as a trend prompt, not a verdict. Pair a lower-than-usual reading with sleep, symptoms and how you feel. Choose an easier session or rest if several signals point in the same direction. There is no sound basis for a fixed HRV prediction after a drink.
+Use your wearable as a trend prompt, not a verdict. Pair a lower than usual reading with sleep, symptoms and how you feel. Choose an easier session or rest if several signals point in the same direction. There is no sound basis for a fixed HRV prediction after a drink.
 
 ## How do you drink with less effect on training?
 
 1. **Set the context first.** Check whether you need to drive, compete, train early, use equipment or make important decisions. If you do, the safest choice is not to drink.
-2. **Count standard drinks.** In Australia, one standard drink contains 10 grams of alcohol. A standard drink is about 100 mL of wine at 13%, 285 mL of full-strength beer at 4.9% or 30 mL of spirits at 40%. A large pour or a strong beer can contain more than one. [NHMRC alcohol guidelines](https://www.nhmrc.gov.au/health-advice/alcohol)
+2. **Count standard drinks.** In Australia, one standard drink contains 10 grams of alcohol. A standard drink is about 100 mL of wine at 13%, 285 mL of full strength beer at 4.9% or 30 mL of spirits at 40%. A large pour or a strong beer can contain more than one. [NHMRC alcohol guidelines](https://www.nhmrc.gov.au/health-advice/alcohol)
 3. **Use the Australian health limits as a ceiling, not a performance target.** For healthy adults, NHMRC advises no more than 10 standard drinks per week and no more than 4 on any one day. The less you drink, the lower the risk. These limits do not make drinking safe for every person or protect training quality.
-4. **Eat and alternate drinks.** Have a normal meal and alternate alcohol with water or another non-alcoholic drink. This may help you drink more slowly and reduce dehydration, but it will not cancel alcohol's effects.
-5. **Protect sleep and the next session.** Avoid placing alcohol close to an early, technical or high-risk session. Do not use a fixed rule such as “three hours is enough” as a guarantee. If sleep was poor or you feel hungover, reduce intensity, choose easy movement or rest.
-6. **Skip unsupported supplements.** There is no established supplement that makes drinking safe or reliably prevents a hangover. Do not use N-acetylcysteine or another product as permission to drink more. Ask a pharmacist or doctor before combining alcohol with medicines or supplements.
+4. **Eat and alternate drinks.** Have a normal meal and alternate alcohol with water or another non alcoholic drink. This may help you drink more slowly and reduce dehydration, but it will not cancel alcohol's effects.
+5. **Protect sleep and the next session.** Avoid placing alcohol close to an early, technical or high risk session. Do not use a fixed rule such as “three hours is enough” as a guarantee. If sleep was poor or you feel hungover, reduce intensity, choose easy movement or rest.
+6. **Skip unsupported supplements.** There is no established supplement that makes drinking safe or reliably prevents a hangover. Do not use N acetylcysteine or another product as permission to drink more. Ask a pharmacist or doctor before combining alcohol with medicines or supplements.
 
 This is a general, illustrative session example, not a real client result: if an evening social event is followed by an early strength session, move the hard session to a later day, plan food and water, and review sleep and symptoms before training. The decision should be based on safety and function, not on forcing a wearable score back to normal.
 
@@ -1009,7 +1009,7 @@ Do not drink during pregnancy or when planning pregnancy. People under 18 should
 
 ## What should you do first?
 
-Alcohol can interfere with sleep, coordination and some recovery processes, but study results are not a licence for fixed predictions about your HRV, hormones or next-day performance. The lowest-risk choice is to drink less or not drink, especially before demanding training. If you do drink, count standard drinks, slow the pace, eat, alternate with water, protect sleep and change training when your judgement or symptoms are affected.
+Alcohol can interfere with sleep, coordination and some recovery processes, but study results are not a licence for fixed predictions about your HRV, hormones or next day performance. The lowest risk choice is to drink less or not drink, especially before demanding training. If you do drink, count standard drinks, slow the pace, eat, alternate with water, protect sleep and change training when your judgement or symptoms are affected.
 
 For a broader review of your training and recovery habits, see the [Performance Assessment](/assessment) or [coaching application](/apply).
 
@@ -1017,7 +1017,7 @@ For a broader review of your training and recovery habits, see the [Performance 
 
 - [National Health and Medical Research Council: Alcohol guidelines](https://www.nhmrc.gov.au/health-advice/alcohol)
 - [Ebrahim et al., Alcohol and sleep I: effects on normal sleep, PubMed](https://pubmed.ncbi.nlm.nih.gov/23347102/)
-- [Vella and Cameron-Smith, Alcohol, athletic performance and recovery](https://doi.org/10.3390/nu2080781)
+- [Vella and Cameron Smith, Alcohol, athletic performance and recovery](https://doi.org/10.3390/nu2080781)
 - [Australian Government Eat For Health: Alcohol](https://www.eatforhealth.gov.au/food-essentials/fat-salt-sugars-and-alcohol/alcohol)
 
 ## Related resources
@@ -1025,7 +1025,7 @@ For a broader review of your training and recovery habits, see the [Performance 
 - [Sleep checklist](/resources/sleep)
 
 
-### Periodisation for non-athletes: a practical guide to training phases
+### Periodisation for Non Athletes: A Practical Guide to Training Phases
 
 Source: https://marinlazic.com/insights/periodisation-for-non-athletes-training-phases
 Published: 2026-02-25. Revised: 2026-10-14.
@@ -1034,9 +1034,9 @@ Periodisation means planning training in phases of 3 to 6 weeks with a lighter w
 
 ## What is periodisation?
 
-Periodisation is the planned organisation of training over time. You vary the amount of work, effort, exercise selection and recovery emphasis so each block has a clear purpose. The plan can be simple. It may use a few weeks of skill and work-capacity training, followed by a block that gives more attention to strength, then a lighter week.
+Periodisation is the planned organisation of training over time. You vary the amount of work, effort, exercise selection and recovery emphasis so each block has a clear purpose. The plan can be simple. It may use a few weeks of skill and work capacity training, followed by a block that gives more attention to strength, then a lighter week.
 
-This structure is useful when your schedule, sleep and stress change. It gives you a starting point for each session while leaving room to adjust the load or exercise. It is not a guarantee of results, and it is not the only sound way to train. A meta-analysis found a moderate improvement in one-repetition maximum strength with periodised programmes compared with non-periodised programmes, but the studies mainly measured strength and included varied protocols. [Read the PubMed review](https://pubmed.ncbi.nlm.nih.gov/28497285/)
+This structure is useful when your schedule, sleep and stress change. It gives you a starting point for each session while leaving room to adjust the load or exercise. It is not a guarantee of results, and it is not the only sound way to train. A meta analysis found a moderate improvement in one repetition maximum strength with periodised programmes compared with non periodised programmes, but the studies mainly measured strength and included varied protocols. [Read the PubMed review](https://pubmed.ncbi.nlm.nih.gov/28497285/)
 
 Random training is not automatically ineffective. Variety can be useful, and a short session is better than skipping movement. The problem is a pattern with no way to repeat key movements, add a suitable challenge or notice when fatigue is accumulating. A plan helps you make those decisions.
 
@@ -1046,10 +1046,10 @@ These phases are a planning template, not a rule for every person:
 
 1. **Foundation:** Practise movement, build tolerance for regular training and establish manageable volume. Use loads that allow controlled technique.
 2. **Strength or intensification:** Keep the main movements familiar and gradually use more challenging loads or harder variations. Reduce work when needed so technique stays consistent.
-3. **Realisation or review:** Use a short block to express current strength or fitness. A rep-quality set, submaximal estimate or timed test may be more suitable than a true one-repetition maximum.
+3. **Realisation or review:** Use a short block to express current strength or fitness. A rep quality set, submaximal estimate or timed test may be more suitable than a true one repetition maximum.
 4. **Transition:** Reduce training stress, retain easy movement and review what to change next. This can be a lighter week rather than complete rest.
 
-The length of each phase depends on training age, goal, available time, injury history and recovery. A non-athlete does not need an athlete’s peaking schedule. For many adults, repeating a small number of movements and adjusting effort from week to week is enough.
+The length of each phase depends on training age, goal, available time, injury history and recovery. A non athlete does not need an athlete’s peaking schedule. For many adults, repeating a small number of movements and adjusting effort from week to week is enough.
 
 ## What does a 12 week periodised plan look like?
 
@@ -1057,36 +1057,36 @@ The following is **illustrative only. It is not a real client result or a prescr
 
 | Weeks | Main aim | Example approach |
 | --- | --- | --- |
-| 1-4 | Foundation | Two full-body strength sessions. Use goblet squats, push-ups or presses, rows and a hinge. Add easy aerobic work if time allows. |
-| 5-8 | Strength emphasis | Keep the same movement patterns. Use fewer, higher-quality repetitions and add load only when form and recovery support it. Include a third short session only if it fits the week. |
-| 9-10 | Review | Repeat selected movements or a simple submaximal test. Stop with good technique. Record effort, repetitions and any symptoms. |
-| 11-12 | Transition | Reduce sets or load. Keep walking, easy cycling, mobility and low-effort skill practice. Plan the next block from the notes. |
+| 1 to 4 | Foundation | Two full body strength sessions. Use goblet squats, push ups or presses, rows and a hinge. Add easy aerobic work if time allows. |
+| 5 to 8 | Strength emphasis | Keep the same movement patterns. Use fewer, higher quality repetitions and add load only when form and recovery support it. Include a third short session only if it fits the week. |
+| 9 to 10 | Review | Repeat selected movements or a simple submaximal test. Stop with good technique. Record effort, repetitions and any symptoms. |
+| 11 to 12 | Transition | Reduce sets or load. Keep walking, easy cycling, mobility and low effort skill practice. Plan the next block from the notes. |
 
 Progress does not require forcing heavier weights every session. You can add a repetition, improve range of motion, use a steadier tempo, reduce rest slightly or choose a harder variation. Keep one or two changes consistent long enough to judge them. If sleep is poor, work stress is high or pain changes your movement, reduce the session and reassess.
 
 ## Which signs mean you need a lighter week?
 
-Recovery is part of the plan. Sleep, food, work demands and stress affect how much training you can tolerate. Wearable heart-rate variability (HRV) is best treated as a personal trend measured under similar conditions. It is device-specific and cannot diagnose illness or prove that you are ready, under-recovered or safe to train. The [HRV guide](/insights/how-to-boost-your-hrv) should be used as a tracking aid, not a medical test.
+Recovery is part of the plan. Sleep, food, work demands and stress affect how much training you can tolerate. Wearable heart rate variability (HRV) is best treated as a personal trend measured under similar conditions. It is device specific and cannot diagnose illness or prove that you are ready, under recovered or safe to train. The [HRV guide](/insights/how-to-boost-your-hrv) should be used as a tracking aid, not a medical test.
 
-Breathing practice may help some people feel calmer. In a randomised study, daily structured breathing improved mood and reduced daily anxiety, and breathing rate fell more than in the comparison group. The study found no significant changes in HRV, resting heart rate or sleep measures. [Read the trial in PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/). Do not promise a fixed sleep, HRV or recovery improvement. Cold-water exposure also has no guaranteed effect on readiness or performance.
+Breathing practice may help some people feel calmer. In a randomised study, daily structured breathing improved mood and reduced daily anxiety, and breathing rate fell more than in the comparison group. The study found no significant changes in HRV, resting heart rate or sleep measures. [Read the trial in PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/). Do not promise a fixed sleep, HRV or recovery improvement. Cold water exposure also has no guaranteed effect on readiness or performance.
 
 Regular activity supports physical and mental health, but associations are not personal guarantees. The [World Health Organization](https://www.who.int/news-room/fact-sheets/detail/physical-activity) notes that any activity is better than none and that muscle strengthening benefits adults.
 
 ## When should you see a professional?
 
-Get medical advice before starting or changing training if you have cardiovascular symptoms, a diagnosed condition, significant injury, pregnancy-related concerns or medicines that affect exercise tolerance. Stop and seek urgent care for severe chest pain, fainting, severe breathlessness or sudden neurological symptoms. A qualified exercise professional can help with programming, but cannot diagnose or treat disease.
+Get medical advice before starting or changing training if you have cardiovascular symptoms, a diagnosed condition, significant injury, pregnancy related concerns or medicines that affect exercise tolerance. Stop and seek urgent care for severe chest pain, fainting, severe breathlessness or sudden neurological symptoms. A qualified exercise professional can help with programming, but cannot diagnose or treat disease.
 
 For a starting point, the [Performance Assessment](/assessment) can help organise training history, goals and constraints. If you want coaching support, you can [apply here](/apply). Any programme should be adjusted to your actual schedule, health context and response over time.
 
 ## Sources
 
-- [Williams et al., “Comparison of Periodized and Non-Periodized Resistance Training on Maximal Strength: A Meta-Analysis,” PubMed](https://pubmed.ncbi.nlm.nih.gov/28497285/)
+- [Williams et al., “Comparison of Periodized and Non Periodized Resistance Training on Maximal Strength: A Meta Analysis,” PubMed](https://pubmed.ncbi.nlm.nih.gov/28497285/)
 - [Balban et al., “Brief structured respiration practices enhance mood and reduce physiological arousal,” PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/)
 - [World Health Organization, “Physical activity,”](https://www.who.int/news-room/fact-sheets/detail/physical-activity)
 
 ## Related resources
 
-- [Five-movement training template](/resources/template)
+- [Five movement training template](/resources/template)
 
 
 ## Resource reference content
@@ -1099,7 +1099,7 @@ A simple strength template built around five movement patterns: push, pull, hing
 
 The movements
 Push: dumbbell bench press or overhead press. A starting point could be 3 sets of 8 to 10 reps.
-Pull: barbell row or chin-up. A starting point could be 3 sets of 8 to 10 reps.
+Pull: barbell row or chin up. A starting point could be 3 sets of 8 to 10 reps.
 Hinge: Romanian deadlift or trap bar deadlift. A starting point could be 3 sets of 6 to 8 reps.
 Squat: goblet squat or barbell back squat. A starting point could be 3 sets of 6 to 8 reps.
 Loaded carry: farmer's walk. A starting point could be 3 sets of 30 to 40 metres.
@@ -1119,24 +1119,24 @@ Track the exercises, loads, reps and how the session felt. A notebook or phone n
 
 Source: https://marinlazic.com/resources/groove
 
-Greasing the groove is a way to practise a movement often at low effort across the day. It can suit movements such as pull-ups and push-ups when the volume stays comfortable and does not interfere with other training.
+Greasing the groove is a way to practise a movement often at low effort across the day. It can suit movements such as pull ups and push ups when the volume stays comfortable and does not interfere with other training.
 
 How it works
-Choose one movement you want to practise. Pull-ups and push-ups are common examples.
+Choose one movement you want to practise. Pull ups and push ups are common examples.
 Find a comfortable fresh set, rather than testing to an absolute limit. A starting working set is often around 40 to 50% of that number.
 Do the working set several times across the day, with plenty of time between efforts. Start with fewer sets and add only if recovery remains good.
 Keep each set well short of failure. If the movement becomes slow, painful or technically messy, reduce the effort or stop for the day.
 
-Example: pull-ups
-If six controlled pull-ups is your current fresh set, a starting working set might be two or three reps.
+Example: pull ups
+If six controlled pull ups is your current fresh set, a starting working set might be two or three reps.
 Try two or three reps on several occasions across the day, with long breaks between them.
 The aim is practice volume that remains manageable. Some fatigue can still occur, especially when you are new to the method.
 After a couple of weeks, review how the movement feels and whether your controlled set has changed. Adjust only if the extra practice is being tolerated well.
 
-Example: push-ups
-If 20 controlled push-ups is your current fresh set, a starting working set might be eight reps.
+Example: push ups
+If 20 controlled push ups is your current fresh set, a starting working set might be eight reps.
 Do the set on a few occasions across the day, leaving plenty of time between efforts.
-Use an incline, fewer repetitions or fewer sets if standard push-ups are too demanding.
+Use an incline, fewer repetitions or fewer sets if standard push ups are too demanding.
 Review your tolerance after one or two weeks before adding more volume.
 
 Rules
@@ -1153,12 +1153,12 @@ A short movement check can help you notice how you feel before training or durin
 Three movement checks
 Squat to a comfortable depth: hold a supported squat position for up to 30 seconds. Keep your heels down if comfortable. Use a doorframe, bench or table for support when needed.
 Shoulder reach: reach one hand over your shoulder and the other behind your back. Compare sides without forcing the range. Stop if it is painful.
-Single-leg balance: stand on one leg for up to 30 seconds with eyes open, near a stable support such as a bench or kitchen counter. Keep a hand close enough to steady yourself if needed.
+Single leg balance: stand on one leg for up to 30 seconds with eyes open, near a stable support such as a bench or kitchen counter. Keep a hand close enough to steady yourself if needed.
 
 Simple options
-For a stiff-feeling squat, try a few slow bodyweight squats to a comfortable depth, pausing briefly where you can control the position.
-For shoulders, try gentle wall slides through a pain-free range.
-For balance, do a few short single-leg stands on each side with eyes open and support nearby. Only reduce support when you feel steady and the setting is safe.
+For a stiff feeling squat, try a few slow bodyweight squats to a comfortable depth, pausing briefly where you can control the position.
+For shoulders, try gentle wall slides through a pain free range.
+For balance, do a few short single leg stands on each side with eyes open and support nearby. Only reduce support when you feel steady and the setting is safe.
 
 When to use it
 Use it at a time that works for you, such as before training or after a long period at a desk.
@@ -1168,12 +1168,12 @@ A change in how you feel is information, not a diagnosis. Persistent restriction
 
 Source: https://marinlazic.com/resources/move
 
-This warm-up includes forward, lateral and rotational movement. Choose a range and load you can control, and use it before training when it suits the session.
+This warm up includes forward, lateral and rotational movement. Choose a range and load you can control, and use it before training when it suits the session.
 
 The movements
 Lateral lunges: try up to 8 per side. Step wide, sit your hips back and keep the trailing leg comfortable. Use only a depth you can control.
-Band chops or a rotational press: try up to 10 per side. Anchor the band securely at chest height. Stand side-on and press or rotate through a comfortable range, then control the return.
-Side-loaded carry: carry one dumbbell or kettlebell for a comfortable distance, then switch hands. Choose a load that lets you walk steadily without leaning or holding your breath.
+Band chops or a rotational press: try up to 10 per side. Anchor the band securely at chest height. Stand side on and press or rotate through a comfortable range, then control the return.
+Side loaded carry: carry one dumbbell or kettlebell for a comfortable distance, then switch hands. Choose a load that lets you walk steadily without leaning or holding your breath.
 
 How to scale
 If lateral lunges feel difficult, use less depth or hold a stable support for balance.
@@ -1181,7 +1181,7 @@ If you do not have a band, use a cable machine if you are familiar with it, or p
 For carries, begin with a light load and shorter distance. Increase only when the walk remains controlled.
 
 When to use it
-Use it before a training session after a brief general warm-up such as easy walking, cycling or skipping.
+Use it before a training session after a brief general warm up such as easy walking, cycling or skipping.
 The sequence may take around six to eight minutes, depending on rest and the options you choose. Stop or change an exercise if it causes pain.
 
 ### High Protein Meals List
@@ -1193,7 +1193,7 @@ Protein needs vary with body size, age, training, total food intake, health cond
 Breakfast ideas
 Four eggs scrambled with spinach and feta can provide roughly 25 to 30 grams of protein, depending on portions.
 Greek yoghurt with protein powder and berries can provide around 25 to 40 grams, depending on the yoghurt and powder used.
-Overnight oats with milk, chia seeds and protein powder can be another higher-protein option. Check product labels for the amount in your serving.
+Overnight oats with milk, chia seeds and protein powder can be another higher protein option. Check product labels for the amount in your serving.
 Including protein at breakfast may be practical if it helps you meet your daily food needs, but there is no single meal pattern that suits everyone.
 
 Lunch ideas
@@ -1204,7 +1204,7 @@ A beef mince, beans, rice and salsa bowl. Lentils or tofu can be used as alterna
 Dinner ideas
 Salmon with sweet potato and greens.
 Steak with roasted vegetables.
-Chicken stir-fry with noodles and vegetables.
+Chicken stir fry with noodles and vegetables.
 
 Snack ideas
 A protein shake with milk or a suitable alternative.
@@ -1213,8 +1213,8 @@ Beef jerky, yoghurt, eggs, tofu or edamame, depending on your preferences and di
 Nuts and fruit can add energy and fibre alongside a protein source.
 
 Working out your target
-A daily range of about 1.6 to 2.2 grams of protein per kilogram of body weight is often used in resistance-training research, but it is not appropriate for every person.
-Spread protein-containing foods across meals if that helps with appetite, training and meal planning. The amount used by the body is not limited to a fixed number at one meal.
+A daily range of about 1.6 to 2.2 grams of protein per kilogram of body weight is often used in resistance training research, but it is not appropriate for every person.
+Spread protein containing foods across meals if that helps with appetite, training and meal planning. The amount used by the body is not limited to a fixed number at one meal.
 If you have kidney disease, another medical condition, are pregnant, or have been advised to limit protein, discuss changes with your doctor or an accredited practising dietitian first.
 
 ### 4 Week Base Building Plan
@@ -1261,7 +1261,7 @@ Many adults benefit from around seven to nine hours of sleep, though needs vary.
 A cool, dark and quiet room may support sleep if you can arrange it.
 
 Food and fluids
-Include enough food and protein-containing meals to support your training and appetite. Individual needs differ.
+Include enough food and protein containing meals to support your training and appetite. Individual needs differ.
 Drink regularly across the day and adjust for heat, sweat loss, activity, food intake, medications and medical advice. Thirst, urine colour and how you feel can offer useful context, but are not clinical tests.
 Seek individual nutrition advice if you have a medical condition, a history of disordered eating or specific performance goals.
 
@@ -1296,7 +1296,7 @@ Some people stop a new routine in its first few weeks and others find it settles
 
 Source: https://marinlazic.com/resources/sleep
 
-Sleep is an important part of recovery, mood and day-to-day performance. This checklist offers general habits to test one at a time. It is not treatment for insomnia, sleep apnoea or another sleep condition.
+Sleep is an important part of recovery, mood and day to day performance. This checklist offers general habits to test one at a time. It is not treatment for insomnia, sleep apnoea or another sleep condition.
 
 Timing
 Keep bed and wake times reasonably consistent where your life allows.
@@ -1317,7 +1317,7 @@ Caffeine and alcohol
 If caffeine affects your sleep, experiment with moving it earlier in the day. Sensitivity and clearance differ between people.
 Alcohol can affect sleep for some people, including sleep later in the night. If you drink, notice your own response and avoid using alcohol as a sleep aid.
 
-Wind-down
-A repeatable pre-bed routine can help signal the end of the day. Keep it simple enough to use most nights.
+Wind down
+A repeatable pre bed routine can help signal the end of the day. Keep it simple enough to use most nights.
 Keep work tasks out of bed where possible so bed is associated with rest.
 If sleep problems persist, or you snore loudly, wake gasping, have severe daytime sleepiness or changes in mood, speak with a GP or qualified sleep clinician.

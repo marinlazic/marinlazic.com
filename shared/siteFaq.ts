@@ -25,7 +25,7 @@ export const HOME_FAQS = [
   },
   {
     q: "What does the free performance assessment include?",
-    a: "The online questionnaire covers your goals, sleep, stress, training, injuries, nutrition and recovery. It produces a coaching score, a category breakdown and an AI-assisted report. The score is based on your answers, not a clinical diagnosis.",
+    a: "The online questionnaire covers your goals, sleep, stress, training, injuries, nutrition and recovery. It produces a coaching score, a category breakdown and an AI assisted report. The score is based on your answers, not a clinical diagnosis.",
   },
   {
     q: "Who is Marin Lazic?",
@@ -48,7 +48,7 @@ export const APPLY_FAQS = [
   },
   {
     q: "Do I need to book a sales call?",
-    a: "No. The application and initial follow-up can be handled by email.",
+    a: "No. The application and initial follow up can be handled by email.",
   },
   {
     q: "Can coaching diagnose a health problem?",

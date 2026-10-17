@@ -29,7 +29,7 @@ export const resources: Resource[] = [
         heading: "The movements",
         content: [
           "Push: dumbbell bench press or overhead press. A starting point could be 3 sets of 8 to 10 reps.",
-          "Pull: barbell row or chin-up. A starting point could be 3 sets of 8 to 10 reps.",
+          "Pull: barbell row or chin up. A starting point could be 3 sets of 8 to 10 reps.",
           "Hinge: Romanian deadlift or trap bar deadlift. A starting point could be 3 sets of 6 to 8 reps.",
           "Squat: goblet squat or barbell back squat. A starting point could be 3 sets of 6 to 8 reps.",
           "Loaded carry: farmer's walk. A starting point could be 3 sets of 30 to 40 metres.",
@@ -64,32 +64,32 @@ export const resources: Resource[] = [
     kitTag: "lead-groove",
     tags: ["Strength", "Skill practice"],
     intro:
-      "Greasing the groove is a way to practise a movement often at low effort across the day. It can suit movements such as pull-ups and push-ups when the volume stays comfortable and does not interfere with other training.",
+      "Greasing the groove is a way to practise a movement often at low effort across the day. It can suit movements such as pull ups and push ups when the volume stays comfortable and does not interfere with other training.",
     sections: [
       {
         heading: "How it works",
         content: [
-          "Choose one movement you want to practise. Pull-ups and push-ups are common examples.",
+          "Choose one movement you want to practise. Pull ups and push ups are common examples.",
           "Find a comfortable fresh set, rather than testing to an absolute limit. A starting working set is often around 40 to 50% of that number.",
           "Do the working set several times across the day, with plenty of time between efforts. Start with fewer sets and add only if recovery remains good.",
           "Keep each set well short of failure. If the movement becomes slow, painful or technically messy, reduce the effort or stop for the day.",
         ],
       },
       {
-        heading: "Example: pull-ups",
+        heading: "Example: pull ups",
         content: [
-          "If six controlled pull-ups is your current fresh set, a starting working set might be two or three reps.",
+          "If six controlled pull ups is your current fresh set, a starting working set might be two or three reps.",
           "Try two or three reps on several occasions across the day, with long breaks between them.",
           "The aim is practice volume that remains manageable. Some fatigue can still occur, especially when you are new to the method.",
           "After a couple of weeks, review how the movement feels and whether your controlled set has changed. Adjust only if the extra practice is being tolerated well.",
         ],
       },
       {
-        heading: "Example: push-ups",
+        heading: "Example: push ups",
         content: [
-          "If 20 controlled push-ups is your current fresh set, a starting working set might be eight reps.",
+          "If 20 controlled push ups is your current fresh set, a starting working set might be eight reps.",
           "Do the set on a few occasions across the day, leaving plenty of time between efforts.",
-          "Use an incline, fewer repetitions or fewer sets if standard push-ups are too demanding.",
+          "Use an incline, fewer repetitions or fewer sets if standard push ups are too demanding.",
           "Review your tolerance after one or two weeks before adding more volume.",
         ],
       },
@@ -118,15 +118,15 @@ export const resources: Resource[] = [
         content: [
           "Squat to a comfortable depth: hold a supported squat position for up to 30 seconds. Keep your heels down if comfortable. Use a doorframe, bench or table for support when needed.",
           "Shoulder reach: reach one hand over your shoulder and the other behind your back. Compare sides without forcing the range. Stop if it is painful.",
-          "Single-leg balance: stand on one leg for up to 30 seconds with eyes open, near a stable support such as a bench or kitchen counter. Keep a hand close enough to steady yourself if needed.",
+          "Single leg balance: stand on one leg for up to 30 seconds with eyes open, near a stable support such as a bench or kitchen counter. Keep a hand close enough to steady yourself if needed.",
         ],
       },
       {
         heading: "Simple options",
         content: [
-          "For a stiff-feeling squat, try a few slow bodyweight squats to a comfortable depth, pausing briefly where you can control the position.",
-          "For shoulders, try gentle wall slides through a pain-free range.",
-          "For balance, do a few short single-leg stands on each side with eyes open and support nearby. Only reduce support when you feel steady and the setting is safe.",
+          "For a stiff feeling squat, try a few slow bodyweight squats to a comfortable depth, pausing briefly where you can control the position.",
+          "For shoulders, try gentle wall slides through a pain free range.",
+          "For balance, do a few short single leg stands on each side with eyes open and support nearby. Only reduce support when you feel steady and the setting is safe.",
         ],
       },
       {
@@ -146,14 +146,14 @@ export const resources: Resource[] = [
     kitTag: "lead-move",
     tags: ["Warm up", "Movement"],
     intro:
-      "This warm-up includes forward, lateral and rotational movement. Choose a range and load you can control, and use it before training when it suits the session.",
+      "This warm up includes forward, lateral and rotational movement. Choose a range and load you can control, and use it before training when it suits the session.",
     sections: [
       {
         heading: "The movements",
         content: [
           "Lateral lunges: try up to 8 per side. Step wide, sit your hips back and keep the trailing leg comfortable. Use only a depth you can control.",
-          "Band chops or a rotational press: try up to 10 per side. Anchor the band securely at chest height. Stand side-on and press or rotate through a comfortable range, then control the return.",
-          "Side-loaded carry: carry one dumbbell or kettlebell for a comfortable distance, then switch hands. Choose a load that lets you walk steadily without leaning or holding your breath.",
+          "Band chops or a rotational press: try up to 10 per side. Anchor the band securely at chest height. Stand side on and press or rotate through a comfortable range, then control the return.",
+          "Side loaded carry: carry one dumbbell or kettlebell for a comfortable distance, then switch hands. Choose a load that lets you walk steadily without leaning or holding your breath.",
         ],
       },
       {
@@ -167,7 +167,7 @@ export const resources: Resource[] = [
       {
         heading: "When to use it",
         content: [
-          "Use it before a training session after a brief general warm-up such as easy walking, cycling or skipping.",
+          "Use it before a training session after a brief general warm up such as easy walking, cycling or skipping.",
           "The sequence may take around six to eight minutes, depending on rest and the options you choose. Stop or change an exercise if it causes pain.",
         ],
       },
@@ -188,7 +188,7 @@ export const resources: Resource[] = [
         content: [
           "Four eggs scrambled with spinach and feta can provide roughly 25 to 30 grams of protein, depending on portions.",
           "Greek yoghurt with protein powder and berries can provide around 25 to 40 grams, depending on the yoghurt and powder used.",
-          "Overnight oats with milk, chia seeds and protein powder can be another higher-protein option. Check product labels for the amount in your serving.",
+          "Overnight oats with milk, chia seeds and protein powder can be another higher protein option. Check product labels for the amount in your serving.",
           "Including protein at breakfast may be practical if it helps you meet your daily food needs, but there is no single meal pattern that suits everyone.",
         ],
       },
@@ -205,7 +205,7 @@ export const resources: Resource[] = [
         content: [
           "Salmon with sweet potato and greens.",
           "Steak with roasted vegetables.",
-          "Chicken stir-fry with noodles and vegetables.",
+          "Chicken stir fry with noodles and vegetables.",
         ],
       },
       {
@@ -220,8 +220,8 @@ export const resources: Resource[] = [
       {
         heading: "Working out your target",
         content: [
-          "A daily range of about 1.6 to 2.2 grams of protein per kilogram of body weight is often used in resistance-training research, but it is not appropriate for every person.",
-          "Spread protein-containing foods across meals if that helps with appetite, training and meal planning. The amount used by the body is not limited to a fixed number at one meal.",
+          "A daily range of about 1.6 to 2.2 grams of protein per kilogram of body weight is often used in resistance training research, but it is not appropriate for every person.",
+          "Spread protein containing foods across meals if that helps with appetite, training and meal planning. The amount used by the body is not limited to a fixed number at one meal.",
           "If you have kidney disease, another medical condition, are pregnant, or have been advised to limit protein, discuss changes with your doctor or an accredited practising dietitian first.",
         ],
       },
@@ -304,7 +304,7 @@ export const resources: Resource[] = [
       {
         heading: "Food and fluids",
         content: [
-          "Include enough food and protein-containing meals to support your training and appetite. Individual needs differ.",
+          "Include enough food and protein containing meals to support your training and appetite. Individual needs differ.",
           "Drink regularly across the day and adjust for heat, sweat loss, activity, food intake, medications and medical advice. Thirst, urine colour and how you feel can offer useful context, but are not clinical tests.",
           "Seek individual nutrition advice if you have a medical condition, a history of disordered eating or specific performance goals.",
         ],
@@ -369,7 +369,7 @@ export const resources: Resource[] = [
     kitTag: "lead-sleep",
     tags: ["Sleep", "Recovery"],
     intro:
-      "Sleep is an important part of recovery, mood and day-to-day performance. This checklist offers general habits to test one at a time. It is not treatment for insomnia, sleep apnoea or another sleep condition.",
+      "Sleep is an important part of recovery, mood and day to day performance. This checklist offers general habits to test one at a time. It is not treatment for insomnia, sleep apnoea or another sleep condition.",
     sections: [
       {
         heading: "Timing",
@@ -403,9 +403,9 @@ export const resources: Resource[] = [
         ],
       },
       {
-        heading: "Wind-down",
+        heading: "Wind down",
         content: [
-          "A repeatable pre-bed routine can help signal the end of the day. Keep it simple enough to use most nights.",
+          "A repeatable pre bed routine can help signal the end of the day. Keep it simple enough to use most nights.",
           "Keep work tasks out of bed where possible so bed is associated with rest.",
           "If sleep problems persist, or you snore loudly, wake gasping, have severe daytime sleepiness or changes in mood, speak with a GP or qualified sleep clinician.",
         ],

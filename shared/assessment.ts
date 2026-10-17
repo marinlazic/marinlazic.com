@@ -114,7 +114,7 @@ export const QUESTIONS: Question[] = [
         description: "Strength development",
       },
       {
-        label: "Improve day-to-day energy",
+        label: "Improve day to day energy",
         value: "energy",
         description: "More consistent energy",
       },

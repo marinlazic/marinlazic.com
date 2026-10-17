@@ -103,7 +103,7 @@ export default function ProgramDetails() {
                   <p className="text-sm text-black/70 leading-relaxed">
                     Communication and programme adjustments are agreed as part
                     of coaching. Contact begins through the application and
-                    email follow-up.
+                    email follow up.
                   </p>
                 </div>
               </div>

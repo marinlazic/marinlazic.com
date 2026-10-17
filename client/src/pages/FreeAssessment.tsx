@@ -24,7 +24,7 @@ export default function FreeAssessment() {
         </h1>
         <p className="text-black/60 leading-relaxed mb-8">
           Review your goals, training, sleep, stress, nutrition and recovery.
-          The questionnaire produces a coaching score and an AI-assisted report
+          The questionnaire produces a coaching score and an AI assisted report
           from your answers. It is a starting point for discussion, not a
           medical diagnosis.
         </p>

@@ -23,7 +23,9 @@ describe("GEO and AEO publication regression guards", () => {
       const path = `/insights/${a.slug}`;
       const head = getPageMeta(path + "?utm_source=chatgpt");
       expect(head.canonicalPath).toBe(path);
-      expect(head.title).toContain(a.title);
+      expect(head.title).toBe(`${a.seoTitle ?? a.title} | Marin Lazic`);
+      // Search result titles are cut off around 60 characters.
+      expect((a.seoTitle ?? a.title).length).toBeLessThanOrEqual(60);
       expect(head.description).toBe(a.excerpt);
       expect(head.ogType).toBe("article");
       expect(buildHeadTags(head)).toContain(`https://marinlazic.com${path}`);

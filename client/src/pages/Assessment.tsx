@@ -1675,7 +1675,7 @@ export default function Assessment() {
                   </p>
                   <p className="text-sm sm:text-base text-white/60 leading-relaxed mb-8">
                     Coaching is shaped around your assessment responses,
-                    training history and day-to-day context. It does not
+                    training history and day to day context. It does not
                     diagnose, treat or replace medical, allied health or
                     dietetic care.
                   </p>

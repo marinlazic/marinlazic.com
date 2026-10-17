@@ -489,7 +489,7 @@ function Timeline() {
               and context
             </h2>
             <p className="text-sm text-black/50 mt-4 leading-relaxed">
-              Experience across high-performance sport and health coaching.
+              Experience across high performance sport and health coaching.
             </p>
           </div>
           <div className="lg:col-span-9">
@@ -1124,7 +1124,7 @@ function SubstackArticles() {
               Substack
             </h2>
             <p className="text-sm text-black/50 mt-4 leading-relaxed">
-              Long-form writing on training and recovery.
+              Long form writing on training and recovery.
             </p>
             <a
               href="https://marinlazic.substack.com/"

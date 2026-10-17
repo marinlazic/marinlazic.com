@@ -180,8 +180,8 @@ export default function Insights() {
                 Insights
               </h1>
               <p className="text-sm text-black/50 mt-4 leading-relaxed max-w-sm">
-                Evidence-based protocols, data-driven strategies, and real-world
-                coaching insights for founders and high performers.
+                Research linked articles on training, recovery, sleep and nutrition,
+                written for founders and busy professionals.
               </p>
             </div>
             <div className="lg:col-span-8">
