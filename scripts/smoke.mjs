@@ -53,6 +53,17 @@ await page("/insights/how-to-boost-your-hrv", "application/ld+json");
 await page("/program", "Start the 4 week programme");
 await page("/report/not-a-real-token-1234", "Saved report");
 
+// 1b. Dashboard shell loads and its API is locked
+{
+  for (const p of ["/admin", "/admin/contacts", "/admin/traffic"]) {
+    const res = await fetch(`${BASE}${p}`);
+    const html = await res.text();
+    record(`dashboard ${p}`, res.status === 200 && /id="root"/.test(html) && /noindex/.test(html), `status ${res.status}`);
+  }
+  const r = await trpc("admin.overview", { days: 30 }, "GET");
+  record("dashboard API rejects anonymous", r.status === 401 || r.status === 403, `status ${r.status}`);
+}
+
 // 2. Health
 {
   const r = await trpc("system.health", { timestamp: Date.now() }, "GET");
