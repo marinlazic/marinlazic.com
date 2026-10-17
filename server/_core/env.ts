@@ -21,7 +21,7 @@ export const ENV = {
   // Gemini, used for the assessment report. Called through Google's
   // OpenAI compatible endpoint so the request shape stays the same.
   geminiApiKey: process.env.GEMINI_API_KEY ?? "",
-  geminiModel: process.env.GEMINI_MODEL ?? "gemini-2.5-flash",
+  geminiModel: process.env.GEMINI_MODEL ?? "gemini-3.8-flash",
 
   // Public origin of the site, used in emails and links.
   siteOrigin: (process.env.CANONICAL_ORIGIN ?? "https://marinlazic.com").replace(/\/$/, ""),

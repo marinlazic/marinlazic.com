@@ -23,8 +23,14 @@ let _pool: Pool | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
+      // Neon needs TLS. Strip sslmode from the URL and set ssl explicitly so
+      // the pg driver does not print its sslmode warning on every request.
+      const url = new URL(process.env.DATABASE_URL);
+      const wantsSsl = url.searchParams.get("sslmode") !== "disable";
+      url.searchParams.delete("sslmode");
       _pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
+        connectionString: url.toString(),
+        ssl: wantsSsl ? { rejectUnauthorized: true } : undefined,
         max: 3,
         idleTimeoutMillis: 10_000,
         connectionTimeoutMillis: 8_000,

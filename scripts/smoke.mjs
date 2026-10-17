@@ -38,7 +38,9 @@ async function page(path, mustContain) {
   const res = await fetch(`${BASE}${path}`, { headers: { "user-agent": "marinlazic-smoke/1.0" } });
   const html = await res.text();
   const ok = res.status === 200 && (!mustContain || html.includes(mustContain));
-  record(`page ${path}`, ok, `status ${res.status}${mustContain && !html.includes(mustContain) ? ", text missing" : ""}`);
+  const shell = html.includes("<!--app-html-->") || /id="root"><\/div>/.test(html);
+  record(`page ${path}`, ok, `status ${res.status}${mustContain && !html.includes(mustContain) ? ", text missing" : ""}${shell ? ", SSR fell back to the shell" : ""}`);
+  if (!ok) console.log("   root snippet:", (html.split('id="root">')[1] || "").slice(0, 200).replace(/\s+/g, " "));
   return html;
 }
 
@@ -49,7 +51,7 @@ await page("/resources", "images/resources/resources-hero");
 await page("/resources/sleep", "images/resources/sleep-1200");
 await page("/insights/how-to-boost-your-hrv", "application/ld+json");
 await page("/program", "Start the 4 week programme");
-await page("/report/not-a-real-token-1234", "Report not found");
+await page("/report/not-a-real-token-1234", "Saved report");
 
 // 2. Health
 {

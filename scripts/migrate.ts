@@ -12,7 +12,10 @@ if (!url) {
   process.exit(0);
 }
 
-const pool = new Pool({ connectionString: url, max: 1 });
+const parsed = new URL(url);
+const wantsSsl = parsed.searchParams.get("sslmode") !== "disable";
+parsed.searchParams.delete("sslmode");
+const pool = new Pool({ connectionString: parsed.toString(), ssl: wantsSsl ? { rejectUnauthorized: true } : undefined, max: 1 });
 const db = drizzle(pool);
 try {
   await migrate(db, { migrationsFolder: path.resolve(import.meta.dirname, "../drizzle/migrations") });
