@@ -9,6 +9,8 @@ import {
 import { sendAssessmentReminderEmail } from "./email";
 import { kitOnAssessmentAbandoned } from "./kit";
 import { storageGetBuffer } from "./storage";
+import { runDiagnostics } from "./diagnostics";
+import { notifyOwner } from "./_core/notification";
 
 function authorised(req: Request): boolean {
   if (!ENV.cronSecret) return false;
@@ -69,7 +71,21 @@ export function registerJobRoutes(app: Express) {
     }
     try {
       const reminders = await runAbandonedAssessmentReminders();
-      res.json({ ok: true, reminders, ranAt: new Date().toISOString() });
+      // Daily service check. Emails Marin only when something that is set up
+      // has stopped working, so a quiet day means all is well.
+      const diagnostics = await runDiagnostics();
+      console.log(
+        `[Jobs] Diagnostics: ${diagnostics.ok ? "all ok" : "failed: " + diagnostics.failed.join(", ")}` +
+          (diagnostics.skipped.length ? `; not set up: ${diagnostics.skipped.join(", ")}` : "")
+      );
+      if (!diagnostics.ok) {
+        const lines = diagnostics.failed.map(k => `${k}: ${diagnostics.checks[k].detail}`);
+        await notifyOwner({
+          title: `marinlazic.com check failed: ${diagnostics.failed.join(", ")}`,
+          content: `The daily site check found a problem.\n\n${lines.join("\n")}\n\nChecked at ${diagnostics.ranAt}.`,
+        }).catch(e => console.warn("[Jobs] Could not email the diagnostics result:", e));
+      }
+      res.json({ ok: true, reminders, diagnostics, ranAt: new Date().toISOString() });
     } catch (error) {
       console.error("[Jobs] Daily job failed:", error);
       res.status(500).json({ ok: false });

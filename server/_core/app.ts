@@ -8,6 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { registerJobRoutes } from "../jobs";
+import { registerDiagnosticsRoute } from "../diagnostics";
 
 /**
  * Builds the Express app. Used by the local server (index.ts) and by the
@@ -27,6 +28,9 @@ export async function createApp(options: { httpServer?: Server } = {}): Promise<
 
   // Scheduled job endpoint and report PDF download
   registerJobRoutes(app);
+
+  // Service checks at /api/diagnostics (CRON_SECRET bearer), used by the smoke test
+  registerDiagnosticsRoute(app);
 
   // tRPC API
   app.use(

@@ -33,6 +33,7 @@ jobs:
         env:
           BASE_URL: ${{ inputs.base_url }}
           TEST_EMAIL: ${{ inputs.test_email }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
       - name: Publish results to the smoke-results branch
         run: |
           mkdir -p /tmp/results && cp smoke-results.txt /tmp/results/

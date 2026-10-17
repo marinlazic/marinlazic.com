@@ -158,6 +158,26 @@ if (reportUrl) {
   record("cron endpoint requires secret", res.status === 401, `status ${res.status}`);
 }
 
+// 10. Service checks with the real keys (needs CRON_SECRET). Reports ok or a
+// short reason per service, never a key value.
+if (process.env.CRON_SECRET) {
+  const res = await fetch(`${BASE}/api/diagnostics`, {
+    headers: { authorization: `Bearer ${process.env.CRON_SECRET}` },
+  });
+  let body = null;
+  try { body = await res.json(); } catch { /* not json */ }
+  if (res.status !== 200 || !body?.checks) {
+    record("diagnostics endpoint", false, `status ${res.status}`);
+  } else {
+    for (const [name, check] of Object.entries(body.checks)) {
+      if (check.skipped) console.log(`SKIP  service ${name}  (${check.detail})`);
+      else record(`service ${name}`, check.ok, check.detail);
+    }
+  }
+} else {
+  console.log("SKIP  service checks (CRON_SECRET not provided)");
+}
+
 const failed = results.filter(r => !r.ok);
 console.log(`\n${results.length - failed.length} passed, ${failed.length} failed`);
 process.exit(failed.length ? 1 : 0);
