@@ -1,0 +1,27 @@
+name: Smoke test the deployed site
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Site to test
+        required: true
+        default: https://marinlazic-com.vercel.app
+      test_email:
+        description: Email that receives the test emails
+        required: true
+        default: marin+smoke@marinlazic.coach
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --experimental-strip-types scripts/smoke.mjs
+        env:
+          BASE_URL: ${{ inputs.base_url }}
+          TEST_EMAIL: ${{ inputs.test_email }}
