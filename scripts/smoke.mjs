@@ -159,8 +159,10 @@ if (reportUrl) {
     origin: BASE,
   });
   const url = r.body?.result?.data?.json?.url;
+  const msg = String(r.body?.error?.json?.message || r.text || "");
   if (r.status === 200 && url) record("stripe checkout session", true, url.slice(0, 40) + "...");
-  else record("stripe checkout session", false, `status ${r.status}: ${(r.body?.error?.json?.message || r.text).slice(0, 160)}`);
+  else if (/not configured/i.test(msg)) console.log("SKIP  stripe checkout session  (STRIPE_SECRET_KEY not set yet)");
+  else record("stripe checkout session", false, `status ${r.status}: ${msg.slice(0, 160)}`);
 }
 
 // 9. Cron endpoint is protected

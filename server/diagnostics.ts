@@ -97,29 +97,37 @@ async function checkKit(): Promise<Check> {
 
 async function checkGemini(): Promise<Check> {
   if (!ENV.geminiApiKey) return notSet("GEMINI_API_KEY");
-  try {
-    const res = await withTimeout(
-      fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${ENV.geminiApiKey}`,
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          model: ENV.geminiModel,
-          messages: [{ role: "user", content: "Reply with the single word OK." }],
-          max_tokens: 5,
+  // Google's endpoint returns a 503 "overloaded" now and then. Try three
+  // times a few seconds apart so a blip does not count as an outage.
+  let last: Check = { ok: false, detail: "no attempt" };
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await withTimeout(
+        fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${ENV.geminiApiKey}`,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            model: ENV.geminiModel,
+            messages: [{ role: "user", content: "Reply with the single word OK." }],
+            max_tokens: 5,
+          }),
         }),
-      }),
-      30000
-    );
-    if (res.status === 401 || res.status === 403) return { ok: false, detail: `key rejected (${res.status})` };
-    if (res.status === 404) return { ok: false, detail: `model ${ENV.geminiModel} not found (404)` };
-    if (!res.ok) return { ok: false, detail: `unexpected status ${res.status}` };
-    return { ok: true, detail: `model ${ENV.geminiModel} answered` };
-  } catch (e) {
-    return { ok: false, detail: errText(e) };
+        30000
+      );
+      if (res.ok) return { ok: true, detail: `model ${ENV.geminiModel} answered${attempt > 1 ? ` on attempt ${attempt}` : ""}` };
+      if (res.status === 401 || res.status === 403) return { ok: false, detail: `key rejected (${res.status})` };
+      if (res.status === 404) return { ok: false, detail: `model ${ENV.geminiModel} not found (404)` };
+      last = { ok: false, detail: res.status === 503 || res.status === 429 ? `Google's service was busy (${res.status}) on ${attempt} attempts; the site retries reports automatically` : `unexpected status ${res.status}` };
+      if (res.status !== 503 && res.status !== 429 && res.status < 500) return last;
+    } catch (e) {
+      last = { ok: false, detail: errText(e) };
+    }
+    if (attempt < 3) await new Promise(r => setTimeout(r, 4000));
   }
+  return last;
 }
 
 async function checkBlob(): Promise<Check> {

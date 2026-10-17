@@ -311,21 +311,37 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     payload.response_format = normalizedResponseFormat;
   }
 
-  const response = await fetch(resolveApiUrl(), {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${ENV.geminiApiKey}`,
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(
-      `LLM invoke failed: ${response.status} ${response.statusText} – ${errorText}`
-    );
+  // Google returns 503 "overloaded" and 429 now and then. Retry those a few
+  // times with a short wait rather than failing the person's report.
+  const RETRY_STATUSES = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
+  const delays = [2000, 5000, 10000];
+  let lastError: Error | null = null;
+  for (let attempt = 0; attempt <= delays.length; attempt++) {
+    let response: Response;
+    try {
+      response = await fetch(resolveApiUrl(), {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${ENV.geminiApiKey}`,
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      // Network level failures are retried the same way as a busy server.
+      lastError = error instanceof Error ? error : new Error(String(error));
+      response = null as unknown as Response;
+    }
+    if (response) {
+      if (response.ok) return (await response.json()) as InvokeResult;
+      const errorText = await response.text();
+      lastError = new Error(`LLM invoke failed: ${response.status} ${response.statusText} – ${errorText.slice(0, 500)}`);
+      if (!RETRY_STATUSES.has(response.status)) throw lastError;
+    }
+    if (attempt < delays.length) {
+      console.warn(`[LLM] attempt ${attempt + 1} failed (${(lastError?.message ?? "unknown").slice(0, 80)}), retrying in ${delays[attempt] / 1000}s`);
+      await new Promise(r => setTimeout(r, delays[attempt]));
+    }
   }
-
-  return (await response.json()) as InvokeResult;
+  throw lastError ?? new Error("LLM invoke failed");
 }

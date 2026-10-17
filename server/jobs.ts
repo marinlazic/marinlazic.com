@@ -73,7 +73,12 @@ export function registerJobRoutes(app: Express) {
       const reminders = await runAbandonedAssessmentReminders();
       // Daily service check. Emails Marin only when something that is set up
       // has stopped working, so a quiet day means all is well.
-      const diagnostics = await runDiagnostics();
+      let diagnostics = await runDiagnostics();
+      if (!diagnostics.ok) {
+        // Give a passing blip 20 seconds and look again before emailing.
+        await new Promise(r => setTimeout(r, 20_000));
+        diagnostics = await runDiagnostics();
+      }
       console.log(
         `[Jobs] Diagnostics: ${diagnostics.ok ? "all ok" : "failed: " + diagnostics.failed.join(", ")}` +
           (diagnostics.skipped.length ? `; not set up: ${diagnostics.skipped.join(", ")}` : "")
