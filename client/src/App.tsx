@@ -18,6 +18,7 @@ import BloodWork from "./pages/BloodWork";
 import HrvConditioning from "./pages/HrvConditioning";
 import ResourcePage from "./pages/ResourcePage";
 import InformationPage from "./pages/InformationPage";
+import ResourcesIndex from "./pages/ResourcesIndex";
 import { Head } from "./components/Head";
 import { RouteAnalytics } from "./components/RouteAnalytics";
 import Report from "./pages/Report";
@@ -51,7 +52,7 @@ function Routes() {
       <Route path="/bloodwork" component={BloodWork} />
       <Route path="/hrv-conditioning" component={HrvConditioning} />
       <Route path="/hrv-program" component={HrvConditioning} />
-      <Route path="/resources" component={InformationPage} />
+      <Route path="/resources" component={ResourcesIndex} />
       <Route path="/media" component={InformationPage} />
       <Route path="/resources/:slug" component={ResourcePage} />
       <Route path="/about" component={InformationPage} />

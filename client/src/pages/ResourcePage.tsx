@@ -18,7 +18,7 @@ export const resources: Resource[] = [
   {
     slug: "5-movement-template",
     aliases: ["template", "fewer"],
-    title: "The 5-Movement Training Template",
+    title: "The 5 Movement Training Template",
     keyword: "FEWER",
     kitTag: "lead-fewer",
     tags: ["Strength", "Training"],
@@ -106,7 +106,7 @@ export const resources: Resource[] = [
   {
     slug: "daily-maintenance-routine",
     aliases: ["routine"],
-    title: "5-Minute Daily Maintenance Routine",
+    title: "5 Minute Daily Maintenance Routine",
     keyword: "ROUTINE",
     kitTag: "lead-routine",
     tags: ["Movement", "Balance", "Recovery"],
@@ -141,10 +141,10 @@ export const resources: Resource[] = [
   {
     slug: "multi-direction-warmup",
     aliases: ["move"],
-    title: "Multi-Direction Warm-Up",
+    title: "Multi Direction Warm Up",
     keyword: "MOVE",
     kitTag: "lead-move",
-    tags: ["Warm-up", "Movement"],
+    tags: ["Warm up", "Movement"],
     intro:
       "This warm-up includes forward, lateral and rotational movement. Choose a range and load you can control, and use it before training when it suits the session.",
     sections: [
@@ -176,7 +176,7 @@ export const resources: Resource[] = [
   {
     slug: "high-protein-meals",
     aliases: ["protein"],
-    title: "High-Protein Meals List",
+    title: "High Protein Meals List",
     keyword: "PROTEIN",
     kitTag: "lead-protein",
     tags: ["Nutrition", "Recovery"],
@@ -230,7 +230,7 @@ export const resources: Resource[] = [
   {
     slug: "base-building-plan",
     aliases: ["engine"],
-    title: "4-Week Base-Building Plan",
+    title: "4 Week Base Building Plan",
     keyword: "ENGINE",
     kitTag: "lead-engine",
     tags: ["Aerobic fitness", "Training"],
@@ -330,7 +330,7 @@ export const resources: Resource[] = [
   {
     slug: "week-3-dip-guide",
     aliases: ["week3"],
-    title: "The Week-3 Dip Guide",
+    title: "The Week 3 Dip Guide",
     keyword: "WEEK3",
     kitTag: "lead-week3",
     tags: ["Habits", "Mindset", "Training"],

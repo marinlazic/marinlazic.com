@@ -1,7 +1,6 @@
 import { useLocation } from "wouter";
 import {
   resourcePhoto,
-  resourcesHero,
   srcSet,
   resourceImagePath,
   type ResourcePhoto,
@@ -220,93 +219,6 @@ export const informationPages: Record<string, InformationPageConfig> = {
     ],
     cta: { label: "Browse resources", href: "/resources" },
   },
-  "/resources": {
-    title: "Free health and performance resources | Marin Lazic",
-    h1: "Resources",
-    description:
-      "Nine short, educational training, recovery, nutrition and sleep resources from Marin Lazic.",
-    label: "Resources",
-    hero: resourcesHero,
-    sections: [
-      {
-        heading: "Short guides for practice",
-        content: [
-          "These resources are short educational guides for training, recovery, nutrition and sleep. Take what fits your experience and context, and adjust when needed.",
-          "They are not medical advice. Stop an activity if it causes pain, and seek advice from a qualified clinician for symptoms, injuries or health concerns.",
-        ],
-      },
-      {
-        heading: "Resource library",
-        content: ["Choose a guide to read the full resource."],
-        cards: true,
-        links: [
-          {
-            label: "The 5-Movement Training Template",
-            href: "/resources/template",
-            photo: "template",
-            description:
-              "A simple push, pull, hinge, squat and carry template.",
-          },
-          {
-            label: "Greasing the Groove Guide",
-            href: "/resources/groove",
-            photo: "groove",
-            description:
-              "Low-effort practice for a movement such as a pull-up or push-up.",
-          },
-          {
-            label: "5-Minute Daily Maintenance Routine",
-            href: "/resources/routine",
-            photo: "routine",
-            description:
-              "A brief movement and balance check with scaled options.",
-          },
-          {
-            label: "Multi-Direction Warm-Up",
-            href: "/resources/move",
-            photo: "move",
-            description:
-              "Warm-up movements for forward, lateral and rotational work.",
-          },
-          {
-            label: "High-Protein Meals List",
-            href: "/resources/protein",
-            photo: "protein",
-            description:
-              "Meal ideas and protein amounts to discuss with your needs in mind.",
-          },
-          {
-            label: "4-Week Base-Building Plan",
-            href: "/resources/engine",
-            photo: "engine",
-            description:
-              "A flexible example for building easy aerobic work gradually.",
-          },
-          {
-            label: "Daily Recovery Checklist",
-            href: "/resources/recover",
-            photo: "recover",
-            description:
-              "Sleep, food, fluids, movement and stress prompts for reflection.",
-          },
-          {
-            label: "The Week-3 Dip Guide",
-            href: "/resources/week3",
-            photo: "week3",
-            description:
-              "Ways to respond when a new routine feels harder to maintain.",
-          },
-          {
-            label: "The Sleep Checklist",
-            href: "/resources/sleep",
-            photo: "sleep",
-            description:
-              "A checklist for timing, light, environment and wind-down habits.",
-          },
-        ],
-      },
-    ],
-  },
   "/media": {
     title: "Media and Interviews | Marin Lazic",
     h1: "Media and interviews",
@@ -340,7 +252,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
 
 void MEDIA_DESCRIPTION;
 
-function Picture({
+export function Picture({
   photo,
   sizes,
   className,
@@ -364,13 +276,13 @@ function Picture({
         loading={eager ? "eager" : "lazy"}
         decoding="async"
         width={largest}
-        height={photo.base === "resources-hero" ? largest / 2 : largest}
+        height={photo.aspect ? Math.round((largest * photo.aspect[1]) / photo.aspect[0]) : largest}
       />
     </picture>
   );
 }
 
-function Navigation() {
+export function Navigation() {
   return (
     <header className="border-b border-black/10">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-6">
@@ -418,7 +330,7 @@ function Navigation() {
   );
 }
 
-function Breadcrumbs({ label }: { label: string }) {
+export function Breadcrumbs({ label }: { label: string }) {
   return (
     <nav
       aria-label="Breadcrumb"

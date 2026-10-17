@@ -1,24 +1,28 @@
-// Photos for the Resources section. All black and white, graded to match the
-// Insights images. Cards are square (1200x1200), the hero is 2:1 (1800x900).
+// Photos for the Resources section. Black and white, graded bright enough
+// that the subject reads at a glance. Cards are square (1200x1200), the
+// featured photo is 3:2 (1800x1200). Nobody topless.
 // Files live in client/public/images/resources as jpg with webp variants.
 
 export type ResourcePhoto = {
   base: string;
   alt: string;
   widths: number[];
+  /** Width to height. Square when omitted. */
+  aspect?: [number, number];
 };
 
 const CARD_WIDTHS = [600, 1200];
 
 export const resourcesHero: ResourcePhoto = {
   base: "resources-hero",
-  alt: "Marin Lazic training outdoors with a kettlebell on a Sydney court",
+  alt: "Athlete squatting with a foam roller held in front on a gym turf",
   widths: [600, 1200, 1800],
+  aspect: [3, 2],
 };
 
 const photos: Record<string, ResourcePhoto> = {
   template: { base: "template", alt: "Athlete working with a sandbag in a gym", widths: CARD_WIDTHS },
-  groove: { base: "groove", alt: "Chin up on an outdoor bar against a timber wall", widths: CARD_WIDTHS },
+  groove: { base: "groove", alt: "Push up on a gym floor in a white t shirt", widths: CARD_WIDTHS },
   routine: { base: "routine", alt: "Two people on the beach at first light with surfboards", widths: CARD_WIDTHS },
   move: { base: "move", alt: "Overhead medicine ball throw outdoors", widths: CARD_WIDTHS },
   protein: { base: "protein", alt: "A plate of eggs, meat, bread and salad", widths: CARD_WIDTHS },
