@@ -106,7 +106,7 @@ export default function Apply() {
   // ─── Confirmation Screen (persistent, not a toast) ──────
   if (submitted) {
     return (
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
         <header className="border-b border-black/10">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
@@ -128,11 +128,11 @@ export default function Apply() {
             transition={{ duration: 0.4 }}
             className="max-w-lg w-full text-center"
           >
-            <CheckCircle className="w-16 h-16 text-[#E53935] mx-auto mb-8" />
+            <CheckCircle className="w-16 h-16 text-black mx-auto mb-8" />
             <h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight mb-4">
               Application Received
             </h1>
-            <div className="w-12 h-[2px] bg-[#E53935] mx-auto mb-8" />
+            <div className="w-12 h-[2px] bg-[#2F6BF0] mx-auto mb-8" />
             <p className="text-lg text-black/60 leading-relaxed mb-4">
               You will hear from me personally by email.
             </p>
@@ -153,7 +153,7 @@ export default function Apply() {
 
   // ─── Application Form ──────────────────────────────────
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
@@ -171,7 +171,7 @@ export default function Apply() {
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
           {/* Headline */}
-          <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
             Apply for Coaching
           </h1>
@@ -180,7 +180,7 @@ export default function Apply() {
           </p>
 
           {/* Proof Block */}
-          <div className="border-l-2 border-[#E53935] pl-5 mb-8 space-y-2">
+          <div className="border-l-2 border-[#2F6BF0] pl-5 mb-8 space-y-2">
             <p className="text-sm text-black/70 leading-relaxed">
               Strength and Conditioning Coach for the Australian Men's Water
               Polo Team, including preparation for Paris 2024.
@@ -197,8 +197,8 @@ export default function Apply() {
 
           {/* Scarcity line */}
           <div className="mb-12 flex items-center gap-3">
-            <div className="w-2 h-2 bg-[#E53935] rounded-full animate-pulse" />
-            <p className="text-xs tracking-[0.1em] uppercase text-[#E53935] font-semibold">
+            <div className="w-2 h-2 bg-[#2F6BF0] rounded-full animate-pulse" />
+            <p className="text-xs tracking-[0.1em] uppercase text-black font-semibold">
               Availability is confirmed after your application
             </p>
           </div>
@@ -361,7 +361,7 @@ export default function Apply() {
             <button
               type="submit"
               disabled={submitApplication.isPending}
-              className="w-full sm:w-auto bg-black text-white px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[52px]"
+              className="w-full sm:w-auto bg-black text-white px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[52px]"
             >
               {submitApplication.isPending ? (
                 <>

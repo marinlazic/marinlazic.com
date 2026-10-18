@@ -2,7 +2,7 @@ import { ArrowRight, XCircle } from "lucide-react";
 
 export default function PaymentCancel() {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a href="/" className="font-heading font-bold text-sm tracking-[0.2em] uppercase">ML</a>
@@ -13,7 +13,7 @@ export default function PaymentCancel() {
       <main className="flex-1 flex items-center justify-center px-5 py-16">
         <div className="max-w-lg w-full text-center">
           <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8">
-            <XCircle className="w-8 h-8 text-[#E53935]" />
+            <XCircle className="w-8 h-8 text-black" />
           </div>
           <h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight mb-4">
             No Worries.
@@ -28,7 +28,7 @@ export default function PaymentCancel() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/assessment"
-              className="inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
             >
               Retake Assessment <ArrowRight className="w-3 h-3" />
             </a>

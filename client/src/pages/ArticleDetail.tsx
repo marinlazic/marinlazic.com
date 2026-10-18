@@ -164,7 +164,7 @@ function ArticleContent({ content }: { content: string }) {
             {...(external
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
-            className="text-[#E53935] underline underline-offset-2 hover:text-[#C62828]"
+            className="text-black underline underline-offset-2 hover:text-black/70"
           >
             {link[1]}
           </a>
@@ -182,44 +182,44 @@ function ArticleContent({ content }: { content: string }) {
   const getHeadingIcon = (text: string) => {
     const lower = text.toLowerCase();
     if (lower.includes("key takeaway"))
-      return <CheckCircle className="w-5 h-5 text-[#E53935]" />;
+      return <CheckCircle className="w-5 h-5 text-black" />;
     if (lower.includes("step"))
-      return <Target className="w-5 h-5 text-[#E53935]" />;
+      return <Target className="w-5 h-5 text-black" />;
     if (lower.includes("how it works") || lower.includes("client journey"))
-      return <Target className="w-5 h-5 text-[#E53935]" />;
+      return <Target className="w-5 h-5 text-black" />;
     if (
       lower.includes("roi") ||
       lower.includes("investment") ||
       lower.includes("cost")
     )
-      return <TrendingUp className="w-5 h-5 text-[#E53935]" />;
+      return <TrendingUp className="w-5 h-5 text-black" />;
     if (lower.includes("bottom line"))
-      return <Zap className="w-5 h-5 text-[#E53935]" />;
+      return <Zap className="w-5 h-5 text-black" />;
     if (lower.includes("protocol") || lower.includes("factor"))
-      return <Activity className="w-5 h-5 text-[#E53935]" />;
+      return <Activity className="w-5 h-5 text-black" />;
     if (lower.includes("sleep") || lower.includes("wind-down"))
-      return <Moon className="w-5 h-5 text-[#E53935]" />;
+      return <Moon className="w-5 h-5 text-black" />;
     if (lower.includes("phase") || lower.includes("progression"))
-      return <Dumbbell className="w-5 h-5 text-[#E53935]" />;
+      return <Dumbbell className="w-5 h-5 text-black" />;
     if (
       lower.includes("cognitive") ||
       lower.includes("brain") ||
       lower.includes("mindset")
     )
-      return <Brain className="w-5 h-5 text-[#E53935]" />;
+      return <Brain className="w-5 h-5 text-black" />;
     if (
       lower.includes("concern") ||
       lower.includes("safe") ||
       lower.includes("contamination")
     )
-      return <Shield className="w-5 h-5 text-[#E53935]" />;
+      return <Shield className="w-5 h-5 text-black" />;
     if (
       lower.includes("what is") ||
       lower.includes("why") ||
       lower.includes("guide") ||
       lower.includes("matter")
     )
-      return <BookOpen className="w-5 h-5 text-[#E53935]" />;
+      return <BookOpen className="w-5 h-5 text-black" />;
     return null;
   };
 
@@ -277,7 +277,7 @@ function ArticleContent({ content }: { content: string }) {
                   key={bi}
                   className="flex gap-4 py-3.5 border-b border-black/5 last:border-0"
                 >
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2.5 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2.5 shrink-0" />
                   <p className="text-[15px] leading-[1.8] text-black/70">
                     {renderInline(item)}
                   </p>
@@ -310,7 +310,7 @@ function ArticleContent({ content }: { content: string }) {
                     key={ni}
                     className="flex gap-4 py-3.5 border-b border-black/5 last:border-0"
                   >
-                    <div className="w-6 h-6 bg-[#E53935] flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-6 h-6 bg-[#2F6BF0] flex items-center justify-center shrink-0 mt-0.5">
                       <span className="text-white font-heading font-bold text-[11px]">
                         {num}
                       </span>
@@ -338,7 +338,7 @@ function ArticleContent({ content }: { content: string }) {
                       {section.content}
                     </h2>
                   </div>
-                  <div className="w-12 h-0.5 bg-[#E53935]" />
+                  <div className="w-12 h-0.5 bg-[#2F6BF0]" />
                 </div>
               );
             }
@@ -357,7 +357,7 @@ function ArticleContent({ content }: { content: string }) {
                 return (
                   <div
                     key={idx}
-                    className="bg-[#FAFAFA] border-l-3 border-[#E53935] p-6 sm:p-8 my-6"
+                    className="bg-white border-l-3 border-[#2F6BF0] p-6 sm:p-8 my-6"
                   >
                     <p className="text-[15px] leading-[1.85] text-black/75">
                       {renderInline(section.content)}
@@ -375,7 +375,7 @@ function ArticleContent({ content }: { content: string }) {
                       key={idx}
                       className="mt-10 mb-4 flex items-start gap-4"
                     >
-                      <div className="shrink-0 w-10 h-10 bg-[#E53935] flex items-center justify-center">
+                      <div className="shrink-0 w-10 h-10 bg-[#2F6BF0] flex items-center justify-center">
                         <span className="text-white font-heading font-bold text-sm">
                           {stepMatch[1].replace("Step ", "")}
                         </span>
@@ -407,9 +407,9 @@ function ArticleContent({ content }: { content: string }) {
               return (
                 <blockquote
                   key={idx}
-                  className="relative my-10 py-6 px-8 bg-[#FAFAFA] border-l-3 border-[#E53935]"
+                  className="relative my-10 py-6 px-8 bg-white border-l-3 border-[#2F6BF0]"
                 >
-                  <div className="absolute -top-3 left-6 text-[#E53935] text-4xl font-serif leading-none">
+                  <div className="absolute -top-3 left-6 text-black text-4xl font-serif leading-none">
                     "
                   </div>
                   <p className="text-[15px] leading-[1.85] text-black/65 italic pt-2">
@@ -433,7 +433,7 @@ function ArticleContent({ content }: { content: string }) {
                 >
                   <table className="w-full text-sm border-collapse">
                     <thead>
-                      <tr className="bg-[#FAFAFA]">
+                      <tr className="bg-white">
                         {rows[0]?.map((cell, ci) => (
                           <th
                             key={ci}
@@ -448,7 +448,7 @@ function ArticleContent({ content }: { content: string }) {
                       {rows.slice(1).map((row, ri) => (
                         <tr
                           key={ri}
-                          className="border-b border-black/5 hover:bg-[#FAFAFA]/50 transition-colors"
+                          className="border-b border-black/5 hover:bg-white/50 transition-colors"
                         >
                           {row.map((cell, ci) => (
                             <td
@@ -496,12 +496,12 @@ export default function ArticleDetail() {
 
   if (!article) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4F4F4] flex items-center justify-center">
         <div className="text-center">
           <h1 className="font-heading text-2xl font-bold mb-4">
             Article not found
           </h1>
-          <Link href="/insights" className="text-sm text-[#E53935] font-medium">
+          <Link href="/insights" className="text-sm text-black font-medium">
             Back to Insights
           </Link>
         </div>
@@ -510,9 +510,9 @@ export default function ArticleDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-[#F4F4F4] text-black">
       {/* Minimal nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-black/10">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F4F4F4]/95 backdrop-blur-sm border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between h-14">
           <a
             href="/"
@@ -535,7 +535,7 @@ export default function ArticleDetail() {
             </a>
             <a
               href="/apply"
-              className="bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-4 py-2 hover:bg-[#C62828] transition-colors font-medium"
+              className="bg-black text-white text-xs tracking-[0.15em] uppercase px-4 py-2 hover:bg-black/80 transition-colors font-medium"
             >
               Apply
             </a>
@@ -560,7 +560,7 @@ export default function ArticleDetail() {
             <span aria-current="page">{article.title}</span>
           </nav>
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-medium">
+            <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
               {article.category}
             </span>
             <span className="text-[10px] text-black/30">|</span>
@@ -592,7 +592,7 @@ export default function ArticleDetail() {
               <a
                 href="/about"
                 rel="author"
-                className="text-sm font-medium block hover:text-[#E53935]"
+                className="text-sm font-medium block hover:text-black/60"
               >
                 Marin Lazic
               </a>
@@ -637,7 +637,7 @@ export default function ArticleDetail() {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 bg-[#FAFAFA] border border-black/8 p-8 sm:p-10 text-center">
+        <div className="mt-12 bg-white border border-black/8 p-8 sm:p-10 text-center">
           <h3 className="font-heading text-xl sm:text-2xl font-bold tracking-[-0.02em] mb-3">
             Want protocols like these, personalised for you?
           </h3>
@@ -648,7 +648,7 @@ export default function ArticleDetail() {
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="/apply"
-              className="inline-block bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-[#C62828] transition-colors font-medium"
+              className="inline-block bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium"
             >
               Apply for Coaching
             </a>
@@ -664,7 +664,7 @@ export default function ArticleDetail() {
 
       {/* Related Articles */}
       {related.length > 0 && (
-        <section className="py-16 bg-[#FAFAFA] border-t border-black/10">
+        <section className="py-16 bg-white border-t border-black/10">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
             <span className="text-[10px] tracking-[0.2em] uppercase text-black/30 font-medium mb-6 block">
               Related Insights
@@ -685,13 +685,13 @@ export default function ArticleDetail() {
                     />
                   </div>
                   <div className="p-5">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-medium">
+                    <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
                       {a.category}
                     </span>
-                    <h3 className="font-heading font-bold text-sm tracking-[-0.01em] leading-snug mt-2 mb-2 group-hover:text-[#E53935] transition-colors">
+                    <h3 className="font-heading font-bold text-sm tracking-[-0.01em] leading-snug mt-2 mb-2 group-hover:text-black/60 transition-colors">
                       {a.title}
                     </h3>
-                    <span className="inline-flex items-center gap-1.5 text-xs text-[#E53935] font-medium tracking-[0.1em] uppercase">
+                    <span className="inline-flex items-center gap-1.5 text-xs text-black font-medium tracking-[0.1em] uppercase">
                       Read <ArrowRight className="w-3 h-3" />
                     </span>
                   </div>
@@ -711,7 +711,7 @@ export default function ArticleDetail() {
           <div className="flex items-center gap-4">
             <a
               href="/apply"
-              className="text-xs tracking-[0.1em] uppercase text-[#E53935] font-medium hover:text-[#C62828] transition-colors"
+              className="text-xs tracking-[0.1em] uppercase text-black font-medium hover:text-black/70 transition-colors"
             >
               Apply for Coaching
             </a>

@@ -1,6 +1,6 @@
 export default function BookACall() {
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
           <a
@@ -11,14 +11,14 @@ export default function BookACall() {
           </a>
           <a
             href="/apply"
-            className="text-xs text-[#E53935] uppercase tracking-wider"
+            className="text-xs text-black uppercase tracking-wider"
           >
             Apply for coaching
           </a>
         </div>
       </header>
       <main className="flex-1 max-w-3xl mx-auto w-full px-5 py-16 sm:py-24">
-        <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
+        <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
         <h1 className="font-heading text-3xl sm:text-5xl font-bold tracking-tight mb-6">
           Coaching enquiries
         </h1>
@@ -34,7 +34,7 @@ export default function BookACall() {
         <div className="flex flex-wrap gap-4">
           <a
             href="/apply"
-            className="bg-[#E53935] text-white px-7 py-4 text-xs uppercase tracking-wider"
+            className="bg-black text-white px-7 py-4 text-xs uppercase tracking-wider"
           >
             Apply for coaching
           </a>

@@ -8,7 +8,7 @@ import { featuredResource, popularResources, resourceCards, startHereResources, 
 function SectionLabel({ children }: { children: string }) {
   return (
     <div className="flex items-center gap-3 mb-5">
-      <span className="w-2.5 h-2.5 bg-[#E53935]" aria-hidden="true" />
+      <span className="w-2.5 h-2.5 bg-[#2F6BF0]" aria-hidden="true" />
       <h2 className="font-heading text-xs tracking-[0.22em] uppercase font-semibold">{children}</h2>
     </div>
   );
@@ -23,7 +23,7 @@ function ListItem({ card }: { card: ResourceCard }) {
         )}
         <span className="min-w-0">
           <span className="block text-[10px] tracking-[0.18em] uppercase text-black/45 font-medium mb-1">{card.category}</span>
-          <span className="block font-heading font-bold text-[15px] leading-snug text-black group-hover:text-[#E53935] transition-colors">{card.title}</span>
+          <span className="block font-heading font-bold text-[15px] leading-snug text-black group-hover:text-black/60 transition-colors">{card.title}</span>
           <span className="block mt-1 text-[11px] text-black/45">{card.minutes} min read</span>
         </span>
       </a>
@@ -43,8 +43,8 @@ function Card({ card }: { card: ResourceCard }) {
           />
         )}
         <span className="block pt-4">
-          <span className="block text-[10px] tracking-[0.18em] uppercase text-[#E53935] font-semibold mb-2">{card.category}</span>
-          <span className="block font-heading font-bold text-lg leading-tight text-black group-hover:text-[#E53935] transition-colors">{card.title}</span>
+          <span className="block text-[10px] tracking-[0.18em] uppercase text-black font-semibold mb-2">{card.category}</span>
+          <span className="block font-heading font-bold text-lg leading-tight text-black group-hover:text-black/60 transition-colors">{card.title}</span>
           <span className="block mt-2 text-sm text-black/60 leading-relaxed">{card.summary}</span>
           <span className="block mt-2 text-[11px] text-black/45">{card.minutes} min read</span>
         </span>
@@ -58,12 +58,12 @@ export default function ResourcesIndex() {
   const grid = resourceCards.filter(c => c.alias !== featured.alias);
 
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
       <Navigation />
       <main className="flex-1 px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
         <div className="max-w-[1280px] mx-auto">
           <Breadcrumbs label="Resources" />
-          <div className="w-3 h-3 bg-[#E53935] mb-6" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#2F6BF0] mb-6" aria-hidden="true" />
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 lg:mb-12">
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.035em] leading-[0.93]">
               Resources
@@ -87,14 +87,14 @@ export default function ResourcesIndex() {
             <section className="lg:col-span-6 order-1 lg:order-2" aria-labelledby="featured-heading">
               <a href={featured.href} className="group block">
                 <Picture photo={resourcesHero} sizes="(min-width: 1024px) 620px, 100vw" className="w-full aspect-[3/2] object-cover block" eager />
-                <span className="block text-[10px] tracking-[0.18em] uppercase text-[#E53935] font-semibold mt-5 mb-3">
+                <span className="block text-[10px] tracking-[0.18em] uppercase text-black font-semibold mt-5 mb-3">
                   Featured guide. {featured.category}
                 </span>
-                <h2 id="featured-heading" className="font-heading font-bold text-3xl sm:text-4xl lg:text-[40px] leading-[1.02] tracking-[-0.02em] group-hover:text-[#E53935] transition-colors">
+                <h2 id="featured-heading" className="font-heading font-bold text-3xl sm:text-4xl lg:text-[40px] leading-[1.02] tracking-[-0.02em] group-hover:text-black/60 transition-colors">
                   {featured.title}
                 </h2>
                 <span className="block mt-3 text-base text-black/65 leading-relaxed">{featured.summary}</span>
-                <span className="inline-flex items-center mt-5 text-xs tracking-[0.15em] uppercase font-medium border-b border-black pb-0.5 group-hover:border-[#E53935] group-hover:text-[#E53935] transition-colors">
+                <span className="inline-flex items-center mt-5 text-xs tracking-[0.15em] uppercase font-medium border-b border-black pb-0.5 group-hover:border-black group-hover:text-black/60 transition-colors">
                   Read the guide
                 </span>
               </a>
@@ -113,7 +113,7 @@ export default function ResourcesIndex() {
           {/* Every guide */}
           <section className="mt-14 lg:mt-20 border-t border-black/10 pt-8" aria-labelledby="all-guides">
             <div className="flex items-center gap-3 mb-6">
-              <span className="w-2.5 h-2.5 bg-[#E53935]" aria-hidden="true" />
+              <span className="w-2.5 h-2.5 bg-[#2F6BF0]" aria-hidden="true" />
               <h2 id="all-guides" className="font-heading text-xs tracking-[0.22em] uppercase font-semibold">
                 All guides
               </h2>
@@ -139,7 +139,7 @@ export default function ResourcesIndex() {
                 Take the free assessment for a score and a written report, or apply for coaching and I build the plan around your week.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href="/assessment" className="inline-flex items-center bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-[#E53935] transition-colors font-medium">
+                <a href="/assessment" className="inline-flex items-center bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-colors font-medium">
                   Take the assessment
                 </a>
                 <a href="/apply" className="inline-flex items-center border border-black text-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-white transition-colors font-medium">

@@ -2,7 +2,7 @@ import { ProgrammeCheckout } from "./Assessment";
 
 export default function ProgramDetails() {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
@@ -19,7 +19,7 @@ export default function ProgramDetails() {
 
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
-          <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
             The Program
           </h1>
@@ -36,7 +36,7 @@ export default function ProgramDetails() {
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Start with the Performance Assessment or an application.
                     Your answers help organise goals, training history and
@@ -44,14 +44,14 @@ export default function ProgramDetails() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     The plan considers your schedule, goals, available
                     equipment, training experience and recovery.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Strength, aerobic conditioning, movement practice and
                     recovery are planned together, with adjustments when
@@ -59,7 +59,7 @@ export default function ProgramDetails() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Track suitable strength and fitness measures alongside
                     sleep, symptoms and how sessions feel. Wearable trends
@@ -75,7 +75,7 @@ export default function ProgramDetails() {
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     A structured training plan delivered through Bridge
                     Athletic. Review timing and the coaching scope are agreed
@@ -83,7 +83,7 @@ export default function ProgramDetails() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Practical sleep, recovery and general nutrition habits.
                     Clinical or individual dietary needs should be discussed
@@ -91,7 +91,7 @@ export default function ProgramDetails() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     If you use a wearable, use its trends with the rest of your
                     training context. Different devices and methods are not
@@ -99,7 +99,7 @@ export default function ProgramDetails() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Communication and programme adjustments are agreed as part
                     of coaching. Contact begins through the application and
@@ -128,7 +128,7 @@ export default function ProgramDetails() {
           <div className="flex flex-wrap gap-4">
             <a
               href="/apply"
-              className="inline-flex items-center bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-[#C62828] transition-colors font-bold"
+              className="inline-flex items-center bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-bold"
             >
               Apply for Coaching
             </a>

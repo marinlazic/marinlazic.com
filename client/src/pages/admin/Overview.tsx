@@ -76,7 +76,7 @@ export function Overview({ days, setDays, openContact }: { days: number; setDays
                     </span>
                   </div>
                   <div className="h-1.5 bg-black/5 mt-1">
-                    <div className={`h-1.5 ${i === data.funnel.length - 1 ? "bg-[#E53935]" : "bg-black"}`} style={{ width: `${Math.max(1, (f.count / topFunnel) * 100)}%` }} />
+                    <div className={`h-1.5 ${i === data.funnel.length - 1 ? "bg-[#2F6BF0]" : "bg-black"}`} style={{ width: `${Math.max(1, (f.count / topFunnel) * 100)}%` }} />
                   </div>
                 </li>
               );
@@ -112,12 +112,12 @@ export function Overview({ days, setDays, openContact }: { days: number; setDays
                 const overdue = f.followUpAt && new Date(f.followUpAt) < new Date();
                 return (
                   <li key={f.id}>
-                    <button type="button" onClick={() => openContact(f.id)} className="w-full text-left px-4 py-3 hover:bg-[#FAFAFA] transition-colors">
+                    <button type="button" onClick={() => openContact(f.id)} className="w-full text-left px-4 py-3 hover:bg-white transition-colors">
                       <div className="flex items-center justify-between gap-3">
                         <span className="text-sm font-medium truncate">{f.name || f.email}</span>
                         <StatusBadge status={f.status} />
                       </div>
-                      <div className={`text-[11px] mt-0.5 ${overdue ? "text-[#E53935]" : "text-black/40"}`}>
+                      <div className={`text-[11px] mt-0.5 ${overdue ? "text-black" : "text-black/40"}`}>
                         {overdue ? "Overdue, " : "Due "}
                         {fmtAgo(f.followUpAt)}
                       </div>

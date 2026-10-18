@@ -442,7 +442,7 @@ function ResourceNavigation() {
           </a>
           <a
             href="/resources"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black hover:text-[#E53935] transition-colors font-medium"
+            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black hover:text-black/60 transition-colors font-medium"
           >
             Resources
           </a>
@@ -454,7 +454,7 @@ function ResourceNavigation() {
           </a>
           <a
             href="/apply"
-            className="bg-[#E53935] text-white text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-[#C62828] transition-colors font-medium"
+            className="bg-black text-white text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-black/80 transition-colors font-medium"
           >
             Apply
           </a>
@@ -474,7 +474,7 @@ export default function ResourcePage() {
   const photo = resourcePhoto(resource.aliases[0]);
 
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
       <ResourceNavigation />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
         <article className="max-w-2xl mx-auto">
@@ -499,8 +499,8 @@ export default function ResourcePage() {
             </span>
           </nav>
 
-          <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
-          <p className="text-xs tracking-[0.15em] uppercase text-[#E53935] font-semibold mb-4">
+          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+          <p className="text-xs tracking-[0.15em] uppercase text-black font-semibold mb-4">
             Keyword: {resource.keyword}
           </p>
           <h1 className="font-heading text-3xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
@@ -541,7 +541,7 @@ export default function ResourcePage() {
           )}
 
           <aside
-            className="border-l-2 border-[#E53935] bg-black/[0.025] px-5 py-4 mb-12"
+            className="border-l-2 border-[#2F6BF0] bg-black/[0.025] px-5 py-4 mb-12"
             aria-label="Educational and safety notice"
           >
             <p className="text-sm text-black/65 leading-relaxed">
@@ -568,7 +568,7 @@ export default function ResourcePage() {
                   {section.content.map(line => (
                     <div key={line} className="flex items-start gap-3">
                       <div
-                        className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0"
+                        className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0"
                         aria-hidden="true"
                       />
                       <p className="text-sm sm:text-base text-black/70 leading-relaxed">

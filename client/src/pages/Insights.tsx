@@ -44,7 +44,7 @@ function ArticleCard({
         </div>
         <div className="p-8 lg:p-12 flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-medium">
+            <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
               {article.category}
             </span>
             <span className="text-[10px] text-black/30">|</span>
@@ -56,7 +56,7 @@ function ArticleCard({
               {article.readTime}
             </span>
           </div>
-          <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em] leading-tight mb-4 group-hover:text-[#E53935] transition-colors">
+          <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em] leading-tight mb-4 group-hover:text-black/60 transition-colors">
             {article.title}
           </h2>
           <p className="text-sm text-black/55 leading-relaxed mb-6 line-clamp-3">
@@ -72,7 +72,7 @@ function ArticleCard({
               </span>
             ))}
           </div>
-          <span className="inline-flex items-center gap-2 text-xs text-[#E53935] font-medium tracking-[0.1em] uppercase group-hover:gap-3 transition-all">
+          <span className="inline-flex items-center gap-2 text-xs text-black font-medium tracking-[0.1em] uppercase group-hover:gap-3 transition-all">
             Read article <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </div>
@@ -95,7 +95,7 @@ function ArticleCard({
       </div>
       <div className="p-6">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-medium">
+          <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
             {article.category}
           </span>
           <span className="text-[10px] text-black/30">|</span>
@@ -103,7 +103,7 @@ function ArticleCard({
             {formatDate(article.date)}
           </span>
         </div>
-        <h3 className="font-heading font-bold text-base sm:text-lg tracking-[-0.01em] leading-snug mb-3 group-hover:text-[#E53935] transition-colors">
+        <h3 className="font-heading font-bold text-base sm:text-lg tracking-[-0.01em] leading-snug mb-3 group-hover:text-black/60 transition-colors">
           {article.title}
         </h3>
         <p className="text-sm text-black/55 leading-relaxed line-clamp-3 mb-4">
@@ -119,7 +119,7 @@ function ArticleCard({
             </span>
           ))}
         </div>
-        <span className="inline-flex items-center gap-1.5 text-xs text-[#E53935] font-medium tracking-[0.1em] uppercase group-hover:gap-2.5 transition-all">
+        <span className="inline-flex items-center gap-1.5 text-xs text-black font-medium tracking-[0.1em] uppercase group-hover:gap-2.5 transition-all">
           Read <ArrowRight className="w-3 h-3" />
         </span>
       </div>
@@ -153,7 +153,7 @@ export default function Insights() {
   );
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-[#F4F4F4] text-black">
       {/* Nav - same as Home */}
       <InsightsNav />
 
@@ -169,7 +169,7 @@ export default function Insights() {
                 <ArrowLeft className="w-3.5 h-3.5" /> Back to home
               </a>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-3 bg-[#E53935]" aria-hidden="true" />
+                <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
                 <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
                   Insights
                 </span>
@@ -198,7 +198,7 @@ export default function Insights() {
       </section>
 
       {/* Categories */}
-      <section className="border-b border-black/10 bg-[#FAFAFA]">
+      <section className="border-b border-black/10 bg-white">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
           <div className="flex items-center gap-1 overflow-x-auto py-4 -mx-1 scrollbar-hide">
             {CATEGORIES.map(cat => (
@@ -234,7 +234,7 @@ export default function Insights() {
                 onClick={() => setActiveTag(activeTag === tag ? null : tag)}
                 className={`whitespace-nowrap text-[10px] tracking-[0.1em] uppercase px-2.5 py-1 border transition-colors ${
                   activeTag === tag
-                    ? "border-[#E53935] text-[#E53935] bg-[#E53935]/5"
+                    ? "border-[#2F6BF0] text-black bg-black/5"
                     : "border-black/10 text-black/40 hover:border-black/20 hover:text-black/60"
                 }`}
               >
@@ -258,7 +258,7 @@ export default function Insights() {
       )}
 
       {/* Articles Grid */}
-      <section className="py-12 lg:py-16 bg-[#FAFAFA]">
+      <section className="py-12 lg:py-16 bg-white">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
           <div className="flex items-center justify-between mb-8">
             <span className="text-[10px] tracking-[0.2em] uppercase text-black/30 font-medium">
@@ -272,7 +272,7 @@ export default function Insights() {
                   setActiveCategory("All");
                   setActiveTag(null);
                 }}
-                className="text-[10px] tracking-[0.15em] uppercase text-[#E53935] font-medium hover:text-[#C62828] transition-colors"
+                className="text-[10px] tracking-[0.15em] uppercase text-black font-medium hover:text-black/70 transition-colors"
               >
                 Clear filters
               </button>
@@ -300,7 +300,7 @@ export default function Insights() {
                   setActiveCategory("All");
                   setActiveTag(null);
                 }}
-                className="mt-4 text-xs text-[#E53935] font-medium tracking-[0.1em] uppercase hover:text-[#C62828] transition-colors"
+                className="mt-4 text-xs text-black font-medium tracking-[0.1em] uppercase hover:text-black/70 transition-colors"
               >
                 View all insights
               </button>
@@ -322,7 +322,7 @@ export default function Insights() {
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="/apply"
-              className="inline-block bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-[#C62828] transition-colors font-medium"
+              className="inline-block bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium"
             >
               Apply for Coaching
             </a>
@@ -345,7 +345,7 @@ export default function Insights() {
           <div className="flex items-center gap-4">
             <a
               href="/apply"
-              className="text-xs tracking-[0.1em] uppercase text-[#E53935] font-medium hover:text-[#C62828] transition-colors"
+              className="text-xs tracking-[0.1em] uppercase text-black font-medium hover:text-black/70 transition-colors"
             >
               Apply for Coaching
             </a>
@@ -395,7 +395,7 @@ function InsightsNav() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-sm border-b border-black/10" : "bg-white border-b border-black/5"}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#F4F4F4]/95 backdrop-blur-sm border-b border-black/10" : "bg-white border-b border-black/5"}`}
     >
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between h-16">
         <a
@@ -414,7 +414,7 @@ function InsightsNav() {
                 : {})}
               className={`text-xs tracking-[0.15em] uppercase font-medium transition-colors ${
                 l.label === "Insights"
-                  ? "text-[#E53935]"
+                  ? "text-black"
                   : "text-black/60 hover:text-black"
               }`}
             >
@@ -429,7 +429,7 @@ function InsightsNav() {
           </a>
           <a
             href="/apply"
-            className="bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-[#C62828] transition-colors font-medium"
+            className="bg-black text-white text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black/80 transition-colors font-medium"
           >
             Apply for Coaching
           </a>
@@ -462,7 +462,7 @@ function InsightsNav() {
                 : {})}
               className={`block py-3 text-sm tracking-[0.1em] uppercase border-b border-black/5 last:border-0 ${
                 l.label === "Insights"
-                  ? "text-[#E53935] font-medium"
+                  ? "text-black font-medium"
                   : "text-black/70 hover:text-black"
               }`}
             >
@@ -472,7 +472,7 @@ function InsightsNav() {
           <a
             href="/apply"
             onClick={() => setMobileOpen(false)}
-            className="block mt-4 bg-[#E53935] text-white text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
+            className="block mt-4 bg-black text-white text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
           >
             Apply for Coaching
           </a>

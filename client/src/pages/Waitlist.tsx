@@ -33,7 +33,7 @@ export default function Waitlist() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
         <header className="border-b border-black/10">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
@@ -49,7 +49,7 @@ export default function Waitlist() {
         </header>
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-lg w-full text-center">
-            <CheckCircle className="w-16 h-16 text-[#E53935] mx-auto mb-8" />
+            <CheckCircle className="w-16 h-16 text-black mx-auto mb-8" />
             <h1 className="font-heading text-3xl font-bold uppercase tracking-tight mb-4">
               You are on the list
             </h1>
@@ -70,7 +70,7 @@ export default function Waitlist() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
@@ -87,7 +87,7 @@ export default function Waitlist() {
 
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
-          <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
             Join the Waitlist
           </h1>
@@ -104,21 +104,21 @@ export default function Waitlist() {
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     The intended focus is strength and aerobic conditioning with
                     a manageable training plan.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Sleep and recovery habits can support the training plan.
                     Final inclusions will be confirmed before enrolment.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Training should fit your available time, starting fitness
                     and individual context.
@@ -133,19 +133,19 @@ export default function Waitlist() {
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     An email update if a programme becomes available.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Pricing, dates and delivery details before you decide.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Registering interest is not a purchase or a commitment to
                     join.
@@ -184,7 +184,7 @@ export default function Waitlist() {
             <button
               type="submit"
               disabled={joinWaitlist.isPending}
-              className="w-full bg-[#E53935] text-white text-xs tracking-[0.2em] uppercase font-bold py-4 hover:bg-[#C62828] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full bg-black text-white text-xs tracking-[0.2em] uppercase font-bold py-4 hover:bg-black/80 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {joinWaitlist.isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

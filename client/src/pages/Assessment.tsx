@@ -54,56 +54,56 @@ const SECTIONS: Section[] = [
     title: "About You",
     subtitle: "A few details to put your responses in context",
     icon: <User className="w-5 h-5" />,
-    color: "#1a1a1a",
+    color: "#2F6BF0",
   },
   {
     id: "goals",
     title: "Goals",
     subtitle: "What would you like to work towards?",
     icon: <Target className="w-5 h-5" />,
-    color: "#E53935",
+    color: "#2F6BF0",
   },
   {
     id: "sleep",
     title: "Sleep",
     subtitle: "Your recent sleep habits and experience",
     icon: <Moon className="w-5 h-5" />,
-    color: "#1a1a2e",
+    color: "#2F6BF0",
   },
   {
     id: "stress",
     title: "Stress & Mental",
     subtitle: "Your workload, stress and focus",
     icon: <Brain className="w-5 h-5" />,
-    color: "#6B21A8",
+    color: "#2F6BF0",
   },
   {
     id: "training",
     title: "Current Training",
     subtitle: "What you are doing now",
     icon: <Dumbbell className="w-5 h-5" />,
-    color: "#264653",
+    color: "#2F6BF0",
   },
   {
     id: "injuries",
     title: "Injuries & Health",
     subtitle: "Health and pain considerations for training",
     icon: <Heart className="w-5 h-5" />,
-    color: "#dc2626",
+    color: "#2F6BF0",
   },
   {
     id: "nutrition",
     title: "Nutrition & Energy",
     subtitle: "Your current eating and energy patterns",
     icon: <Utensils className="w-5 h-5" />,
-    color: "#e76f51",
+    color: "#2F6BF0",
   },
   {
     id: "recovery",
     title: "Recovery & Technology",
     subtitle: "How you recover and what you track",
     icon: <Watch className="w-5 h-5" />,
-    color: "#2d6a4f",
+    color: "#2F6BF0",
   },
 ];
 
@@ -170,10 +170,10 @@ function ShareResults({
       transition={{ delay: 1.2 }}
       className="mb-16"
     >
-      <div className="border border-black/10 bg-[#FAFAFA] p-6 sm:p-8">
+      <div className="border border-black/10 bg-white p-6 sm:p-8">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Share2 className="w-4 h-4 text-[#E53935]" />
+            <Share2 className="w-4 h-4 text-black" />
             <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium">
               Share Your Results
             </h3>
@@ -183,7 +183,7 @@ function ShareResults({
               if (!showPanel) track("share_panel_open", { score: overallPct });
               setShowPanel(!showPanel);
             }}
-            className="text-xs tracking-[0.1em] uppercase text-[#E53935] font-bold hover:text-[#c62828] transition-colors flex items-center gap-1.5"
+            className="text-xs tracking-[0.1em] uppercase text-black font-bold hover:text-[#c62828] transition-colors flex items-center gap-1.5"
           >
             {showPanel ? "Close" : "Share"}
             <ChevronDown
@@ -215,7 +215,7 @@ function ShareResults({
                   <p className="text-sm text-black/70 leading-relaxed">
                     {shareText}
                   </p>
-                  <p className="text-xs text-[#E53935] mt-2">{assessmentUrl}</p>
+                  <p className="text-xs text-black mt-2">{assessmentUrl}</p>
                 </div>
 
                 {/* Share buttons */}
@@ -337,7 +337,7 @@ export function AnalysisSection({
       if (match)
         return (
           <div key={i} className="flex items-start gap-3 mb-1.5">
-            <span className="text-[#E53935] mt-1 shrink-0 text-xs">&bull;</span>
+            <span className="text-black mt-1 shrink-0 text-xs">&bull;</span>
             <p className="text-sm text-black/70 leading-relaxed">
               <strong className="text-black">{match[1]}</strong>
               {match[2] ? `: ${match[2]}` : ""}
@@ -348,7 +348,7 @@ export function AnalysisSection({
     if (line.startsWith("- "))
       return (
         <div key={i} className="flex items-start gap-3 mb-1.5">
-          <span className="text-[#E53935] mt-1 shrink-0 text-xs">&bull;</span>
+          <span className="text-black mt-1 shrink-0 text-xs">&bull;</span>
           <p className="text-sm text-black/70 leading-relaxed">
             {line.replace("- ", "")}
           </p>
@@ -357,7 +357,7 @@ export function AnalysisSection({
     if (line.match(/^\d+\.\s/))
       return (
         <div key={i} className="flex items-start gap-3 mb-1.5">
-          <span className="text-[10px] font-bold text-[#E53935] mt-1 shrink-0 w-4 text-right">
+          <span className="text-[10px] font-bold text-black mt-1 shrink-0 w-4 text-right">
             {line.match(/^(\d+)\./)?.[1]}.
           </span>
           <p className="text-sm text-black/70 leading-relaxed">
@@ -367,7 +367,7 @@ export function AnalysisSection({
       );
     if (line.startsWith("> "))
       return (
-        <blockquote key={i} className="border-l-2 border-[#E53935] pl-4 my-3">
+        <blockquote key={i} className="border-l-2 border-[#2F6BF0] pl-4 my-3">
           <p className="text-sm text-black/60 italic leading-relaxed">
             {line.replace("> ", "")}
           </p>
@@ -418,7 +418,7 @@ export function AnalysisSection({
         {hasMore && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-1 text-xs tracking-[0.1em] uppercase text-[#E53935] font-bold hover:text-[#c62828] transition-colors"
+            className="flex items-center gap-1 text-xs tracking-[0.1em] uppercase text-black font-bold hover:text-[#c62828] transition-colors"
           >
             {expanded ? "Collapse" : "Read Full Analysis"}
             <ChevronDown
@@ -428,7 +428,7 @@ export function AnalysisSection({
         )}
       </div>
 
-      <div className="bg-[#FAFAFA] border border-black/10 p-6 sm:p-8">
+      <div className="bg-white border border-black/10 p-6 sm:p-8">
         <div className="prose prose-sm max-w-none">
           {expanded || !hasMore ? (
             lines.map((line, i) => renderLine(line, i))
@@ -440,7 +440,7 @@ export function AnalysisSection({
               </div>
               <button
                 onClick={() => setExpanded(true)}
-                className="mt-4 flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#E53935] font-bold hover:text-[#c62828] transition-colors"
+                className="mt-4 flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-black font-bold hover:text-[#c62828] transition-colors"
               >
                 Read Full Analysis <ChevronDown className="w-3 h-3" />
               </button>
@@ -497,7 +497,7 @@ export function KickstartCheckoutButton({
     <button
       onClick={handleCheckout}
       disabled={loading}
-      className="w-full sm:w-auto bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+      className="w-full sm:w-auto bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
     >
       {loading ? (
         <>
@@ -518,7 +518,7 @@ export function ProgrammeCheckout({ source }: { source: string }) {
   const [name, setName] = useState("");
   return (
     <div className="border border-black/10 p-6 sm:p-8">
-      <p className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-semibold mb-3">
+      <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-3">
         Start now
       </p>
       <p className="text-sm text-black/60 leading-relaxed mb-6 max-w-xl">
@@ -741,7 +741,7 @@ export default function Assessment() {
   // ─── Intro Screen ────────────────────────────────────
   if (phase === "intro") {
     return (
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
         <header className="border-b border-black/10">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
@@ -758,7 +758,7 @@ export default function Assessment() {
 
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-2xl w-full">
-            <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
+            <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight leading-[0.95] mb-6">
               Performance
               <br />
@@ -788,7 +788,7 @@ export default function Assessment() {
                   track("assessment_started");
                   setPhase("quiz");
                 }}
-                className="bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors"
+                className="bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
               >
                 Start the Assessment
               </button>
@@ -823,7 +823,7 @@ export default function Assessment() {
   // ─── Analyzing Screen ────────────────────────────────
   if (phase === "analyzing") {
     return (
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
         <header className="border-b border-black/10">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
@@ -840,7 +840,7 @@ export default function Assessment() {
 
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-lg w-full text-center">
-            <Loader2 className="w-12 h-12 animate-spin text-[#E53935] mx-auto mb-8" />
+            <Loader2 className="w-12 h-12 animate-spin text-black mx-auto mb-8" />
             <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-4">
               Building Your Analysis
             </h2>
@@ -863,7 +863,7 @@ export default function Assessment() {
                   transition={{ delay: i * 2, duration: 0.3 }}
                   className="flex items-center gap-3 text-sm text-black/40"
                 >
-                  <div className="w-1.5 h-1.5 bg-[#E53935] rounded-full" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] rounded-full" />
                   {step}
                 </motion.div>
               ))}
@@ -900,9 +900,9 @@ export default function Assessment() {
       if (pct >= 80)
         return { label: "More consistent responses", color: "#16a34a" };
       if (pct >= 60)
-        return { label: "Some consistent responses", color: "#2563eb" };
+        return { label: "Some consistent responses", color: "#2F6BF0" };
       if (pct >= 40) return { label: "Mixed responses", color: "#f59e0b" };
-      return { label: "Areas to review", color: "#E53935" };
+      return { label: "Areas to review", color: "#121212" };
     };
 
     const overallLabel = getScoreLabel(overallPct);
@@ -940,7 +940,7 @@ export default function Assessment() {
         .join(" ") + " Z";
 
     return (
-      <div className="min-h-screen bg-white flex flex-col" ref={containerRef}>
+      <div className="min-h-screen bg-[#F4F4F4] flex flex-col" ref={containerRef}>
         <header className="border-b border-black/10">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
@@ -964,7 +964,7 @@ export default function Assessment() {
               className="text-center mb-16"
             >
               <div
-                className="w-3 h-3 bg-[#E53935] mx-auto mb-8"
+                className="w-3 h-3 bg-[#2F6BF0] mx-auto mb-8"
                 aria-hidden="true"
               />
               <h2 className="font-heading text-xl sm:text-2xl font-bold uppercase tracking-tight mb-8 text-black/40">
@@ -1046,7 +1046,7 @@ export default function Assessment() {
               className="grid md:grid-cols-2 gap-8 mb-16"
             >
               {/* Radar Chart */}
-              <div className="bg-[#FAFAFA] border border-black/10 p-6 sm:p-8 flex flex-col items-center">
+              <div className="bg-white border border-black/10 p-6 sm:p-8 flex flex-col items-center">
                 <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-6 self-start">
                   Performance Radar
                 </h3>
@@ -1091,8 +1091,8 @@ export default function Assessment() {
                   {/* Data polygon */}
                   <motion.path
                     d={radarPath}
-                    fill="rgba(229, 57, 53, 0.15)"
-                    stroke="#E53935"
+                    fill="rgba(47, 107, 240, 0.12)"
+                    stroke="#2F6BF0"
                     strokeWidth="2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -1105,7 +1105,7 @@ export default function Assessment() {
                       cx={p.x}
                       cy={p.y}
                       r="4"
-                      fill="#E53935"
+                      fill="#2F6BF0"
                       initial={{ opacity: 0, r: 0 }}
                       animate={{ opacity: 1, r: 4 }}
                       transition={{ delay: 0.8 + i * 0.1 }}
@@ -1157,19 +1157,19 @@ export default function Assessment() {
                 {/* Weakest */}
                 <div className="bg-red-50 border border-red-200 p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-[#E53935] rounded-full" />
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-medium">
+                    <div className="w-2 h-2 bg-[#2F6BF0] rounded-full" />
+                    <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
                       Biggest Opportunity
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-[#E53935]">{weakest?.icon}</span>
+                      <span className="text-black">{weakest?.icon}</span>
                       <span className="font-heading text-lg font-bold uppercase">
                         {weakest?.title}
                       </span>
                     </div>
-                    <span className="font-heading text-2xl font-bold text-[#E53935]">
+                    <span className="font-heading text-2xl font-bold text-black">
                       {weakest?.percentage}%
                     </span>
                   </div>
@@ -1186,7 +1186,7 @@ export default function Assessment() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 + i * 0.1 }}
-                        className="bg-[#FAFAFA] border border-black/10 p-3 flex flex-col items-center"
+                        className="bg-white border border-black/10 p-3 flex flex-col items-center"
                       >
                         <div className="relative w-16 h-16 mb-2">
                           <svg
@@ -1248,19 +1248,19 @@ export default function Assessment() {
 
               const getHRVRating = (_v: number) => ({
                 label: "Indicative reading",
-                color: "#2563eb",
+                color: "#2F6BF0",
                 desc: "Use this reading as one data point alongside your own recent trend, sleep, symptoms and training load. A single reading does not indicate health, fitness or a diagnosis.",
                 pct: 50,
               });
               const getRHRRating = (_v: number) => ({
                 label: "Indicative reading",
-                color: "#2563eb",
+                color: "#2F6BF0",
                 desc: "Compare readings taken with the same device and method over time. A single reading does not establish a health or fitness rating and is not a diagnosis.",
                 pct: 50,
               });
               const getRRRating = (_v: number) => ({
                 label: "Indicative reading",
-                color: "#2563eb",
+                color: "#2F6BF0",
                 desc: "Compare this estimate with your usual device-consistent trend. Wearable respiratory readings are not diagnostic and should not be used as a stand-alone health assessment.",
                 pct: 50,
               });
@@ -1312,7 +1312,7 @@ export default function Assessment() {
                   className="border-t border-black/10 pt-12 mb-16"
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <Heart className="w-4 h-4 text-[#E53935]" />
+                    <Heart className="w-4 h-4 text-black" />
                     <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium">
                       Your Biometrics
                     </h3>
@@ -1335,7 +1335,7 @@ export default function Assessment() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 + mi * 0.1 }}
-                        className="border border-black/10 bg-[#FAFAFA]"
+                        className="border border-black/10 bg-white"
                       >
                         <div className="p-5 sm:p-6 grid sm:grid-cols-[200px_1fr] gap-6">
                           {/* Value display */}
@@ -1416,8 +1416,8 @@ export default function Assessment() {
                             </div>
                             <div className="bg-white border border-black/5 p-4">
                               <div className="flex items-center gap-2 mb-2">
-                                <Target className="w-3.5 h-3.5 text-[#E53935]" />
-                                <span className="text-[9px] tracking-[0.15em] uppercase text-[#E53935] font-bold">
+                                <Target className="w-3.5 h-3.5 text-black" />
+                                <span className="text-[9px] tracking-[0.15em] uppercase text-black font-bold">
                                   Your Reading
                                 </span>
                               </div>
@@ -1502,7 +1502,7 @@ export default function Assessment() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7 + i * 0.08 }}
-                      className="border border-black/10 bg-[#FAFAFA]"
+                      className="border border-black/10 bg-white"
                     >
                       {/* Header */}
                       <div className="p-5 sm:p-6 border-b border-black/5">
@@ -1559,7 +1559,7 @@ export default function Assessment() {
                                   className="flex-1 flex flex-col items-center gap-1"
                                 >
                                   <motion.div
-                                    className={`w-full rounded-sm ${isYou ? "bg-[#E53935]" : "bg-black/10"}`}
+                                    className={`w-full rounded-sm ${isYou ? "bg-[#2F6BF0]" : "bg-black/10"}`}
                                     initial={{ height: 0 }}
                                     animate={{ height: `${val}%` }}
                                     transition={{
@@ -1568,7 +1568,7 @@ export default function Assessment() {
                                     }}
                                   />
                                   {isYou && (
-                                    <span className="text-[8px] font-bold text-[#E53935] uppercase">
+                                    <span className="text-[8px] font-bold text-black uppercase">
                                       You
                                     </span>
                                   )}
@@ -1589,8 +1589,8 @@ export default function Assessment() {
                         {/* Pro Tip */}
                         <div className="bg-white border border-black/5 p-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <Zap className="w-3.5 h-3.5 text-[#E53935]" />
-                            <span className="text-[9px] tracking-[0.15em] uppercase text-[#E53935] font-bold">
+                            <Zap className="w-3.5 h-3.5 text-black" />
+                            <span className="text-[9px] tracking-[0.15em] uppercase text-black font-bold">
                               Pro Tip
                             </span>
                           </div>
@@ -1607,7 +1607,7 @@ export default function Assessment() {
 
             {/* Wearable note */}
             {hasWhoop === "no" && (
-              <div className="bg-[#FAFAFA] border border-black/10 p-6 sm:p-8 mb-16">
+              <div className="bg-white border border-black/10 p-6 sm:p-8 mb-16">
                 <p className="text-sm text-black/60 leading-relaxed">
                   If you use a wearable, its device-consistent trend can be one
                   input alongside sleep, symptoms and training load. It does not
@@ -1632,7 +1632,7 @@ export default function Assessment() {
                 </p>
                 <a
                   href={reportUrl}
-                  className="text-sm font-semibold text-black underline underline-offset-4 hover:text-[#E53935] transition-colors break-all"
+                  className="text-sm font-semibold text-black underline underline-offset-4 hover:text-black/60 transition-colors break-all"
                 >
                   {reportUrl}
                 </a>
@@ -1667,7 +1667,7 @@ export default function Assessment() {
                   <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-6 leading-tight">
                     This Is Where Most People Stop
                   </h2>
-                  <div className="w-8 h-0.5 bg-[#E53935] mb-8" />
+                  <div className="w-8 h-0.5 bg-[#2F6BF0] mb-8" />
                   <p className="text-sm sm:text-base text-white/60 leading-relaxed mb-6">
                     You have the data. You know what is holding you back. The
                     difference between knowing and doing is having someone build
@@ -1695,7 +1695,7 @@ export default function Assessment() {
                         "Direct access to your coach",
                       ].map((item, i) => (
                         <div key={i} className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-[#E53935] shrink-0 mt-0.5" />
+                          <CheckCircle className="w-4 h-4 text-black shrink-0 mt-0.5" />
                           <span className="text-sm text-white/70">{item}</span>
                         </div>
                       ))}
@@ -1705,7 +1705,7 @@ export default function Assessment() {
                   {/* CTA Button */}
                   <a
                     href={`/apply?name=${encodeURIComponent((answers.name as string) || "")}&email=${encodeURIComponent((answers.email as string) || "")}${utmSource ? `&utm_source=${encodeURIComponent(utmSource)}` : ""}${utmMedium ? `&utm_medium=${encodeURIComponent(utmMedium)}` : ""}${utmCampaign ? `&utm_campaign=${encodeURIComponent(utmCampaign)}` : ""}`}
-                    className="inline-flex items-center gap-2 bg-[#E53935] text-white px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#c62828] transition-colors mb-4"
+                    className="inline-flex items-center gap-2 bg-black text-white px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#c62828] transition-colors mb-4"
                   >
                     Apply for Coaching
                   </a>
@@ -1754,7 +1754,7 @@ export default function Assessment() {
 
   // ─── Quiz Screen ──────────────────────────────────────
   return (
-    <div className="min-h-screen bg-white flex flex-col" ref={containerRef}>
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col" ref={containerRef}>
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
@@ -1772,7 +1772,7 @@ export default function Assessment() {
         {/* Progress bar */}
         <div className="w-full h-0.5 bg-black/5">
           <motion.div
-            className="h-full bg-[#E53935]"
+            className="h-full bg-[#2F6BF0]"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.3 }}
           />
@@ -1792,7 +1792,7 @@ export default function Assessment() {
             >
               {/* Section header - synced with current question */}
               {isNewSection && section && (
-                <div className="border border-black/10 bg-[#FAFAFA] px-4 py-3 mb-6 flex items-center gap-3">
+                <div className="border border-black/10 bg-white px-4 py-3 mb-6 flex items-center gap-3">
                   <span style={{ color: section.color }}>{section.icon}</span>
                   <div>
                     <span className="text-xs font-bold tracking-[0.1em] uppercase">
@@ -1899,7 +1899,7 @@ export default function Assessment() {
                       !answers[question.id] ||
                       (answers[question.id] as string[]).length === 0
                     }
-                    className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                   </button>
@@ -1924,14 +1924,14 @@ export default function Assessment() {
                     }}
                   />
                   {validationError && (
-                    <p className="text-[#E53935] text-xs mb-4 flex items-center gap-1">
+                    <p className="text-black text-xs mb-4 flex items-center gap-1">
                       <AlertCircle className="w-3 h-3" /> {validationError}
                     </p>
                   )}
                   <div className="flex gap-3">
                     <button
                       onClick={handleTextSubmit}
-                      className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors"
+                      className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
                     >
                       Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                     </button>
@@ -1984,14 +1984,14 @@ export default function Assessment() {
                     />
                   )}
                   {validationError && (
-                    <p className="text-[#E53935] text-xs mb-4 flex items-center gap-1">
+                    <p className="text-black text-xs mb-4 flex items-center gap-1">
                       <AlertCircle className="w-3 h-3" /> {validationError}
                     </p>
                   )}
                   <div className="flex gap-3">
                     <button
                       onClick={handleTextSubmit}
-                      className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors"
+                      className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
                     >
                       Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                     </button>

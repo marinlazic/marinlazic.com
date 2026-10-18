@@ -40,7 +40,7 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
           else setError("Incorrect password.");
         }}
       >
-        <div className="w-3 h-3 bg-[#E53935] mx-auto mb-6" />
+        <div className="w-3 h-3 bg-[#2F6BF0] mx-auto mb-6" />
         <h1 className="font-heading font-bold text-2xl mb-3">Dashboard</h1>
         <p className="text-sm text-black/50 mb-8">Enter the admin password.</p>
         <input
@@ -52,7 +52,7 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
           placeholder="Password"
           aria-label="Password"
         />
-        {error && <p className="text-xs text-[#E53935] mb-4">{error}</p>}
+        {error && <p className="text-xs text-black mb-4">{error}</p>}
         <button type="submit" disabled={busy || !password} className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium disabled:opacity-50">
           {busy ? "Signing in" : "Sign In"}
         </button>
@@ -94,7 +94,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center max-w-sm">
-          <div className="w-3 h-3 bg-[#E53935] mx-auto mb-6" />
+          <div className="w-3 h-3 bg-[#2F6BF0] mx-auto mb-6" />
           <h1 className="font-heading font-bold text-2xl mb-3">Access Denied</h1>
           <a href="/" className="inline-flex items-center gap-2 text-sm text-black/60 hover:text-black transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to site

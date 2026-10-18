@@ -129,7 +129,7 @@ export function Contacts({ selectedId, openContact, closeContact }: { selectedId
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-black/10 bg-[#FAFAFA]">
+              <tr className="border-b border-black/10 bg-white">
                 <th className={th}>Contact</th>
                 <th className={th}>Type</th>
                 <th className={th}>Status</th>
@@ -156,7 +156,7 @@ export function Contacts({ selectedId, openContact, closeContact }: { selectedId
                 rows.map(c => {
                   const overdue = c.followUpAt && new Date(c.followUpAt) < new Date() && c.status !== "archived";
                   return (
-                    <tr key={c.id} className={`border-b border-black/5 hover:bg-[#FAFAFA] transition-colors cursor-pointer ${selectedId === c.id ? "bg-[#FAFAFA]" : ""}`} onClick={() => openContact(c.id)}>
+                    <tr key={c.id} className={`border-b border-black/5 hover:bg-white transition-colors cursor-pointer ${selectedId === c.id ? "bg-white" : ""}`} onClick={() => openContact(c.id)}>
                       <td className={td}>
                         <div className="font-medium">{c.name || <span className="text-black/30">No name</span>}</div>
                         <div className="text-xs text-black/50">{c.email}</div>
@@ -178,7 +178,7 @@ export function Contacts({ selectedId, openContact, closeContact }: { selectedId
                         <ScorePill score={c.score} />
                       </td>
                       <td className={`${td} text-xs text-black/60 whitespace-nowrap`}>{fmtAgo(c.lastActivityAt)}</td>
-                      <td className={`${td} text-xs whitespace-nowrap ${overdue ? "text-[#E53935] font-medium" : "text-black/60"}`}>{c.followUpAt ? fmtDate(c.followUpAt) : ""}</td>
+                      <td className={`${td} text-xs whitespace-nowrap ${overdue ? "text-black font-medium" : "text-black/60"}`}>{c.followUpAt ? fmtDate(c.followUpAt) : ""}</td>
                       <td className={`${td} text-right`}>
                         <ChevronRight className="w-4 h-4 text-black/30 inline" />
                       </td>
@@ -348,7 +348,7 @@ export function ContactDrawer({ id, onClose }: { id: number; onClose: () => void
                             <span className="font-medium">{c.percentage}</span>
                           </div>
                           <div className="h-1 bg-black/5 mt-1">
-                            <div className={`h-1 ${c.id === d.scores?.weakest?.id ? "bg-[#E53935]" : "bg-black"}`} style={{ width: `${c.percentage}%` }} />
+                            <div className={`h-1 ${c.id === d.scores?.weakest?.id ? "bg-[#2F6BF0]" : "bg-black"}`} style={{ width: `${c.percentage}%` }} />
                           </div>
                         </li>
                       ))}
@@ -441,7 +441,7 @@ export function ContactDrawer({ id, onClose }: { id: number; onClose: () => void
                         <li key={nt.id} className="border-l-2 border-black/10 pl-3">
                           <div className="flex items-start justify-between gap-2">
                             <p className="text-sm whitespace-pre-wrap">{nt.body}</p>
-                            <button type="button" className="text-black/30 hover:text-[#E53935]" onClick={() => deleteNote.mutate({ noteId: nt.id })} aria-label="Delete note">
+                            <button type="button" className="text-black/30 hover:text-black" onClick={() => deleteNote.mutate({ noteId: nt.id })} aria-label="Delete note">
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
                           </div>
@@ -458,7 +458,7 @@ export function ContactDrawer({ id, onClose }: { id: number; onClose: () => void
                 <ul className="p-4 space-y-3">
                   {d.timeline.map((t, i) => (
                     <li key={i} className="flex gap-3">
-                      <span className={`mt-1.5 w-2 h-2 shrink-0 ${t.kind === "purchase" ? "bg-green-600" : t.kind === "note" ? "bg-[#E53935]" : t.kind === "application" ? "bg-amber-500" : "bg-black/30"}`} />
+                      <span className={`mt-1.5 w-2 h-2 shrink-0 ${t.kind === "purchase" ? "bg-green-600" : t.kind === "note" ? "bg-[#2F6BF0]" : t.kind === "application" ? "bg-amber-500" : "bg-black/30"}`} />
                       <div className="min-w-0 flex-1">
                         <div className="text-sm">{t.title}</div>
                         {t.detail && <div className="text-[11px] text-black/50 truncate">{t.detail}</div>}

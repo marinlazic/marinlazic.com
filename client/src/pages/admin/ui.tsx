@@ -3,7 +3,7 @@
 import { format, formatDistanceToNowStrict } from "date-fns";
 import type { ReactNode } from "react";
 
-export const RED = "#E53935";
+export const RED = "#2F6BF0";
 export const INK = "#111111";
 export const GREY = "#9A9A9A";
 
@@ -49,7 +49,7 @@ export function Delta({ current, previous, suffix = "" }: { current: number; pre
   const up = change > 0;
   const flat = change === 0;
   return (
-    <span className={`text-[11px] font-medium ${flat ? "text-black/40" : up ? "text-green-700" : "text-[#E53935]"}`}>
+    <span className={`text-[11px] font-medium ${flat ? "text-black/40" : up ? "text-green-700" : "text-black"}`}>
       {flat ? "same" : `${up ? "+" : ""}${change}%`}
       {suffix}
     </span>
@@ -71,7 +71,7 @@ export function KpiCard({ label, value, previous, current, hint }: { label: stri
 
 export function StatusBadge({ status }: { status: string | null | undefined }) {
   const colors: Record<string, string> = {
-    new: "bg-[#E53935]/10 text-[#E53935]",
+    new: "bg-black/5 text-black",
     contacted: "bg-blue-50 text-blue-700",
     applied: "bg-amber-50 text-amber-800",
     converted: "bg-green-50 text-green-700",
@@ -88,7 +88,7 @@ export function KindBadge({ kind }: { kind: string }) {
 
 export function ScorePill({ score }: { score: number | null | undefined }) {
   if (score === null || score === undefined) return <span className="text-black/30 text-xs">none</span>;
-  const tone = score >= 80 ? "bg-green-50 text-green-700" : score >= 60 ? "bg-black/5 text-black" : score >= 50 ? "bg-amber-50 text-amber-800" : "bg-[#E53935]/10 text-[#E53935]";
+  const tone = score >= 80 ? "bg-green-50 text-green-700" : score >= 60 ? "bg-black/5 text-black" : score >= 50 ? "bg-amber-50 text-amber-800" : "bg-black/5 text-black";
   return <span className={`inline-flex items-center justify-center min-w-[36px] px-1.5 py-0.5 text-xs font-semibold ${tone}`}>{score}</span>;
 }
 

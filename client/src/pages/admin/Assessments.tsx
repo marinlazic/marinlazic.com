@@ -123,7 +123,7 @@ export function Assessments({ days, setDays }: { days: number; setDays: (d: numb
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-black/10 bg-[#FAFAFA]">
+                <tr className="border-b border-black/10 bg-white">
                   <th className={th}>Person</th>
                   <th className={th}>Progress</th>
                   <th className={th}>Score</th>

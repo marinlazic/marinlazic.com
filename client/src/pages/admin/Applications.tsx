@@ -30,7 +30,7 @@ export function Applications({ openContact }: { openContact: (id: number) => voi
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-black/10 bg-[#FAFAFA]">
+                <tr className="border-b border-black/10 bg-white">
                   <th className={th}>Applicant</th>
                   <th className={th}>90 day goal</th>
                   <th className={th}>Obstacle</th>
@@ -42,7 +42,7 @@ export function Applications({ openContact }: { openContact: (id: number) => voi
               </thead>
               <tbody>
                 {rows.map(a => (
-                  <tr key={a.id} className={`border-b border-black/5 hover:bg-[#FAFAFA] transition-colors ${a.leadId ? "cursor-pointer" : ""}`} onClick={() => a.leadId && openContact(a.leadId)}>
+                  <tr key={a.id} className={`border-b border-black/5 hover:bg-white transition-colors ${a.leadId ? "cursor-pointer" : ""}`} onClick={() => a.leadId && openContact(a.leadId)}>
                     <td className={td}>
                       <div className="font-medium">{a.name}</div>
                       <div className="text-xs text-black/50">{a.email}</div>

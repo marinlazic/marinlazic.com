@@ -83,7 +83,7 @@ export function Nav() {
       aria-label="Main navigation"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-sm border-b border-black/10"
+          ? "bg-[#F4F4F4]/95 backdrop-blur-sm border-b border-black/10"
           : "bg-transparent"
       }`}
     >
@@ -120,7 +120,7 @@ export function Nav() {
           <a
             href="/apply"
             onClick={() => track("cta_click", { button: "nav_apply_coaching" })}
-            className="bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-[#C62828] transition-colors font-medium"
+            className="bg-black text-white text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black/80 transition-colors font-medium"
           >
             Apply for Coaching
           </a>
@@ -148,7 +148,7 @@ export function Nav() {
       {mobileOpen && (
         <div
           id="main-mobile-menu"
-          className="xl:hidden bg-white border-b border-black/10 px-5 sm:px-8 lg:px-12 pb-6 pt-2"
+          className="xl:hidden bg-[#F4F4F4] border-b border-black/10 px-5 sm:px-8 lg:px-12 pb-6 pt-2"
         >
           {links.map(l => (
             <a
@@ -169,7 +169,7 @@ export function Nav() {
               setMobileOpen(false);
               track("cta_click", { button: "nav_apply_coaching_mobile" });
             }}
-            className="block mt-4 bg-[#E53935] text-white text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
+            className="block mt-4 bg-black text-white text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
           >
             Apply for Coaching
           </a>
@@ -227,7 +227,7 @@ function Hero() {
           <div className="lg:col-span-7 order-2 lg:order-1">
             {/* Red accent square */}
             <div
-              className="w-3 h-3 bg-[#E53935] mb-8"
+              className="w-3 h-3 bg-[#2F6BF0] mb-8"
               aria-hidden="true"
               role="presentation"
             />
@@ -252,7 +252,7 @@ function Hero() {
                 onClick={() =>
                   track("cta_click", { button: "hero_apply_coaching" })
                 }
-                className="inline-flex items-center bg-[#E53935] text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-[#C62828] transition-colors font-medium"
+                className="inline-flex items-center bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
               >
                 Apply for Coaching
               </a>
@@ -276,9 +276,9 @@ function Hero() {
           {/* Right: Photo */}
           <div className="lg:col-span-5 order-1 lg:order-2 relative">
             <div className="relative">
-              {/* Red accent behind image */}
+              {/* Brand gradient panel behind the photo */}
               <div
-                className="absolute -top-4 -right-4 w-full h-full bg-[#E53935]/10 hidden lg:block"
+                className="absolute -top-5 -right-5 w-full h-full ml-gradient hidden lg:block"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -289,7 +289,7 @@ function Hero() {
               />
               {/* Small red square accent */}
               <div
-                className="absolute bottom-6 -left-3 w-6 h-6 bg-[#E53935] hidden lg:block"
+                className="absolute bottom-6 -left-3 w-6 h-6 bg-[#2F6BF0] hidden lg:block"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -338,7 +338,7 @@ function TrustBar() {
   ];
 
   return (
-    <div className="border-t border-b border-black/10 py-6 sm:py-8 bg-[#FAFAFA]">
+    <div className="border-t border-b border-black/10 py-6 sm:py-8 bg-white">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/30 font-medium shrink-0">
@@ -370,7 +370,7 @@ function About() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#E53935]"
+                className="w-2.5 h-2.5 bg-[#2F6BF0]"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -413,7 +413,7 @@ function About() {
             </p>
             <a
               href="/about"
-              className="inline-flex items-center gap-2 text-sm text-[#E53935] font-medium hover:text-[#C62828] transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-sm text-black font-medium hover:text-black/70 transition-colors mb-8"
             >
               More about Marin <ArrowRight className="w-3.5 h-3.5" />
             </a>
@@ -468,14 +468,14 @@ function Timeline() {
   return (
     <Section
       id="experience"
-      className="py-24 lg:py-32 bg-[#FAFAFA] border-t border-black/10"
+      className="py-24 lg:py-32 bg-white border-t border-black/10"
     >
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#E53935]"
+                className="w-2.5 h-2.5 bg-[#2F6BF0]"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -506,7 +506,7 @@ function Timeline() {
                     <h3 className="font-heading font-semibold text-base sm:text-lg text-black">
                       {item.role}
                     </h3>
-                    <p className="text-sm text-[#E53935] font-medium mt-0.5">
+                    <p className="text-sm text-black font-medium mt-0.5">
                       {item.org}
                     </p>
                     <p className="text-sm text-black/55 mt-2 leading-relaxed">
@@ -584,7 +584,7 @@ function Services() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#E53935]"
+                className="w-2.5 h-2.5 bg-[#2F6BF0]"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -601,8 +601,8 @@ function Services() {
               Clear support shaped around the person, team or organisation.
             </p>
             {/* Availability note */}
-            <div className="mt-6 p-4 border border-[#E53935]/20 bg-[#E53935]/5">
-              <p className="text-[10px] tracking-[0.15em] uppercase text-[#E53935] font-semibold mb-1">
+            <div className="mt-6 p-4 border border-black/20 bg-black/5">
+              <p className="text-[10px] tracking-[0.15em] uppercase text-black font-semibold mb-1">
                 Availability
               </p>
               <p className="text-xs text-black/50 leading-relaxed">
@@ -619,7 +619,7 @@ function Services() {
                 >
                   {/* Service header */}
                   <div className="flex items-start gap-4 mb-4">
-                    <span className="text-xs tracking-[0.1em] text-[#E53935] font-bold mt-1 shrink-0">
+                    <span className="text-xs tracking-[0.1em] text-black font-bold mt-1 shrink-0">
                       {service.number}
                     </span>
                     <h3 className="font-heading font-semibold text-lg sm:text-xl tracking-[-0.01em]">
@@ -637,7 +637,7 @@ function Services() {
                     </p>
                     {service.outcomes.map((outcome, j) => (
                       <div key={j} className="flex items-start gap-3">
-                        <div className="w-1.5 h-1.5 bg-[#E53935] mt-1.5 shrink-0" />
+                        <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-1.5 shrink-0" />
                         <p className="text-sm text-black/55 leading-relaxed">
                           {outcome}
                         </p>
@@ -654,7 +654,7 @@ function Services() {
                             onClick={() =>
                               track("cta_click", { button: "service_01_apply" })
                             }
-                            className="inline-flex items-center gap-2 bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-6 py-3 hover:bg-[#C62828] transition-colors font-medium"
+                            className="inline-flex items-center gap-2 bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3 hover:bg-black/80 transition-colors font-medium"
                           >
                             Apply for Coaching{" "}
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -686,7 +686,7 @@ function Services() {
                             button: `service_${service.number}_details`,
                           })
                         }
-                        className="inline-flex items-center gap-2 text-sm text-[#E53935] font-medium hover:text-[#C62828] transition-colors group"
+                        className="inline-flex items-center gap-2 text-sm text-black font-medium hover:text-black/70 transition-colors group"
                       >
                         {service.linkLabel}
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -699,7 +699,7 @@ function Services() {
                             button: `service_email_${service.number}`,
                           })
                         }
-                        className="inline-flex items-center gap-2 text-sm text-[#E53935] font-medium hover:text-[#C62828] transition-colors group"
+                        className="inline-flex items-center gap-2 text-sm text-black font-medium hover:text-black/70 transition-colors group"
                       >
                         Get in Touch
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -773,7 +773,7 @@ function AssessmentPreview() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#E53935]"
+                className="w-2.5 h-2.5 bg-[#2F6BF0]"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -855,12 +855,12 @@ function AssessmentPreview() {
                     })}
                     <path
                       d={radarPath}
-                      fill="rgba(229,57,53,0.08)"
-                      stroke="#E53935"
+                      fill="rgba(47,107,240,0.10)"
+                      stroke="#2F6BF0"
                       strokeWidth="1.5"
                     />
                     {radarPoints.map((p, i) => (
-                      <circle key={i} cx={p.x} cy={p.y} r="3" fill="#E53935" />
+                      <circle key={i} cx={p.x} cy={p.y} r="3" fill="#2F6BF0" />
                     ))}
                     {sampleCategories.map((cat, i) => {
                       const a =
@@ -906,7 +906,7 @@ function AssessmentPreview() {
                             {cat.name}
                           </span>
                           <span
-                            className={`text-xs sm:text-sm font-bold ${isLow ? "text-[#E53935]" : "text-black/70"}`}
+                            className={`text-xs sm:text-sm font-bold ${isLow ? "text-black" : "text-black/70"}`}
                           >
                             {cat.score}
                           </span>
@@ -916,7 +916,7 @@ function AssessmentPreview() {
                             className="h-full transition-all"
                             style={{
                               width: `${cat.score}%`,
-                              backgroundColor: isLow ? "#E53935" : "#1a1a1a",
+                              backgroundColor: isLow ? "#2F6BF0" : "#1a1a1a",
                             }}
                           />
                         </div>
@@ -937,9 +937,9 @@ function AssessmentPreview() {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-1.5 sm:mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-1.5 sm:mt-2 shrink-0" />
                   <div>
-                    <p className="text-xs tracking-[0.1em] uppercase text-[#E53935] font-semibold mb-1">
+                    <p className="text-xs tracking-[0.1em] uppercase text-black font-semibold mb-1">
                       Stress
                     </p>
                     <p className="text-xs sm:text-sm text-black/55 leading-relaxed">
@@ -950,7 +950,7 @@ function AssessmentPreview() {
                         href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#E53935] underline underline-offset-2 hover:text-[#C62828]"
+                        className="text-black underline underline-offset-2 hover:text-black/70"
                       >
                         Read the review
                       </a>
@@ -959,9 +959,9 @@ function AssessmentPreview() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-1.5 sm:mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-1.5 sm:mt-2 shrink-0" />
                   <div>
-                    <p className="text-xs tracking-[0.1em] uppercase text-[#E53935] font-semibold mb-1">
+                    <p className="text-xs tracking-[0.1em] uppercase text-black font-semibold mb-1">
                       Sleep
                     </p>
                     <p className="text-xs sm:text-sm text-black/55 leading-relaxed">
@@ -1007,14 +1007,14 @@ function LatestInsights() {
   return (
     <Section
       id="articles"
-      className="py-24 lg:py-32 bg-[#FAFAFA] border-t border-black/10"
+      className="py-24 lg:py-32 bg-white border-t border-black/10"
     >
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left label */}
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-3 bg-[#E53935]" aria-hidden="true" />
+              <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
                 Latest Writing
               </span>
@@ -1032,7 +1032,7 @@ function LatestInsights() {
               onClick={() =>
                 track("cta_click", { button: "articles_view_all" })
               }
-              className="inline-flex items-center gap-2 mt-6 text-sm text-[#E53935] font-medium hover:text-[#C62828] transition-colors group"
+              className="inline-flex items-center gap-2 mt-6 text-sm text-black font-medium hover:text-black/70 transition-colors group"
             >
               Browse resources
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -1061,7 +1061,7 @@ function LatestInsights() {
                   </div>
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-[10px] tracking-[0.2em] uppercase text-[#E53935] font-medium">
+                      <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
                         {article.category}
                       </span>
                       <span className="text-[10px] text-black/30">|</span>
@@ -1069,13 +1069,13 @@ function LatestInsights() {
                         {formatDate(article.date)}
                       </span>
                     </div>
-                    <h3 className="font-heading font-bold text-base sm:text-lg tracking-[-0.01em] leading-snug mb-3 group-hover:text-[#E53935] transition-colors">
+                    <h3 className="font-heading font-bold text-base sm:text-lg tracking-[-0.01em] leading-snug mb-3 group-hover:text-black/60 transition-colors">
                       {article.title}
                     </h3>
                     <p className="text-sm text-black/55 leading-relaxed line-clamp-3">
                       {article.excerpt}
                     </p>
-                    <span className="inline-flex items-center gap-1.5 mt-4 text-xs text-[#E53935] font-medium tracking-[0.1em] uppercase group-hover:gap-2.5 transition-all">
+                    <span className="inline-flex items-center gap-1.5 mt-4 text-xs text-black font-medium tracking-[0.1em] uppercase group-hover:gap-2.5 transition-all">
                       Read
                       <ArrowRight className="w-3 h-3" />
                     </span>
@@ -1113,7 +1113,7 @@ function SubstackArticles() {
           {/* Left label */}
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-3 bg-[#E53935]" aria-hidden="true" />
+              <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
                 Substack
               </span>
@@ -1133,7 +1133,7 @@ function SubstackArticles() {
               onClick={() =>
                 track("cta_click", { button: "substack_view_all" })
               }
-              className="inline-flex items-center gap-2 mt-6 text-sm text-[#E53935] font-medium hover:text-[#C62828] transition-colors group"
+              className="inline-flex items-center gap-2 mt-6 text-sm text-black font-medium hover:text-black/70 transition-colors group"
             >
               Read on Substack
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -1145,7 +1145,7 @@ function SubstackArticles() {
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[0, 1, 2].map(i => (
-                  <div key={i} className="bg-[#FAFAFA] animate-pulse">
+                  <div key={i} className="bg-white animate-pulse">
                     <div className="aspect-[16/9] bg-black/5" />
                     <div className="p-6 space-y-3">
                       <div className="h-3 bg-black/5 rounded w-1/3" />
@@ -1182,13 +1182,13 @@ function SubstackArticles() {
                       <span className="text-[10px] tracking-[0.15em] uppercase text-black/35 font-medium">
                         {formatDate(article.pubDate)}
                       </span>
-                      <h3 className="font-heading font-bold text-base sm:text-lg tracking-[-0.01em] leading-snug mt-2 mb-3 group-hover:text-[#E53935] transition-colors">
+                      <h3 className="font-heading font-bold text-base sm:text-lg tracking-[-0.01em] leading-snug mt-2 mb-3 group-hover:text-black/60 transition-colors">
                         {article.title}
                       </h3>
                       <p className="text-sm text-black/55 leading-relaxed line-clamp-3">
                         {decodeHtml(article.description)}
                       </p>
-                      <span className="inline-flex items-center gap-1.5 mt-4 text-xs text-[#E53935] font-medium tracking-[0.1em] uppercase group-hover:gap-2.5 transition-all">
+                      <span className="inline-flex items-center gap-1.5 mt-4 text-xs text-black font-medium tracking-[0.1em] uppercase group-hover:gap-2.5 transition-all">
                         Read on Substack
                         <ArrowRight className="w-3 h-3" />
                       </span>
@@ -1267,7 +1267,7 @@ function Contact() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#E53935]"
+                className="w-2.5 h-2.5 bg-[#2F6BF0]"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -1284,7 +1284,7 @@ function Contact() {
           <div className="lg:col-span-9 lg:pl-8 lg:border-l border-black/10">
             {submitted ? (
               <div className="flex items-start gap-4 py-8">
-                <CheckCircle className="w-6 h-6 text-[#E53935] shrink-0 mt-0.5" />
+                <CheckCircle className="w-6 h-6 text-black shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-heading font-semibold text-xl mb-2">
                     Thanks for getting in touch.
@@ -1311,7 +1311,7 @@ function Contact() {
                     onClick={() =>
                       track("cta_click", { button: "contact_apply_coaching" })
                     }
-                    className="inline-flex items-center bg-[#E53935] text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-[#C62828] transition-colors font-medium"
+                    className="inline-flex items-center bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
                   >
                     Apply for Coaching
                   </a>
@@ -1374,7 +1374,7 @@ function Contact() {
                       </button>
                     </div>
                     {error && (
-                      <div className="flex items-center gap-2 mt-3 text-[#E53935] text-sm">
+                      <div className="flex items-center gap-2 mt-3 text-black text-sm">
                         <AlertCircle className="w-4 h-4" />
                         {error}
                       </div>
@@ -1437,7 +1437,7 @@ function Footer() {
             <div className="flex flex-wrap gap-4 mt-4">
               <a
                 href="/apply"
-                className="text-xs tracking-[0.1em] uppercase text-[#E53935] font-medium hover:text-[#C62828] transition-colors"
+                className="text-xs tracking-[0.1em] uppercase text-black font-medium hover:text-black/70 transition-colors"
               >
                 Apply for Coaching
               </a>
@@ -1519,13 +1519,13 @@ function StickyApplyBar() {
   return (
     <>
       {/* Mobile: slim bottom bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-black/10 px-4 py-3 flex items-center justify-between">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#F4F4F4]/95 backdrop-blur-sm border-t border-black/10 px-4 py-3 flex items-center justify-between">
         <span className="text-[10px] tracking-[0.1em] uppercase text-black/50 font-medium">
           Coaching applications
         </span>
         <a
           href="/apply"
-          className="bg-[#E53935] text-white text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-[#C62828] transition-colors font-medium"
+          className="bg-black text-white text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black/80 transition-colors font-medium"
         >
           Apply for Coaching
         </a>
@@ -1533,7 +1533,7 @@ function StickyApplyBar() {
       {/* Desktop: floating button bottom-right */}
       <a
         href="/apply"
-        className="hidden md:flex fixed bottom-8 right-8 z-50 items-center gap-2 bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-[#C62828] transition-all shadow-lg hover:shadow-xl font-medium"
+        className="hidden md:flex fixed bottom-8 right-8 z-50 items-center gap-2 bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-all shadow-lg hover:shadow-xl font-medium"
       >
         Apply for Coaching <ArrowRight className="w-3.5 h-3.5" />
       </a>
@@ -1654,7 +1654,7 @@ function ExitIntentPopup() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="w-3 h-3 bg-[#E53935] mb-6" aria-hidden="true" />
+            <div className="w-3 h-3 bg-[#2F6BF0] mb-6" aria-hidden="true" />
 
             <h3 className="font-heading font-bold text-xl sm:text-2xl tracking-[-0.02em] mb-3">
               Before you leave
@@ -1666,7 +1666,7 @@ function ExitIntentPopup() {
 
             <button
               onClick={goToAssessment}
-              className="w-full bg-[#E53935] text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-[#C62828] transition-colors font-medium"
+              className="w-full bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
             >
               Take the Performance Assessment
             </button>
@@ -1720,7 +1720,7 @@ export default function Home() {
   }, [track]);
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-[#F4F4F4] text-black">
       <Nav />
       <Hero />
       <AssessmentPreview />

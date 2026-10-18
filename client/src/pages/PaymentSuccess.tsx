@@ -43,7 +43,7 @@ function ConfettiParticle({ delay, color }: { delay: number; color: string }) {
 }
 
 function Confetti() {
-  const colors = ["#E53935", "#000000", "#FFD700", "#4CAF50", "#2196F3", "#FF9800"];
+  const colors = ["#2F6BF0", "#121212", "#C2D9FB", "#548DF8", "#3068F0", "#9A9DA3"];
   const particles = Array.from({ length: 60 }, (_, i) => ({
     id: i,
     delay: Math.random() * 0.8,
@@ -111,13 +111,13 @@ export default function PaymentSuccess() {
   // ─── Loading State ───────────────────────────────────
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#F4F4F4] flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="text-center"
         >
-          <Loader2 className="w-10 h-10 animate-spin text-[#E53935] mx-auto mb-6" />
+          <Loader2 className="w-10 h-10 animate-spin text-black mx-auto mb-6" />
           <p className="text-sm text-black/40 tracking-[0.1em] uppercase">Confirming your payment...</p>
           <p className="text-xs text-black/25 mt-2">This usually takes just a moment.</p>
         </motion.div>
@@ -128,7 +128,7 @@ export default function PaymentSuccess() {
   // ─── Paid / Success State ────────────────────────────
   if (isPaid) {
     return (
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
         <AnimatePresence>{showConfetti && <Confetti />}</AnimatePresence>
 
         <header className="border-b border-black/10">
@@ -161,7 +161,7 @@ export default function PaymentSuccess() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <div className="w-3 h-3 bg-[#E53935] mx-auto mb-6" />
+                <div className="w-3 h-3 bg-[#2F6BF0] mx-auto mb-6" />
                 <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
                   Welcome to<br />the Team.
                 </h1>
@@ -205,7 +205,7 @@ export default function PaymentSuccess() {
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="flex flex-col items-center">
-                    <span className="w-8 h-8 bg-[#E53935] text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
+                    <span className="w-8 h-8 bg-black text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
                     <div className="w-px h-full bg-black/10 mt-1" />
                   </div>
                   <div className="pb-2">
@@ -217,7 +217,7 @@ export default function PaymentSuccess() {
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="flex flex-col items-center">
-                    <span className="w-8 h-8 bg-[#E53935] text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
+                    <span className="w-8 h-8 bg-black text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
                     <div className="w-px h-full bg-black/10 mt-1" />
                   </div>
                   <div className="pb-2">
@@ -229,7 +229,7 @@ export default function PaymentSuccess() {
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="flex flex-col items-center">
-                    <span className="w-8 h-8 bg-[#E53935] text-white text-xs font-bold flex items-center justify-center shrink-0">3</span>
+                    <span className="w-8 h-8 bg-black text-white text-xs font-bold flex items-center justify-center shrink-0">3</span>
                     <div className="w-px h-full bg-black/10 mt-1" />
                   </div>
                   <div className="pb-2">
@@ -256,7 +256,7 @@ export default function PaymentSuccess() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="bg-[#FAFAFA] border border-black/10 p-6 sm:p-8 mb-8"
+              className="bg-white border border-black/10 p-6 sm:p-8 mb-8"
             >
               <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-6">What's Included in Your Program</h3>
               <div className="grid sm:grid-cols-2 gap-5">
@@ -322,7 +322,7 @@ export default function PaymentSuccess() {
             >
               <a
                 href="/"
-                className="inline-flex items-center gap-2 bg-black text-white px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors"
+                className="inline-flex items-center gap-2 bg-black text-white px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
               >
                 Back to Site <ArrowRight className="w-3 h-3" />
               </a>
@@ -346,7 +346,7 @@ export default function PaymentSuccess() {
 
   // ─── Processing / Pending State ──────────────────────
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a href="/" className="font-heading font-bold text-sm tracking-[0.2em] uppercase">ML</a>
@@ -375,7 +375,7 @@ export default function PaymentSuccess() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => window.location.reload()}
-              className="inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#E53935] transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
             >
               <Zap className="w-3 h-3" /> Refresh Status
             </button>

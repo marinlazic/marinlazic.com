@@ -1,6 +1,6 @@
 export default function BloodWork() {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
       <header className="border-b border-black/10">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
@@ -17,7 +17,7 @@ export default function BloodWork() {
 
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
-          <div className="w-3 h-3 bg-[#E53935] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
             Blood Work Coaching Context
           </h1>
@@ -35,7 +35,7 @@ export default function BloodWork() {
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Coaching context for training after you have discussed
                     testing and results with your GP or another appropriate
@@ -43,14 +43,14 @@ export default function BloodWork() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Support to apply clinician-cleared exercise and nutrition
                     guidance within a coaching plan.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#E53935] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Coaching does not replace medical care or individual dietary
                     advice from an Accredited Practising Dietitian.
@@ -65,7 +65,7 @@ export default function BloodWork() {
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <span className="text-xs text-[#E53935] font-bold mt-0.5 shrink-0">
+                  <span className="text-xs text-black font-bold mt-0.5 shrink-0">
                     1.
                   </span>
                   <p className="text-sm text-black/70 leading-relaxed">
@@ -75,7 +75,7 @@ export default function BloodWork() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-xs text-[#E53935] font-bold mt-0.5 shrink-0">
+                  <span className="text-xs text-black font-bold mt-0.5 shrink-0">
                     2.
                   </span>
                   <p className="text-sm text-black/70 leading-relaxed">
@@ -84,7 +84,7 @@ export default function BloodWork() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-xs text-[#E53935] font-bold mt-0.5 shrink-0">
+                  <span className="text-xs text-black font-bold mt-0.5 shrink-0">
                     3.
                   </span>
                   <p className="text-sm text-black/70 leading-relaxed">
@@ -129,7 +129,7 @@ export default function BloodWork() {
           <div className="flex flex-wrap gap-4">
             <a
               href="/#contact"
-              className="inline-flex items-center bg-[#E53935] text-white text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-[#C62828] transition-colors font-bold"
+              className="inline-flex items-center bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-bold"
             >
               Contact About Availability
             </a>
