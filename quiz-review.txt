@@ -1,5 +1,0 @@
-Quiz flow review:
-- Intro page: Clean, Swiss Design, red accent, 5 category icons. Working.
-- Question 1 (Sleep): Red progress bar at top, 1/10 counter, category badge, bold question, subtext, 5 options with descriptions. Clean layout. Working.
-- Previous button and Exit link at bottom. Working.
-- Need to verify: auto-advance on answer, email capture, results screen.

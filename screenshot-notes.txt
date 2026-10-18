@@ -1,9 +1,0 @@
-Screenshot 1 - Hero section:
-- Swiss Design style is working well: clean white canvas, bold black DM Sans headings, red square accent
-- Navigation bar with ML logo, About, Experience, Coaching, Contact links, and Work With Me CTA
-- Large MARIN LAZIC heading with red accent square above
-- Placeholder headshot image displayed with grayscale filter
-- Cookie consent banner visible at bottom
-- Overall layout is clean, asymmetric, and professional
-- TypeScript: 0 errors
-- Server: running on port 3000
