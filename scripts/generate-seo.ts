@@ -62,6 +62,45 @@ const full =
     )
     .join("\n");
 fs.writeFileSync(path.join(dir, "llms-full.txt"), full);
+
+// RSS feed of the articles, newest first. Feed readers, Bing and answer
+// engines use it to notice new and revised pieces without a full crawl.
+const rfc822 = (d: string) => new Date(`${d}T00:00:00Z`).toUTCString();
+const sorted = [...articles].sort((a, b) => (a.date < b.date ? 1 : -1));
+const latest = sorted
+  .map(a => a.dateModified || a.date)
+  .sort()
+  .at(-1)!;
+const rss =
+  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">\n' +
+  "<channel>\n" +
+  "<title>Marin Lazic: Insights</title>\n" +
+  `<link>${CANONICAL_ORIGIN}/insights</link>\n` +
+  "<description>Research linked articles on training, recovery, sleep and nutrition for founders and busy professionals.</description>\n" +
+  "<language>en-au</language>\n" +
+  `<lastBuildDate>${rfc822(latest)}</lastBuildDate>\n` +
+  `<atom:link href="${CANONICAL_ORIGIN}/feed.xml" rel="self" type="application/rss+xml" />\n` +
+  sorted
+    .map(a => {
+      const url = `${CANONICAL_ORIGIN}/insights/${a.slug}`;
+      return (
+        "<item>\n" +
+        `<title>${xmlEscape(a.title)}</title>\n` +
+        `<link>${url}</link>\n` +
+        `<guid isPermaLink="true">${url}</guid>\n` +
+        `<pubDate>${rfc822(a.date)}</pubDate>\n` +
+        "<dc:creator>Marin Lazic</dc:creator>\n" +
+        a.tags.map(t => `<category>${xmlEscape(t)}</category>`).join("") + "\n" +
+        `<description>${xmlEscape(a.excerpt)}</description>\n` +
+        "</item>"
+      );
+    })
+    .join("\n") +
+  "\n</channel>\n</rss>\n";
+const rssValidation = XMLValidator.validate(rss);
+if (rssValidation !== true) throw new Error(JSON.stringify(rssValidation));
+fs.writeFileSync(path.join(dir, "feed.xml"), rss);
 console.log(
-  `Generated and validated ${entries.length} canonical sitemap URLs; preserved approved llms.txt; refreshed llms-full.txt.`
+  `Generated and validated ${entries.length} canonical sitemap URLs; preserved approved llms.txt; refreshed llms-full.txt and feed.xml (${sorted.length} items).`
 );

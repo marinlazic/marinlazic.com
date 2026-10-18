@@ -11,6 +11,7 @@ import { kitOnAssessmentAbandoned } from "./kit";
 import { storageGetBuffer } from "./storage";
 import { runDiagnostics } from "./diagnostics";
 import { notifyOwner } from "./_core/notification";
+import { submitChangedUrls } from "./indexNow";
 
 function authorised(req: Request): boolean {
   if (!ENV.cronSecret) return false;
@@ -90,7 +91,13 @@ export function registerJobRoutes(app: Express) {
           content: `The daily site check found a problem.\n\n${lines.join("\n")}\n\nChecked at ${diagnostics.ranAt}.`,
         }).catch(e => console.warn("[Jobs] Could not email the diagnostics result:", e));
       }
-      res.json({ ok: true, reminders, diagnostics, ranAt: new Date().toISOString() });
+      // Tell Bing and friends which pages changed. Never fails the job.
+      const indexNow = await submitChangedUrls().catch(e => {
+        console.warn("[Jobs] IndexNow failed:", e);
+        return { submitted: [], status: null, detail: String(e) };
+      });
+      console.log(`[Jobs] IndexNow: ${indexNow.detail}`);
+      res.json({ ok: true, reminders, diagnostics, indexNow, ranAt: new Date().toISOString() });
     } catch (error) {
       console.error("[Jobs] Daily job failed:", error);
       res.status(500).json({ ok: false });

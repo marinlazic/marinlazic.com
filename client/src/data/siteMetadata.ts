@@ -77,7 +77,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     modified: PREVIOUS_CONTENT_DATE,
   },
   "/training-for-long-term-health": {
-    title: "Training for Long-Term Health | Marin Lazic",
+    title: "Training for Long Term Health | Marin Lazic",
     description:
       "Practical guides to strength, aerobic fitness, VO2 max, sleep and sustainable training. Evidence and clear limits, without lifespan promises.",
     label: "Training for long term health",
@@ -86,7 +86,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/insights": {
     title: "Health and Performance Insights | Marin Lazic",
     description:
-      "Research-linked guides to strength, aerobic fitness, sleep, HRV, nutrition and recovery for founders and busy professionals.",
+      "Research linked guides to strength, aerobic fitness, sleep, HRV, nutrition and recovery for founders and busy professionals.",
     label: "Insights",
     modified: PREVIOUS_CONTENT_DATE,
   },
@@ -95,7 +95,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     description:
       "Nine practical training templates and checklists for movement, protein, aerobic fitness, sleep and recovery. Free coaching resources.",
     label: "Resources",
-    modified: "2026-10-16",
+    modified: "2026-10-18",
   },
   "/media": {
     title: MEDIA_TITLE,
@@ -157,7 +157,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     modified: PREVIOUS_CONTENT_DATE,
   },
   "/hrv-program": {
-    title: "HRV-Guided Conditioning | Marin Lazic",
+    title: "HRV Guided Conditioning | Marin Lazic",
     description:
       "Use personal HRV trends alongside sleep, symptoms and training history. Programme pricing, dates and availability remain unconfirmed.",
     label: "HRV conditioning",
@@ -376,6 +376,7 @@ export function getPageMeta(url: string): HeadMeta {
       description: record.excerpt,
       image: record.image.startsWith("/") ? `${CANONICAL_ORIGIN}${record.image}` : record.image,
       keywords: [...record.tags],
+      about: record.tags.slice(0, 3).map(name => ({ "@type": "Thing", name })),
       isAccessibleForFree: true,
       wordCount: articleWordCount(record.content),
       citation: articleCitations(record.content),

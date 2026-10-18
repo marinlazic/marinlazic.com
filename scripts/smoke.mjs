@@ -53,6 +53,16 @@ await page("/insights/how-to-boost-your-hrv", "application/ld+json");
 await page("/program", "Start the 4 week programme");
 await page("/report/not-a-real-token-1234", "Saved report");
 
+// 1a. Feed and IndexNow key file are served
+{
+  const feed = await fetch(`${BASE}/feed.xml`);
+  const xml = await feed.text();
+  record("rss feed", feed.status === 200 && xml.includes("<rss") && xml.includes("/insights/"), `status ${feed.status}`);
+  const key = "b1a22b3384a75608ac5a98b4ca4db8c4";
+  const kf = await fetch(`${BASE}/${key}.txt`);
+  record("indexnow key file", kf.status === 200 && (await kf.text()).trim() === key, `status ${kf.status}`);
+}
+
 // 1b. Dashboard shell loads and its API is locked
 {
   for (const p of ["/admin", "/admin/contacts", "/admin/traffic"]) {

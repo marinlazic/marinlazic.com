@@ -44,6 +44,7 @@ export function buildHeadTags(head: HeadMeta) {
     `<meta data-site-head name="twitter:card" content="${image ? "summary_large_image" : "summary"}" />`,
     `<meta data-site-head name="twitter:title" content="${socialTitle}" />`,
     `<meta data-site-head name="twitter:description" content="${socialDesc}" />`,
+    `<link data-site-head rel="alternate" type="application/rss+xml" title="Marin Lazic: Insights" href="${ORIGIN}/feed.xml" />`,
   ];
   if (url)
     tags.push(
