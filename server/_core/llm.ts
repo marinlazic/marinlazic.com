@@ -337,6 +337,8 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
       const errorText = await response.text();
       lastError = new Error(`LLM invoke failed: ${response.status} ${response.statusText} – ${errorText.slice(0, 500)}`);
       if (!RETRY_STATUSES.has(response.status)) throw lastError;
+      // A used up quota does not come back in ten seconds; stop at once.
+      if (response.status === 429 && /exceeded your current quota/i.test(errorText)) throw lastError;
     }
     if (attempt < delays.length) {
       console.warn(`[LLM] attempt ${attempt + 1} failed (${(lastError?.message ?? "unknown").slice(0, 80)}), retrying in ${delays[attempt] / 1000}s`);

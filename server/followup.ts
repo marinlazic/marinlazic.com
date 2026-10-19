@@ -516,10 +516,13 @@ export async function refreshFollowups(options: { only?: string; force?: boolean
   }
 
   // Three at a time: a full run of forty takes a couple of minutes instead of ten.
+  // A used up Gemini quota stops the run, so drafts never eat the allowance
+  // the assessment reports need.
   let i = 0;
+  let quotaGone = false;
   await Promise.all(
     Array.from({ length: Math.min(3, toDraft.length) }, async () => {
-      while (i < toDraft.length) {
+      while (i < toDraft.length && !quotaGone) {
         const l = toDraft[i++];
         const standingOnly = { stage: l.stage, priority: l.priority, updatedAt: new Date() };
         try {
@@ -527,17 +530,23 @@ export async function refreshFollowups(options: { only?: string; force?: boolean
           await upsert(l.email, { ...standingOnly, nextAction: draft.next_action, draftSubject: draft.subject, draftBody: draft.body, basis: basisFor(l), draftedAt: new Date() });
           out.drafted++;
         } catch (err) {
-          const msg = String((err as Error)?.message ?? err).slice(0, 200);
+          const raw = String((err as Error)?.message ?? err);
+          const quota = /exceeded your current quota/i.test(raw);
+          const msg = quota ? QUOTA_MESSAGE : raw.slice(0, 200);
           console.warn("[Followup] Draft failed for a contact:", msg);
-          if (out.errors.length < 5) out.errors.push(msg);
+          if (!out.errors.includes(msg) && out.errors.length < 5) out.errors.push(msg);
           await upsert(l.email, standingOnly);
           out.failed++;
+          if (quota) quotaGone = true;
         }
       }
     })
   );
+  if (quotaGone) out.skipped += toDraft.length - i;
   return out;
 }
+
+export const QUOTA_MESSAGE = "Gemini says the key's quota is used up (the free tier's daily allowance). Drafts resume when it resets, or straight away once billing is enabled on the key in Google AI Studio.";
 
 // ─── Manual events and the one off import ───────────────────────────────────
 
