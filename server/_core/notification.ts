@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { Resend } from "resend";
 import { ENV } from "./env";
+import { recordEmail, type EmailKind } from "../emailLog";
 
 export type NotificationPayload = {
   title: string;
@@ -57,13 +58,15 @@ export async function notifyOwner(payload: NotificationPayload): Promise<boolean
 
   try {
     const resend = new Resend(ENV.resendApiKey);
-    const { error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from,
       to: [to],
       subject: title,
       text: content,
       html: `<pre style="font-family:Inter,Arial,sans-serif;font-size:14px;line-height:1.6;white-space:pre-wrap;color:#121212">${escapeHtml(content)}</pre>`,
     });
+    const kind: EmailKind = /new lead/i.test(title) ? "owner_lead" : "owner_alert";
+    await recordEmail({ to, kind, subject: title, providerId: data?.id, ok: !error, error: error?.message });
     if (error) {
       console.warn("[Notification] Resend rejected owner email:", error);
       return false;

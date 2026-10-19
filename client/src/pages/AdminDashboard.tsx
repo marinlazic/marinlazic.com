@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { loginWithPassword } from "@/const";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { ArrowLeft, BarChart3, ClipboardList, FileText, Globe, LayoutDashboard, LogOut, Server, Users } from "lucide-react";
+import { ArrowLeft, BarChart3, ClipboardList, FileText, Globe, LayoutDashboard, LogOut, Mail, Server, Users } from "lucide-react";
 import { Overview } from "./admin/Overview";
 import { Contacts, ContactDrawer } from "./admin/Contacts";
 import { Applications } from "./admin/Applications";
@@ -10,6 +10,7 @@ import { Assessments } from "./admin/Assessments";
 import { Content } from "./admin/Content";
 import { Traffic } from "./admin/Traffic";
 import { System } from "./admin/System";
+import { Email } from "./admin/Email";
 
 const SECTIONS = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
@@ -18,6 +19,7 @@ const SECTIONS = [
   { id: "assessments", label: "Assessments", icon: BarChart3 },
   { id: "content", label: "Content", icon: FileText },
   { id: "traffic", label: "Traffic", icon: Globe },
+  { id: "email", label: "Email", icon: Mail },
   { id: "system", label: "System", icon: Server },
 ] as const;
 type SectionId = (typeof SECTIONS)[number]["id"];
@@ -162,6 +164,7 @@ export default function AdminDashboard() {
           {section === "assessments" && <Assessments days={assessmentDays} setDays={setAssessmentDays} />}
           {section === "content" && <Content days={days} setDays={setDays} />}
           {section === "traffic" && <Traffic days={days} setDays={setDays} />}
+          {section === "email" && <Email days={days} setDays={setDays} />}
           {section === "system" && <System />}
         </div>
       </main>

@@ -1,8 +1,24 @@
 import { Resend } from "resend";
 import { ENV } from "./_core/env";
 import { generateAssessmentPDF } from "./pdf";
+import { recordEmail, type EmailKind } from "./emailLog";
 
 let resendClient: Resend | null = null;
+
+
+// Every send goes through here so the dashboard can list what was sent.
+async function sendLogged(resend: Resend, kind: EmailKind, payload: Parameters<Resend["emails"]["send"]>[0]) {
+  const to = Array.isArray(payload.to) ? payload.to[0] : payload.to;
+  const subject = payload.subject ?? "";
+  try {
+    const result = await resend.emails.send(payload);
+    await recordEmail({ to, kind, subject, providerId: result.data?.id, ok: !result.error, error: result.error?.message });
+    return result;
+  } catch (err) {
+    await recordEmail({ to, kind, subject, ok: false, error: err });
+    throw err;
+  }
+}
 
 function getResendClient(): Resend {
   if (!resendClient) {
@@ -214,7 +230,7 @@ export async function sendAssessmentResultsEmail(params: {
       emailPayload.attachments = attachments;
     }
 
-    const { data, error } = await resend.emails.send(emailPayload);
+    const { data, error } = await sendLogged(resend, "assessment_results", emailPayload);
 
     if (error) {
       console.error("[Email] Resend API error:", error);
@@ -296,7 +312,7 @@ export async function sendApplicationNotificationEmail(params: {
 </body>
 </html>`;
 
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await sendLogged(resend, "owner_application", {
       from: "Marin Lazic <results@marinlazic.com>",
       to: ["Marin@marinlazic.coach"],
       replyTo: params.applicantEmail,
@@ -386,7 +402,7 @@ export async function sendAssessmentNotificationEmail(params: {
 </body>
 </html>`;
 
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await sendLogged(resend, "owner_assessment", {
       from: "Marin Lazic <results@marinlazic.com>",
       to: ["Marin@marinlazic.coach"],
       replyTo: params.email,
@@ -455,7 +471,7 @@ export async function sendApplicantConfirmationEmail(params: {
 </body>
 </html>`;
 
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await sendLogged(resend, "application_confirmation", {
       from: "Marin Lazic <results@marinlazic.com>",
       to: [params.applicantEmail],
       replyTo: "marin@marinlazic.coach",
@@ -521,7 +537,7 @@ export async function sendPurchaseConfirmationEmail(params: {
   if (!ENV.resendApiKey) return false;
   try {
     const resend = getResendClient();
-    const { error } = await resend.emails.send({
+    const { error } = await sendLogged(resend, "purchase_confirmation", {
       from: ENV.resendFromEmail || RESULTS_SENDER,
       to: [params.email],
       replyTo: OWNER_REPLY_TO,
@@ -551,7 +567,7 @@ export async function sendAssessmentReminderEmail(params: {
   if (!ENV.resendApiKey) return false;
   try {
     const resend = getResendClient();
-    const { error } = await resend.emails.send({
+    const { error } = await sendLogged(resend, "assessment_reminder", {
       from: ENV.resendFromEmail || RESULTS_SENDER,
       to: [params.email],
       replyTo: OWNER_REPLY_TO,
@@ -586,7 +602,7 @@ export async function sendEnquiryConfirmationEmail(params: {
   if (!ENV.resendApiKey) return false;
   try {
     const resend = getResendClient();
-    const { error } = await resend.emails.send({
+    const { error } = await sendLogged(resend, "enquiry_confirmation", {
       from: ENV.resendFromEmail || RESULTS_SENDER,
       to: [params.email],
       replyTo: OWNER_REPLY_TO,

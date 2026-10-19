@@ -13,6 +13,8 @@ import {
   leadNotes,
   leads,
 } from "../drizzle/schema";
+import { kitOverview } from "./kitStats";
+import { EMAIL_KIND_LABELS } from "./emailLog";
 import { QUESTIONS, calculateScores, getScoreBand, getScoreLabel } from "../shared/assessment";
 import { runDiagnostics } from "./diagnostics";
 
@@ -705,6 +707,63 @@ async function system(force = false) {
   return value;
 }
 
+// ─── Email marketing ───────────────────────────────────────────────────────
+
+/** Site emails (Resend) in the period: totals by kind, per day, and the latest sends. */
+async function siteEmails(days: number, limit = 100) {
+  const { since, previousSince, now } = windows(days);
+  const byKind = await raw<{ kind: string; status: string; count: unknown }>(sql`
+    SELECT kind, status, COUNT(*) AS count FROM email_log
+    WHERE created_at >= ${since} GROUP BY kind, status ORDER BY count DESC`);
+  const previous = await raw<{ count: unknown }>(sql`
+    SELECT COUNT(*) AS count FROM email_log WHERE created_at >= ${previousSince} AND created_at < ${since} AND status = 'sent'`);
+  const daily = await raw<{ day: string; kind: string; count: unknown }>(sql`
+    SELECT to_char(created_at AT TIME ZONE 'Australia/Sydney', 'YYYY-MM-DD') AS day, kind, COUNT(*) AS count
+    FROM email_log WHERE created_at >= ${since} AND status = 'sent' GROUP BY day, kind ORDER BY day`);
+  const recentRows = await raw<{ id: number; to_email: string; kind: string; subject: string; status: string; error: string | null; created_at: string }>(sql`
+    SELECT id, to_email, kind, subject, status, error, created_at FROM email_log
+    ORDER BY created_at DESC LIMIT ${limit}`);
+  const kinds: Record<string, { label: string; sent: number; failed: number }> = {};
+  for (const r of byKind) {
+    const k = (kinds[r.kind] ??= { label: (EMAIL_KIND_LABELS as Record<string, string>)[r.kind] ?? r.kind, sent: 0, failed: 0 });
+    if (r.status === "sent") k.sent += n(r.count); else k.failed += n(r.count);
+  }
+  const sent = Object.values(kinds).reduce((a, k) => a + k.sent, 0);
+  const failed = Object.values(kinds).reduce((a, k) => a + k.failed, 0);
+  const keys = dayKeys(since, now);
+  const series = keys.map(day => {
+    const row: Record<string, number | string> = { day };
+    for (const r of daily) if (r.day === day) row[r.kind] = n(r.count);
+    return row;
+  });
+  return {
+    days,
+    sent,
+    failed,
+    previousSent: n(previous[0]?.count),
+    kinds: Object.entries(kinds).map(([kind, v]) => ({ kind, ...v })).sort((a, b) => b.sent - a.sent),
+    series,
+    kindLabels: EMAIL_KIND_LABELS,
+    recent: recentRows.map(r => ({
+      id: r.id,
+      to: r.to_email,
+      kind: r.kind,
+      label: (EMAIL_KIND_LABELS as Record<string, string>)[r.kind] ?? r.kind,
+      subject: r.subject,
+      status: r.status,
+      error: r.error,
+      createdAt: r.created_at,
+    })),
+  };
+}
+
+/** Everything a contact received from the site, newest first. */
+async function emailsForContact(email: string) {
+  const rows = await raw<{ id: number; kind: string; subject: string; status: string; created_at: string }>(sql`
+    SELECT id, kind, subject, status, created_at FROM email_log WHERE lower(to_email) = lower(${email}) ORDER BY created_at DESC LIMIT 50`);
+  return rows.map(r => ({ id: r.id, kind: r.kind, label: (EMAIL_KIND_LABELS as Record<string, string>)[r.kind] ?? r.kind, subject: r.subject, status: r.status, createdAt: r.created_at }));
+}
+
 // ─── Router ────────────────────────────────────────────────────────────────
 
 const daysInput = z.object({ days: z.number().int().min(1).max(365).default(30) }).optional();
@@ -715,6 +774,14 @@ export const adminRouter = router({
   traffic: adminProcedure.input(daysInput).query(({ input }) => traffic(input?.days ?? 30)),
   assessments: adminProcedure.input(daysInput).query(({ input }) => assessments(input?.days ?? 90)),
   system: adminProcedure.input(z.object({ force: z.boolean().optional() }).optional()).query(({ input }) => system(input?.force)),
+
+  email: router({
+    kit: adminProcedure
+      .input(z.object({ days: z.number().int().min(1).max(365).default(30), force: z.boolean().optional() }).optional())
+      .query(({ input }) => kitOverview(input?.days ?? 30, input?.force)),
+    site: adminProcedure.input(daysInput).query(({ input }) => siteEmails(input?.days ?? 30)),
+    forContact: adminProcedure.input(z.object({ email: z.string().email() })).query(({ input }) => emailsForContact(input.email)),
+  }),
 
   contacts: router({
     list: adminProcedure

@@ -81,6 +81,28 @@ export const leadNotes = pgTable("lead_notes", {
 export type LeadNote = typeof leadNotes.$inferSelect;
 export type InsertLeadNote = typeof leadNotes.$inferInsert;
 
+/**
+ * Every email the site sends through Resend: results, confirmations,
+ * reminders and owner alerts. Lets the dashboard show what each person
+ * received and how many emails go out each day.
+ */
+export const emailLog = pgTable("email_log", {
+  id: serial("id").primaryKey(),
+  toEmail: varchar("to_email", { length: 320 }).notNull(),
+  kind: varchar("kind", { length: 60 }).notNull(),
+  subject: varchar("subject", { length: 300 }).notNull(),
+  providerId: varchar("provider_id", { length: 120 }),
+  status: varchar("status", { length: 20 }).notNull().default("sent"),
+  error: text("error"),
+  createdAt: ts("created_at").defaultNow().notNull(),
+}, table => [
+  index("email_log_created_at_idx").on(table.createdAt),
+  index("email_log_to_email_idx").on(table.toEmail),
+]);
+
+export type EmailLog = typeof emailLog.$inferSelect;
+export type InsertEmailLog = typeof emailLog.$inferInsert;
+
 export const analyticsEvents = pgTable("analytics_events", {
   id: serial("id").primaryKey(),
   eventType: varchar("event_type", { length: 100 }).notNull(),
