@@ -77,7 +77,7 @@ export function Email({ days, setDays }: { days: number; setDays: (d: number) =>
       {/* Kit list health */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <KpiCard label="Subscribers" value={k?.subscribers.active === null || k?.subscribers.active === undefined ? "" : fmtInt(k.subscribers.active)} hint={k?.subscribers.cancelled != null ? `${fmtInt(k.subscribers.cancelled)} unsubscribed all time${k.subscribers.bounced ? `, ${fmtInt(k.subscribers.bounced)} bounced` : ""}` : "Active in Kit"} />
-        <KpiCard label={`New in ${days} days`} value={k?.growth ? fmtInt(k.growth.newSubscribers) : ""} hint={k?.growth ? `${fmtInt(k.growth.cancellations)} left, net ${k.growth.net >= 0 ? "+" : ""}${fmtInt(k.growth.net)}` : "From Kit growth stats"} />
+        <KpiCard label={`New in ${days} days`} value={k?.growth ? fmtInt(k.growth.newSubscribers) : ""} hint={k?.growth ? `${fmtInt(Math.abs(k.growth.cancellations))} left, net ${k.growth.net >= 0 ? `+${fmtInt(k.growth.net)}` : `${fmtInt(Math.abs(k.growth.net))} fewer`}` : "From Kit growth stats"} />
         <KpiCard label="Kit emails sent" value={k?.emailStats ? fmtInt(k.emailStats.sent) : ""} hint={k?.emailStats ? `Last 90 days. ${k.emailStats.openTracking ? `Open rate ${rate(k.emailStats.openRate)}` : "Open tracking off"}${k.emailStats.clickTracking ? `, click rate ${rate(k.emailStats.clickRate)}` : ""}` : "Broadcasts and sequences"} />
         <KpiCard label="Site emails sent" value={s ? fmtInt(s.sent) : ""} current={s?.sent} previous={s?.previousSent} hint={s?.failed ? `${fmtInt(s.failed)} failed` : "Results, confirmations, reminders, alerts"} />
       </div>
@@ -92,7 +92,7 @@ export function Email({ days, setDays }: { days: number; setDays: (d: number) =>
               return {
                 label: p.label,
                 value: count ?? 0,
-                sub: count === null ? "tag not found in Kit" : prev ? `${pct(count, prev)}% of the step before` : i === 0 ? "everyone who gave an email" : "",
+                sub: count === null ? (p.tag === "purchased" ? "no purchases yet; the tag appears with the first sale" : "tag not found in Kit") : prev ? `${pct(count, prev)}% of the step before` : i === 0 ? "everyone who gave an email" : "",
               };
             })}
             max={pipelineTop || undefined}
