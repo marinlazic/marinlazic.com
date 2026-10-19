@@ -398,6 +398,7 @@ export function Followup({ openContact }: { openContact: (id: number) => void })
           {sync.data.mail ? `Gmail: ${sync.data.mail.added} new messages across ${sync.data.mail.contacts} contacts${sync.data.mail.partial ? " (time ran out, press Sync again)" : ""}. ` : ""}
           {sync.data.mailError ? `Gmail: ${sync.data.mailError}. ` : ""}
           Drafts: {sync.data.drafts.drafted} written, {sync.data.drafts.kept} kept, {sync.data.drafts.failed} failed.
+          {sync.data.drafts.errors?.length ? ` Why: ${sync.data.drafts.errors.join(" | ")}` : ""}
         </p>
       )}
       {gmail.lastError && <p className="text-xs text-black border border-black/10 bg-white px-4 py-2">Last Gmail read failed: {gmail.lastError}</p>}

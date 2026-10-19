@@ -471,7 +471,7 @@ async function draftFor(l: FollowupLead): Promise<Draft> {
   };
 }
 
-export type RefreshResult = { leads: number; drafted: number; kept: number; failed: number; skipped: number };
+export type RefreshResult = { leads: number; drafted: number; kept: number; failed: number; skipped: number; errors: string[] };
 
 /**
  * Writes or rewrites the draft for every lead whose story changed. `only`
@@ -485,7 +485,7 @@ export async function refreshFollowups(options: { only?: string; force?: boolean
   const existing = new Map(
     (await rows(sql`SELECT email, basis, stage, priority FROM ${contactFollowups}`)).map(r => [String(r.email), r])
   );
-  const out: RefreshResult = { leads: all.length, drafted: 0, kept: 0, failed: 0, skipped: 0 };
+  const out: RefreshResult = { leads: all.length, drafted: 0, kept: 0, failed: 0, skipped: 0, errors: [] };
   const limit = options.limit ?? 25;
   const upsert = async (email: string, set: Partial<typeof contactFollowups.$inferInsert>) => {
     const values = { email, stage: set.stage ?? "Never replied", priority: set.priority ?? "Low", ...set };
@@ -527,7 +527,9 @@ export async function refreshFollowups(options: { only?: string; force?: boolean
           await upsert(l.email, { ...standingOnly, nextAction: draft.next_action, draftSubject: draft.subject, draftBody: draft.body, basis: basisFor(l), draftedAt: new Date() });
           out.drafted++;
         } catch (err) {
-          console.warn("[Followup] Draft failed for a contact:", (err as Error).message);
+          const msg = String((err as Error)?.message ?? err).slice(0, 200);
+          console.warn("[Followup] Draft failed for a contact:", msg);
+          if (out.errors.length < 5) out.errors.push(msg);
           await upsert(l.email, standingOnly);
           out.failed++;
         }
