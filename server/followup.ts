@@ -487,16 +487,19 @@ export async function refreshFollowups(options: { only?: string; force?: boolean
   );
   const out: RefreshResult = { leads: all.length, drafted: 0, kept: 0, failed: 0, skipped: 0 };
   const limit = options.limit ?? 25;
+  const upsert = async (email: string, set: Partial<typeof contactFollowups.$inferInsert>) => {
+    const values = { email, stage: set.stage ?? "Never replied", priority: set.priority ?? "Low", ...set };
+    await d.insert(contactFollowups).values(values).onConflictDoUpdate({ target: contactFollowups.email, set });
+  };
+
+  const toDraft: FollowupLead[] = [];
   for (const l of all) {
     if (options.only && l.email !== options.only) continue;
     const basis = basisFor(l);
     const prev = existing.get(l.email);
     const standingOnly = { stage: l.stage, priority: l.priority, updatedAt: new Date() };
     if (!l.needsDraft) {
-      await d
-        .insert(contactFollowups)
-        .values({ email: l.email, ...standingOnly, nextAction: null, draftSubject: null, draftBody: null, basis, draftedAt: null })
-        .onConflictDoUpdate({ target: contactFollowups.email, set: { ...standingOnly, nextAction: null, draftSubject: null, draftBody: null, basis, draftedAt: null } });
+      await upsert(l.email, { ...standingOnly, nextAction: null, draftSubject: null, draftBody: null, basis, draftedAt: null });
       out.skipped++;
       continue;
     }
@@ -504,28 +507,33 @@ export async function refreshFollowups(options: { only?: string; force?: boolean
       out.kept++;
       continue;
     }
-    if (!ENV.geminiApiKey || out.drafted >= limit) {
-      await d
-        .insert(contactFollowups)
-        .values({ email: l.email, ...standingOnly, basis: prev?.basis === basis ? basis : null })
-        .onConflictDoUpdate({ target: contactFollowups.email, set: standingOnly });
+    if (!ENV.geminiApiKey || toDraft.length >= limit) {
+      await upsert(l.email, { ...standingOnly, basis: prev?.basis === basis ? basis : null });
       out.skipped++;
       continue;
     }
-    try {
-      const draft = await draftFor(l);
-      const set = { ...standingOnly, nextAction: draft.next_action, draftSubject: draft.subject, draftBody: draft.body, basis, draftedAt: new Date() };
-      await d.insert(contactFollowups).values({ email: l.email, ...set }).onConflictDoUpdate({ target: contactFollowups.email, set });
-      out.drafted++;
-    } catch (err) {
-      console.warn("[Followup] Draft failed for a contact:", (err as Error).message);
-      await d
-        .insert(contactFollowups)
-        .values({ email: l.email, ...standingOnly })
-        .onConflictDoUpdate({ target: contactFollowups.email, set: standingOnly });
-      out.failed++;
-    }
+    toDraft.push(l);
   }
+
+  // Three at a time: a full run of forty takes a couple of minutes instead of ten.
+  let i = 0;
+  await Promise.all(
+    Array.from({ length: Math.min(3, toDraft.length) }, async () => {
+      while (i < toDraft.length) {
+        const l = toDraft[i++];
+        const standingOnly = { stage: l.stage, priority: l.priority, updatedAt: new Date() };
+        try {
+          const draft = await draftFor(l);
+          await upsert(l.email, { ...standingOnly, nextAction: draft.next_action, draftSubject: draft.subject, draftBody: draft.body, basis: basisFor(l), draftedAt: new Date() });
+          out.drafted++;
+        } catch (err) {
+          console.warn("[Followup] Draft failed for a contact:", (err as Error).message);
+          await upsert(l.email, standingOnly);
+          out.failed++;
+        }
+      }
+    })
+  );
   return out;
 }
 

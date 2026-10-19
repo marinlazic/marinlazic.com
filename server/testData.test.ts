@@ -5,6 +5,11 @@ describe("test addresses", () => {
   it("recognises the smoke test pattern and nothing else", () => {
     expect(isTestEmail("marin+smoke@marinlazic.coach")).toBe(true);
     expect(isTestEmail("Marin+SMOKE@marinlazic.com")).toBe(true);
+    expect(isTestEmail("marin+test2@marinlazic.coach")).toBe(true);
+    expect(isTestEmail("marin+e2etest@marinlazic.coach")).toBe(true);
+    expect(isTestEmail("manus.emailfix.test.1781146147271@marinlazic.com")).toBe(true);
+    expect(isTestEmail("rwedvwlc@sharklasers.com")).toBe(true);
+    expect(isTestEmail("ellemeredith+mindbody@gmail.com")).toBe(false);
     expect(isTestEmail("marin@marinlazic.coach")).toBe(false);
     expect(isTestEmail("smoke@example.com")).toBe(false);
     expect(isTestEmail("")).toBe(false);
