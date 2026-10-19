@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { loginWithPassword } from "@/const";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { ArrowLeft, BarChart3, ClipboardList, FileText, Globe, LayoutDashboard, LogOut, Mail, Server, Users } from "lucide-react";
+import { ArrowLeft, BarChart3, ClipboardList, FileText, Globe, LayoutDashboard, LogOut, Mail, MessageCircle, Server, Users } from "lucide-react";
 import { Overview } from "./admin/Overview";
 import { Contacts, ContactDrawer } from "./admin/Contacts";
 import { Applications } from "./admin/Applications";
@@ -11,9 +11,11 @@ import { Content } from "./admin/Content";
 import { Traffic } from "./admin/Traffic";
 import { System } from "./admin/System";
 import { Email } from "./admin/Email";
+import { Followup } from "./admin/Followup";
 
 const SECTIONS = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
+  { id: "followup", label: "Follow up", icon: MessageCircle },
   { id: "contacts", label: "Contacts", icon: Users },
   { id: "applications", label: "Applications", icon: ClipboardList },
   { id: "assessments", label: "Assessments", icon: BarChart3 },
@@ -159,6 +161,7 @@ export default function AdminDashboard() {
         </header>
         <div className="p-4 lg:p-8 max-w-[1400px]">
           {section === "overview" && <Overview days={days} setDays={setDays} openContact={openContact} />}
+          {section === "followup" && <Followup openContact={openContact} />}
           {section === "contacts" && <Contacts selectedId={selectedContact} openContact={openContact} closeContact={closeContact} />}
           {section === "applications" && <Applications openContact={openContact} />}
           {section === "assessments" && <Assessments days={assessmentDays} setDays={setAssessmentDays} />}

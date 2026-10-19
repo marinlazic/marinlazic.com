@@ -28,4 +28,9 @@ export const ENV = {
 
   // Shared secret the scheduled job must present.
   cronSecret: process.env.CRON_SECRET ?? "",
+
+  // Google OAuth client for the Gmail connection (read only). Created in
+  // Google Cloud Console; the dashboard's System page walks through it.
+  googleClientId: process.env.GOOGLE_CLIENT_ID ?? "",
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
 };

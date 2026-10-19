@@ -17,6 +17,11 @@ import { kitOverview } from "./kitStats";
 import { EMAIL_KIND_LABELS } from "./emailLog";
 import { QUESTIONS, calculateScores, getScoreBand, getScoreLabel } from "../shared/assessment";
 import { runDiagnostics } from "./diagnostics";
+import { answersFromMessage, labelAnswer, leadKind, parseAnswers } from "./contactAnswers";
+import { importEvents, loadFollowups, logContact, refreshFollowups } from "./followup";
+import { disconnect as gmailDisconnect, gmailStatus, recordSyncError, syncGmail } from "./gmail";
+
+export { answersFromMessage, labelAnswer, leadKind };
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
 
@@ -52,15 +57,6 @@ function dayKeys(since: Date, now: Date): string[] {
   return keys;
 }
 
-// Leads come from four places. The source column says which.
-export function leadKind(source: string | null | undefined): "assessment" | "application" | "purchase" | "enquiry" {
-  const s = (source || "").toLowerCase();
-  if (s.startsWith("performance-assessment")) return "assessment";
-  if (s === "coaching-application") return "application";
-  if (s === "stripe-purchase") return "purchase";
-  return "enquiry";
-}
-
 const ENQUIRY_EXCLUDED_SOURCES = ["coaching-application", "stripe-purchase"];
 const enquiryWhere = sql`(${leads.source} IS NULL OR (${leads.source} NOT LIKE 'performance-assessment%' AND ${leads.source} NOT IN (${sql.join(ENQUIRY_EXCLUDED_SOURCES.map(s => sql`${s}`), sql`, `)})))`;
 
@@ -68,54 +64,11 @@ const enquiryWhere = sql`(${leads.source} IS NULL OR (${leads.source} NOT LIKE '
 // row can never break a whole query.
 const EV_JSON = sql`CASE WHEN ${analyticsEvents.eventData} LIKE '{%' THEN ${analyticsEvents.eventData}::jsonb ELSE '{}'::jsonb END`;
 
-const QUESTION_BY_ID = new Map(QUESTIONS.map(q => [q.id, q]));
-
-function parseAnswers(text: string | null): Record<string, unknown> {
-  if (!text) return {};
-  try {
-    const parsed = JSON.parse(text);
-    return parsed && typeof parsed === "object" ? parsed : {};
-  } catch {
-    return {};
-  }
-}
-
-/**
- * Old assessment leads (before saved reports existed) carry their answers in
- * the message column as "key: value | key: value". Turn that back into answers.
- */
-export function answersFromMessage(message: string | null | undefined): Record<string, unknown> {
-  if (!message || !message.includes(" | ") || !message.includes(": ")) return {};
-  const out: Record<string, unknown> = {};
-  for (const part of message.split(" | ")) {
-    const idx = part.indexOf(": ");
-    if (idx === -1) continue;
-    const key = part.slice(0, idx).trim();
-    const value = part.slice(idx + 2).trim();
-    if (!key || key === "name" || key === "email") continue;
-    out[key] = value.includes(", ") && QUESTION_BY_ID.get(key)?.type === "multi" ? value.split(", ") : value;
-  }
-  return out;
-}
-
 function scoreFromAnswers(text: string | null): number | null {
   const answers = parseAnswers(text);
   if (!Object.keys(answers).length) return null;
   const s = calculateScores(answers);
   return s.categories.some(c => c.max > 0) ? s.overallPct : null;
-}
-
-export function labelAnswer(questionId: string, value: unknown): { question: string; answer: string; section: string } {
-  const q = QUESTION_BY_ID.get(questionId);
-  const values = Array.isArray(value) ? value : [value];
-  const answer = values
-    .map(v => {
-      const opt = q?.options?.find(o => o.value === v);
-      return opt ? opt.label : String(v ?? "");
-    })
-    .filter(Boolean)
-    .join(", ");
-  return { question: q?.text ?? questionId, answer, section: q?.section ?? "other" };
 }
 
 // ─── Overview ──────────────────────────────────────────────────────────────
@@ -781,6 +734,46 @@ export const adminRouter = router({
       .query(({ input }) => kitOverview(input?.days ?? 30, input?.force)),
     site: adminProcedure.input(daysInput).query(({ input }) => siteEmails(input?.days ?? 30)),
     forContact: adminProcedure.input(z.object({ email: z.string().email() })).query(({ input }) => emailsForContact(input.email)),
+  }),
+
+  // Where every lead stands, with the drafted replies. Gmail feeds it once connected.
+  followup: router({
+    overview: adminProcedure.query(async () => {
+      const [{ leads: rows, events }, gmail] = await Promise.all([loadFollowups(), gmailStatus()]);
+      return { leads: rows, events, gmail, generatedAt: new Date().toISOString() };
+    }),
+    // Reads new mail (when Gmail is connected) and rewrites the drafts whose story changed.
+    sync: adminProcedure.input(z.object({ full: z.boolean().optional(), redraft: z.boolean().optional() }).optional()).mutation(async ({ input }) => {
+      const gmail = await gmailStatus();
+      let mail: Awaited<ReturnType<typeof syncGmail>> | null = null;
+      let mailError: string | null = null;
+      if (gmail.connected) {
+        try {
+          mail = await syncGmail({ full: input?.full });
+        } catch (err) {
+          mailError = String((err as Error)?.message ?? err);
+          await recordSyncError(err);
+        }
+      }
+      const drafts = await refreshFollowups({ force: input?.redraft, limit: 40 });
+      return { mail, mailError, drafts };
+    }),
+    redraft: adminProcedure.input(z.object({ email: z.string().email() })).mutation(({ input }) => refreshFollowups({ only: input.email.toLowerCase(), force: true, limit: 1 })),
+    // "I replied", "I called", "they replied": for anything that did not go through Gmail.
+    log: adminProcedure
+      .input(z.object({ email: z.string().email(), kind: z.enum(["sent", "reply"]), channel: z.enum(["email", "call", "message"]).default("email"), at: z.string().optional(), note: z.string().max(300).optional() }))
+      .mutation(async ({ input }) => {
+        await logContact(input);
+        await refreshFollowups({ only: input.email.toLowerCase(), limit: 1 });
+        return { ok: true };
+      }),
+    importEvents: adminProcedure
+      .input(z.object({ rows: z.array(z.object({ email: z.string().email(), kind: z.enum(["sent", "reply", "purchase", "auto"]), at: z.string(), subject: z.string().optional() })).max(2000) }))
+      .mutation(async ({ input }) => ({ imported: await importEvents(input.rows) })),
+    gmailDisconnect: adminProcedure.mutation(async () => {
+      await gmailDisconnect();
+      return { ok: true };
+    }),
   }),
 
   contacts: router({

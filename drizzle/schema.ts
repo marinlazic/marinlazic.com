@@ -8,6 +8,7 @@ import {
   serial,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -177,3 +178,51 @@ export const assessmentReports = pgTable("assessment_reports", {
 
 export type AssessmentReport = typeof assessmentReports.$inferSelect;
 export type InsertAssessmentReport = typeof assessmentReports.$inferInsert;
+
+/** Small key value store for things set from the dashboard, such as the Gmail connection. */
+export const appSettings = pgTable("app_settings", {
+  key: varchar("key", { length: 100 }).primaryKey(),
+  value: jsonb("value").$type<Record<string, unknown>>().notNull(),
+  updatedAt: ts("updated_at").defaultNow().notNull(),
+});
+
+/**
+ * One email or call between Marin and a contact, read from Gmail (origin
+ * gmail), logged by hand in the dashboard (manual) or loaded once from the
+ * earlier Gmail read (import). Forms, applications, purchases and the
+ * site's own emails are not stored here; they come from their own tables.
+ */
+export const conversationEvents = pgTable("conversation_events", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 320 }).notNull(),
+  kind: varchar("kind", { length: 20 }).notNull(), // sent | reply | purchase | auto
+  channel: varchar("channel", { length: 20 }).notNull().default("email"), // email | call | message
+  at: ts("at").notNull(),
+  subject: varchar("subject", { length: 300 }),
+  snippet: text("snippet"),
+  origin: varchar("origin", { length: 20 }).notNull(), // gmail | manual | import
+  externalId: varchar("external_id", { length: 120 }),
+  threadId: varchar("thread_id", { length: 120 }),
+  createdAt: ts("created_at").defaultNow().notNull(),
+}, table => [
+  index("conversation_events_email_idx").on(table.email),
+  index("conversation_events_at_idx").on(table.at),
+  uniqueIndex("conversation_events_external_idx").on(table.origin, table.externalId),
+]);
+
+export type ConversationEvent = typeof conversationEvents.$inferSelect;
+
+/** Where each contact stands and the reply drafted for Marin, refreshed by the daily job. */
+export const contactFollowups = pgTable("contact_followups", {
+  email: varchar("email", { length: 320 }).primaryKey(),
+  stage: varchar("stage", { length: 30 }).notNull(),
+  priority: varchar("priority", { length: 10 }).notNull(),
+  nextAction: text("next_action"),
+  draftSubject: varchar("draft_subject", { length: 300 }),
+  draftBody: text("draft_body"),
+  basis: varchar("basis", { length: 64 }),
+  draftedAt: ts("drafted_at"),
+  updatedAt: ts("updated_at").defaultNow().notNull(),
+});
+
+export type ContactFollowup = typeof contactFollowups.$inferSelect;

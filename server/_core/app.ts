@@ -10,6 +10,7 @@ import { serveStatic, setupVite } from "./vite";
 import { registerJobRoutes } from "../jobs";
 import { registerDiagnosticsRoute } from "../diagnostics";
 import { registerManusImportRoute } from "../manusImport";
+import { registerGmailRoutes } from "../gmail";
 
 /**
  * Builds the Express app. Used by the local server (index.ts) and by the
@@ -35,6 +36,9 @@ export async function createApp(options: { httpServer?: Server } = {}): Promise<
 
   // One off Manus data import at /api/admin/import-manus (CRON_SECRET bearer)
   registerManusImportRoute(app);
+
+  // Gmail connection for the Follow up section (admin session, Google OAuth)
+  registerGmailRoutes(app);
 
   // tRPC API
   app.use(

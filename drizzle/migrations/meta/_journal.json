@@ -22,6 +22,13 @@
       "when": 1792393757020,
       "tag": "0002_email_log",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792396710982,
+      "tag": "0003_followup",
+      "breakpoints": true
     }
   ]
 }

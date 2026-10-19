@@ -13,6 +13,8 @@ import { runDiagnostics } from "./diagnostics";
 import { notifyOwner } from "./_core/notification";
 import { submitChangedUrls } from "./indexNow";
 import { describePurge, purgeTestData } from "./testData";
+import { gmailStatus, recordSyncError, syncGmail } from "./gmail";
+import { refreshFollowups } from "./followup";
 
 function authorised(req: Request): boolean {
   if (!ENV.cronSecret) return false;
@@ -118,7 +120,25 @@ export function registerJobRoutes(app: Express) {
         return null;
       });
       if (purged) console.log(`[Jobs] Test data: ${describePurge(purged)}`);
-      res.json({ ok: true, reminders, diagnostics, indexNow, purged, ranAt: new Date().toISOString() });
+      // Follow up: read new mail when Gmail is connected, then refresh the drafts.
+      let followup: Record<string, unknown> = {};
+      try {
+        const gmail = await gmailStatus();
+        if (gmail.connected) {
+          try {
+            followup.mail = await syncGmail();
+          } catch (e) {
+            followup.mailError = String((e as Error)?.message ?? e);
+            await recordSyncError(e);
+          }
+        }
+        followup.drafts = await refreshFollowups({ limit: 20 });
+        console.log(`[Jobs] Follow up: ${JSON.stringify(followup)}`);
+      } catch (e) {
+        console.warn("[Jobs] Follow up refresh failed:", e);
+        followup = { error: String((e as Error)?.message ?? e) };
+      }
+      res.json({ ok: true, reminders, diagnostics, indexNow, purged, followup, ranAt: new Date().toISOString() });
     } catch (error) {
       console.error("[Jobs] Daily job failed:", error);
       res.status(500).json({ ok: false });

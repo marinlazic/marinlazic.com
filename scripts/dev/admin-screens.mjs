@@ -18,7 +18,7 @@ await page.fill('input[type="password"]', password);
 await page.click('button[type="submit"]');
 await page.waitForSelector("nav[aria-label='Dashboard sections']", { timeout: 15000 });
 
-const sections = ["", "contacts", "applications", "assessments", "content", "traffic", "email", "system"];
+const sections = ["", "followup", "contacts", "applications", "assessments", "content", "traffic", "email", "system"];
 for (const s of sections) {
   await page.goto(`${base}/admin/${s}`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1200);
