@@ -54,7 +54,9 @@ export async function purgeTestData(): Promise<PurgeResult> {
   result.progress = await count(sql`WITH d AS (DELETE FROM assessment_progress WHERE lower(email) LIKE ${like} RETURNING 1) SELECT count(*) AS c FROM d`);
   result.applications = await count(sql`WITH d AS (DELETE FROM applications WHERE lower(email) LIKE ${like} RETURNING 1) SELECT count(*) AS c FROM d`);
   result.leads = await count(sql`WITH d AS (DELETE FROM leads WHERE lower(email) LIKE ${like} RETURNING 1) SELECT count(*) AS c FROM d`);
-  result.emailLog = await count(sql`WITH d AS (DELETE FROM email_log WHERE lower(to_email) LIKE ${like} RETURNING 1) SELECT count(*) AS c FROM d`);
+  // Emails to the test address, plus any alert to Marin that names the test
+  // person in its subject (older runs sent those before alerts were skipped).
+  result.emailLog = await count(sql`WITH d AS (DELETE FROM email_log WHERE lower(to_email) LIKE ${like} OR (kind LIKE 'owner_%' AND subject ILIKE '%smoke test%') RETURNING 1) SELECT count(*) AS c FROM d`);
 
   for (const email of result.emails) {
     try {
