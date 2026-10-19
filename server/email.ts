@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import { ENV } from "./_core/env";
 import { generateAssessmentPDF } from "./pdf";
 import { recordEmail, type EmailKind } from "./emailLog";
+import { isTestEmail } from "../shared/testData";
 
 let resendClient: Resend | null = null;
 
@@ -257,6 +258,7 @@ export async function sendApplicationNotificationEmail(params: {
   weakestArea?: string;
   primaryGoal?: string;
 }): Promise<boolean> {
+  if (isTestEmail(params.applicantEmail)) return true; // smoke test: Marin is not alerted
   if (!ENV.resendApiKey) {
     console.warn("[Email] RESEND_API_KEY not configured, skipping application notification");
     return false;
@@ -346,6 +348,7 @@ export async function sendAssessmentNotificationEmail(params: {
   utmLine: string;
   scoreSummary: string;
 }): Promise<boolean> {
+  if (isTestEmail(params.email)) return true; // smoke test: Marin is not alerted
   if (!ENV.resendApiKey) {
     console.warn("[Email] RESEND_API_KEY not configured, skipping assessment notification");
     return false;

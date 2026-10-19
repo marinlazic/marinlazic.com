@@ -90,7 +90,7 @@ await page("/report/not-a-real-token-1234", "Saved report");
   record("admin login rejects wrong password", res.status === 401, `status ${res.status}`);
 }
 
-// 4. Enquiry form: database row, Resend confirmation, Kit tag
+// 4. Enquiry form: database row, Resend confirmation (test addresses never go to Kit)
 {
   const r = await trpc("leads.submit", {
     email: EMAIL,
@@ -98,10 +98,10 @@ await page("/report/not-a-real-token-1234", "Saved report");
     source: "smoke-test",
     message: "Automated test of the enquiry form. Safe to ignore.",
   });
-  record("enquiry submit (database + Resend + Kit)", r.status === 200 && r.body?.result?.data?.json?.success === true, `status ${r.status} ${r.status !== 200 ? r.text.slice(0, 200) : ""}`);
+  record("enquiry submit (database + Resend)", r.status === 200 && r.body?.result?.data?.json?.success === true, `status ${r.status} ${r.status !== 200 ? r.text.slice(0, 200) : ""}`);
 }
 
-// 5. Assessment progress save (database + Kit assessment-started)
+// 5. Assessment progress save (database)
 let resumeToken = null;
 {
   const r = await trpc("assessment.saveProgress", {
@@ -202,5 +202,13 @@ if (process.env.CRON_SECRET) {
 }
 
 const failed = results.filter(r => !r.ok);
+// 11. Remove everything this run wrote, so the dashboard only holds real people.
+{
+  const res = await fetch(`${BASE}/api/test/cleanup`, { method: "POST", headers: { "user-agent": "marinlazic-smoke/1.0" } });
+  let body = null;
+  try { body = await res.json(); } catch { /* not json */ }
+  record("test data removed", res.status === 200 && body?.ok === true, body?.summary || `status ${res.status}`);
+}
+
 console.log(`\n${results.length - failed.length} passed, ${failed.length} failed`);
 process.exit(failed.length ? 1 : 0);

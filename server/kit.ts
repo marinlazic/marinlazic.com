@@ -7,6 +7,7 @@
  */
 import { waitUntil } from "@vercel/functions";
 import { ENV } from "./_core/env";
+import { isTestEmail } from "../shared/testData";
 
 const KIT_BASE = "https://api.kit.com/v4";
 
@@ -177,6 +178,10 @@ async function setCustomFields(subscriberId: number, fields: Record<string, stri
 }
 
 async function tagByName(email: string, tag: string, firstName?: string, fields?: Record<string, string>) {
+  if (isTestEmail(email)) {
+    console.log(`[Kit] ${tag}: skipped, test address`);
+    return;
+  }
   const subscriberId = await createOrUpdateSubscriber(email, firstName);
   const tagId = await getOrCreateTag(tag);
   await tagSubscriber(subscriberId, tagId);
@@ -256,6 +261,32 @@ export function kitOnEnquiry(email: string, firstName?: string, corporate = fals
     await tagByName(email, KIT_TAGS.enquiry, firstName);
     if (corporate) await tagByName(email, KIT_TAGS.corporateEnquiry, firstName);
   });
+}
+
+/**
+ * Takes a test address out of Kit: every tag removed, then unsubscribed.
+ * Kit's API has no delete, so the record stays in the account as cancelled.
+ */
+export async function kitForgetSubscriber(email: string): Promise<string> {
+  if (!ENV.kitApiKey) return "Kit not configured";
+  if (!isTestEmail(email)) throw new Error("Only test addresses can be removed this way");
+  const found = await kitFetch(`/subscribers?email_address=${encodeURIComponent(email)}&per_page=1`);
+  if (!found.ok) throw new Error(`Kit lookup answered ${found.status}`);
+  const sub = ((await found.json()) as { subscribers?: { id: number; state?: string }[] }).subscribers?.[0];
+  if (!sub) return "not in Kit";
+  const tagRes = await kitFetch(`/subscribers/${sub.id}/tags?per_page=100`);
+  const tags: { id: number; name: string }[] = tagRes.ok ? ((await tagRes.json()) as { tags?: { id: number; name: string }[] }).tags ?? [] : [];
+  for (const t of tags) {
+    const r = await kitFetch(`/tags/${t.id}/subscribers/${sub.id}`, { method: "DELETE" });
+    if (!r.ok && r.status !== 404) throw new Error(`Kit could not remove tag ${t.name}: ${r.status}`);
+  }
+  let unsubscribed = sub.state === "cancelled";
+  if (!unsubscribed) {
+    const r = await kitFetch(`/subscribers/${sub.id}/unsubscribe`, { method: "POST" });
+    if (!r.ok) throw new Error(`Kit could not unsubscribe: ${r.status}`);
+    unsubscribed = true;
+  }
+  return `${tags.length} tags removed, unsubscribed`;
 }
 
 /** Abandoned assessment reminder sent. Awaited by the scheduled job. */

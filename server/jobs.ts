@@ -12,6 +12,7 @@ import { storageGetBuffer } from "./storage";
 import { runDiagnostics } from "./diagnostics";
 import { notifyOwner } from "./_core/notification";
 import { submitChangedUrls } from "./indexNow";
+import { describePurge, purgeTestData } from "./testData";
 
 function authorised(req: Request): boolean {
   if (!ENV.cronSecret) return false;
@@ -65,6 +66,19 @@ export async function runAbandonedAssessmentReminders(): Promise<{
 }
 
 export function registerJobRoutes(app: Express) {
+  // The smoke test calls this when it finishes. It only ever removes rows for
+  // "+smoke" addresses, so it needs no secret.
+  app.post("/api/test/cleanup", async (_req: Request, res: Response) => {
+    try {
+      const purged = await purgeTestData();
+      console.log(`[Jobs] Test data: ${describePurge(purged)}`);
+      res.json({ ok: true, ...purged, summary: describePurge(purged) });
+    } catch (error) {
+      console.error("[Jobs] Test data purge failed:", error);
+      res.status(500).json({ ok: false, error: String((error as Error)?.message ?? error) });
+    }
+  });
+
   app.get("/api/cron/daily", async (req: Request, res: Response) => {
     if (!authorised(req)) {
       res.status(401).json({ error: "Unauthorised" });
@@ -97,7 +111,14 @@ export function registerJobRoutes(app: Express) {
         return { submitted: [], status: null, detail: String(e) };
       });
       console.log(`[Jobs] IndexNow: ${indexNow.detail}`);
-      res.json({ ok: true, reminders, diagnostics, indexNow, ranAt: new Date().toISOString() });
+      // Anything the smoke test left behind (it cleans up after itself, but a
+      // run that died halfway would not have).
+      const purged = await purgeTestData().catch(e => {
+        console.warn("[Jobs] Test data purge failed:", e);
+        return null;
+      });
+      if (purged) console.log(`[Jobs] Test data: ${describePurge(purged)}`);
+      res.json({ ok: true, reminders, diagnostics, indexNow, purged, ranAt: new Date().toISOString() });
     } catch (error) {
       console.error("[Jobs] Daily job failed:", error);
       res.status(500).json({ ok: false });

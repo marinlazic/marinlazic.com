@@ -45,6 +45,7 @@ import {
 import { generateAssessmentPDF } from "./pdf";
 import { storagePut, storageConfigured } from "./storage";
 import { calculateScores, getScoreBand } from "@shared/assessment";
+import { isTestEmail } from "@shared/testData";
 import { ENV } from "./_core/env";
 import { randomBytes } from "node:crypto";
 
@@ -483,6 +484,7 @@ export const appRouter = router({
           console.warn("[Leads] Failed to send enquiry confirmation:", e);
         }
 
+        if (isTestEmail(input.email)) return { success: true }; // smoke test: Marin is not alerted
         try {
           const nameLine = input.name ? `Name: ${input.name}\n` : "";
           const msgLine = input.message ? `\nDetails: ${input.message}` : "";
