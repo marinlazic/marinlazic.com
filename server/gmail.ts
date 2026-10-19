@@ -221,6 +221,10 @@ export function messageText(m: GmailMessage): string {
 
 const PURCHASE_WORDS = /purchas|payment|paid|order|receipt|bought|sold|subscri|checkout/i;
 
+/** Wording in Marin's own email that means the next move is still his. */
+export const PROMISE_WORDS = /\b(i(?:'| wi)?ll|i will|i am going to|i'm going to|let me|will) (get back|come back|be in touch|send (?:you|it|that|the|through|over)|check in|follow up|revise|put together|write up|have a look|look at|circle back|get (?:you|that|it) (?:sorted|done|over))\b|\bget back to you\b|\bback to you (?:by|on|next|tomorrow|this|with)\b/i;
+export const promiseIn = (text: string | undefined) => Boolean(text && PROMISE_WORDS.test(text));
+
 // ─── Sync ───────────────────────────────────────────────────────────────────
 
 /** Every contact the site knows, lowercased, test addresses and Marin's own left out. */
@@ -336,6 +340,7 @@ export async function syncGmail(options: { full?: boolean } = {}): Promise<SyncC
         subject: header(m, "Subject").slice(0, 300) || null,
         snippet: (m.snippet ?? "").slice(0, 600) || null,
         origin: "gmail",
+        promise: c.kind === "sent" && promiseIn(m.snippet),
         externalId: m.id,
         threadId: m.threadId,
       });

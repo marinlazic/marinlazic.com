@@ -4,7 +4,7 @@
 // conversation once it is connected on the System page.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import { Check, Copy, ExternalLink, Mail, MessageSquare, Phone, RefreshCw } from "lucide-react";
+import { Check, Clock, Copy, ExternalLink, Mail, MessageSquare, Phone, RefreshCw } from "lucide-react";
 import { format } from "date-fns";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "../../../../server/routers";
@@ -69,6 +69,9 @@ function LogButtons({ lead, compact = false, iconOnly = false }: { lead: Lead; c
       <button type="button" className={b} disabled={busy} title="They replied somewhere the site cannot see (Instagram, text)" onClick={() => log.mutate({ email: lead.email, kind: "reply", channel: "message" })}>
         <MessageSquare className="w-3 h-3" /> {!iconOnly && "They replied"}
       </button>
+      <button type="button" className={b} disabled={busy} title="I told them I would come back to them, so the next move is still mine" onClick={() => log.mutate({ email: lead.email, kind: "sent", channel: "email", promise: true })}>
+        <Clock className="w-3 h-3" /> {!iconOnly && "I promised to follow up"}
+      </button>
     </>
   );
 }
@@ -100,6 +103,7 @@ function StepCard({ n, lead, account, openContact }: { n: number; lead: Lead; ac
       </div>
       <div className="text-sm font-semibold">
         {lead.name} <StageTag stage={lead.stage} />
+        {lead.promised && <span className="ml-2 text-[11px] text-black/40 font-normal">you said you would come back to them</span>}
         {lead.score !== null && <span className="ml-2 text-[11px] text-black/40 font-normal">score {lead.score}</span>}
       </div>
       <p className="text-[13px] leading-snug flex-1">{lead.nextAction ?? (lead.draftedAt ? "" : "No draft yet. Press Sync, or Redraft here.")}</p>

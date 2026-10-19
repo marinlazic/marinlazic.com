@@ -201,6 +201,9 @@ export const conversationEvents = pgTable("conversation_events", {
   subject: varchar("subject", { length: 300 }),
   snippet: text("snippet"),
   origin: varchar("origin", { length: 20 }).notNull(), // gmail | manual | import
+  // True on an email Marin sent in which he said he would come back to them:
+  // the ball stays with him even though he wrote last.
+  promise: boolean("promise").notNull().default(false),
   externalId: varchar("external_id", { length: 120 }),
   threadId: varchar("thread_id", { length: 120 }),
   createdAt: ts("created_at").defaultNow().notNull(),

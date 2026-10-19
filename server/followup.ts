@@ -29,6 +29,7 @@ export type StoryEvent = {
   subject: string | null;
   snippet: string | null;
   origin: string;
+  promise?: boolean;
 };
 
 export type FollowupLead = {
@@ -57,6 +58,7 @@ export type FollowupLead = {
   waitingSince: string;
   days: number;
   won: boolean;
+  promised: boolean;
   needsDraft: boolean;
   nextAction: string | null;
   draftSubject: string | null;
@@ -84,6 +86,7 @@ export type Standing = {
   days: number;
   needsDraft: boolean;
   nextActionFixed: string | null;
+  promised: boolean;
 };
 
 const HUMAN: EventKind[] = ["form", "application", "purchase", "sent", "reply"];
@@ -100,9 +103,9 @@ export function standing(events: StoryEvent[], commitmentValue: string | null, n
   const first = human[0] ?? sorted[0] ?? null;
   const daysSince = (iso: string | null | undefined) => (iso ? Math.max(0, Math.floor((now.getTime() - Date.parse(iso)) / DAY)) : 0);
 
-  // A reply from them always puts the ball with Marin, client or not.
+  // A reply from them, or a promise from Marin, puts the ball with Marin.
   let stage: Stage;
-  if (last && last.kind === "reply") stage = "Reply owed";
+  if (last && (last.kind === "reply" || (last.kind === "sent" && last.promise))) stage = "Reply owed";
   else if (won) stage = "Won";
   else if (sent === 0) stage = "Never replied";
   else if (last && last.kind !== "sent") stage = "Reply owed";
@@ -112,6 +115,7 @@ export function standing(events: StoryEvent[], commitmentValue: string | null, n
   const waitingSince = last?.at ?? now.toISOString();
   const days = daysSince(waitingSince);
   const lastBy: "You" | "Lead" = last?.kind === "sent" ? "You" : "Lead";
+  const promised = Boolean(last && last.kind === "sent" && last.promise);
   const keen = commitmentValue === "all-in" || commitmentValue === "locked-in" || commitmentValue === "ready";
 
   let priority: Priority;
@@ -143,7 +147,7 @@ export function standing(events: StoryEvent[], commitmentValue: string | null, n
     nextActionFixed = `No reply after ${sent} email${sent === 1 ? "" : "s"} from you. Leave it, or send one short note in a month.`;
   }
 
-  return { stage, priority, sent, replies, won, lastHuman: last, waitingSince, lastContact: last?.at ?? waitingSince, lastBy, days, needsDraft, nextActionFixed };
+  return { stage, priority, sent, replies, won, lastHuman: last, waitingSince, lastContact: last?.at ?? waitingSince, lastBy, days, needsDraft, nextActionFixed, promised };
 }
 
 // ─── Labels ─────────────────────────────────────────────────────────────────
@@ -209,7 +213,7 @@ export async function loadFollowups(now = new Date()): Promise<{ leads: Followup
     rows(sql`SELECT lower(email) AS email, name, answers, scores, utm_source, created_at FROM assessment_reports ORDER BY created_at ASC`),
     rows(sql`SELECT lower(email) AS email, name, q1_90day_goal, utm_source, created_at FROM applications ORDER BY created_at ASC`),
     rows(sql`SELECT lower(to_email) AS email, kind, subject, created_at FROM email_log WHERE status = 'sent' AND kind NOT LIKE 'owner_%' ORDER BY created_at ASC`),
-    rows(sql`SELECT id, lower(email) AS email, kind, channel, at, subject, snippet, origin FROM ${conversationEvents} ORDER BY at ASC`),
+    rows(sql`SELECT id, lower(email) AS email, kind, channel, at, subject, snippet, origin, promise FROM ${conversationEvents} ORDER BY at ASC`),
     rows(sql`SELECT * FROM ${contactFollowups}`),
   ]);
 
@@ -314,7 +318,7 @@ export async function loadFollowups(now = new Date()): Promise<{ leads: Followup
     if (!a.firstSeen) a.firstSeen = iso(r.at);
     const kind = String(r.kind) as EventKind;
     if (kind === "purchase" && r.origin === "gmail") a.bridge = true;
-    a.events.push({ id: `c:${r.id}`, email: a.email, kind, channel: String(r.channel ?? "email"), at: iso(r.at), subject: r.subject ?? null, snippet: r.snippet ?? null, origin: String(r.origin) });
+    a.events.push({ id: `c:${r.id}`, email: a.email, kind, channel: String(r.channel ?? "email"), at: iso(r.at), subject: r.subject ?? null, snippet: r.snippet ?? null, origin: String(r.origin), promise: Boolean(r.promise) });
   }
 
   const draftByEmail = new Map(drafts.map(r => [String(r.email), r]));
@@ -359,6 +363,7 @@ export async function loadFollowups(now = new Date()): Promise<{ leads: Followup
       waitingSince: st.waitingSince,
       days: st.days,
       won: st.won,
+      promised: st.promised,
       needsDraft: st.needsDraft,
       nextAction: st.needsDraft ? (d?.next_action ? String(d.next_action) : null) : st.nextActionFixed,
       draftSubject: st.needsDraft && d?.draft_subject ? String(d.draft_subject) : null,
@@ -381,7 +386,7 @@ function describeHistory(events: StoryEvent[]): string {
     if (e.kind === "form") parts.push(`${e.subject === "Enquiry" ? "Sent an enquiry" : "Filled in the assessment"} on ${when}${e.snippet ? ` ("${e.snippet.slice(0, 120)}")` : ""}`);
     else if (e.kind === "application") parts.push(`Applied for coaching on ${when}`);
     else if (e.kind === "purchase") parts.push(`${e.subject ?? "Bought"} on ${when}`);
-    else if (e.kind === "sent") parts.push(e.channel === "call" ? `You called on ${when}` : e.channel === "message" ? `You messaged on ${when}` : `You emailed on ${when}${e.subject ? ` (${e.subject})` : ""}`);
+    else if (e.kind === "sent") parts.push((e.channel === "call" ? `You called on ${when}` : e.channel === "message" ? `You messaged on ${when}` : `You emailed on ${when}${e.subject ? ` (${e.subject})` : ""}`) + (e.promise ? " and said you would come back to them" : ""));
     else if (e.kind === "reply") parts.push(`They replied on ${when}${e.snippet ? `: "${e.snippet.slice(0, 160)}"` : ""}`);
     else if (e.kind === "auto") parts.push(`${e.subject ?? "Automated email"} sent on ${when}`);
   }
@@ -418,7 +423,9 @@ function stageBrief(l: FollowupLead): string {
   const last = l.history;
   switch (l.stage) {
     case "Reply owed":
-      return `They wrote last and have been waiting ${l.days} days for Marin. Answer what they raised, keep it moving, and propose the next step (a short call, or starting).`;
+      return l.promised
+        ? `Marin told them he would come back to them and has not, ${l.days} days ago. Deliver on that promise now (or give a firm date), briefly own the gap in one line, and propose the next step.`
+        : `They wrote last and have been waiting ${l.days} days for Marin. Answer what they raised, keep it moving, and propose the next step (a short call, or starting).`;
     case "Never replied":
       return `They filled in the assessment ${l.days} days ago and have not had a personal email from Marin yet. Open with one specific observation from their assessment, give one practical thing to try this week, and ask one question about their goal. If it has been more than a week, one short line acknowledging the delay at most.`;
     case "Won":
@@ -524,7 +531,7 @@ export async function refreshFollowups(options: { only?: string; force?: boolean
 
 // ─── Manual events and the one off import ───────────────────────────────────
 
-export async function logContact(input: { email: string; kind: "sent" | "reply"; channel: "email" | "call" | "message"; at?: string; note?: string }): Promise<void> {
+export async function logContact(input: { email: string; kind: "sent" | "reply"; channel: "email" | "call" | "message"; at?: string; note?: string; promise?: boolean }): Promise<void> {
   const d = await getDb();
   if (!d) throw new Error("Database not available");
   const email = input.email.toLowerCase();
@@ -533,9 +540,10 @@ export async function logContact(input: { email: string; kind: "sent" | "reply";
     kind: input.kind,
     channel: input.channel,
     at: input.at ? new Date(input.at) : new Date(),
-    subject: input.note?.slice(0, 300) ?? (input.channel === "call" ? "Call" : input.channel === "message" ? "Message" : null),
+    subject: input.note?.slice(0, 300) ?? (input.promise ? "Said I would come back to them" : input.channel === "call" ? "Call" : input.channel === "message" ? "Message" : null),
     snippet: null,
     origin: "manual",
+    promise: Boolean(input.promise && input.kind === "sent"),
     externalId: null,
     threadId: null,
   });
@@ -544,7 +552,7 @@ export async function logContact(input: { email: string; kind: "sent" | "reply";
   }
 }
 
-export async function importEvents(rowsIn: { email: string; kind: "sent" | "reply" | "purchase" | "auto"; at: string; subject?: string }[]): Promise<number> {
+export async function importEvents(rowsIn: { email: string; kind: "sent" | "reply" | "purchase" | "auto"; at: string; subject?: string; promise?: boolean }[]): Promise<number> {
   const d = await getDb();
   if (!d) throw new Error("Database not available");
   const values = rowsIn
@@ -557,6 +565,7 @@ export async function importEvents(rowsIn: { email: string; kind: "sent" | "repl
       subject: r.subject?.slice(0, 300) ?? null,
       snippet: null,
       origin: "import",
+      promise: Boolean(r.promise && r.kind === "sent"),
       externalId: `${r.email.toLowerCase()}:${r.kind}:${r.at}`,
       threadId: null,
     }));

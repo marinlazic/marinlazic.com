@@ -761,14 +761,14 @@ export const adminRouter = router({
     redraft: adminProcedure.input(z.object({ email: z.string().email() })).mutation(({ input }) => refreshFollowups({ only: input.email.toLowerCase(), force: true, limit: 1 })),
     // "I replied", "I called", "they replied": for anything that did not go through Gmail.
     log: adminProcedure
-      .input(z.object({ email: z.string().email(), kind: z.enum(["sent", "reply"]), channel: z.enum(["email", "call", "message"]).default("email"), at: z.string().optional(), note: z.string().max(300).optional() }))
+      .input(z.object({ email: z.string().email(), kind: z.enum(["sent", "reply"]), channel: z.enum(["email", "call", "message"]).default("email"), at: z.string().optional(), note: z.string().max(300).optional(), promise: z.boolean().optional() }))
       .mutation(async ({ input }) => {
         await logContact(input);
         await refreshFollowups({ only: input.email.toLowerCase(), limit: 1 });
         return { ok: true };
       }),
     importEvents: adminProcedure
-      .input(z.object({ rows: z.array(z.object({ email: z.string().email(), kind: z.enum(["sent", "reply", "purchase", "auto"]), at: z.string(), subject: z.string().optional() })).max(2000) }))
+      .input(z.object({ rows: z.array(z.object({ email: z.string().email(), kind: z.enum(["sent", "reply", "purchase", "auto"]), at: z.string(), subject: z.string().optional(), promise: z.boolean().optional() })).max(2000) }))
       .mutation(async ({ input }) => ({ imported: await importEvents(input.rows) })),
     gmailDisconnect: adminProcedure.mutation(async () => {
       await gmailDisconnect();

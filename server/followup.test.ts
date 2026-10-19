@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { noDashes, sourceLabel, standing, type StoryEvent } from "./followup";
-import { addressesIn, classify, messageText } from "./gmail";
+import { addressesIn, classify, messageText, promiseIn } from "./gmail";
 
 const now = new Date("2026-10-19T08:00:00Z");
 const day = (d: number) => new Date(now.getTime() - d * 86_400_000).toISOString();
@@ -75,6 +75,14 @@ describe("stage rules", () => {
     expect(s.stage).toBe("Reply owed");
   });
 
+  it("a promise from Marin keeps the ball with Marin", () => {
+    const s = standing([ev("form", 60), ev("sent", 50), ev("reply", 48), ev("sent", 40, { promise: true })], null, now);
+    expect(s.stage).toBe("Reply owed");
+    expect(s.promised).toBe(true);
+    expect(s.days).toBe(40);
+    expect(s.priority).toBe("High");
+  });
+
   it("a new form after Marin's email puts the ball back with Marin", () => {
     const s = standing([ev("form", 30), ev("sent", 25), ev("form", 2)], null, now);
     expect(s.stage).toBe("Reply owed");
@@ -111,6 +119,14 @@ describe("gmail classification", () => {
     expect(classify(msg({ From: "Ann <ann@example.com>", To: "marin@marinlazic.coach" }), "ann@example.com", mine)).toEqual({ kind: "reply", email: "ann@example.com" });
     expect(classify(msg({ From: "someone@else.com", To: "ann@example.com" }), "ann@example.com", mine)).toBeNull();
     expect(classify(msg({ From: "marin@marinlazic.coach", To: "bob@example.com" }, ["SENT"]), "ann@example.com", mine)).toBeNull();
+  });
+
+  it("spots a promise in Marin's own words", () => {
+    expect(promiseIn("Thanks Leah. I'll revise the plan and get back to you early next week.")).toBe(true);
+    expect(promiseIn("Let me put together a plan and send it through on Friday.")).toBe(true);
+    expect(promiseIn("No worries at all, good luck with the selections.")).toBe(false);
+    expect(promiseIn("Here is the program, let me know how you go.")).toBe(false);
+    expect(promiseIn(undefined)).toBe(false);
   });
 
   it("reads the text of a full message", () => {
