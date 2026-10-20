@@ -48,6 +48,7 @@ async function page(path, mustContain) {
 await page("/", "Performance coach for founders");
 await page("/media", "Kelly and Juliet Starrett");
 await page("/resources", "images/resources/resources-hero");
+await page("/recovery-guide", "The four kinds of fatigue");
 await page("/resources/sleep", "images/resources/sleep-1200");
 await page("/insights/how-to-boost-your-hrv", "application/ld+json");
 await page("/program", "Start the 4 week programme");
@@ -99,6 +100,14 @@ await page("/report/not-a-real-token-1234", "Saved report");
     message: "Automated test of the enquiry form. Safe to ignore.",
   });
   record("enquiry submit (database + Resend)", r.status === 200 && r.body?.result?.data?.json?.success === true, `status ${r.status} ${r.status !== 200 ? r.text.slice(0, 200) : ""}`);
+}
+
+// 4b. Recovery Guide signup: email with the PDF attached (Kit skipped for a test address)
+{
+  const r = await trpc("guides.subscribe", { guide: "recovery", email: EMAIL, firstName: "Smoke", placement: "smoke-test" });
+  record("recovery guide signup (Resend + PDF)", r.status === 200 && r.body?.result?.data?.json?.sent === true, `status ${r.status} ${r.status !== 200 ? r.text.slice(0, 200) : ""}`);
+  const pdf = await fetch(`${BASE}/guides/the-recovery-guide.pdf`, { method: "HEAD" });
+  record("recovery guide pdf served", pdf.status === 200 && /pdf/.test(pdf.headers.get("content-type") || ""), `status ${pdf.status}`);
 }
 
 // 5. Assessment progress save (database)

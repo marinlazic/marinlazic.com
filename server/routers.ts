@@ -30,6 +30,7 @@ import {
   kitOnAssessmentComplete,
   kitOnApplicationSubmit,
   kitOnEnquiry,
+  kitOnGuide,
 } from "./kit";
 import { z } from "zod/v4";
 import { XMLParser } from "fast-xml-parser";
@@ -41,6 +42,7 @@ import {
   sendAssessmentNotificationEmail,
   sendApplicantConfirmationEmail,
   sendEnquiryConfirmationEmail,
+  sendRecoveryGuideEmail,
 } from "./email";
 import { generateAssessmentPDF } from "./pdf";
 import { storagePut, storageConfigured } from "./storage";
@@ -446,6 +448,56 @@ export const appRouter = router({
           answeredCount: progress.answeredCount,
           completed: progress.completed,
         };
+      }),
+  }),
+
+  // Free guides: the person gets the PDF by email, joins the Kit list with the
+  // guide's tag, and a guide_signup event records where they came from.
+  guides: router({
+    subscribe: publicProcedure
+      .input(
+        z.object({
+          guide: z.literal("recovery"),
+          email: z.string().email().max(320),
+          firstName: z.string().max(100).optional(),
+          placement: z.string().max(60).optional(),
+          sessionId: z.string().max(100).optional(),
+          landingPath: z.string().max(512).optional(),
+          referrer: z.string().max(2048).optional(),
+          utmSource: z.string().max(200).optional(),
+          utmMedium: z.string().max(200).optional(),
+          utmCampaign: z.string().max(200).optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const email = input.email.trim().toLowerCase();
+        const firstName = input.firstName?.trim() || undefined;
+        const source = input.utmSource || input.referrer || input.placement || "site";
+
+        kitOnGuide(email, firstName, source);
+        const sent = await sendRecoveryGuideEmail({ email, firstName });
+
+        try {
+          await trackEvent({
+            eventType: "guide_signup",
+            eventData: JSON.stringify({
+              guide: input.guide,
+              placement: input.placement ?? null,
+              landingPath: input.landingPath ?? null,
+              referrer: input.referrer ?? "",
+              utm_source: input.utmSource ?? null,
+              utm_medium: input.utmMedium ?? null,
+              utm_campaign: input.utmCampaign ?? null,
+              path: input.placement ?? null,
+            }),
+            sessionId: input.sessionId,
+            userAgent: ctx.req.headers["user-agent"]?.toString(),
+            referrer: input.referrer ?? "",
+          });
+        } catch (e) {
+          console.warn("[Guides] Could not record the signup event:", e);
+        }
+        return { success: true, sent };
       }),
   }),
 

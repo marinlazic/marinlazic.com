@@ -21,7 +21,7 @@ type TrackOptions = {
   referrer?: string;
 };
 
-function getSessionId(): string {
+export function getSessionId(): string {
   // This function is called only from a tracking effect or interaction handler,
   // never while React is rendering (including SSR).
   if (typeof window === "undefined") return "";

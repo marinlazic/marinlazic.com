@@ -17,6 +17,7 @@ import {
   Moon,
 } from "lucide-react";
 import { articles } from "@/data/articlesData";
+import { GuideSignup } from "@/components/GuideSignup";
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00");
@@ -637,6 +638,8 @@ export default function ArticleDetail() {
         </div>
 
         {/* CTA */}
+        <GuideSignup placement="article" variant="inline" className="mt-12" />
+
         <div className="mt-12 bg-white border border-black/8 p-8 sm:p-10 text-center">
           <h3 className="font-heading text-xl sm:text-2xl font-bold tracking-[-0.02em] mb-3">
             Want protocols like these, personalised for you?

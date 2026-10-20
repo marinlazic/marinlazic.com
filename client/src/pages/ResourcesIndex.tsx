@@ -3,6 +3,7 @@
 // white, bright enough to read the subject at a glance.
 import { Navigation, Breadcrumbs, Picture } from "./InformationPage";
 import { resourcesHero } from "@/data/resourceImages";
+import { GuideSignup } from "@/components/GuideSignup";
 import { featuredResource, popularResources, resourceCards, startHereResources, type ResourceCard } from "@/data/resourceIndex";
 
 function SectionLabel({ children }: { children: string }) {
@@ -148,6 +149,8 @@ export default function ResourcesIndex() {
               </div>
             </div>
           </section>
+
+          <GuideSignup placement="resources-index" variant="inline" className="mt-16" />
         </div>
       </main>
       <footer className="border-t border-black/10 py-8">

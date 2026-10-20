@@ -1,6 +1,7 @@
 import { useParams } from "wouter";
 import NotFound from "./NotFound";
 import { resourcePhoto, resourceImagePath, srcSet } from "@/data/resourceImages";
+import { GuideSignup } from "@/components/GuideSignup";
 
 export type Resource = {
   slug: string;
@@ -588,6 +589,8 @@ export default function ResourcePage() {
               </p>
             </div>
           )}
+
+          <GuideSignup placement="resource" variant="inline" className="mt-12" />
 
           <div className="mt-12 border-t border-black/10 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
             <div>

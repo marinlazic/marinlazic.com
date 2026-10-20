@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { articles as insightsData } from "@/data/articlesData";
 import { HOME_FAQS } from "@shared/siteFaq";
+import { GuideSignup } from "@/components/GuideSignup";
+import { RECOVERY_GUIDE } from "@shared/recoveryGuide";
 
 const HEADSHOT_URL =
   "/images/site/marin-about-photo_5aa64d77.jpg";
@@ -1091,6 +1093,50 @@ function LatestInsights() {
 }
 
 // ─── From the Substack (RSS Feed) ─────────────────────────
+// ─── Free guide ─────────────────────────────────────────
+function FreeGuide() {
+  return (
+    <Section id="free-guide" className="py-24 lg:py-32 border-t border-black/10">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="lg:col-span-3">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
+              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">Free guide</span>
+            </div>
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
+              The Recovery
+              <br />
+              Guide
+            </h2>
+            <p className="text-sm text-black/50 mt-4 leading-relaxed">12 pages. {RECOVERY_GUIDE.subtitle}.</p>
+          </div>
+          <div className="lg:col-span-9">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+              <div className="lg:col-span-8">
+                <p className="text-base sm:text-lg text-black/70 leading-relaxed mb-6 max-w-2xl">{RECOVERY_GUIDE.promise}</p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 mb-8 max-w-2xl">
+                  {RECOVERY_GUIDE.whatsInside.slice(0, 4).map(item => (
+                    <li key={item} className="flex gap-3 text-sm text-black/65 leading-relaxed">
+                      <span className="w-2 h-2 bg-[#2F6BF0] mt-2 shrink-0" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <GuideSignup placement="home" />
+                <a href="/recovery-guide" className="inline-block mt-4 text-xs tracking-[0.15em] uppercase text-black/50 hover:text-black transition-colors font-medium">
+                  See what is inside
+                </a>
+              </div>
+              <div className="hidden lg:block lg:col-span-4 ml-gradient min-h-[260px]" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 function SubstackArticles() {
   const { track } = useAnalytics();
   const { data: articles, isLoading } = trpc.articles.latest.useQuery({
@@ -1729,6 +1775,7 @@ export default function Home() {
       <Timeline />
       <Services />
       <LatestInsights />
+      <FreeGuide />
       <SubstackArticles />
       <Contact />
       <FAQ />

@@ -19,6 +19,7 @@ import HrvConditioning from "./pages/HrvConditioning";
 import ResourcePage from "./pages/ResourcePage";
 import InformationPage from "./pages/InformationPage";
 import ResourcesIndex from "./pages/ResourcesIndex";
+import RecoveryGuide from "./pages/RecoveryGuide";
 import { Head } from "./components/Head";
 import { RouteAnalytics } from "./components/RouteAnalytics";
 import Report from "./pages/Report";
@@ -53,6 +54,7 @@ function Routes() {
       <Route path="/hrv-conditioning" component={HrvConditioning} />
       <Route path="/hrv-program" component={HrvConditioning} />
       <Route path="/resources" component={ResourcesIndex} />
+      <Route path="/recovery-guide" component={RecoveryGuide} />
       <Route path="/media" component={InformationPage} />
       <Route path="/resources/:slug" component={ResourcePage} />
       <Route path="/about" component={InformationPage} />

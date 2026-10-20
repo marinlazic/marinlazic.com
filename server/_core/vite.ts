@@ -107,6 +107,13 @@ function resolveDist(): string {
   return candidates[1];
 }
 
+/** A file under client/public, wherever the build put it. */
+export function publicFilePath(rel: string): string {
+  const built = path.join(resolveDist(), "public", rel);
+  if (fs.existsSync(built)) return built;
+  return path.resolve(import.meta.dirname, "../../client/public", rel);
+}
+
 // The HTML template is moved out of dist/public after the build (see
 // scripts/postbuild.mjs) so Vercel's CDN cannot serve it as a static home page.
 function resolveTemplate(dist: string): string {

@@ -108,7 +108,7 @@ async function overview(days: number) {
     previous: await fn(previousSince, since),
   });
 
-  const [visitors, pageViews, assessmentsStarted, assessmentsCompleted, enquiries, applicationsCount, purchases] =
+  const [visitors, pageViews, assessmentsStarted, assessmentsCompleted, enquiries, applicationsCount, purchases, guideSignups] =
     await Promise.all([
       kpi((s, u) => countEvents("page_view", s, u, true)),
       kpi((s, u) => countEvents("page_view", s, u)),
@@ -117,6 +117,7 @@ async function overview(days: number) {
       kpi((s, u) => countTable(leads, leads.createdAt, s, u, enquiryWhere)),
       kpi((s, u) => countTable(applications, applications.createdAt, s, u)),
       kpi((s, u) => countTable(leads, leads.paidAt, s, u)),
+      kpi((s, u) => countEvents("guide_signup", s, u)),
     ]);
 
   const revenue = async (s: Date, u?: Date) => {
@@ -212,7 +213,7 @@ async function overview(days: number) {
 
   return {
     period: { days, since: since.toISOString(), now: now.toISOString() },
-    kpis: { visitors, pageViews, assessmentsStarted, assessmentsCompleted, enquiries, applications: applicationsCount, purchases, revenueCents },
+    kpis: { visitors, pageViews, assessmentsStarted, assessmentsCompleted, enquiries, applications: applicationsCount, purchases, revenueCents, guideSignups },
     daily,
     funnel,
     followUps,

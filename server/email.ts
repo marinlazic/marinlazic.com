@@ -3,6 +3,7 @@ import { ENV } from "./_core/env";
 import { generateAssessmentPDF } from "./pdf";
 import { recordEmail, type EmailKind } from "./emailLog";
 import { isTestEmail } from "../shared/testData";
+import { RECOVERY_GUIDE } from "../shared/recoveryGuide";
 
 let resendClient: Resend | null = null;
 
@@ -597,6 +598,49 @@ export async function sendAssessmentReminderEmail(params: {
 }
 
 // ─── Enquiry confirmation ───────────────────────────────
+/** The Recovery Guide, with the PDF attached and a link in case the attachment is stripped. */
+export async function sendRecoveryGuideEmail(params: { email: string; firstName?: string | null }): Promise<boolean> {
+  if (!ENV.resendApiKey) return false;
+  try {
+    const resend = getResendClient();
+    const { readFile } = await import("node:fs/promises");
+    const { publicFilePath } = await import("./_core/vite");
+    const pdfPath = publicFilePath(RECOVERY_GUIDE.pdfPath.replace(/^\//, ""));
+    let attachments: Array<{ filename: string; content: Buffer; contentType: string }> | undefined;
+    try {
+      attachments = [{ filename: "The Recovery Guide.pdf", content: await readFile(pdfPath), contentType: "application/pdf" }];
+    } catch (err) {
+      console.warn("[Email] Recovery Guide PDF not found, sending the link only:", err);
+    }
+    const link = `${ENV.siteOrigin}${RECOVERY_GUIDE.pdfPath}`;
+    const { error } = await sendLogged(resend, "guide_delivery", {
+      from: ENV.resendFromEmail || RESULTS_SENDER,
+      to: [params.email],
+      replyTo: OWNER_REPLY_TO,
+      subject: "Your Recovery Guide",
+      html: plainEmailHtml(
+        firstNameOf(params.firstName),
+        [
+          "Here is the Recovery Guide. It is attached, and it is also at the link below if the attachment does not come through.",
+          "The short version: a heavy lifting day, a long run and a week of back to back meetings each leave a different kind of fatigue, and each needs a different fix. The guide shows you how to tell them apart and what to do about each one, with the numbers.",
+          "Start with the thirty second morning check in section 07. Do it for two weeks and you will see your pattern.",
+          "If you want to know where you stand across sleep, stress, training and recovery, the free assessment takes about ten minutes. Reply to this email if you have a question. I read every one.",
+        ],
+        { label: "Open the guide", href: link }
+      ),
+      attachments,
+    });
+    if (error) {
+      console.error("[Email] Recovery Guide delivery failed:", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[Email] Recovery Guide delivery failed:", err);
+    return false;
+  }
+}
+
 export async function sendEnquiryConfirmationEmail(params: {
   email: string;
   name?: string | null;

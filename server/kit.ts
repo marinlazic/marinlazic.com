@@ -25,6 +25,7 @@ export const KIT_TAGS = {
   purchased: "purchased",
   enquiry: "enquiry",
   corporateEnquiry: "corporate_enquiry",
+  recoveryGuide: "Recovery Guide Subscribers",
 } as const;
 
 // ─── Background execution ───────────────────────────────────────────────────
@@ -287,6 +288,14 @@ export async function kitForgetSubscriber(email: string): Promise<string> {
     unsubscribed = true;
   }
   return `${tags.length} tags removed, unsubscribed`;
+}
+
+/** Recovery Guide requested from the site. */
+export function kitOnGuide(email: string, firstName?: string, source?: string) {
+  if (!ENV.kitApiKey || !email) return;
+  runInBackground(`guide-${email}`, () =>
+    tagByName(email, KIT_TAGS.recoveryGuide, firstName, source ? { guide_source: source.slice(0, 100) } : undefined)
+  );
 }
 
 /** Abandoned assessment reminder sent. Awaited by the scheduled job. */

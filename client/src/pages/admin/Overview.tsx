@@ -34,6 +34,7 @@ export function Overview({ days, setDays, openContact }: { days: number; setDays
         <KpiCard label="Page views" value={fmtInt(k.pageViews.current)} current={k.pageViews.current} previous={k.pageViews.previous} />
         <KpiCard label="Assessments started" value={fmtInt(k.assessmentsStarted.current)} current={k.assessmentsStarted.current} previous={k.assessmentsStarted.previous} />
         <KpiCard label="Assessments finished" value={fmtInt(k.assessmentsCompleted.current)} current={k.assessmentsCompleted.current} previous={k.assessmentsCompleted.previous} hint={`${completion}% completion (was ${prevCompletion}%)`} />
+        <KpiCard label="Guide signups" value={fmtInt(k.guideSignups.current)} current={k.guideSignups.current} previous={k.guideSignups.previous} hint="Recovery Guide by email" />
         <KpiCard label="Enquiries" value={fmtInt(k.enquiries.current)} current={k.enquiries.current} previous={k.enquiries.previous} hint="Contact form" />
         <KpiCard label="Applications" value={fmtInt(k.applications.current)} current={k.applications.current} previous={k.applications.previous} hint="Coaching applications" />
         <KpiCard label="Purchases" value={fmtInt(k.purchases.current)} current={k.purchases.current} previous={k.purchases.previous} hint="Paid through Stripe" />

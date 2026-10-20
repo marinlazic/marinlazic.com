@@ -134,6 +134,15 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     noindex: true,
     modified: PREVIOUS_CONTENT_DATE,
   },
+  "/recovery-guide": {
+    title: "The Recovery Guide: Match Your Recovery to the Work You Did | Marin Lazic",
+    description:
+      "A free 12 page guide to the four kinds of fatigue (nervous system, muscles and joints, engine, head) and what to do after each: cold water, stretching, easy movement, breathing, light and sleep, with the numbers.",
+    socialTitle: "The Recovery Guide | Free, 12 pages",
+    socialDescription: "A heavy lifting day, a long run and a week of meetings each leave a different kind of fatigue. How to tell them apart and what to do about each one.",
+    label: "Recovery Guide",
+    modified: "2026-10-20",
+  },
   "/waitlist": {
     title: "Programme Updates Waitlist | Marin Lazic",
     description:
@@ -406,6 +415,7 @@ export function getPageMeta(url: string): HeadMeta {
     [
       "/about",
       "/resources",
+      "/recovery-guide",
       "/media",
       "/executive-health-performance",
       "/corporate-health-performance",

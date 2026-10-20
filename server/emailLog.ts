@@ -9,6 +9,7 @@ export type EmailKind =
   | "enquiry_confirmation"
   | "application_confirmation"
   | "purchase_confirmation"
+  | "guide_delivery"
   | "owner_application"
   | "owner_assessment"
   | "owner_lead"
@@ -20,6 +21,7 @@ export const EMAIL_KIND_LABELS: Record<EmailKind, string> = {
   enquiry_confirmation: "Enquiry confirmation",
   application_confirmation: "Application confirmation",
   purchase_confirmation: "Purchase confirmation",
+  guide_delivery: "Recovery Guide sent",
   owner_application: "New application (to Marin)",
   owner_assessment: "New assessment (to Marin)",
   owner_lead: "New lead (to Marin)",
