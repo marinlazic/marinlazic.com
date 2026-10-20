@@ -57,7 +57,7 @@ function newToken(bytes = 24) {
   return randomBytes(bytes).toString("base64url");
 }
 
-function reportUrlFor(token: string) {
+export function reportUrlFor(token: string) {
   return `${ENV.siteOrigin}/report/${token}`;
 }
 
@@ -132,7 +132,7 @@ function checkRateLimit(key: string): boolean {
 }
 
 // ─── LLM Analysis Generator ─────────────────────────────
-async function generatePerformanceAnalysis(
+export async function generatePerformanceAnalysis(
   answers: Record<string, unknown>
 ): Promise<string> {
   const systemPrompt = `You are Marin Lazic, an elite Health and Performance Coach based in Sydney, Australia. You are the Strength & Conditioning Coach for the Australian Men's Water Polo Team (Paris 2024 Olympics). You speak directly, with authority and warmth. You use Australian English spelling.
@@ -216,11 +216,36 @@ Remember: Write as Marin Lazic. Be specific to THEIR answers. This should feel l
     if (Array.isArray(content)) {
       return content.map(c => (c.type === "text" ? c.text : "")).join("");
     }
-    return "Analysis generation failed. Please contact us directly.";
+    throw new Error("Empty analysis");
   } catch (err) {
     console.error("[Assessment] LLM analysis failed:", err);
     throw new Error("Failed to generate analysis");
   }
+}
+
+/**
+ * What the person gets when Gemini cannot answer (quota, outage): their
+ * scores in plain words, and a promise of the written analysis. The report
+ * is marked pending and the daily job writes the real analysis later.
+ */
+export function fallbackAnalysis(answers: Record<string, unknown>, name?: string | null): string {
+  const scores = calculateScores(answers);
+  const first = (name ?? "").trim().split(/\s+/)[0];
+  const cats = scores.categories.filter(c => c.max > 0).slice().sort((a, b) => b.percentage - a.percentage);
+  const lines = [
+    `## Your scores${first ? `, ${first}` : ""}`,
+    "",
+    `Overall you scored **${scores.overallPct} out of 100**. Here is how each area came out, strongest first.`,
+    "",
+    ...cats.map(c => `- **${c.name}**: ${c.percentage} out of 100`),
+    "",
+    "## Your written analysis is on its way",
+    "",
+    "The personalised write up that normally sits here is being prepared and will be emailed to you within a day, with the full report attached. It covers what your answers say about your training, sleep, stress, recovery and nutrition, and what to fix first.",
+    "",
+    cats.length ? `> Until then: your lowest area is **${cats[cats.length - 1].name}**. That is where the biggest gain is waiting.` : "",
+  ];
+  return lines.join("\n");
 }
 
 export const appRouter = router({
@@ -275,8 +300,25 @@ export const appRouter = router({
           message: scoreSummary.slice(0, 5000),
         });
 
-        // Generate LLM analysis
-        const analysis = await generatePerformanceAnalysis(answers);
+        // Generate LLM analysis. If Gemini cannot answer (quota, outage) the
+        // person still gets their scores, the report and the email; the
+        // written analysis follows from the daily job, and Marin is told.
+        let analysis: string;
+        let analysisPending = false;
+        try {
+          analysis = await generatePerformanceAnalysis(answers);
+        } catch (err) {
+          analysisPending = true;
+          analysis = fallbackAnalysis(answers, name);
+          const reason = String((err as Error)?.message ?? err);
+          console.error("[Assessment] Using the fallback analysis:", reason);
+          if (!isTestEmail(email)) {
+            notifyOwner({
+              title: "Assessment analysis could not be written",
+              content: `Gemini did not answer for ${name || email}'s assessment, so they received their scores and a note that the written analysis follows within a day. The daily job will retry; a quota error means billing needs to be enabled on the Gemini key.\n\nReason: ${reason.slice(0, 300)}`,
+            }).catch(() => undefined);
+          }
+        }
 
         // One scoring function for the screen, the PDF and Kit.
         const scores = calculateScores(answers);
@@ -306,6 +348,7 @@ export const appRouter = router({
               overallPct: scores.overallPct,
               band: getScoreBand(scores.overallPct),
               categories: scores.categories,
+              ...(analysisPending ? { analysisPending: true } : {}),
             },
             analysis,
             pdfKey,

@@ -15,6 +15,7 @@ import { submitChangedUrls } from "./indexNow";
 import { describePurge, purgeTestData } from "./testData";
 import { gmailStatus, recordSyncError, syncGmail } from "./gmail";
 import { refreshFollowups } from "./followup";
+import { retryPendingAnalyses } from "./pendingAnalyses";
 
 function authorised(req: Request): boolean {
   if (!ENV.cronSecret) return false;
@@ -120,6 +121,12 @@ export function registerJobRoutes(app: Express) {
         return null;
       });
       if (purged) console.log(`[Jobs] Test data: ${describePurge(purged)}`);
+      // Reports whose written analysis is still owed (Gemini was out when they finished).
+      const pendingReports = await retryPendingAnalyses().catch(e => {
+        console.warn("[Jobs] Pending analyses failed:", e);
+        return null;
+      });
+      if (pendingReports?.pending) console.log(`[Jobs] Pending analyses: ${JSON.stringify(pendingReports)}`);
       // Follow up: read new mail when Gmail is connected, then refresh the drafts.
       let followup: Record<string, unknown> = {};
       try {
@@ -138,7 +145,7 @@ export function registerJobRoutes(app: Express) {
         console.warn("[Jobs] Follow up refresh failed:", e);
         followup = { error: String((e as Error)?.message ?? e) };
       }
-      res.json({ ok: true, reminders, diagnostics, indexNow, purged, followup, ranAt: new Date().toISOString() });
+      res.json({ ok: true, reminders, diagnostics, indexNow, purged, pendingReports, followup, ranAt: new Date().toISOString() });
     } catch (error) {
       console.error("[Jobs] Daily job failed:", error);
       res.status(500).json({ ok: false });
