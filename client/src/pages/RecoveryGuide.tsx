@@ -26,7 +26,9 @@ export default function RecoveryGuide() {
               <p className="text-base sm:text-lg text-black/65 leading-relaxed max-w-2xl mb-8">{G.promise}</p>
               <GuideSignup placement="recovery-guide-page" />
             </div>
-            <div className="hidden lg:block lg:col-span-5 ml-gradient min-h-[320px]" aria-hidden="true" />
+            <div className="hidden lg:block lg:col-span-5 min-h-[320px] bg-black overflow-hidden">
+              <img src={GUIDE_PHOTOS.hero} alt="" className="w-full h-full object-cover" />
+            </div>
           </div>
 
           <section className="border-t border-black/10 pt-7 mb-16">

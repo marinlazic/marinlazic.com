@@ -35,15 +35,20 @@ export type GuideBlock =
   | { type: "lines"; title: string; subtitle?: string; x: string[]; min: number; max: number; series: { label: string; values: number[]; note: string }[] }
   /** One column chart with an optional reference line and a few notes on particular columns. */
   | { type: "columns"; title: string; subtitle?: string; x: string[]; values: number[]; max: number; labels?: string[]; reference?: { at: number; label: string }; notes?: { at: number; text: string }[]; note?: string }
+  /** A full bleed strip of one to three photos across the foot of the page. */
+  | { type: "band"; photos: GuidePhoto[]; pos?: string[] }
   /** Two blocks side by side on the page (the web page lays them out one after the other). */
   | { type: "row"; blocks: GuideBlock[] }
   /** A new page in the PDF; the web page ignores it. */
   | { type: "break" };
 
-/** Marin's own photos, graded black and white like the rest of the site. The builder and the page map them to files. */
+/** Marin's own photos, graded black and white. The builder and the page map them to files. */
 export type GuidePhoto =
-  | "hero" | "morning" | "olympic" | "walk" | "phone" | "floor" | "nervous" | "muscles" | "engine" | "head"
-  | "pool" | "coach" | "plate" | "sunrise" | "notes" | "marin";
+  | "hero" | "morning" | "olympic" | "walk" | "phone" | "floor" | "grass" | "pool" | "coach"
+  | "plate" | "sunrise" | "notes" | "marin"
+  | "slam" | "muscles" | "engine" | "head"
+  | "paris" | "field" | "team" | "gym" | "pushup" | "boards" | "ice" | "boat" | "coast"
+  | "wave" | "lane" | "dawn" | "netpool" | "squad" | "bondi" | "shore" | "ladder";
 
 export const GUIDE_PHOTOS: Record<GuidePhoto, string> = {
   hero: "/images/guide/hero.jpg",
@@ -52,24 +57,42 @@ export const GUIDE_PHOTOS: Record<GuidePhoto, string> = {
   walk: "/images/guide/walk.jpg",
   phone: "/images/guide/phone.jpg",
   floor: "/images/guide/floor.jpg",
-  nervous: "/images/guide/nervous.jpg",
-  muscles: "/images/guide/muscles.jpg",
-  engine: "/images/guide/engine.jpg",
-  head: "/images/guide/head.jpg",
+  grass: "/images/guide/grass.jpg",
   pool: "/images/guide/pool.jpg",
   coach: "/images/guide/coach.jpg",
   plate: "/images/guide/plate.jpg",
   sunrise: "/images/guide/sunrise.jpg",
   notes: "/images/guide/notes.jpg",
   marin: "/images/guide/marin.jpg",
+  slam: "/images/guide/slam.jpg",
+  muscles: "/images/guide/muscles.jpg",
+  engine: "/images/guide/engine.jpg",
+  head: "/images/guide/head.jpg",
+  paris: "/images/guide/paris.jpg",
+  field: "/images/guide/field.jpg",
+  team: "/images/guide/team.jpg",
+  gym: "/images/guide/gym.jpg",
+  pushup: "/images/guide/pushup.jpg",
+  boards: "/images/guide/boards.jpg",
+  ice: "/images/guide/ice.jpg",
+  boat: "/images/guide/boat.jpg",
+  coast: "/images/guide/coast.jpg",
+  wave: "/images/guide/wave.jpg",
+  lane: "/images/guide/lane.jpg",
+  dawn: "/images/guide/dawn.jpg",
+  netpool: "/images/guide/netpool.jpg",
+  squad: "/images/guide/squad.jpg",
+  bondi: "/images/guide/bondi.jpg",
+  shore: "/images/guide/shore.jpg",
+  ladder: "/images/guide/ladder.jpg",
 };
 
 export type GuideSection = {
   number: string;
   title: string;
   kicker: string;
-  /** Full page photo opener before the content, with the title on the image; "gradient" is the striped brand panel instead of a photo. */
-  opener?: GuidePhoto | "gradient";
+  /** Full page photo opener before the content, with the title on the image. */
+  opener?: GuidePhoto;
   /** Where the title sits on the opener and in what colour: light type at the bottom by default. "split" puts a portrait photo on the left half and the title on paper on the right. */
   openerStyle?: { ink?: "light" | "dark"; at?: "top" | "bottom"; align?: "left" | "right"; pos?: string; split?: boolean };
   /** A photo beside the content, for sections without an opener. */
@@ -116,6 +139,7 @@ export const RECOVERY_GUIDE = {
           title: "The same idea, drawn",
           note: "The line is your capacity: how much you can lift, how far you can run, how sharp you are. A session knocks it down. Rest brings it back and a little past where it started. The whole game is timing the next session for that peak.",
         },
+        { type: "band", photos: ["field"] },
       ],
     },
     {
@@ -168,6 +192,7 @@ export const RECOVERY_GUIDE = {
             { label: "Head", values: [4, 4, 3, 4, 4, 5, 5], note: "Wednesday pays for Tuesday's meetings. The weekend outdoors lifts it." },
           ],
         },
+        { type: "band", photos: ["grass"] },
       ],
     },
     {
@@ -180,12 +205,13 @@ export const RECOVERY_GUIDE = {
         {
           type: "tiles",
           items: [
-            { photo: "nervous", title: "Nervous system", cause: "Heavy lifting above about 85% of your max. Top speed sprints. Hard jumping and landing. Low rep power work. Any session where the bar moves slowly because it is heavy.", feel: "Flat. No pop. Weights feel heavier than they are. Reaction time is off. You can still grind, but nothing is snappy." },
+            { photo: "slam", title: "Nervous system", cause: "Heavy lifting above about 85% of your max. Top speed sprints. Hard jumping and landing. Low rep power work. Any session where the bar moves slowly because it is heavy.", feel: "Flat. No pop. Weights feel heavier than they are. Reaction time is off. You can still grind, but nothing is snappy." },
             { photo: "muscles", title: "Muscles and joints", cause: "Muscle building work like 6 sets of 6 with two minutes rest. Long lowering phases. Downhill running. Lots of stopping, starting and changing direction. A long flight or a day on your feet.", feel: "Sore and stiff. Heavy legs. Stairs are a thought. You move like you are 20 years older for a day or two." },
             { photo: "engine", title: "Engine", cause: "High volume sessions. 3 sets of 12 with a minute of rest. Tempo runs, intervals, long swims, anything repetitive for a long time. A big week of training volume.", feel: "Drained and hungry. Breathing hard on things that are normally easy. Sleep is heavy but you still wake tired." },
             { photo: "head", title: "Head", cause: "A big game, a pitch, a presentation. A new team or a new job. Conflict at home or at work. Travel. Anything you read as a threat, even a small one. Or things are just not right and you cannot say why.", feel: "Wired, not tired. Short fuse. Busy mind at 2am. You skip the warm up and rush the session, or you cannot make yourself start." },
           ],
         },
+        { type: "callout", label: "For the busy professional", text: "A twelve hour day of meetings is head fatigue with a side of nervous system fatigue. A red eye flight is muscles and joints plus head. A week on the road with bad food and little sleep hits all four. Treat it like training load, because that is what it is." },
         { type: "break" },
         {
           type: "bars",
@@ -206,14 +232,15 @@ export const RECOVERY_GUIDE = {
           ],
           note: "Typical ranges with the right recovery. Shorter with the matching list from section 05. Longer with alcohol, poor sleep, or another hard session on top.",
         },
-        { type: "callout", label: "For the busy professional", text: "A twelve hour day of meetings is head fatigue with a side of nervous system fatigue. A red eye flight is muscles and joints plus head. A week on the road with bad food and little sleep hits all four. Treat it like training load, because that is what it is." },
+        { type: "band", photos: ["gym"] },
       ],
     },
     {
       number: "05",
       title: "Match the recovery to the fatigue",
       kicker: "The part most people get wrong",
-      opener: "gradient",
+      opener: "team",
+      openerStyle: { split: true },
       blocks: [
         { type: "lead", text: "We are careful about which system a session targets when we write a program. Then we recover from everything the same way. That makes no sense. Cold water after a muscle building session is a different tool from cold water after a sprint session, and breathing drills do nothing for sore quads." },
         { type: "p", text: "Pick the list that matches the fatigue. The numbers are starting points that work for most people; adjust to how you respond." },
@@ -357,6 +384,8 @@ export const RECOVERY_GUIDE = {
             { time: "1 to 2 passes", text: "That is it. More does not help. Follow with the dynamic stretches before training or the static ones after." },
           ],
         },
+        { type: "band", photos: ["pushup", "slam"] },
+
         { type: "break" },
         {
           type: "protocol",
@@ -390,6 +419,7 @@ export const RECOVERY_GUIDE = {
             { time: "5 min", text: "Easy movement: a walk, the dynamic stretches, a few squats. Then coffee, if you want it." },
           ],
         },
+        { type: "band", photos: ["boat", "coast"] },
         { type: "break" },
         {
           type: "row",
@@ -415,6 +445,8 @@ export const RECOVERY_GUIDE = {
             },
           ],
         },
+        { type: "band", photos: ["ice", "lane"] },
+
       ],
     },
     {
@@ -423,7 +455,7 @@ export const RECOVERY_GUIDE = {
       kicker: "Eight situations, read and acted on",
       opener: "coach",
       blocks: [
-        { type: "lead", text: "Knowing the four kinds of fatigue is only useful on the day something happens. Here are the eight situations I get asked about most, and what I tell people to do. Read the situation, do today's list, do tomorrow's, and skip what is on the skip line." },
+        { type: "p", text: "Knowing the four kinds of fatigue is only useful on the day something happens. Here are the eight situations I get asked about most, and what I tell people to do. Read the situation, do today's list, do tomorrow's, and skip what is on the skip line." },
         {
           type: "table",
           title: "Find your situation",
@@ -440,6 +472,7 @@ export const RECOVERY_GUIDE = {
             ["Something coming on", "All four", "Above the neck: an easy walk. Below the neck: stop", "Easy movement first when the scores come back"],
           ],
         },
+        { type: "band", photos: ["wave"] },
         { type: "break" },
         {
           type: "scenario",
@@ -457,6 +490,7 @@ export const RECOVERY_GUIDE = {
           tomorrow: ["Easy movement 20 to 30 minutes at talking pace.", "The ten minute evening reset.", "Reassess with the morning scores. Back to full load when muscles and joints score 4 or better."],
           skip: ["Adding volume to make up for the lighter day.", "Training through sharp pain.", "A hot bath straight after, which makes the soreness worse for most people."],
         },
+        { type: "band", photos: ["boards"] },
         { type: "break" },
         {
           type: "scenario",
@@ -474,6 +508,7 @@ export const RECOVERY_GUIDE = {
           tomorrow: ["Same wake time, even on the weekend. That is what resets the clock.", "A bigger breakfast with protein. Cold water in the morning if you like it, not at night."],
           skip: ["Heavy or maximum work, intervals, late sessions.", "Alcohol as a sleep aid. It knocks you out and wrecks the second half of the night.", "Weekend lie ins past 60 minutes."],
         },
+        { type: "band", photos: ["squad"] },
         { type: "break" },
         {
           type: "scenario",
@@ -491,6 +526,7 @@ export const RECOVERY_GUIDE = {
           tomorrow: ["Scores again. Two days flat in a row means a regeneration day, not a harder session.", "Eat properly. Flat is often just under fed."],
           skip: ["Forcing a maximum session to prove something.", "Skipping food because you did not train.", "Deciding you have lost it. You have not."],
         },
+        { type: "band", photos: ["bondi"] },
         { type: "break" },
         {
           type: "scenario",
@@ -508,6 +544,7 @@ export const RECOVERY_GUIDE = {
           tomorrow: ["Scores in the morning. Return to easy movement first, two days of it, then moderate, then hard.", "The ten minute reset at night helps you sleep when you are blocked up."],
           skip: ["Hard sessions. They lengthen the illness.", "Cold plunges and breath holds.", "Heroics. Nobody remembers the session you trained through sick."],
         },
+        { type: "band", photos: ["netpool"] },
       ],
     },
     {
@@ -528,6 +565,7 @@ export const RECOVERY_GUIDE = {
             ["Protein", "Some at every meal. It is the raw material for every repair on the list."],
           ],
         },
+        { type: "p", text: "Supplements can help at the margins once the food is right: fish oil, tart cherry, zinc, a probiotic, glutamine. Which ones, and whether you need any, is a conversation for your doctor or dietitian, not a guess from a label." },
         { type: "break" },
         {
           type: "row",
@@ -553,7 +591,7 @@ export const RECOVERY_GUIDE = {
             },
           ],
         },
-        { type: "p", text: "Supplements can help at the margins once the food is right: fish oil, tart cherry, zinc, a probiotic, glutamine. Which ones, and whether you need any, is a conversation for your doctor or dietitian, not a guess from a label." },
+        { type: "band", photos: ["shore"] },
       ],
     },
     {
@@ -574,7 +612,8 @@ export const RECOVERY_GUIDE = {
           ],
         },
         { type: "p", text: "Any system at 3 or under gets its list from section 05 today, or the matching page in 07, before anything hard. Two systems at 2 or under means today is a regeneration day: easy movement, the lists, food, sleep. Twenty minutes on the right list beats an hour on the wrong one." },
-        { type: "callout", label: "Track it", text: "Write the four numbers in your phone each morning. After two weeks you will see your pattern: which sessions cost you most, how many days you need after them, and what Monday looks like after a big weekend." },
+        { type: "callout", label: "Track it", text: "Write the four numbers in your phone each morning. After two weeks you will see your pattern: which sessions cost you most and how long you take to come back." },
+        { type: "band", photos: ["dawn"] },
         { type: "break" },
         {
           type: "row",
@@ -607,6 +646,8 @@ export const RECOVERY_GUIDE = {
             },
           ],
         },
+        { type: "band", photos: ["ladder"] },
+
       ],
     },
     {

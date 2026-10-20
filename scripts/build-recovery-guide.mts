@@ -43,30 +43,6 @@ async function prepare(k: GuidePhoto): Promise<string> {
 for (const k of Object.keys(GUIDE_PHOTOS) as GuidePhoto[]) await prepare(k);
 const photo = (k: GuidePhoto) => prepared.get(k)!;
 
-// The striped gradient panel as a raster image. A layered CSS gradient with
-// transparency comes out magenta in some PDF viewers; a PNG never does.
-const GRAD = path.join(IMG_DIR, "gradient.png");
-{
-  const W = 1200, H = 1200;
-  const stops: [number, [number, number, number]][] = [[0, [255, 255, 255]], [0.38, [194, 217, 251]], [0.72, [84, 141, 248]], [1, [48, 104, 240]]];
-  const buf = Buffer.alloc(W * H * 3);
-  for (let y = 0; y < H; y++) {
-    const t = y / (H - 1);
-    let a = stops[0], b = stops[stops.length - 1];
-    for (let i = 0; i < stops.length - 1; i++) if (t >= stops[i][0] && t <= stops[i + 1][0]) { a = stops[i]; b = stops[i + 1]; }
-    const f = (t - a[0]) / (b[0] - a[0] || 1);
-    const base = a[1].map((c, i) => c + (b[1][i] - c) * f);
-    for (let x = 0; x < W; x++) {
-      // 2px of white at 55% every 23px, 1px at 25% nine pixels later: the brand stripe.
-      const m = x % 23;
-      const alpha = m < 2 ? 0.55 : m === 9 ? 0.25 : 0;
-      const o = (y * W + x) * 3;
-      for (let i = 0; i < 3; i++) buf[o + i] = Math.round(base[i] + (255 - base[i]) * alpha);
-    }
-  }
-  await sharp(buf, { raw: { width: W, height: H, channels: 3 } }).png({ compressionLevel: 9 }).toFile(GRAD);
-}
-const gradUrl = pathToFileURL(GRAD).href;
 
 // ---------- charts (SVG in mm units; 1pt = 0.353mm) ----------
 const fmt = (n: number) => (Math.round(n * 100) / 100).toString();
@@ -173,24 +149,24 @@ function columnsChart(b: Extract<GuideBlock, { type: "columns" }>, half: boolean
 function figure(b: Extract<GuideBlock, { type: "figure" }>, half: boolean): string {
   let body = "";
   if (b.kind === "supercompensation") {
-    const w = 265, h = 118, pw = 81, gap = 11, base = 72, bottom = 104;
+    const w = 265, h = 98, pw = 81, gap = 11, base = 56, bottom = 86;
     const panel = (x0: number, title: string, inner: string, caption: string) =>
-      T(x0, 6, title, { size: 4.2, weight: 700, family: "DM Sans" }) + L(x0, base, x0 + pw, base, INK, 0.3) + T(x0, base - 1.6, "Where you started", { size: 2.7, fill: GREY }) + inner + WT(x0, bottom + 5, caption, 50, 4, { size: 3, fill: "#3a3a3a" });
+      T(x0, 5, title, { size: 4.2, weight: 700, family: "DM Sans" }) + L(x0, base, x0 + pw, base, INK, 0.3) + T(x0, base - 1.6, "Where you started", { size: 2.7, fill: GREY }) + inner + WT(x0, bottom, caption, 50, 4, { size: 3, fill: "#3a3a3a" });
     // One session, rested well.
     const x0 = 0;
-    const c1 = `M${x0} ${base} C${x0 + 6} ${base},${x0 + 8} ${base + 22},${x0 + 15} ${base + 22} C${x0 + 25} ${base + 22},${x0 + 30} ${base - 26},${x0 + 45} ${base - 26} C${x0 + 60} ${base - 26},${x0 + 70} ${base - 3},${x0 + pw} ${base}`;
+    const c1 = `M${x0} ${base} C${x0 + 6} ${base},${x0 + 8} ${base + 15},${x0 + 15} ${base + 15} C${x0 + 25} ${base + 15},${x0 + 30} ${base - 22},${x0 + 45} ${base - 22} C${x0 + 60} ${base - 22},${x0 + 70} ${base - 3},${x0 + pw} ${base}`;
     let inner = `<path d="${c1}" fill="none" stroke="${BLUE}" stroke-width="0.9"/>`;
-    inner += `<circle cx="${x0 + 45}" cy="${base - 26}" r="1.8" fill="${BLUE}"/>`;
-    inner += T(x0 + 15, base + 28, "Session", { size: 3, anchor: "middle", weight: 500 }) + T(x0 + 24, base - 10, "Rest", { size: 3, anchor: "end", weight: 500 }) + T(x0 + 45, base - 31, "Adapt: next session here", { size: 3, anchor: "middle", weight: 700, family: "DM Sans" }) + T(x0 + pw, base + 5, "Fades if you wait too long", { size: 2.7, fill: GREY, anchor: "end" });
+    inner += `<circle cx="${x0 + 45}" cy="${base - 22}" r="1.8" fill="${BLUE}"/>`;
+    inner += T(x0 + 15, base + 20, "Session", { size: 3, anchor: "middle", weight: 500 }) + T(x0 + 24, base - 9, "Rest", { size: 3, anchor: "end", weight: 500 }) + T(x0 + 45, base - 26, "Adapt: next session here", { size: 3, anchor: "middle", weight: 700, family: "DM Sans" }) + T(x0 + pw, base + 5, "Fades if you wait too long", { size: 2.7, fill: GREY, anchor: "end" });
     body += panel(x0, "One session, rested well", inner, "Down during the work, up and past the start during the rest.");
     // Too soon: each session starts before the rise is finished.
     const x1 = pw + gap;
     let d = `M${x1} ${base}`, y = base, inner2 = "";
     for (let i = 0; i < 4; i++) {
       const sx = x1 + i * 20;
-      d += ` C${sx + 4} ${y},${sx + 5} ${y + 18},${sx + 9} ${y + 18} C${sx + 14} ${y + 18},${sx + 17} ${y + 5},${sx + 20} ${y + 5}`;
-      inner2 += `<circle cx="${sx + 20}" cy="${y + 5}" r="1.3" fill="${INK}"/>`;
-      y += 5;
+      d += ` C${sx + 4} ${y},${sx + 5} ${y + 12},${sx + 9} ${y + 12} C${sx + 14} ${y + 12},${sx + 17} ${y + 4},${sx + 20} ${y + 4}`;
+      inner2 += `<circle cx="${sx + 20}" cy="${y + 4}" r="1.3" fill="${INK}"/>`;
+      y += 4;
     }
     inner2 = `<path d="${d}" fill="none" stroke="${BLUE}" stroke-width="0.9"/>` + inner2 + T(x1, base - 8, "Next session before the rest is done", { size: 3, weight: 500 }) + T(x1 + pw, base - 2, "Each one starts lower", { size: 3, anchor: "end", weight: 700, family: "DM Sans" });
     body += panel(x1, "The next session too soon", inner2, "Shorten the rest and the gain shrinks, then turns into a loss.");
@@ -199,11 +175,11 @@ function figure(b: Extract<GuideBlock, { type: "figure" }>, half: boolean): stri
     d = `M${x2} ${base}`; y = base; let inner3 = "";
     for (let i = 0; i < 4; i++) {
       const sx = x2 + i * 20;
-      d += ` C${sx + 4} ${y},${sx + 5} ${y + 14},${sx + 8} ${y + 14} C${sx + 13} ${y + 14},${sx + 16} ${y - 8},${sx + 20} ${y - 8}`;
-      inner3 += `<circle cx="${sx + 20}" cy="${y - 8}" r="1.3" fill="${BLUE}"/>`;
-      y -= 8;
+      d += ` C${sx + 4} ${y},${sx + 5} ${y + 10},${sx + 8} ${y + 10} C${sx + 13} ${y + 10},${sx + 16} ${y - 7},${sx + 20} ${y - 7}`;
+      inner3 += `<circle cx="${sx + 20}" cy="${y - 7}" r="1.3" fill="${BLUE}"/>`;
+      y -= 7;
     }
-    inner3 = `<path d="${d}" fill="none" stroke="${BLUE}" stroke-width="0.9"/>` + inner3 + T(x2, base - 40, "Next session at the peak", { size: 3, weight: 500 }) + T(x2 + pw, y - 3, "Each one starts higher", { size: 3, anchor: "end", weight: 700, family: "DM Sans" });
+    inner3 = `<path d="${d}" fill="none" stroke="${BLUE}" stroke-width="0.9"/>` + inner3 + T(x2, base - 36, "Next session at the peak", { size: 3, weight: 500 }) + T(x2 + pw, y - 3, "Each one starts higher", { size: 3, anchor: "end", weight: 700, family: "DM Sans" });
     body += panel(x2, "The next session timed right", inner3, "Rest until the peak, then go again from a little higher. That is progress.");
     body = svg(w, h, body);
   } else if (b.kind === "coldzone") {
@@ -294,6 +270,10 @@ function block(b: GuideBlock, half = false): string {
       return linesChart(b);
     case "columns":
       return columnsChart(b, half);
+    case "band":
+      return `<div class="band">${b.photos
+        .map((ph, i) => `<i style="background-image:url('${photo(ph)}');background-position:${b.pos?.[i] ?? "center"}"></i>`)
+        .join("")}</div>`;
     case "row":
       return `<div class="row">${b.blocks.map(x => `<div>${block(x, true)}</div>`).join("")}</div>`;
   }
@@ -343,7 +323,7 @@ p.lead{font-family:"DM Sans";font-weight:500;font-size:16pt;line-height:1.25;let
 ul{margin:0 0 4mm;padding:0;list-style:none}
 li{position:relative;padding-left:6mm;margin-bottom:1.8mm}
 li:before{content:"";position:absolute;left:0;top:2.1mm;width:2mm;height:2mm;background:${BLUE}}
-.callout{border-top:.5pt solid ${INK};border-bottom:.5pt solid ${INK};padding:3.2mm 0;margin:4mm 0 0}
+.callout{border-top:.5pt solid ${INK};border-bottom:.5pt solid ${INK};padding:2.6mm 0;margin:3mm 0 0}
 .callout .label{display:block;font-size:7.5pt;letter-spacing:.18em;text-transform:uppercase;color:${GREY};margin-bottom:1.5mm}
 .callout p{margin:0;font-family:"DM Sans";font-weight:500;font-size:13pt;line-height:1.25;letter-spacing:-.01em}
 .steps{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin:3mm 0 5mm}
@@ -356,10 +336,9 @@ li:before{content:"";position:absolute;left:0;top:2.1mm;width:2mm;height:2mm;bac
 .loop .again{flex-basis:100%;font-family:Inter;font-weight:400;font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:${GREY};margin-top:1mm}
 table{width:100%;border-collapse:collapse;margin:2mm 0 4mm}
 th{text-align:left;font-family:"DM Sans";font-weight:700;font-size:7.8pt;letter-spacing:.14em;text-transform:uppercase;padding:0 3mm 2mm 0;border-bottom:.5pt solid ${INK};vertical-align:bottom}
-td{vertical-align:top;padding:2.2mm 3mm 2.2mm 0;border-bottom:.5pt solid ${RULE};font-size:9pt;line-height:1.4}
+td{vertical-align:top;padding:1.8mm 3mm 1.8mm 0;border-bottom:.5pt solid ${RULE};font-size:9pt;line-height:1.4}
 td.k{font-weight:600;width:24%}
 .tbl{margin-bottom:4mm}
-.grad{background-image:url('${gradUrl}');background-size:100% 100%;background-repeat:no-repeat}
 /* charts */
 .ct{font-family:"DM Sans";font-weight:700;font-size:14pt;letter-spacing:-.015em;margin:0 0 1.5mm}
 .cs{font-size:9pt;color:#3a3a3a;margin:0 0 4mm;max-width:190mm}
@@ -370,7 +349,7 @@ svg.chart{display:block;overflow:visible}
 .panels.n4{grid-template-columns:repeat(4,1fr)}
 .panel h4{font-size:11pt;margin-bottom:2mm;border-top:1.2pt solid ${INK};padding-top:2.5mm}
 .panel p{font-size:8.4pt;color:#3a3a3a;line-height:1.4;margin:2.5mm 0 0}
-.bars .brow{display:grid;grid-template-columns:42mm 1fr 92mm;gap:7mm;align-items:center;padding:5mm 0;border-top:.5pt solid ${RULE}}
+.bars .brow{display:grid;grid-template-columns:42mm 1fr 92mm;gap:7mm;align-items:center;padding:3.8mm 0;border-top:.5pt solid ${RULE}}
 .bars .brow.axis{border-top:0;padding:0 0 1mm;align-items:end}
 .bars .brow.axis h4{display:none}
 .bars .brow.axis:before{content:""}
@@ -396,6 +375,11 @@ svg.chart{display:block;overflow:visible}
 .legend{display:flex;gap:8mm;font-size:8.2pt;color:#3a3a3a;margin-top:2mm}
 .legend span span{margin-right:2mm}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12mm;align-items:start}
+/* photo band across the foot of a page */
+.band{position:absolute;left:0;right:0;bottom:0;height:42mm;display:grid;grid-auto-flow:column;grid-auto-columns:1fr}
+.band i{display:block;background-size:cover;background-position:center}
+.page.hasband{padding-bottom:51mm}
+.page.hasband .foot{bottom:45mm;border-top:0;padding-top:0}
 /* photo pages */
 .photo{padding:0;background:${INK}}
 .photo .img{position:absolute;inset:0;background-size:cover;background-position:center}
@@ -423,14 +407,6 @@ svg.chart{display:block;overflow:visible}
 .split .title h2{font-size:44pt;line-height:.94;letter-spacing:-.04em;margin:0}
 .split .title p.sub{font-family:"DM Sans";font-weight:500;font-size:14pt;letter-spacing:-.01em;margin:4mm 0 0;line-height:1.25}
 .split .foot{left:156mm}
-/* gradient opener */
-.gradpage .panel{position:absolute;left:0;top:0;bottom:0;width:160mm}
-.gradpage .bar{position:absolute;left:176mm;right:16mm;top:13mm;margin:0}
-.gradpage .title{position:absolute;left:176mm;right:16mm;bottom:24mm}
-.gradpage .title .n{font-family:"DM Sans";font-weight:700;font-size:20pt;letter-spacing:-.02em;margin:0 0 3mm}
-.gradpage .title h2{font-size:40pt;line-height:.94;letter-spacing:-.04em;margin:0}
-.gradpage .title p.sub{font-family:"DM Sans";font-weight:500;font-size:14pt;letter-spacing:-.01em;margin:4mm 0 0;line-height:1.25}
-.gradpage .foot{left:176mm}
 /* intro */
 .cols{display:grid;grid-template-columns:1fr 92mm;gap:16mm;align-items:start}
 .intro .big{font-family:"DM Sans";font-weight:500;font-size:17pt;line-height:1.24;letter-spacing:-.02em;color:#000;margin:0 0 6mm}
@@ -446,7 +422,7 @@ svg.chart{display:block;overflow:visible}
 .withside>p,.withside>.lead,.withside>ul,.withside>.callout{max-width:none}
 /* tiles */
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:0 7mm;margin-top:2mm}
-.tile .ph{height:66mm;background-size:cover;background-position:center}
+.tile .ph{height:57mm;background-size:cover;background-position:center}
 .tile h3{margin:3.5mm 0 0;font-size:17pt;letter-spacing:-.025em;line-height:1}
 .tile .tx{padding-top:1mm}
 .tile .tx p{font-size:9.2pt;line-height:1.42;margin:0 0 1.5mm}
@@ -482,21 +458,21 @@ svg.chart{display:block;overflow:visible}
 .psteps p{margin:0;font-size:9pt;line-height:1.42}
 /* scenarios: two per page, side by side */
 .scen{border-top:1.2pt solid ${INK};padding-top:3.5mm}
-.scen h3{font-size:20pt;letter-spacing:-.03em;line-height:1.04;margin:0 0 3mm}
-.scen .read{font-family:"DM Sans";font-weight:500;font-size:11.5pt;line-height:1.3;letter-spacing:-.005em;margin:0 0 4.5mm}
+.scen h3{font-size:20pt;letter-spacing:-.03em;line-height:1.04;margin:0 0 2.4mm}
+.scen .read{font-family:"DM Sans";font-weight:500;font-size:11.5pt;line-height:1.3;letter-spacing:-.005em;margin:0 0 3mm}
 .scen .read span{display:block;font-family:Inter;font-weight:400;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:${GREY};margin-bottom:1mm}
-.acts .k{font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:${INK};font-weight:600;border-bottom:.5pt solid ${INK};padding-bottom:1.2mm;margin:0 0 1.8mm}
-.acts>div{margin-bottom:4mm}
+.acts .k{font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:${INK};font-weight:600;border-bottom:.5pt solid ${INK};padding-bottom:1mm;margin:0 0 1.4mm}
+.acts>div{margin-bottom:3mm}
 .acts ul{margin-bottom:0}
-.acts li{font-size:9.4pt;line-height:1.42;margin-bottom:1.8mm}
+.acts li{font-size:9.2pt;line-height:1.36;margin-bottom:1.1mm}
 .acts ul.skip li:before{background:#B9BCC2}
 /* scorecard */
 .score{margin:3mm 0 5mm}
-.srow{display:grid;grid-template-columns:1fr 78mm;gap:8mm;align-items:center;border-top:.5pt solid ${INK};padding:3.2mm 0}
-.srow h4{font-size:14pt;letter-spacing:-.02em;margin-bottom:.8mm}
+.srow{display:grid;grid-template-columns:1fr 72mm;gap:8mm;align-items:center;border-top:.5pt solid ${INK};padding:1.9mm 0}
+.srow h4{font-size:13pt;letter-spacing:-.02em;margin-bottom:.5mm}
 .srow p{margin:0;color:#3a3a3a}
 .boxes{display:flex;gap:2.5mm;justify-content:flex-end}
-.box{width:12mm;height:12mm;border:.6pt solid ${INK};display:flex;align-items:center;justify-content:center;font-family:"DM Sans";font-weight:500;font-size:11pt;color:${GREY}}
+.box{width:10mm;height:10mm;border:.6pt solid ${INK};display:flex;align-items:center;justify-content:center;font-family:"DM Sans";font-weight:500;font-size:11pt;color:${GREY}}
 .scale{display:flex;justify-content:space-between;font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:${GREY};border-top:.5pt solid ${INK};padding-top:2.2mm}
 /* week */
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:4mm;margin:2mm 0 3mm}
@@ -507,7 +483,6 @@ svg.chart{display:block;overflow:visible}
 .day .rec{color:#3a3a3a}
 .day .rec:before{content:"";display:block;width:2.2mm;height:2.2mm;background:${BLUE};margin-bottom:1.5mm}
 /* back page */
-.back .close{position:absolute;left:166mm;right:16mm;bottom:22mm;height:50mm}
 .url{font-family:"DM Sans";font-weight:700;font-size:22pt;letter-spacing:-.03em;color:#000;margin:0}
 `;
 
@@ -527,23 +502,19 @@ push(`<section class="page photo cover"><div class="img" style="background-image
 </section>`);
 
 // Intro
-push(`<section class="page intro">${bar}
+push(`<section class="page intro hasband">${bar}
   <p class="kicker">Before you start</p>
   <h2>Why the same recovery<br>for everything does not work</h2>
   <div class="cols">
     <div><p class="big">${esc(G.promise)}</p><p class="small">${esc(G.authorLine)}</p></div>
     <div><p class="kicker">What is inside</p><ul class="inside">${G.whatsInside.map((i, k) => `<li><span class="i">${String(k + 1).padStart(2, "0")}</span><span>${esc(i)}</span></li>`).join("")}</ul></div>
   </div>
+  <div class="band"><i style="background-image:url('${photo("paris")}')"></i></div>
   ${foot()}
 </section>`);
 
 function sectionPages(s: GuideSection) {
-  if (s.opener === "gradient") {
-    push(`<section class="page gradpage">${bar}<div class="panel grad"></div>
-      <div class="title"><p class="n">${s.number}</p><h2>${esc(s.title)}</h2><p class="sub">${esc(s.kicker)}</p></div>
-      ${foot()}
-    </section>`);
-  } else if (s.opener && s.openerStyle?.split) {
+  if (s.opener && s.openerStyle?.split) {
     push(`<section class="page split">${bar}<div class="img" style="background-image:url('${photo(s.opener)}');background-position:${s.openerStyle?.pos ?? "center"}"></div>
       <div class="title"><p class="n">${s.number}</p><h2>${esc(s.title)}</h2><p class="sub">${esc(s.kicker)}</p></div>
       ${foot()}
@@ -568,11 +539,10 @@ function sectionPages(s: GuideSection) {
           ? `<p class="kicker">${s.number} ${esc(s.kicker)}</p>`
           : `<p class="num">${s.number}</p><p class="kicker">${esc(s.kicker)}</p><h2>${esc(s.title)}</h2>`
         : `<p class="kicker">${s.number} ${esc(s.title)}, continued</p>`;
-    const isBack = s === G.sections[G.sections.length - 1];
     const withSide = Boolean(s.side && i === 0);
     const side = withSide ? `<div class="side" style="background-image:url('${photo(s.side!)}')"></div>` : "";
-    const close = isBack ? '<div class="close grad"></div>' : "";
-    push(`<section class="page${withSide ? " withside" : ""}${isBack ? " back" : ""}">${side}${bar}${head}${body}${close}${foot()}</section>`);
+    const hasBand = blocks.some(b => b.type === "band");
+    push(`<section class="page${withSide ? " withside" : ""}${hasBand ? " hasband" : ""}">${side}${bar}${head}${body}${foot()}</section>`);
   });
 }
 
