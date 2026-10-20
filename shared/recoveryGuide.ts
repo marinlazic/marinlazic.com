@@ -8,7 +8,7 @@ export type GuideBlock =
   | { type: "p"; text: string }
   | { type: "lead"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "table"; columns: string[]; rows: string[][] }
+  | { type: "table"; title?: string; columns: string[]; rows: string[][]; note?: string }
   | { type: "callout"; label: string; text: string }
   | { type: "steps"; items: { title: string; text: string }[] }
   /** The four kinds of fatigue as photo tiles. */
@@ -25,31 +25,43 @@ export type GuideBlock =
   | { type: "protocol"; title: string; when: string; steps: { time: string; text: string }[]; care?: string }
   /** What to do when: read the situation, act today and tomorrow, and what to skip. */
   | { type: "scenario"; title: string; read: string; today: string[]; tomorrow: string[]; skip: string[] }
+  /** A drawn figure the builder knows how to draw: the training curve, the cold water target, the repair plate. */
+  | { type: "figure"; kind: "supercompensation" | "coldzone" | "plate"; title: string; note?: string }
+  /** Horizontal range bars: each row spans lo to hi in the unit given. */
+  | { type: "bars"; title: string; unit: string; max: number; ticks: { at: number; label: string }[]; rows: { label: string; lo: number; hi: number; note: string }[]; note?: string }
+  /** A grid of tools against the four systems: 2 first choice, 1 helps, 0 not the tool. */
+  | { type: "matrix"; title: string; columns: string[]; rows: { label: string; cells: (0 | 1 | 2)[] }[]; legend: string[]; note?: string }
+  /** Small line charts, one per series, all on the same scale. */
+  | { type: "lines"; title: string; subtitle?: string; x: string[]; min: number; max: number; series: { label: string; values: number[]; note: string }[] }
+  /** One column chart with an optional reference line and a few notes on particular columns. */
+  | { type: "columns"; title: string; subtitle?: string; x: string[]; values: number[]; max: number; labels?: string[]; reference?: { at: number; label: string }; notes?: { at: number; text: string }[]; note?: string }
+  /** Two blocks side by side on the page (the web page lays them out one after the other). */
+  | { type: "row"; blocks: GuideBlock[] }
   /** A new page in the PDF; the web page ignores it. */
   | { type: "break" };
 
-/** Photos from the site, by name. The builder and the page map them to files. */
+/** Marin's own photos, graded black and white like the rest of the site. The builder and the page map them to files. */
 export type GuidePhoto =
-  | "hero" | "morning" | "zone2" | "whoop" | "executive" | "chinup" | "periodisation" | "vo2max" | "stress"
-  | "pool" | "plate" | "sunrise" | "notes" | "marin" | "olympic" | "burnout";
+  | "hero" | "morning" | "olympic" | "walk" | "phone" | "floor" | "nervous" | "muscles" | "engine" | "head"
+  | "pool" | "coach" | "plate" | "sunrise" | "notes" | "marin";
 
 export const GUIDE_PHOTOS: Record<GuidePhoto, string> = {
-  hero: "/images/articles/insights-hero-bwvACFKZNH25ufFn36wzkx.webp",
-  morning: "/images/articles/article-morning-FYrEKKJ4PY5r5Smq5Niq9s.webp",
-  zone2: "/images/articles/article-zone2-LN7HkbGvgQW45DUWj9D4zX.webp",
-  whoop: "/images/articles/article-whoop-aPcJLKrMSwjXphtA9QV7Yq.webp",
-  executive: "/images/articles/article-executive-fitness-7smAuKbB8VnoomqQR4MdYo.webp",
-  chinup: "/images/articles/article-chinup-b3w94tbnjqHCj5eJMpGWRR.webp",
-  periodisation: "/images/articles/article-periodisation-EvdvYK7AKq2qNs5Tup927x.webp",
-  vo2max: "/images/articles/article-vo2max-MLepkJc5Xo8tvTbdeNGm5X.webp",
-  stress: "/images/articles/article-stress-FpEMk5MfHkqRzb7BWPiKEY.webp",
-  pool: "/images/resources/recover-1200.jpg",
-  plate: "/images/resources/protein-1200.jpg",
-  sunrise: "/images/resources/sleep-1200.jpg",
-  notes: "/images/resources/week3-1200.jpg",
-  marin: "/images/site/marin-about-photo_5aa64d77.jpg",
-  olympic: "/images/articles/article-olympic-gpLGKvxLbp5dFAxegeMPbR.webp",
-  burnout: "/images/articles/article-burnout-oKVqLKRv2GVDMseTkNsZfo.webp",
+  hero: "/images/guide/hero.jpg",
+  morning: "/images/guide/morning.jpg",
+  olympic: "/images/guide/olympic.jpg",
+  walk: "/images/guide/walk.jpg",
+  phone: "/images/guide/phone.jpg",
+  floor: "/images/guide/floor.jpg",
+  nervous: "/images/guide/nervous.jpg",
+  muscles: "/images/guide/muscles.jpg",
+  engine: "/images/guide/engine.jpg",
+  head: "/images/guide/head.jpg",
+  pool: "/images/guide/pool.jpg",
+  coach: "/images/guide/coach.jpg",
+  plate: "/images/guide/plate.jpg",
+  sunrise: "/images/guide/sunrise.jpg",
+  notes: "/images/guide/notes.jpg",
+  marin: "/images/guide/marin.jpg",
 };
 
 export type GuideSection = {
@@ -58,8 +70,8 @@ export type GuideSection = {
   kicker: string;
   /** Full page photo opener before the content, with the title on the image; "gradient" is the striped brand panel instead of a photo. */
   opener?: GuidePhoto | "gradient";
-  /** Where the title sits on the opener and in what colour: light type at the bottom by default. */
-  openerStyle?: { ink?: "light" | "dark"; at?: "top" | "bottom"; align?: "left" | "right"; pos?: string };
+  /** Where the title sits on the opener and in what colour: light type at the bottom by default. "split" puts a portrait photo on the left half and the title on paper on the right. */
+  openerStyle?: { ink?: "light" | "dark"; at?: "top" | "bottom"; align?: "left" | "right"; pos?: string; split?: boolean };
   /** A photo beside the content, for sections without an opener. */
   side?: GuidePhoto;
   blocks: GuideBlock[];
@@ -79,7 +91,7 @@ export const RECOVERY_GUIDE = {
   whatsInside: [
     "Why the rest is where you get stronger, and what happens when you skip it",
     "The four kinds of fatigue and how to tell which one you have",
-    "What to do after each kind, with times and temperatures",
+    "What to do after each kind, with times and temperatures, and a grid of which tool fits which fatigue",
     "Eight exact protocols: cold water, the ten minute reset, switching off, switching on, the foam roll map, refuelling, the flight, the morning",
     "What to do when: eight real situations, read and acted on",
     "The foods that help you repair, a thirty second morning check, and a week laid out",
@@ -97,13 +109,20 @@ export const RECOVERY_GUIDE = {
         { type: "loop", words: ["Work", "Rest", "Adapt"] },
         { type: "p", text: "Think of it as a loop. Work, then rest, then adapt. Then go again from a slightly higher base. Every time you shorten the rest, you shrink the gain." },
         { type: "callout", label: "The rule", text: "Work plus rest equals progress. Miss either half and you are standing still, or going backwards." },
+        { type: "break" },
+        {
+          type: "figure",
+          kind: "supercompensation",
+          title: "The same idea, drawn",
+          note: "The line is your capacity: how much you can lift, how far you can run, how sharp you are. A session knocks it down. Rest brings it back and a little past where it started. The whole game is timing the next session for that peak.",
+        },
       ],
     },
     {
       number: "02",
       title: "Two kinds of recovery",
       kicker: "Rest and regeneration",
-      side: "zone2",
+      side: "walk",
       blocks: [
         { type: "p", text: "Recovery is just the process of getting over the stress you put on yourself, at training, at work and at home. There are two ways to help it along." },
         {
@@ -120,7 +139,7 @@ export const RECOVERY_GUIDE = {
       number: "03",
       title: "Your readiness changes every day",
       kicker: "Four systems",
-      side: "whoop",
+      side: "phone",
       blocks: [
         { type: "p", text: "How ready you are to train, think and perform is not fixed. It moves from day to day and sometimes hour to hour, depending on what you did yesterday and what is on your mind today." },
         { type: "p", text: "It helps to think of four systems, each with its own readiness:" },
@@ -134,23 +153,58 @@ export const RECOVERY_GUIDE = {
           ],
         },
         { type: "p", text: "Each system can be fresh or flat on its own. You can be sore but sharp. You can be rested but wired. That is the whole point: once you know which system is down, you know what to fix." },
+        { type: "break" },
+        {
+          type: "lines",
+          title: "An example week, scored each morning",
+          subtitle: "The week from section 10, scored 1 to 5 before coffee. Each system has its own bad day, and none of them line up.",
+          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          min: 1,
+          max: 5,
+          series: [
+            { label: "Nervous system", values: [4, 2, 3, 4, 4, 2, 3], note: "Low the morning after Monday's and Friday's heavy lifts." },
+            { label: "Muscles and joints", values: [4, 3, 3, 3, 4, 3, 4], note: "Stiff after each lift. Never below 3 with the evening reset." },
+            { label: "Engine", values: [4, 4, 4, 4, 2, 3, 4], note: "Empty on Friday morning after Thursday's intervals." },
+            { label: "Head", values: [4, 4, 3, 4, 4, 5, 5], note: "Wednesday pays for Tuesday's meetings. The weekend outdoors lifts it." },
+          ],
+        },
       ],
     },
     {
       number: "04",
       title: "The four kinds of fatigue",
       kicker: "Stress adds up, but each kind is specific",
-      opener: "chinup",
+      opener: "floor",
       blocks: [
         { type: "p", text: "Every session and every hard day lands mostly on one of the four systems. Here is how to tell them apart." },
         {
           type: "tiles",
           items: [
-            { photo: "executive", title: "Nervous system", cause: "Heavy lifting above about 85% of your max. Top speed sprints. Hard jumping and landing. Low rep power work. Any session where the bar moves slowly because it is heavy.", feel: "Flat. No pop. Weights feel heavier than they are. Reaction time is off. You can still grind, but nothing is snappy." },
-            { photo: "periodisation", title: "Muscles and joints", cause: "Muscle building work like 6 sets of 6 with two minutes rest. Long lowering phases. Downhill running. Lots of stopping, starting and changing direction. A long flight or a day on your feet.", feel: "Sore and stiff. Heavy legs. Stairs are a thought. You move like you are 20 years older for a day or two." },
-            { photo: "vo2max", title: "Engine", cause: "High volume sessions. 3 sets of 12 with a minute of rest. Tempo runs, intervals, long swims, anything repetitive for a long time. A big week of training volume.", feel: "Drained and hungry. Breathing hard on things that are normally easy. Sleep is heavy but you still wake tired." },
-            { photo: "stress", title: "Head", cause: "A big game, a pitch, a presentation. A new team or a new job. Conflict at home or at work. Travel. Anything you read as a threat, even a small one. Or things are just not right and you cannot say why.", feel: "Wired, not tired. Short fuse. Busy mind at 2am. You skip the warm up and rush the session, or you cannot make yourself start." },
+            { photo: "nervous", title: "Nervous system", cause: "Heavy lifting above about 85% of your max. Top speed sprints. Hard jumping and landing. Low rep power work. Any session where the bar moves slowly because it is heavy.", feel: "Flat. No pop. Weights feel heavier than they are. Reaction time is off. You can still grind, but nothing is snappy." },
+            { photo: "muscles", title: "Muscles and joints", cause: "Muscle building work like 6 sets of 6 with two minutes rest. Long lowering phases. Downhill running. Lots of stopping, starting and changing direction. A long flight or a day on your feet.", feel: "Sore and stiff. Heavy legs. Stairs are a thought. You move like you are 20 years older for a day or two." },
+            { photo: "engine", title: "Engine", cause: "High volume sessions. 3 sets of 12 with a minute of rest. Tempo runs, intervals, long swims, anything repetitive for a long time. A big week of training volume.", feel: "Drained and hungry. Breathing hard on things that are normally easy. Sleep is heavy but you still wake tired." },
+            { photo: "head", title: "Head", cause: "A big game, a pitch, a presentation. A new team or a new job. Conflict at home or at work. Travel. Anything you read as a threat, even a small one. Or things are just not right and you cannot say why.", feel: "Wired, not tired. Short fuse. Busy mind at 2am. You skip the warm up and rush the session, or you cannot make yourself start." },
           ],
+        },
+        { type: "break" },
+        {
+          type: "bars",
+          title: "How long each kind takes to clear",
+          unit: "hours",
+          max: 84,
+          ticks: [
+            { at: 0, label: "0" },
+            { at: 24, label: "1 day" },
+            { at: 48, label: "2 days" },
+            { at: 72, label: "3 days" },
+          ],
+          rows: [
+            { label: "Nervous system", lo: 48, hi: 72, note: "The longest to clear and the easiest to miss, because nothing hurts. The morning score is the only honest test." },
+            { label: "Muscles and joints", lo: 24, hi: 72, note: "Soreness peaks at 24 to 48 hours and is gone by 72 with easy movement and protein at every meal." },
+            { label: "Engine", lo: 12, hi: 24, note: "Refills with carbohydrate, fluids and a night's sleep. A very long session can take 48." },
+            { label: "Head", lo: 8, hi: 48, note: "One good night for a hard day. Longer when the stress does not stop, which is the problem with most weeks." },
+          ],
+          note: "Typical ranges with the right recovery. Shorter with the matching list from section 05. Longer with alcohol, poor sleep, or another hard session on top.",
         },
         { type: "callout", label: "For the busy professional", text: "A twelve hour day of meetings is head fatigue with a side of nervous system fatigue. A red eye flight is muscles and joints plus head. A week on the road with bad food and little sleep hits all four. Treat it like training load, because that is what it is." },
       ],
@@ -211,6 +265,30 @@ export const RECOVERY_GUIDE = {
           ],
         },
         { type: "callout", label: "A word of care", text: "If you have a heart condition, are pregnant, or have a history of fainting, talk to your doctor before cold water or breath holds. Start shorter and warmer than you think." },
+        { type: "break" },
+        {
+          type: "matrix",
+          title: "Which tool for which fatigue",
+          columns: ["Nervous system", "Muscles and joints", "Engine", "Head"],
+          rows: [
+            { label: "Cold water, 10 to 15 minutes", cells: [2, 1, 0, 1] },
+            { label: "Static stretching, 30 to 60 seconds", cells: [2, 2, 1, 0] },
+            { label: "Dynamic stretching, 6 to 8 reps", cells: [0, 2, 1, 0] },
+            { label: "Foam rolling, 3 to 4 areas", cells: [1, 2, 2, 0] },
+            { label: "Easy movement, 20 to 30 minutes", cells: [1, 1, 2, 1] },
+            { label: "Compression, 120 mmHg", cells: [0, 2, 2, 0] },
+            { label: "Breathing to switch off, 6 in 4 hold 10 out", cells: [1, 0, 0, 2] },
+            { label: "Breathing to switch on, 4 in 2 hold", cells: [0, 0, 0, 2] },
+            { label: "Morning daylight, 2 to 10 minutes", cells: [1, 0, 1, 2] },
+            { label: "Carbohydrate and fluids in the hours after", cells: [0, 1, 2, 0] },
+            { label: "Protein at every meal", cells: [1, 2, 1, 0] },
+            { label: "Foods that calm inflammation", cells: [2, 2, 1, 1] },
+            { label: "No alcohol or caffeine before bed", cells: [2, 1, 1, 2] },
+            { label: "Sleep", cells: [2, 2, 2, 2] },
+          ],
+          legend: ["First choice: it is on that system's list", "Helps", "Not the tool for this one"],
+          note: "Skip cold water in the 24 hours before speed or power work, and the day before a competition. It dulls the spring you want. The rest of the grid is additive: a day that hits two systems gets both lists.",
+        },
       ],
     },
     {
@@ -218,7 +296,6 @@ export const RECOVERY_GUIDE = {
       title: "The protocols",
       kicker: "Exact routines, with the clock on them",
       opener: "pool",
-      openerStyle: { align: "right", pos: "100% 50%" },
       blocks: [
         { type: "lead", text: "A list is not a routine. These are the eight routines I actually hand to people, with the minutes on each step. Pick the one the situation calls for and run it as written the first few times. Then adjust." },
         {
@@ -270,7 +347,6 @@ export const RECOVERY_GUIDE = {
             { time: "5 min", text: "Then move: leg swings, arm circles, a few easy jumps, building to two or three short fast efforts." },
           ],
         },
-        { type: "break" },
         {
           type: "protocol",
           title: "The foam roll map",
@@ -281,6 +357,7 @@ export const RECOVERY_GUIDE = {
             { time: "1 to 2 passes", text: "That is it. More does not help. Follow with the dynamic stretches before training or the static ones after." },
           ],
         },
+        { type: "break" },
         {
           type: "protocol",
           title: "Refuelling after a hard session",
@@ -291,7 +368,6 @@ export const RECOVERY_GUIDE = {
             { time: "Next meal", text: "Protein again, plus the antioxidant foods from section 08. Cherries, berries, greens." },
           ],
         },
-        { type: "break" },
         {
           type: "protocol",
           title: "The flight",
@@ -314,15 +390,57 @@ export const RECOVERY_GUIDE = {
             { time: "5 min", text: "Easy movement: a walk, the dynamic stretches, a few squats. Then coffee, if you want it." },
           ],
         },
+        { type: "break" },
+        {
+          type: "row",
+          blocks: [
+            {
+              type: "figure",
+              kind: "coldzone",
+              title: "Cold water: how cold, how long",
+              note: "The box is the target. Colder than 10 degrees adds risk, not benefit. Warmer than 15 does little. Under 10 minutes the nervous system does not settle. Past 15 minutes there is nothing more to gain.",
+            },
+            {
+              type: "table",
+              title: "Refuelling by bodyweight",
+              columns: ["Bodyweight", "Protein", "Carbohydrate", "What that looks like"],
+              rows: [
+                ["60 kg", "25 g", "60 g", "A tub of Greek yoghurt and two bananas"],
+                ["70 kg", "28 g", "70 g", "Three eggs on two slices of toast, a banana and a glass of milk"],
+                ["80 kg", "32 g", "80 g", "A chicken breast, a cup and a half of cooked rice, a piece of fruit"],
+                ["90 kg", "36 g", "90 g", "A shake with a scoop of whey, a banana and a cup of oats made on milk"],
+                ["100 kg", "40 g", "100 g", "A tin of tuna, two cups of cooked pasta, a piece of fruit"],
+              ],
+              note: "Protein at 0.4 g per kilo, carbohydrate at 1 g per kilo, inside the first hour after a hard session. The meals are rough matches, not recipes. Add 500 ml of water with a pinch of salt.",
+            },
+          ],
+        },
       ],
     },
     {
       number: "07",
       title: "What to do when",
       kicker: "Eight situations, read and acted on",
-      opener: "burnout",
+      opener: "coach",
       blocks: [
         { type: "lead", text: "Knowing the four kinds of fatigue is only useful on the day something happens. Here are the eight situations I get asked about most, and what I tell people to do. Read the situation, do today's list, do tomorrow's, and skip what is on the skip line." },
+        {
+          type: "table",
+          title: "Find your situation",
+          columns: ["What you notice", "Which system", "First move", "Then"],
+          rows: [
+            ["Flat, no pop, the weights feel heavier than they are", "Nervous system", "Cold water 10 to 15 minutes, early night", "Nothing heavy or fast for 48 hours"],
+            ["Sore, stiff, heavy legs", "Muscles and joints", "The foam roll map, then the dynamic stretches", "Train, 20 to 30 percent lighter"],
+            ["Drained and hungry, breathing hard on easy things", "Engine", "Carbohydrate and fluids, 20 to 30 minutes easy movement", "Protein at every meal, early night"],
+            ["Wired, short fuse, busy mind at 2am", "Head", "Daylight 2 to 10 minutes, switching off before bed", "No caffeine after 2pm, phone out of the room"],
+            ["Cannot sleep after a late session", "Nervous system", "Switching off, a warm shower, carbohydrate with dinner", "Move late sessions earlier"],
+            ["Just landed from a long flight", "Muscles and joints, head", "Walk outside in daylight for 20 to 30 minutes", "Local bedtime, first hard session 48 hours later"],
+            ["A week of bad sleep", "Head, nervous system", "Same wake time every day, daylight before coffee", "Talking pace sessions only this week"],
+            ["A big day in 48 hours", "Nervous system, head", "Easy movement only, carbohydrate, early night", "Switching on an hour before"],
+            ["Something coming on", "All four", "Above the neck: an easy walk. Below the neck: stop", "Easy movement first when the scores come back"],
+          ],
+        },
+        { type: "break" },
         {
           type: "scenario",
           title: "You lifted heavy today and have a big day tomorrow",
@@ -410,6 +528,31 @@ export const RECOVERY_GUIDE = {
             ["Protein", "Some at every meal. It is the raw material for every repair on the list."],
           ],
         },
+        { type: "break" },
+        {
+          type: "row",
+          blocks: [
+            {
+              type: "figure",
+              kind: "plate",
+              title: "The repair plate",
+              note: "Half the plate is vegetables and fruit, the antioxidant foods. A quarter is protein. A quarter is slow carbohydrate, and that quarter grows after a hard session. A thumb of fat from whole foods on top: olive oil, avocado, nuts, oily fish.",
+            },
+            {
+              type: "table",
+              title: "A day that does the repair",
+              columns: ["Meal", "What is on it", "Which lever"],
+              rows: [
+                ["Breakfast", "Eggs with spinach, berries, a spoon of yoghurt or kefir", "Protein, antioxidants, a healthy gut"],
+                ["Lunch", "Salmon or sardines, a big salad with beetroot and avocado, rice", "Omega 3, antioxidants, protein"],
+                ["After training", "A shake or yoghurt with a banana and cherries", "Protein and carbohydrate inside the hour"],
+                ["Dinner", "Chicken, beans or tofu, red cabbage and greens, sweet potato", "Protein, antioxidants, carbohydrate to sleep"],
+                ["Most days", "Something fermented: sauerkraut, kimchi, miso, kefir", "A healthy gut"],
+                ["Two or three times a week", "Fatty fish", "Omega 3"],
+              ],
+            },
+          ],
+        },
         { type: "p", text: "Supplements can help at the margins once the food is right: fish oil, tart cherry, zinc, a probiotic, glutamine. Which ones, and whether you need any, is a conversation for your doctor or dietitian, not a guess from a label." },
       ],
     },
@@ -418,7 +561,7 @@ export const RECOVERY_GUIDE = {
       title: "The thirty second morning check",
       kicker: "Decide what today needs",
       opener: "sunrise",
-      openerStyle: { at: "top" },
+      openerStyle: { split: true },
       blocks: [
         { type: "p", text: "Before coffee, score each system from 1 to 5. One is empty, five is fresh." },
         {
@@ -430,8 +573,40 @@ export const RECOVERY_GUIDE = {
             { system: "Head", question: "Am I calm and clear, or wired and short?" },
           ],
         },
-        { type: "p", text: "Any system at 3 or under gets its list from section 05 today, or the matching page in 07,, before anything hard. Two systems at 2 or under means today is a regeneration day: easy movement, the lists, food, sleep. Twenty minutes on the right list beats an hour on the wrong one." },
+        { type: "p", text: "Any system at 3 or under gets its list from section 05 today, or the matching page in 07, before anything hard. Two systems at 2 or under means today is a regeneration day: easy movement, the lists, food, sleep. Twenty minutes on the right list beats an hour on the wrong one." },
         { type: "callout", label: "Track it", text: "Write the four numbers in your phone each morning. After two weeks you will see your pattern: which sessions cost you most, how many days you need after them, and what Monday looks like after a big weekend." },
+        { type: "break" },
+        {
+          type: "row",
+          blocks: [
+            {
+              type: "table",
+              title: "Read the scores",
+              columns: ["What you see", "What today is", "What to do"],
+              rows: [
+                ["All four at 4 or 5", "Train as planned", "Go hard if the plan says so. Run the morning protocol and get on with it."],
+                ["One or more at 3", "Train, with care", "Run their lists first. If the session hits that system, drop the load 10 to 20 percent."],
+                ["One at 2 or under", "A modified day", "Its list before anything else. If the session needs that system, swap it for easy movement."],
+                ["Two or more at 2 or under", "A regeneration day", "Easy movement, the lists, food, sleep. No hard work today, whatever the plan says."],
+                ["Any at 1, or three days under 3 in a row", "Rest", "Nothing today. If it does not lift inside a week, talk to your doctor, or to me."],
+              ],
+            },
+            {
+              type: "columns",
+              title: "What two weeks of scores looks like",
+              subtitle: "The four scores added up, 4 to 20, for an example fortnight.",
+              x: ["M", "T", "W", "T", "F", "S", "S", "M", "T", "W", "T", "F", "S", "S"],
+              values: [17, 13, 15, 16, 16, 11, 14, 17, 15, 15, 14, 9, 12, 15],
+              max: 20,
+              reference: { at: 16, label: "Every system at 4" },
+              notes: [
+                { at: 5, text: "Friday's heavy lift, late night" },
+                { at: 11, text: "After a red eye flight" },
+              ],
+              note: "Two weeks of numbers show which days cost you and how long you take to come back. That is the pattern to plan around.",
+            },
+          ],
+        },
       ],
     },
     {
@@ -439,9 +614,18 @@ export const RECOVERY_GUIDE = {
       title: "A week that works",
       kicker: "Put it in the diary",
       opener: "notes",
-      openerStyle: { ink: "dark" },
+      openerStyle: { split: true },
       blocks: [
         { type: "p", text: "Here is how it fits together for someone who lifts three times a week, does one hard conditioning session and works a full week." },
+        {
+          type: "columns",
+          title: "How the week loads",
+          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          values: [5, 3, 3, 4, 5, 1, 0],
+          max: 5,
+          labels: ["Heavy lower lift", "Meetings all day", "Upper lift, moderate", "Intervals", "Heavy full body lift", "Outdoors, easy", "Off"],
+          note: "Two heavy days, never back to back. The hard conditioning sits mid week with an easy day either side. The weekend is the recovery, not an afterthought.",
+        },
         {
           type: "week",
           rows: [
