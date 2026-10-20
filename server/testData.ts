@@ -7,7 +7,7 @@ import { sql } from "drizzle-orm";
 import { getDb } from "./db";
 import { storageDelete } from "./storage";
 import { kitForgetSubscriber } from "./kit";
-import { TEST_EMAIL_SQL_LIKE } from "../shared/testData";
+import { TEST_EMAIL_SQL_LIKE, isTestEmail } from "../shared/testData";
 
 export type PurgeResult = {
   emails: string[];
@@ -66,6 +66,48 @@ export async function purgeTestData(): Promise<PurgeResult> {
     }
   }
 
+  return result;
+}
+
+/**
+ * Removes one person entirely: lead rows (notes go with them), applications,
+ * assessment progress, saved reports and their PDFs, the email log,
+ * conversation events and the follow up row. Used by the Delete contact
+ * button in the dashboard. Test addresses are also taken out of Kit; a real
+ * address is left in Kit, since unsubscribing someone is a separate decision.
+ */
+export async function removeContact(emailIn: string): Promise<PurgeResult> {
+  const email = emailIn.toLowerCase().trim();
+  const result: PurgeResult = { emails: [email], leads: 0, applications: 0, progress: 0, reports: 0, pdfs: 0, emailLog: 0, kit: [] };
+  const d = await getDb();
+  if (!d || !email) return result;
+  const rows = (q: ReturnType<typeof sql>) => d.execute(q).then((r: any) => (r.rows ?? r) as Record<string, unknown>[]);
+  const count = async (q: ReturnType<typeof sql>) => Number((await rows(q))[0]?.c ?? 0);
+
+  const reports = await rows(sql`SELECT pdf_key FROM assessment_reports WHERE lower(email) = ${email} AND pdf_key IS NOT NULL`);
+  for (const r of reports) {
+    try {
+      await storageDelete(String(r.pdf_key));
+      result.pdfs++;
+    } catch (err) {
+      console.warn("[TestData] Could not delete PDF", r.pdf_key, err);
+    }
+  }
+  result.reports = await count(sql`WITH d AS (DELETE FROM assessment_reports WHERE lower(email) = ${email} RETURNING 1) SELECT count(*) AS c FROM d`);
+  result.progress = await count(sql`WITH d AS (DELETE FROM assessment_progress WHERE lower(email) = ${email} RETURNING 1) SELECT count(*) AS c FROM d`);
+  result.applications = await count(sql`WITH d AS (DELETE FROM applications WHERE lower(email) = ${email} RETURNING 1) SELECT count(*) AS c FROM d`);
+  result.leads = await count(sql`WITH d AS (DELETE FROM leads WHERE lower(email) = ${email} RETURNING 1) SELECT count(*) AS c FROM d`);
+  result.emailLog = await count(sql`WITH d AS (DELETE FROM email_log WHERE lower(to_email) = ${email} RETURNING 1) SELECT count(*) AS c FROM d`);
+  await rows(sql`DELETE FROM conversation_events WHERE lower(email) = ${email}`);
+  await rows(sql`DELETE FROM contact_followups WHERE lower(email) = ${email}`);
+
+  if (isTestEmail(email)) {
+    try {
+      result.kit.push(`${email}: ${await kitForgetSubscriber(email)}`);
+    } catch (err) {
+      result.kit.push(`${email}: ${String((err as Error)?.message ?? err)}`);
+    }
+  }
   return result;
 }
 

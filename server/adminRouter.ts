@@ -20,6 +20,7 @@ import { runDiagnostics } from "./diagnostics";
 import { answersFromMessage, labelAnswer, leadKind, parseAnswers } from "./contactAnswers";
 import { importEvents, loadFollowups, logContact, refreshFollowups } from "./followup";
 import { disconnect as gmailDisconnect, gmailStatus, recordSyncError, syncGmail } from "./gmail";
+import { describePurge, removeContact } from "./testData";
 
 export { answersFromMessage, labelAnswer, leadKind };
 
@@ -815,6 +816,11 @@ export const adminRouter = router({
         if (Object.keys(set).length) await d.update(leads).set(set).where(eq(leads.id, input.id));
         return { ok: true };
       }),
+    // Deletes a person and everything attached to them. Cannot be undone.
+    remove: adminProcedure.input(z.object({ email: z.string().email() })).mutation(async ({ input }) => {
+      const r = await removeContact(input.email);
+      return { ok: true, summary: describePurge(r), ...r };
+    }),
     addNote: adminProcedure
       .input(z.object({ id: z.number().int(), body: z.string().min(1).max(5000) }))
       .mutation(async ({ input }) => {

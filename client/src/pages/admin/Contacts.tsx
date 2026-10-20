@@ -226,6 +226,13 @@ export function ContactDrawer({ id, onClose }: { id: number; onClose: () => void
   const update = trpc.admin.contacts.update.useMutation({ onSuccess: invalidate });
   const addNote = trpc.admin.contacts.addNote.useMutation({ onSuccess: invalidate });
   const deleteNote = trpc.admin.contacts.deleteNote.useMutation({ onSuccess: invalidate });
+  const remove = trpc.admin.contacts.remove.useMutation({
+    onSuccess: () => {
+      invalidate();
+      utils.admin.followup.overview.invalidate();
+      onClose();
+    },
+  });
   const [note, setNote] = useState("");
   const [copied, setCopied] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);
@@ -277,9 +284,22 @@ export function ContactDrawer({ id, onClose }: { id: number; onClose: () => void
                   </button>
                 </div>
               </div>
-              <button type="button" onClick={onClose} className="text-black/40 hover:text-black" aria-label="Close">
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  type="button"
+                  className="text-black/40 hover:text-black text-[10px] tracking-[0.15em] uppercase inline-flex items-center gap-1 disabled:opacity-40"
+                  disabled={remove.isPending}
+                  title="Delete this person and everything attached: assessments, reports, applications, emails, notes"
+                  onClick={() => {
+                    if (window.confirm(`Delete ${lead.name || lead.email} and everything attached to them? This cannot be undone.`)) remove.mutate({ email: lead.email });
+                  }}
+                >
+                  <Trash2 className="w-3 h-3" /> Delete
+                </button>
+                <button type="button" onClick={onClose} className="text-black/40 hover:text-black" aria-label="Close">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             <div className="px-6 py-5 space-y-6">
