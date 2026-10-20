@@ -36,6 +36,31 @@ async function prepare(k: GuidePhoto): Promise<string> {
 for (const k of Object.keys(GUIDE_PHOTOS) as GuidePhoto[]) await prepare(k);
 const photo = (k: GuidePhoto) => prepared.get(k)!;
 
+// The striped gradient panel as a raster image. A layered CSS gradient with
+// transparency comes out magenta in some PDF viewers; a PNG never does.
+const GRAD = path.join(IMG_DIR, "gradient.png");
+{
+  const W = 1200, H = 1200;
+  const stops: [number, [number, number, number]][] = [[0, [255, 255, 255]], [0.38, [194, 217, 251]], [0.72, [84, 141, 248]], [1, [48, 104, 240]]];
+  const buf = Buffer.alloc(W * H * 3);
+  for (let y = 0; y < H; y++) {
+    const t = y / (H - 1);
+    let a = stops[0], b = stops[stops.length - 1];
+    for (let i = 0; i < stops.length - 1; i++) if (t >= stops[i][0] && t <= stops[i + 1][0]) { a = stops[i]; b = stops[i + 1]; }
+    const f = (t - a[0]) / (b[0] - a[0] || 1);
+    const base = a[1].map((c, i) => c + (b[1][i] - c) * f);
+    for (let x = 0; x < W; x++) {
+      // 2px of white at 55% every 23px, 1px at 25% nine pixels later: the brand stripe.
+      const m = x % 23;
+      const alpha = m < 2 ? 0.55 : m === 9 ? 0.25 : 0;
+      const o = (y * W + x) * 3;
+      for (let i = 0; i < 3; i++) buf[o + i] = Math.round(base[i] + (255 - base[i]) * alpha);
+    }
+  }
+  await sharp(buf, { raw: { width: W, height: H, channels: 3 } }).png({ compressionLevel: 9 }).toFile(GRAD);
+}
+const gradUrl = pathToFileURL(GRAD).href;
+
 function block(b: GuideBlock): string {
   switch (b.type) {
     case "break":
@@ -67,6 +92,12 @@ function block(b: GuideBlock): string {
       return `<div class="sys"><div class="syshead"><h3>${esc(b.title)}</h3><p>${esc(b.goal)}</p></div><div class="cards">${b.items
         .map(c => `<div class="card"><span class="fig">${esc(c.figure)}</span><span class="lab">${esc(c.label)}</span><p>${esc(c.text)}</p></div>`)
         .join("")}</div></div>`;
+    case "protocol":
+      return `<div class="proto"><div class="phead"><h3>${esc(b.title)}</h3><p class="when"><span>When</span>${esc(b.when)}</p>${b.care ? `<p class="care"><span>Care</span>${esc(b.care)}</p>` : ""}</div>
+        <ol class="psteps">${b.steps.map((st, i) => `<li><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(st.time)}</span><p>${esc(st.text)}</p></li>`).join("")}</ol></div>`;
+    case "scenario":
+      return `<div class="scen"><h3>When ${esc(b.title.charAt(0).toLowerCase() + b.title.slice(1))}</h3><p class="read"><span>Read it</span>${esc(b.read)}</p>
+        <div class="cols3"><div><p class="k">Today</p><ul>${b.today.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div><div><p class="k">Tomorrow</p><ul>${b.tomorrow.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div><div><p class="k">Skip</p><ul class="skip">${b.skip.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div></div></div>`;
     case "scorecard":
       return `<div class="score">${b.rows
         .map(
@@ -123,7 +154,7 @@ table{width:100%;border-collapse:collapse;margin:3mm 0 6mm}
 th{text-align:left;font-family:"DM Sans";font-weight:700;font-size:8pt;letter-spacing:.16em;text-transform:uppercase;padding:0 3mm 2mm 0;border-bottom:.5pt solid #121212}
 td{vertical-align:top;padding:2.6mm 3mm 2.6mm 0;border-bottom:.5pt solid #D6D6D6;font-size:9.6pt;line-height:1.42}
 td.k{font-weight:600;width:28%}
-.grad{background:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 2px,transparent 2px 9px,rgba(255,255,255,.25) 9px 10px,transparent 10px 23px),linear-gradient(180deg,#FFFFFF 0%,#C2D9FB 38%,#548DF8 72%,#3068F0 100%)}
+.grad{background-image:url('${gradUrl}');background-size:100% 100%;background-repeat:no-repeat}
 /* photo pages */
 .photo{padding:0;background:#121212}
 .photo .img{position:absolute;inset:0;background-size:cover;background-position:center}
@@ -136,6 +167,10 @@ td.k{font-weight:600;width:28%}
 .photo .title p.sub{font-family:"DM Sans";font-weight:500;font-size:16pt;letter-spacing:-.01em;margin:5mm 0 0;color:#fff;max-width:130mm;line-height:1.25}
 .photo .by{position:absolute;left:18mm;right:18mm;bottom:10mm;display:flex;justify-content:space-between;font-size:7.5pt;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.8);border-top:.5pt solid rgba(255,255,255,.5);padding-top:2.5mm}
 .photo.top .title{top:34mm;bottom:auto}
+.photo.right .title{text-align:right}
+.photo.right .title .kicker{justify-content:flex-end}
+.photo.right .title h2,.photo.right .title p.sub{margin-left:auto}
+.photo.right .title p.sub{max-width:90mm}
 .photo.dark .bar,.photo.dark .title,.photo.dark .title .n,.photo.dark .title h2,.photo.dark .title p.sub,.photo.dark .by{color:#121212}
 .photo.dark .bar{border-bottom-color:rgba(18,18,18,.6)}.photo.dark .bar span,.photo.dark .title .kicker{color:#3a3a3a}
 .photo.dark .by{color:#3a3a3a;border-top-color:rgba(18,18,18,.4)}
@@ -174,6 +209,26 @@ td.k{font-weight:600;width:28%}
 .card .fig{display:block;font-family:"DM Sans";font-weight:700;font-size:19pt;letter-spacing:-.035em;line-height:1;margin-bottom:1.8mm;white-space:nowrap}
 .card .lab{display:block;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#121212;font-weight:600;margin-bottom:1.5mm;line-height:1.3}
 .card p{font-size:8.2pt;line-height:1.38;color:#3a3a3a;margin:0}
+/* protocols */
+.proto{display:grid;grid-template-columns:62mm 1fr;gap:8mm;border-top:1.2pt solid #121212;padding-top:4mm;margin:0 0 9mm}
+.proto h3{font-size:20pt;letter-spacing:-.025em;line-height:1.05;margin:0 0 3mm}
+.proto .when,.proto .care{font-size:8.8pt;line-height:1.42;color:#3a3a3a;margin:0 0 2.5mm}
+.proto .when span,.proto .care span{display:block;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:#6a6a6a;margin-bottom:.8mm}
+.psteps{list-style:none;margin:0;padding:0}
+.psteps li{display:grid;grid-template-columns:9mm 31mm 1fr;gap:3mm;align-items:start;padding:2.2mm 0;border-bottom:.5pt solid #D6D6D6}
+.psteps li:before{display:none}
+.psteps .i{font-family:"DM Sans";font-weight:700;font-size:9pt;color:#B9BCC2;padding-top:1.2mm}
+.psteps .t{font-family:"DM Sans";font-weight:700;font-size:14pt;letter-spacing:-.03em;line-height:1.05;white-space:nowrap}
+.psteps p{margin:0;font-size:9pt;line-height:1.42}
+/* scenarios */
+.scen{border-top:1.2pt solid #121212;padding-top:4mm;margin:0 0 9mm}
+.scen h3{font-size:21pt;letter-spacing:-.03em;line-height:1.02;margin:0 0 3mm;max-width:160mm}
+.scen .read{font-family:"DM Sans";font-weight:500;font-size:11pt;line-height:1.3;letter-spacing:-.005em;margin:0 0 4mm;max-width:165mm}
+.scen .read span{display:block;font-family:Inter;font-weight:400;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:#6a6a6a;margin-bottom:1mm}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6mm}
+.cols3 .k{font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:#121212;font-weight:600;border-bottom:.5pt solid #121212;padding-bottom:1.5mm;margin:0 0 2mm}
+.cols3 li{font-size:8.6pt;line-height:1.4;margin-bottom:1.8mm}
+.cols3 ul.skip li:before{background:#B9BCC2}
 /* scorecard */
 .score{margin:4mm 0 6mm}
 .srow{display:grid;grid-template-columns:1fr 70mm;gap:8mm;align-items:center;border-top:.5pt solid #121212;padding:4mm 0}
@@ -230,8 +285,8 @@ function sectionPages(s: GuideSection) {
       ${foot()}
     </section>`);
   } else if (s.opener) {
-    const cls = `${s.openerStyle?.ink === "dark" ? " dark" : ""}${s.openerStyle?.at === "top" ? " top" : ""}`;
-    push(`<section class="page photo${cls}"><div class="img" style="background-image:url('${photo(s.opener)}')"></div>${bar}
+    const cls = `${s.openerStyle?.ink === "dark" ? " dark" : ""}${s.openerStyle?.at === "top" ? " top" : ""}${s.openerStyle?.align === "right" ? " right" : ""}`;
+    push(`<section class="page photo${cls}"><div class="img" style="background-image:url('${photo(s.opener)}');background-position:${s.openerStyle?.pos ?? "center"}"></div>${bar}
       <div class="title"><p class="n">${s.number}</p><h2>${esc(s.title)}</h2><p class="sub">${esc(s.kicker)}</p></div>
       <div class="by"><span>${esc(G.title)}</span><span>${String(n).padStart(2, "0")}</span></div>
     </section>`);
@@ -254,8 +309,9 @@ function sectionPages(s: GuideSection) {
           : `<p class="num">${s.number}</p><p class="kicker">${esc(s.kicker)}</p><h2>${esc(s.title)}</h2>`
         : `<p class="kicker">${s.number} ${esc(s.title)}, continued</p>`;
     const content = s.side && i === 0 ? `<div class="withside"><div>${body}</div><div class="side" style="background-image:url('${photo(s.side)}')"></div></div>` : body;
-    const close = s.number === "09" ? '<div class="close grad"></div>' : "";
-    push(`<section class="page ${s.number === "09" ? "back" : ""}">${bar}${head}${content}${close}${foot()}</section>`);
+    const isBack = s === G.sections[G.sections.length - 1];
+    const close = isBack ? '<div class="close grad"></div>' : "";
+    push(`<section class="page ${isBack ? "back" : ""}">${bar}${head}${content}${close}${foot()}</section>`);
   });
 }
 

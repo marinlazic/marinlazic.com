@@ -623,7 +623,7 @@ export async function sendRecoveryGuideEmail(params: { email: string; firstName?
         [
           "Here is the Recovery Guide. It is attached, and it is also at the link below if the attachment does not come through.",
           "The short version: a heavy lifting day, a long run and a week of back to back meetings each leave a different kind of fatigue, and each needs a different fix. The guide shows you how to tell them apart and what to do about each one, with the numbers.",
-          "Start with the thirty second morning check in section 07. Do it for two weeks and you will see your pattern.",
+          "Start with the thirty second morning check in section 09, and keep section 07 for the days something goes sideways. Do it for two weeks and you will see your pattern.",
           "If you want to know where you stand across sleep, stress, training and recovery, the free assessment takes about ten minutes. Reply to this email if you have a question. I read every one.",
         ],
         { label: "Open the guide", href: link }

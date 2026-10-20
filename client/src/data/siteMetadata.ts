@@ -137,8 +137,8 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/recovery-guide": {
     title: "The Recovery Guide: Match Your Recovery to the Work You Did | Marin Lazic",
     description:
-      "A free 17 page guide to the four kinds of fatigue (nervous system, muscles and joints, engine, head) and what to do after each: cold water, stretching, easy movement, breathing, light and sleep, with the numbers.",
-    socialTitle: "The Recovery Guide | Free, 17 pages",
+      "A free 27 page guide to the four kinds of fatigue (nervous system, muscles and joints, engine, head) and what to do after each: cold water, stretching, easy movement, breathing, light and sleep, with the numbers.",
+    socialTitle: "The Recovery Guide | Free, 27 pages",
     socialDescription: "A heavy lifting day, a long run and a week of meetings each leave a different kind of fatigue. How to tell them apart and what to do about each one.",
     label: "Recovery Guide",
     modified: "2026-10-20",

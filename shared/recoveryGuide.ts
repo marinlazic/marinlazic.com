@@ -21,13 +21,17 @@ export type GuideBlock =
   | { type: "week"; rows: { day: string; work: string; recovery: string }[] }
   /** The loop: three words with arrows. */
   | { type: "loop"; words: string[] }
+  /** An exact routine: when to use it, then numbered steps with a time on each. */
+  | { type: "protocol"; title: string; when: string; steps: { time: string; text: string }[]; care?: string }
+  /** What to do when: read the situation, act today and tomorrow, and what to skip. */
+  | { type: "scenario"; title: string; read: string; today: string[]; tomorrow: string[]; skip: string[] }
   /** A new page in the PDF; the web page ignores it. */
   | { type: "break" };
 
 /** Photos from the site, by name. The builder and the page map them to files. */
 export type GuidePhoto =
   | "hero" | "morning" | "zone2" | "whoop" | "executive" | "chinup" | "periodisation" | "vo2max" | "stress"
-  | "pool" | "plate" | "sunrise" | "notes" | "marin";
+  | "pool" | "plate" | "sunrise" | "notes" | "marin" | "olympic" | "burnout";
 
 export const GUIDE_PHOTOS: Record<GuidePhoto, string> = {
   hero: "/images/articles/insights-hero-bwvACFKZNH25ufFn36wzkx.webp",
@@ -44,6 +48,8 @@ export const GUIDE_PHOTOS: Record<GuidePhoto, string> = {
   sunrise: "/images/resources/sleep-1200.jpg",
   notes: "/images/resources/week3-1200.jpg",
   marin: "/images/site/marin-about-photo_5aa64d77.jpg",
+  olympic: "/images/articles/article-olympic-gpLGKvxLbp5dFAxegeMPbR.webp",
+  burnout: "/images/articles/article-burnout-oKVqLKRv2GVDMseTkNsZfo.webp",
 };
 
 export type GuideSection = {
@@ -53,7 +59,7 @@ export type GuideSection = {
   /** Full page photo opener before the content, with the title on the image; "gradient" is the striped brand panel instead of a photo. */
   opener?: GuidePhoto | "gradient";
   /** Where the title sits on the opener and in what colour: light type at the bottom by default. */
-  openerStyle?: { ink?: "light" | "dark"; at?: "top" | "bottom" };
+  openerStyle?: { ink?: "light" | "dark"; at?: "top" | "bottom"; align?: "left" | "right"; pos?: string };
   /** A photo beside the content, for sections without an opener. */
   side?: GuidePhoto;
   blocks: GuideBlock[];
@@ -73,10 +79,10 @@ export const RECOVERY_GUIDE = {
   whatsInside: [
     "Why the rest is where you get stronger, and what happens when you skip it",
     "The four kinds of fatigue and how to tell which one you have",
-    "What to do after each kind: cold water, stretching, easy movement, breathing, compression, light and sleep, with times and temperatures",
-    "The foods that help you repair, and the ones worth a conversation",
-    "A morning check that takes thirty seconds and tells you what to do today",
-    "A week that works, laid out",
+    "What to do after each kind, with times and temperatures",
+    "Eight exact protocols: cold water, the ten minute reset, switching off, switching on, the foam roll map, refuelling, the flight, the morning",
+    "What to do when: eight real situations, read and acted on",
+    "The foods that help you repair, a thirty second morning check, and a week laid out",
   ],
   sections: [
     {
@@ -84,7 +90,7 @@ export const RECOVERY_GUIDE = {
       title: "You get stronger in the rest",
       kicker: "Work plus rest",
       opener: "morning",
-      side: "pool",
+      side: "olympic",
       blocks: [
         { type: "lead", text: "Training is a stress. The body does not get fitter during the session. It gets fitter afterwards, while it repairs the damage and builds a bit extra so the next session is easier." },
         { type: "p", text: "That means two things are true at the same time. Work without rest ends in overtraining, injury and illness. Rest without work changes nothing. The result you want sits between them: enough work to ask for change, enough rest to let it happen." },
@@ -165,7 +171,7 @@ export const RECOVERY_GUIDE = {
             { figure: "10 to 15°", label: "Cold water", text: "10 to 15 minutes in a bath, the ocean or a plunge tub." },
             { figure: "30 to 60 s", label: "Static stretching", text: "1 to 2 sets per muscle. Slow and relaxed, nothing forced." },
             { figure: "0", label: "Alcohol and caffeine before bed", text: "Protect the sleep. Nothing in the hours before bed." },
-            { figure: "Eat", label: "Foods that calm inflammation", text: "See section 06." },
+            { figure: "Eat", label: "Foods that calm inflammation", text: "See section 08." },
           ],
         },
         {
@@ -209,6 +215,185 @@ export const RECOVERY_GUIDE = {
     },
     {
       number: "06",
+      title: "The protocols",
+      kicker: "Exact routines, with the clock on them",
+      opener: "pool",
+      openerStyle: { align: "right", pos: "100% 50%" },
+      blocks: [
+        { type: "lead", text: "A list is not a routine. These are the eight routines I actually hand to people, with the minutes on each step. Pick the one the situation calls for and run it as written the first few times. Then adjust." },
+        {
+          type: "protocol",
+          title: "Cold water, done properly",
+          when: "After heavy lifting or sprint sessions. Not in the 24 hours before power or speed work, and not within an hour of bed.",
+          steps: [
+            { time: "10 to 15°", text: "Bath, ocean or plunge tub. Colder is not better. If you cannot hold a thermometer in it, add warm water." },
+            { time: "60 s", text: "Get in slowly to the chest. Long exhales through the nose for the first minute. The gasp passes." },
+            { time: "10 to 15 min", text: "Stay still. Hands out of the water if your fingers ache. Talk to someone if that helps you relax." },
+            { time: "10 min", text: "Get out and warm up by moving: walk, light arm circles. Not a hot shower straight away." },
+          ],
+          care: "Heart condition, pregnant, or a history of fainting: talk to your doctor first. Never alone in open water.",
+        },
+        {
+          type: "protocol",
+          title: "The ten minute evening reset",
+          when: "After a heavy day on the legs or a day on your feet. Any night you want to sleep better.",
+          steps: [
+            { time: "2 min", text: "Hip flexors, half kneeling, 60 seconds each side. Squeeze the glute of the back leg." },
+            { time: "2 min", text: "Hamstrings, one leg on a chair, 60 seconds each side. Hinge from the hips, back flat." },
+            { time: "2 min", text: "Glutes, figure four lying on your back, 60 seconds each side." },
+            { time: "2 min", text: "Calves against a wall, 60 seconds each side. Knee straight, then slightly bent." },
+            { time: "2 min", text: "Chest in a doorway, 60 seconds. Then lats, one hand on a frame and sit back, 30 seconds each side." },
+          ],
+          care: "Slow breathing throughout. Stretch to a pull, never to pain.",
+        },
+        { type: "break" },
+        {
+          type: "protocol",
+          title: "Switching off",
+          when: "Before bed after a late session, after a wired day, or any time your mind will not stop. Five minutes.",
+          steps: [
+            { time: "0 min", text: "Lie down or sit with your back supported. Lights low. Phone in another room." },
+            { time: "6 s", text: "Breathe in through the nose for a count of six." },
+            { time: "4 s", text: "Hold for four. Soft, not strained." },
+            { time: "10 s", text: "Out through the nose or pursed lips for ten. Longer out than in is the whole trick." },
+            { time: "12 rounds", text: "About four minutes. If you lose count, start again. Done." },
+          ],
+        },
+        {
+          type: "protocol",
+          title: "Switching on",
+          when: "Before a session, a game or a presentation when you feel flat. Three minutes, then move.",
+          steps: [
+            { time: "4 s", text: "In through the nose for four." },
+            { time: "2 s", text: "Hold for two." },
+            { time: "Out fast", text: "Out through the mouth, quick. Ten rounds. Or box breathing: four in, four hold, four out, four hold, eight rounds." },
+            { time: "5 min", text: "Then move: leg swings, arm circles, a few easy jumps, building to two or three short fast efforts." },
+          ],
+        },
+        { type: "break" },
+        {
+          type: "protocol",
+          title: "The foam roll map",
+          when: "Before a session when you are stiff, or after a session when you are sore. Six minutes.",
+          steps: [
+            { time: "Lower day", text: "Calves, quads, glutes, hip flexors or adductors. 60 seconds each. Slow passes, pause on the tight spots, keep breathing." },
+            { time: "Upper day", text: "Lats, upper back, pecs. 60 seconds each. The upper back with the roller across the spine, arms crossed." },
+            { time: "1 to 2 passes", text: "That is it. More does not help. Follow with the dynamic stretches before training or the static ones after." },
+          ],
+        },
+        {
+          type: "protocol",
+          title: "Refuelling after a hard session",
+          when: "After anything over 60 minutes, two sessions in a day, or a session that left you drained.",
+          steps: [
+            { time: "0 to 60 min", text: "20 to 40 g of protein and about 1 g of carbohydrate per kilo of bodyweight. A real meal is best; a shake and a banana will do." },
+            { time: "500 ml", text: "Water with a pinch of salt, or an electrolyte drink if you sweated a lot. Then keep sipping through the afternoon." },
+            { time: "Next meal", text: "Protein again, plus the antioxidant foods from section 08. Cherries, berries, greens." },
+          ],
+        },
+        { type: "break" },
+        {
+          type: "protocol",
+          title: "The flight",
+          when: "Any flight over four hours. Most of the damage is on the plane, not after it.",
+          steps: [
+            { time: "Before", text: "Compression socks on. Set your watch to the destination. Decide now whether it is day or night where you are going and act like it." },
+            { time: "Every 90 min", text: "Up and walk the aisle. Calf raises, hip circles, a few squats by the galley." },
+            { time: "250 ml / h", text: "Water every hour. No alcohol. Caffeine only if it is morning at your destination." },
+            { time: "Landing", text: "Twenty to thirty minutes walking outside in daylight. Then the ten minute reset that night. First proper session 48 hours later, moderate." },
+          ],
+        },
+        {
+          type: "protocol",
+          title: "The morning",
+          when: "Every day. This is the one that makes the others work.",
+          steps: [
+            { time: "0 to 60 min", text: "Outside, 2 to 10 minutes of daylight. Not through a window, not through sunglasses." },
+            { time: "500 ml", text: "Water before anything else." },
+            { time: "30 s", text: "The four scores. Nervous system, muscles and joints, engine, head, each 1 to 5. Section 09." },
+            { time: "5 min", text: "Easy movement: a walk, the dynamic stretches, a few squats. Then coffee, if you want it." },
+          ],
+        },
+      ],
+    },
+    {
+      number: "07",
+      title: "What to do when",
+      kicker: "Eight situations, read and acted on",
+      opener: "burnout",
+      blocks: [
+        { type: "lead", text: "Knowing the four kinds of fatigue is only useful on the day something happens. Here are the eight situations I get asked about most, and what I tell people to do. Read the situation, do today's list, do tomorrow's, and skip what is on the skip line." },
+        {
+          type: "scenario",
+          title: "You lifted heavy today and have a big day tomorrow",
+          read: "Nervous system fatigue now, head fatigue coming. You need to be sharp twice in 24 hours.",
+          today: ["Cold water 10 to 15 minutes if you can get it, otherwise the ten minute evening reset.", "Dinner with carbohydrate and protein. No alcohol.", "Switching off: five minutes before bed. In bed 30 minutes earlier than usual."],
+          tomorrow: ["Daylight 2 to 10 minutes before coffee.", "Switching on for three minutes before the meeting if you feel flat.", "A 20 minute walk at lunch, outside."],
+          skip: ["Another hard session.", "Screens in bed.", "A second coffee after 2pm."],
+        },
+        {
+          type: "scenario",
+          title: "You are sore and have a session today",
+          read: "Muscles and joints. Soreness is dull, both sides, eases as you warm up. Pain is sharp, one sided or in a joint. Pain means stop and get it looked at.",
+          today: ["The foam roll map, six minutes, then the dynamic stretches.", "Keep the session, drop the load 20 to 30 percent, keep the movements.", "Protein at every meal. Compression after if you have it."],
+          tomorrow: ["Easy movement 20 to 30 minutes at talking pace.", "The ten minute evening reset.", "Reassess with the morning scores. Back to full load when muscles and joints score 4 or better."],
+          skip: ["Adding volume to make up for the lighter day.", "Training through sharp pain.", "A hot bath straight after, which makes the soreness worse for most people."],
+        },
+        { type: "break" },
+        {
+          type: "scenario",
+          title: "You land after a long flight",
+          read: "Muscles and joints from sitting, head from the clock change. Both systems are down; nothing is broken.",
+          today: ["Walk outside in daylight for 20 to 30 minutes, whatever the hour.", "Water, a proper meal with protein, no alcohol.", "The ten minute evening reset. Bed at local bedtime, even if you are not tired. No naps over 20 minutes."],
+          tomorrow: ["Daylight first thing. Caffeine only before 2pm local.", "Easy movement, 20 to 30 minutes. The dynamic stretches.", "First proper session the day after, moderate loads."],
+          skip: ["Heavy lifting or sprints in the first 48 hours.", "Sleeping until noon to catch up.", "Deciding how you feel until day three."],
+        },
+        {
+          type: "scenario",
+          title: "You have had a week of bad sleep",
+          read: "Head and nervous system together. Everything feels harder than it is. The fix is a boring week, not a hard one.",
+          today: ["Daylight 2 to 10 minutes within an hour of waking.", "Caffeine after the daylight and none after 2pm.", "Sessions at talking pace only. Easy movement, the foam roll map, the reset at night.", "Switching off before bed, every night this week."],
+          tomorrow: ["Same wake time, even on the weekend. That is what resets the clock.", "A bigger breakfast with protein. Cold water in the morning if you like it, not at night."],
+          skip: ["Heavy or maximum work, intervals, late sessions.", "Alcohol as a sleep aid. It knocks you out and wrecks the second half of the night.", "Weekend lie ins past 60 minutes."],
+        },
+        { type: "break" },
+        {
+          type: "scenario",
+          title: "A game, a race or a big presentation is 48 hours away",
+          read: "You want the nervous system fresh and the head calm. Everything from here is about arriving sharp, not fitter.",
+          today: ["The last hard session is done. Easy movement only: 20 minutes at talking pace.", "Static stretching 1 to 2 sets of 30 to 60 seconds. Carbohydrate with dinner.", "Early night. Switching off before bed."],
+          tomorrow: ["Daylight on waking. Short dynamic warm up, a few fast efforts, then stop.", "Carbohydrate at every meal. Nothing new on the plate.", "On the day: switching on for three minutes an hour before, coffee 60 minutes before if you use it."],
+          skip: ["An ice bath the day before. It dulls the spring you want.", "A new shoe, a new food, a new routine.", "Trying to squeeze in one more session."],
+        },
+        {
+          type: "scenario",
+          title: "You feel flat and cannot get going",
+          read: "Score the four systems. If the nervous system is low, the body is tired. If the head is low and the body scores fine, you are not tired, you are stuck.",
+          today: ["Nervous system low: swap speed and heavy work for 20 to 30 minutes easy movement. Cold water. Early night.", "Head low: 10 minutes walking in daylight, switching on for three minutes, then start the warm up.", "The ten minute rule: warm up, reassess. If you are still flat after ten minutes, stop without guilt. If not, carry on."],
+          tomorrow: ["Scores again. Two days flat in a row means a regeneration day, not a harder session.", "Eat properly. Flat is often just under fed."],
+          skip: ["Forcing a maximum session to prove something.", "Skipping food because you did not train.", "Deciding you have lost it. You have not."],
+        },
+        { type: "break" },
+        {
+          type: "scenario",
+          title: "You cannot sleep after a late session",
+          read: "Nervous system still switched on. The session was the right call; the two hours after it were not.",
+          today: ["Switching off: five minutes, lying down, lights low.", "Carbohydrate with the evening meal. A warm shower, not a cold one.", "Phone out of the room. If you are awake after 20 minutes, get up, dim light, read, back when sleepy."],
+          tomorrow: ["Wake at the usual time. Daylight before coffee.", "Move late sessions earlier where you can. Finish hard work three hours before bed when it matters."],
+          skip: ["Scrolling in bed.", "Alcohol to come down.", "Caffeine after 2pm on training days."],
+        },
+        {
+          type: "scenario",
+          title: "You feel something coming on",
+          read: "Above the neck, a runny nose or a scratchy throat, you can move. Below the neck, a chest, a fever, aching all over, you stop. A fever and training do not mix.",
+          today: ["Above the neck: an easy walk, 20 minutes, then home. Below the neck: nothing, and see a doctor if it does not settle.", "Sleep as much as you can. Fluids, soup, protein, the antioxidant foods.", "No cold water this week."],
+          tomorrow: ["Scores in the morning. Return to easy movement first, two days of it, then moderate, then hard.", "The ten minute reset at night helps you sleep when you are blocked up."],
+          skip: ["Hard sessions. They lengthen the illness.", "Cold plunges and breath holds.", "Heroics. Nobody remembers the session you trained through sick."],
+        },
+      ],
+    },
+    {
+      number: "08",
       title: "Food does the repair",
       kicker: "Feed the system that fixes you",
       side: "plate",
@@ -229,7 +414,7 @@ export const RECOVERY_GUIDE = {
       ],
     },
     {
-      number: "07",
+      number: "09",
       title: "The thirty second morning check",
       kicker: "Decide what today needs",
       opener: "sunrise",
@@ -245,12 +430,12 @@ export const RECOVERY_GUIDE = {
             { system: "Head", question: "Am I calm and clear, or wired and short?" },
           ],
         },
-        { type: "p", text: "Any system at 3 or under gets its list from section 05 today, before anything hard. Two systems at 2 or under means today is a regeneration day: easy movement, the lists, food, sleep. Twenty minutes on the right list beats an hour on the wrong one." },
+        { type: "p", text: "Any system at 3 or under gets its list from section 05 today, or the matching page in 07,, before anything hard. Two systems at 2 or under means today is a regeneration day: easy movement, the lists, food, sleep. Twenty minutes on the right list beats an hour on the wrong one." },
         { type: "callout", label: "Track it", text: "Write the four numbers in your phone each morning. After two weeks you will see your pattern: which sessions cost you most, how many days you need after them, and what Monday looks like after a big weekend." },
       ],
     },
     {
-      number: "08",
+      number: "10",
       title: "A week that works",
       kicker: "Put it in the diary",
       opener: "notes",
@@ -273,7 +458,7 @@ export const RECOVERY_GUIDE = {
       ],
     },
     {
-      number: "09",
+      number: "11",
       title: "Where do you stand?",
       kicker: "Next step",
       side: "marin",
