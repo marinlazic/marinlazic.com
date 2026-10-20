@@ -2,10 +2,10 @@
 // What the guide is, what is inside, the signup, and a taste of section 04.
 import { Breadcrumbs, Navigation } from "./InformationPage";
 import { GuideSignup } from "@/components/GuideSignup";
-import { RECOVERY_GUIDE } from "@shared/recoveryGuide";
+import { GUIDE_PHOTOS, RECOVERY_GUIDE } from "@shared/recoveryGuide";
 
 const G = RECOVERY_GUIDE;
-const fatigue = G.sections.find(s => s.number === "04")?.blocks.find(b => b.type === "table");
+const fatigue = G.sections.find(s => s.number === "04")?.blocks.find(b => b.type === "tiles");
 
 export default function RecoveryGuide() {
   return (
@@ -18,7 +18,7 @@ export default function RecoveryGuide() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch mb-16">
             <div className="lg:col-span-7">
               <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
-              <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">Free guide, 12 pages</p>
+              <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">Free guide, 17 pages</p>
               <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
                 {G.title}
               </h1>
@@ -41,31 +41,25 @@ export default function RecoveryGuide() {
             </ol>
           </section>
 
-          {fatigue && fatigue.type === "table" && (
+          {fatigue && fatigue.type === "tiles" && (
             <section className="border-t border-black/10 pt-7 mb-16">
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-2">A taste of section 04</h2>
-              <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-6">The four kinds of fatigue</p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm min-w-[640px]">
-                  <thead>
-                    <tr className="border-b border-black">
-                      {fatigue.columns.map(c => (
-                        <th key={c} className="text-left py-2 pr-4 text-[10px] tracking-[0.16em] uppercase font-semibold">{c}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {fatigue.rows.map(r => (
-                      <tr key={r[0]} className="border-b border-black/10 align-top">
-                        {r.map((c, i) => (
-                          <td key={i} className={`py-3 pr-4 leading-relaxed ${i === 0 ? "font-semibold whitespace-nowrap" : "text-black/70"}`}>{c}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-8">The four kinds of fatigue</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {fatigue.items.map(t => (
+                  <article key={t.title} className="min-w-0">
+                    <div className="relative aspect-[4/3] bg-black overflow-hidden">
+                      <img src={GUIDE_PHOTOS[t.photo]} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                      <h3 className="absolute left-4 bottom-3 text-white font-heading font-bold text-xl tracking-[-0.02em]">{t.title}</h3>
+                    </div>
+                    <p className="text-[10px] tracking-[0.16em] uppercase text-black/45 mt-4 mb-1">What causes it</p>
+                    <p className="text-sm text-black/70 leading-relaxed">{t.cause}</p>
+                    <p className="text-[10px] tracking-[0.16em] uppercase text-black/45 mt-3 mb-1">What it feels like</p>
+                    <p className="text-sm text-black/70 leading-relaxed">{t.feel}</p>
+                  </article>
+                ))}
               </div>
-              <p className="text-sm text-black/60 mt-6 max-w-2xl">
+              <p className="text-sm text-black/60 mt-8 max-w-2xl">
                 Section 05 gives you the matching list for each one: cold water, stretching, easy movement, compression, breathing, light and sleep, with times and temperatures.
               </p>
             </section>

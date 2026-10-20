@@ -90,7 +90,7 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
           {RECOVERY_GUIDE.title}: {RECOVERY_GUIDE.subtitle.toLowerCase()}
         </h3>
         <p className="text-sm text-black/60 leading-relaxed mb-5 max-w-2xl">
-          A heavy lifting day, a long run and a week of meetings each leave a different kind of fatigue. Twelve pages on how to tell them apart and what to do about each one, with the numbers. Free, by email.
+          A heavy lifting day, a long run and a week of meetings each leave a different kind of fatigue. Seventeen pages on how to tell them apart and what to do about each one, with the numbers. Free, by email.
         </p>
         {form}
         {error && (

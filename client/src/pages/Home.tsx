@@ -1109,7 +1109,7 @@ function FreeGuide() {
               <br />
               Guide
             </h2>
-            <p className="text-sm text-black/50 mt-4 leading-relaxed">12 pages. {RECOVERY_GUIDE.subtitle}.</p>
+            <p className="text-sm text-black/50 mt-4 leading-relaxed">17 pages. {RECOVERY_GUIDE.subtitle}.</p>
           </div>
           <div className="lg:col-span-9">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
