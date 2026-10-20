@@ -553,6 +553,7 @@ export const appRouter = router({
           source: z.string().optional(),
           message: z.string().optional(),
           corporate: z.boolean().optional(),
+          speaking: z.boolean().optional(),
         })
       )
       .mutation(async ({ input, ctx }) => {
@@ -565,6 +566,7 @@ export const appRouter = router({
         }
 
         const corporate = Boolean(input.corporate) || /corporate/i.test(input.source || "");
+        const speaking = Boolean(input.speaking) || /speaking/i.test(input.source || "");
         await createLead({
           email: input.email,
           name: input.name || null,
@@ -572,9 +574,9 @@ export const appRouter = router({
           message: input.message || null,
         });
 
-        kitOnEnquiry(input.email, input.name, corporate);
+        kitOnEnquiry(input.email, input.name, corporate, speaking);
         try {
-          await sendEnquiryConfirmationEmail({ email: input.email, name: input.name, corporate });
+          await sendEnquiryConfirmationEmail({ email: input.email, name: input.name, corporate, speaking });
         } catch (e) {
           console.warn("[Leads] Failed to send enquiry confirmation:", e);
         }

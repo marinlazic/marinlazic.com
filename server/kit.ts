@@ -25,6 +25,7 @@ export const KIT_TAGS = {
   purchased: "purchased",
   enquiry: "enquiry",
   corporateEnquiry: "corporate_enquiry",
+  speakingEnquiry: "speaking_enquiry",
   recoveryGuide: "Recovery Guide Subscribers",
 } as const;
 
@@ -255,12 +256,13 @@ export function kitOnPurchase(
   );
 }
 
-/** Home page enquiry form. Corporate enquiries get a second tag. */
-export function kitOnEnquiry(email: string, firstName?: string, corporate = false) {
+/** Home page and /speaking enquiry forms. Corporate and speaking enquiries get a second tag. */
+export function kitOnEnquiry(email: string, firstName?: string, corporate = false, speaking = false) {
   if (!ENV.kitApiKey || !email) return;
   runInBackground(`enquiry-${email}`, async () => {
     await tagByName(email, KIT_TAGS.enquiry, firstName);
     if (corporate) await tagByName(email, KIT_TAGS.corporateEnquiry, firstName);
+    if (speaking) await tagByName(email, KIT_TAGS.speakingEnquiry, firstName);
   });
 }
 

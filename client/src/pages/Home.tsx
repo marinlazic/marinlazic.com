@@ -77,6 +77,7 @@ export function Nav() {
     { label: "Corporate", href: "/corporate-health-performance" },
     { label: "Resources", href: "/resources" },
     { label: "Media", href: "/media" },
+    { label: "Speaking", href: "/speaking" },
     { label: "Contact", href: "#contact" },
   ];
 

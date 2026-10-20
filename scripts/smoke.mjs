@@ -49,6 +49,7 @@ await page("/", "Performance coach for founders");
 await page("/media", "Kelly and Juliet Starrett");
 await page("/resources", "images/resources/resources-hero");
 await page("/recovery-guide", "The four kinds of fatigue");
+await page("/speaking", "Olympic level performance science");
 await page("/resources/sleep", "images/resources/sleep-1200");
 await page("/insights/how-to-boost-your-hrv", "application/ld+json");
 await page("/program", "Start the 4 week programme");
