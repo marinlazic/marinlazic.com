@@ -12,6 +12,20 @@
       "memory": 1769
     }
   },
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "marinlazicspeak.com" }],
+      "destination": "https://marinlazic.com/speaking",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.marinlazicspeak.com" }],
+      "destination": "https://marinlazic.com/speaking",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

@@ -63,7 +63,7 @@ export const mediaItems: MediaItem[] = [
 ];
 
 export const MEDIA_INTRO =
-  "Podcasts and interviews where I talk about preparing the Australian Men's Water Polo Team, coaching founders, and what stress does to performance. Each one has a short summary of what we covered and a link to the episode. Media and speaking enquiries go through the contact form on the home page.";
+  "Podcasts and interviews where I talk about preparing the Australian Men's Water Polo Team, coaching founders, and what stress does to performance. Each one has a short summary of what we covered and a link to the episode. Media enquiries go through the contact form on the home page. Speaking enquiries go through the Speaking page.";
 
 export const MEDIA_CLOSING =
   "If you would like me on your podcast or at your event, send a note through the contact form on the home page.";

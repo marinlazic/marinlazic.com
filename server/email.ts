@@ -645,6 +645,7 @@ export async function sendEnquiryConfirmationEmail(params: {
   email: string;
   name?: string | null;
   corporate?: boolean;
+  speaking?: boolean;
 }): Promise<boolean> {
   if (!ENV.resendApiKey) return false;
   try {
@@ -655,7 +656,9 @@ export async function sendEnquiryConfirmationEmail(params: {
       replyTo: OWNER_REPLY_TO,
       subject: "Got your message",
       html: plainEmailHtml(firstNameOf(params.name), [
-        params.corporate
+        params.speaking
+          ? "Thanks for the speaking enquiry. I have your note and will reply by email within one business day."
+          : params.corporate
           ? "Thanks for the enquiry about corporate health and performance. I have your note and will reply by email within one business day."
           : "Thanks for your message. I have it and will reply by email within one business day.",
         "If it is quicker, reply to this email with any detail you want to add.",

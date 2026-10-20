@@ -105,6 +105,16 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     label: "Media",
     modified: "2026-10-15",
   },
+  "/speaking": {
+    title: "Speaking: Performance Science for Business Leaders | Marin Lazic",
+    description:
+      "Keynotes and sessions for founders, CEOs and executives from the Strength and Conditioning Coach of the Australian Men's Water Polo Team. HRV, recovery, sleep, jet lag and decision making.",
+    socialTitle: "Speaking | Marin Lazic",
+    socialDescription:
+      "Olympic level performance science for business leaders. Eight practical sessions on HRV, recovery, sleep, jet lag and training.",
+    label: "Speaking",
+    modified: "2026-10-20",
+  },
   "/apply": {
     title: "Apply for Executive Performance Coaching | Marin Lazic",
     description:
@@ -417,6 +427,7 @@ export function getPageMeta(url: string): HeadMeta {
       "/resources",
       "/recovery-guide",
       "/media",
+      "/speaking",
       "/executive-health-performance",
       "/corporate-health-performance",
       "/training-for-long-term-health",
@@ -465,6 +476,16 @@ export function getPageMeta(url: string): HeadMeta {
           unitText: "month",
         },
       },
+    });
+  if (path === "/speaking")
+    graph.push({
+      "@type": "Service",
+      "@id": `${CANONICAL_ORIGIN}/speaking#service`,
+      name: "Keynote speaking on health and performance",
+      serviceType: "Keynote speaking and leadership sessions",
+      provider: { "@id": PERSON_ID },
+      url: `${CANONICAL_ORIGIN}/speaking`,
+      audience: { "@type": "Audience", audienceType: "Founders, CEOs and executives" },
     });
   if (path === "/corporate-health-performance")
     graph.push({

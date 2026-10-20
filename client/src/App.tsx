@@ -20,6 +20,7 @@ import ResourcePage from "./pages/ResourcePage";
 import InformationPage from "./pages/InformationPage";
 import ResourcesIndex from "./pages/ResourcesIndex";
 import RecoveryGuide from "./pages/RecoveryGuide";
+import Speaking from "./pages/Speaking";
 import { Head } from "./components/Head";
 import { RouteAnalytics } from "./components/RouteAnalytics";
 import Report from "./pages/Report";
@@ -56,6 +57,7 @@ function Routes() {
       <Route path="/resources" component={ResourcesIndex} />
       <Route path="/recovery-guide" component={RecoveryGuide} />
       <Route path="/media" component={InformationPage} />
+      <Route path="/speaking" component={Speaking} />
       <Route path="/resources/:slug" component={ResourcePage} />
       <Route path="/about" component={InformationPage} />
       <Route path="/executive-health-performance" component={InformationPage} />

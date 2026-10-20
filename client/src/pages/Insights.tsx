@@ -382,11 +382,7 @@ function InsightsNav() {
     { label: "Experience", href: "/#experience" },
     { label: "Coaching", href: "/executive-health-performance" },
     { label: "Otion", href: "/corporate-health-performance" },
-    {
-      label: "Speaking",
-      href: "https://www.marinlazicspeak.com",
-      external: true,
-    },
+    { label: "Speaking", href: "/speaking" },
     { label: "Insights", href: "/insights" },
     { label: "Resources", href: "/resources" },
     { label: "Media", href: "/media" },
