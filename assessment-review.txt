@@ -1,9 +1,0 @@
-Assessment page review:
-- Intro screen renders correctly with Swiss Design styling
-- Red accent square, bold uppercase heading "How Are You Actually Performing?"
-- 10 questions, 2 minutes description
-- Start the Assessment button (black)
-- Back to Site button (outline)
-- 5 category icons at bottom: Sleep, Stress, Recovery, Energy, Movement
-- Clean minimal layout matching portfolio site
-- Need to test the quiz flow

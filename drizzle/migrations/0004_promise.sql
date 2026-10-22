@@ -1,1 +1,0 @@
-ALTER TABLE "conversation_events" ADD COLUMN "promise" boolean DEFAULT false NOT NULL;
