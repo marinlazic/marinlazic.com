@@ -520,25 +520,28 @@ export const appRouter = router({
         kitOnGuide(email, firstName, source);
         const sent = await sendRecoveryGuideEmail({ email, firstName });
 
-        try {
-          await trackEvent({
-            eventType: "guide_signup",
-            eventData: JSON.stringify({
-              guide: input.guide,
-              placement: input.placement ?? null,
-              landingPath: input.landingPath ?? null,
+        // The smoke test signs up on every run, so those are not people.
+        if (!isTestEmail(email)) {
+          try {
+            await trackEvent({
+              eventType: "guide_signup",
+              eventData: JSON.stringify({
+                guide: input.guide,
+                placement: input.placement ?? null,
+                landingPath: input.landingPath ?? null,
+                referrer: input.referrer ?? "",
+                utm_source: input.utmSource ?? null,
+                utm_medium: input.utmMedium ?? null,
+                utm_campaign: input.utmCampaign ?? null,
+                path: input.placement ?? null,
+              }),
+              sessionId: input.sessionId,
+              userAgent: ctx.req.headers["user-agent"]?.toString(),
               referrer: input.referrer ?? "",
-              utm_source: input.utmSource ?? null,
-              utm_medium: input.utmMedium ?? null,
-              utm_campaign: input.utmCampaign ?? null,
-              path: input.placement ?? null,
-            }),
-            sessionId: input.sessionId,
-            userAgent: ctx.req.headers["user-agent"]?.toString(),
-            referrer: input.referrer ?? "",
-          });
-        } catch (e) {
-          console.warn("[Guides] Could not record the signup event:", e);
+            });
+          } catch (e) {
+            console.warn("[Guides] Could not record the signup event:", e);
+          }
         }
         return { success: true, sent };
       }),

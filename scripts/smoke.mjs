@@ -55,6 +55,20 @@ await page("/insights/how-to-boost-your-hrv", "application/ld+json");
 await page("/program", "Start the 4 week programme");
 await page("/report/not-a-real-token-1234", "Saved report");
 
+// 1b. Tagged short links redirect with the UTM tags attached, and do not shadow real pages
+{
+  const checks = [
+    ["/ig", "/recovery-guide?utm_source=instagram&utm_medium=social"],
+    ["/yt/a", "/assessment?utm_source=youtube&utm_medium=video"],
+    ["/kit/p/october", "/program?utm_source=kit&utm_medium=email&utm_campaign=october"],
+  ];
+  for (const [from, to] of checks) {
+    const res = await fetch(`${BASE}${from}`, { redirect: "manual", headers: { "user-agent": "marinlazic-smoke/1.0" } });
+    const loc = res.headers.get("location") || "";
+    record(`short link ${from}`, res.status === 302 && loc === to, `status ${res.status}, location ${loc || "none"}`);
+  }
+}
+
 // 1a. Feed and IndexNow key file are served
 {
   const feed = await fetch(`${BASE}/feed.xml`);

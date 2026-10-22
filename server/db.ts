@@ -1,4 +1,5 @@
 import { and, count, desc, eq, gte, isNull, lte, sql } from "drizzle-orm";
+import { HUMAN_EVENT } from "./botFilter";
 import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import {
@@ -431,7 +432,7 @@ export async function getAnalyticsStats(days = 30) {
   const eventsByType = await db
     .select({ eventType: analyticsEvents.eventType, count: count() })
     .from(analyticsEvents)
-    .where(gte(analyticsEvents.createdAt, since))
+    .where(and(gte(analyticsEvents.createdAt, since), HUMAN_EVENT))
     .groupBy(analyticsEvents.eventType);
   const dailyEvents = await db
     .select({
@@ -440,7 +441,7 @@ export async function getAnalyticsStats(days = 30) {
       count: count(),
     })
     .from(analyticsEvents)
-    .where(gte(analyticsEvents.createdAt, since))
+    .where(and(gte(analyticsEvents.createdAt, since), HUMAN_EVENT))
     .groupBy(dayExpr, analyticsEvents.eventType)
     .orderBy(dayExpr);
   return { eventsByType, dailyEvents };

@@ -11,6 +11,7 @@ import { registerJobRoutes } from "../jobs";
 import { registerDiagnosticsRoute } from "../diagnostics";
 import { registerManusImportRoute } from "../manusImport";
 import { registerGmailRoutes } from "../gmail";
+import { registerShortLinks } from "../shortLinks";
 
 /**
  * Builds the Express app. Used by the local server (index.ts) and by the
@@ -39,6 +40,9 @@ export async function createApp(options: { httpServer?: Server } = {}): Promise<
 
   // Gmail connection for the Follow up section (admin session, Google OAuth)
   registerGmailRoutes(app);
+
+  // Tagged short links: /ig, /yt/a and the like redirect with UTM tags attached
+  registerShortLinks(app);
 
   // tRPC API
   app.use(

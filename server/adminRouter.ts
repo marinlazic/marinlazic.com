@@ -63,6 +63,8 @@ const enquiryWhere = sql`(${leads.source} IS NULL OR (${leads.source} NOT LIKE '
 
 // event_data is JSON written by the site's tracker. Guard the cast so one odd
 // row can never break a whole query.
+import { HUMAN_EVENT } from "./botFilter";
+
 const EV_JSON = sql`CASE WHEN ${analyticsEvents.eventData} LIKE '{%' THEN ${analyticsEvents.eventData}::jsonb ELSE '{}'::jsonb END`;
 
 function scoreFromAnswers(text: string | null): number | null {
@@ -76,8 +78,8 @@ function scoreFromAnswers(text: string | null): number | null {
 
 async function countEvents(type: string, since: Date, until?: Date, distinctSessions = false) {
   const where = until
-    ? and(eq(analyticsEvents.eventType, type), gte(analyticsEvents.createdAt, since), lt(analyticsEvents.createdAt, until))
-    : and(eq(analyticsEvents.eventType, type), gte(analyticsEvents.createdAt, since));
+    ? and(eq(analyticsEvents.eventType, type), gte(analyticsEvents.createdAt, since), lt(analyticsEvents.createdAt, until), HUMAN_EVENT)
+    : and(eq(analyticsEvents.eventType, type), gte(analyticsEvents.createdAt, since), HUMAN_EVENT);
   const d = await db();
   const [row] = await d
     .select({
@@ -137,7 +139,7 @@ async function overview(days: number) {
       visitors: sql<number>`count(distinct ${analyticsEvents.sessionId})`,
     })
     .from(analyticsEvents)
-    .where(and(eq(analyticsEvents.eventType, "page_view"), gte(analyticsEvents.createdAt, since)))
+    .where(and(eq(analyticsEvents.eventType, "page_view"), gte(analyticsEvents.createdAt, since), HUMAN_EVENT))
     .groupBy(dayCol);
   const leadDay = sql<string>`to_char(${leads.createdAt} at time zone 'UTC', 'YYYY-MM-DD')`;
   const dailyLeads = await d
@@ -172,7 +174,7 @@ async function overview(days: number) {
   // Funnel, all sessions in the window
   const assessmentPageSessions = await raw<{ c: number }>(sql`
     select count(distinct ${analyticsEvents.sessionId}) as c from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
       and (${EV_JSON} ->> 'path') = '/assessment'`);
   const checkoutStarted = await countEvents("checkout_started", since);
   const funnel = [
@@ -228,27 +230,27 @@ async function content(days: number) {
   const pages = await raw<{ path: string; views: number; visitors: number }>(sql`
     select coalesce(${EV_JSON} ->> 'path', '/') as path, count(*) as views, count(distinct ${analyticsEvents.sessionId}) as visitors
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1 order by views desc limit 100`);
   const landing = await raw<{ path: string; sessions: number }>(sql`
     select coalesce(${EV_JSON} ->> 'landingPath', '/') as path, count(distinct ${analyticsEvents.sessionId}) as sessions
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1 order by sessions desc limit 30`);
   const ctaClicks = await raw<{ button: string; clicks: number; path: string }>(sql`
     select coalesce(${EV_JSON} ->> 'button', 'unknown') as button, coalesce(${EV_JSON} ->> 'path', '/') as path, count(*) as clicks
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'cta_click' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'cta_click' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1, 2 order by clicks desc limit 50`);
   const sections = await raw<{ section: string; views: number }>(sql`
     select coalesce(${EV_JSON} ->> 'section', 'unknown') as section, count(*) as views
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'section_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'section_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1 order by views desc limit 30`);
   const shares = await raw<{ platform: string; clicks: number }>(sql`
     select coalesce(${EV_JSON} ->> 'platform', 'unknown') as platform, count(*) as clicks
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'share_click' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'share_click' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1 order by clicks desc`);
   const num = <T extends Row>(rows: T[], keys: string[]) =>
     rows.map(r => {
@@ -281,33 +283,33 @@ async function traffic(days: number) {
                 else regexp_replace(${analyticsEvents.referrer}, '^https?://([^/]+).*$', '\\1') end as referrer,
            count(distinct ${analyticsEvents.sessionId}) as sessions
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1 order by sessions desc limit 30`);
   const utm = async (key: string) =>
     raw<{ value: string; sessions: number }>(sql`
       select ${EV_JSON} ->> ${key} as value, count(distinct ${analyticsEvents.sessionId}) as sessions
       from ${analyticsEvents}
-      where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+      where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
         and (${EV_JSON} ->> ${key}) is not null
       group by 1 order by sessions desc limit 30`);
   const [sources, mediums, campaigns] = await Promise.all([utm("utm_source"), utm("utm_medium"), utm("utm_campaign")]);
   const agents = await raw<{ ua: string | null; sessions: number }>(sql`
     select ${analyticsEvents.userAgent} as ua, count(distinct ${analyticsEvents.sessionId}) as sessions
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1`);
   const devices: Record<string, number> = {};
   for (const row of agents) devices[deviceFromUa(row.ua)] = (devices[deviceFromUa(row.ua)] ?? 0) + n(row.sessions);
   const hourly = await raw<{ hour: number; views: number }>(sql`
     select extract(hour from ${analyticsEvents.createdAt} at time zone 'Australia/Sydney')::int as hour, count(*) as views
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1 order by 1`);
   const hours = Array.from({ length: 24 }, (_, h) => ({ hour: h, views: n(hourly.find(r => Number(r.hour) === h)?.views) }));
   const weekly = await raw<{ dow: number; views: number }>(sql`
     select extract(isodow from ${analyticsEvents.createdAt} at time zone 'Australia/Sydney')::int as dow, count(*) as views
     from ${analyticsEvents}
-    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since} and ${HUMAN_EVENT}
     group by 1 order by 1`);
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((label, i) => ({
     day: label,

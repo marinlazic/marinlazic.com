@@ -17,11 +17,12 @@ export type PurgeResult = {
   reports: number;
   pdfs: number;
   emailLog: number;
+  events: number;
   kit: string[];
 };
 
 export async function purgeTestData(): Promise<PurgeResult> {
-  const result: PurgeResult = { emails: [], leads: 0, applications: 0, progress: 0, reports: 0, pdfs: 0, emailLog: 0, kit: [] };
+  const result: PurgeResult = { emails: [], leads: 0, applications: 0, progress: 0, reports: 0, pdfs: 0, emailLog: 0, events: 0, kit: [] };
   const d = await getDb();
   if (!d) return result;
   const like = TEST_EMAIL_SQL_LIKE;
@@ -58,6 +59,10 @@ export async function purgeTestData(): Promise<PurgeResult> {
   // person in its subject (older runs sent those before alerts were skipped).
   result.emailLog = await count(sql`WITH d AS (DELETE FROM email_log WHERE lower(to_email) LIKE ${like} OR (kind LIKE 'owner_%' AND subject ILIKE '%smoke test%') RETURNING 1) SELECT count(*) AS c FROM d`);
 
+  // Analytics rows written by the smoke test itself. Every count already
+  // filters these out by user agent; this keeps the table clean as well.
+  result.events = await count(sql`WITH d AS (DELETE FROM analytics_events WHERE user_agent ILIKE '%marinlazic-smoke%' RETURNING 1) SELECT count(*) AS c FROM d`);
+
   for (const email of result.emails) {
     try {
       result.kit.push(`${email}: ${await kitForgetSubscriber(email)}`);
@@ -78,7 +83,7 @@ export async function purgeTestData(): Promise<PurgeResult> {
  */
 export async function removeContact(emailIn: string): Promise<PurgeResult> {
   const email = emailIn.toLowerCase().trim();
-  const result: PurgeResult = { emails: [email], leads: 0, applications: 0, progress: 0, reports: 0, pdfs: 0, emailLog: 0, kit: [] };
+  const result: PurgeResult = { emails: [email], leads: 0, applications: 0, progress: 0, reports: 0, pdfs: 0, emailLog: 0, events: 0, kit: [] };
   const d = await getDb();
   if (!d || !email) return result;
   const rows = (q: ReturnType<typeof sql>) => d.execute(q).then((r: any) => (r.rows ?? r) as Record<string, unknown>[]);
@@ -112,7 +117,7 @@ export async function removeContact(emailIn: string): Promise<PurgeResult> {
 }
 
 export function describePurge(r: PurgeResult): string {
-  const total = r.leads + r.applications + r.progress + r.reports + r.emailLog;
+  const total = r.leads + r.applications + r.progress + r.reports + r.emailLog + r.events;
   if (!total && !r.kit.length) return "nothing to remove";
-  return `${r.leads} leads, ${r.progress} assessments in progress, ${r.reports} reports, ${r.pdfs} PDFs, ${r.applications} applications, ${r.emailLog} email log rows` + (r.kit.length ? `; Kit: ${r.kit.join(", ")}` : "");
+  return `${r.leads} leads, ${r.progress} assessments in progress, ${r.reports} reports, ${r.pdfs} PDFs, ${r.applications} applications, ${r.emailLog} email log rows, ${r.events} analytics rows` + (r.kit.length ? `; Kit: ${r.kit.join(", ")}` : "");
 }
