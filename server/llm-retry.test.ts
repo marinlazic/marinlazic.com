@@ -49,3 +49,23 @@ describe("invokeLLM retries when Google is busy", () => {
     expect(fetchMock).toHaveBeenCalledTimes(4);
   });
 });
+
+describe("a silent model call", () => {
+  it("gives up rather than holding the person on the page", async () => {
+    vi.resetModules();
+    process.env.LLM_TIMEOUT_MS = "40";
+    process.env.GEMINI_API_KEY = "test-key";
+    const fetchMock = vi.fn(async (_url: string, init: any) => {
+      // Never answers; resolves only when the request is aborted.
+      return await new Promise<Response>((_resolve, reject) => {
+        init.signal.addEventListener("abort", () => reject(new Error("The operation was aborted due to timeout")));
+      });
+    });
+    vi.stubGlobal("fetch", fetchMock as unknown as typeof fetch);
+    const { invokeLLM } = await import("./_core/llm");
+    await expect(invokeLLM({ messages: [{ role: "user", content: "hello" }] })).rejects.toThrow();
+    // Four attempts: the first plus three retries, each one abandoned.
+    expect(fetchMock).toHaveBeenCalledTimes(4);
+    delete process.env.LLM_TIMEOUT_MS;
+  }, 30_000);
+});

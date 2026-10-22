@@ -315,6 +315,11 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   // times with a short wait rather than failing the person's report.
   const RETRY_STATUSES = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
   const delays = [2000, 5000, 10000];
+  // Google sometimes accepts the request and then goes quiet. Without a limit
+  // the person filling in the assessment waits until the whole function times
+  // out at 300s and gets an error page, so give up on a silent call and let
+  // the retry, or the fallback analysis, take over.
+  const CALL_TIMEOUT_MS = Number(process.env.LLM_TIMEOUT_MS ?? 75_000);
   let lastError: Error | null = null;
   for (let attempt = 0; attempt <= delays.length; attempt++) {
     let response: Response;
@@ -326,6 +331,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
           authorization: `Bearer ${ENV.geminiApiKey}`,
         },
         body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(CALL_TIMEOUT_MS),
       });
     } catch (error) {
       // Network level failures are retried the same way as a busy server.
