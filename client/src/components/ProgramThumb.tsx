@@ -15,7 +15,7 @@ export function ProgramThumb({ p, eager = false }: { p: Thumb; eager?: boolean }
         src={p.image}
         alt={p.imageAlt}
         className="absolute inset-0 w-full h-full object-cover block"
-        style={{ objectPosition: p.focus }}
+        style={{ objectPosition: p.focus, filter: p.image.startsWith("http") ? "grayscale(1) contrast(1.12)" : undefined }}
         width={1000}
         height={750}
         loading={lazy}
@@ -23,8 +23,9 @@ export function ProgramThumb({ p, eager = false }: { p: Thumb; eager?: boolean }
       />
       <div
         aria-hidden="true"
-        className="absolute left-[4%] right-[2%] top-[12%] font-heading font-black lowercase leading-[0.82] tracking-[-0.045em]"
+        className="absolute left-[4%] right-[2%] font-heading font-black lowercase leading-[0.82] tracking-[-0.045em]"
         style={{
+          top: p.wordTop ?? "12%",
           fontSize: p.word.length > 5 ? "26cqw" : "32cqw",
           color: THUMB_YELLOW,
           textShadow: "0 2px 14px rgba(0,0,0,0.35)",

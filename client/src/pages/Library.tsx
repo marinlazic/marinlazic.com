@@ -1,5 +1,7 @@
 // /library: the program library. Programs live in shared/programs.ts and are
 // sold and delivered in Bridge. Sections with no programs yet show a note.
+import { useState } from "react";
+import { trpc } from "@/lib/trpc";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { PROGRAMS, UPCOMING, SECTIONS, programLength, programPath } from "@shared/programs";
 import { Breadcrumbs, Navigation } from "./InformationPage";
@@ -29,9 +31,9 @@ const TEAM_THUMB: Thumb = {
 };
 
 const HERO_PHOTOS = [
-  { src: "/images/library/max-strength.webp", pin: "Water polo", alt: "A water polo goal and net in a pool" },
-  { src: "/images/guide/gym.jpg", pin: "Gym", alt: "People training in a gym with suspension straps" },
-  { src: "/images/guide/lane.jpg", pin: "Pool", alt: "The edge of a pool lane" },
+  { src: "https://images.unsplash.com/photo-1517837414457-37b44cea4818?auto=format&fit=crop&w=900&h=1000&q=75", pin: "Strength", alt: "A man lifting a barbell in a gym" },
+  { src: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=900&h=1000&q=75", pin: "Women", alt: "A woman lifting a barbell" },
+  { src: "https://images.unsplash.com/photo-1758506971986-b0d0edebd8d5?auto=format&fit=crop&w=900&h=1000&q=75", pin: "Running", alt: "A man running across a city street" },
 ];
 
 const BRIDGE_STEPS = [
@@ -55,6 +57,96 @@ function Label({ children }: { children: React.ReactNode }) {
   );
 }
 
+
+function CustomProgram({ num }: { num: string }) {
+  const submit = trpc.application.submit.useMutation();
+  const [f, setF] = useState({ name: "", email: "", goal: "", weeks: "", days: "", kit: "", notes: "" });
+  const [err, setErr] = useState("");
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setF(prev => ({ ...prev, [k]: e.target.value }));
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErr("");
+    if (!f.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim()) || !f.goal.trim()) {
+      setErr("Add your name, a valid email and what the program is for.");
+      return;
+    }
+    try {
+      await submit.mutateAsync({
+        name: f.name.trim(),
+        email: f.email.trim(),
+        q1_90day_goal: `CUSTOM PROGRAM REQUEST. What it is for: ${f.goal.trim()}`,
+        q2_obstacle: `Weeks: ${f.weeks || "not said"}. Days a week: ${f.days || "not said"}. Equipment: ${f.kit || "not said"}. Injuries or limits: ${f.notes.trim() || "none said"}.`,
+        q3_investment: "yes",
+        q4_anything_else: "Sent from the program library, Design your own program.",
+        utmCampaign: "custom_program",
+      });
+    } catch {
+      setErr("Something went wrong. Please try again.");
+    }
+  };
+  const field = "w-full border border-black/30 bg-white px-3.5 py-3 text-[15px] font-sans";
+  return (
+    <section id="custom" className="mt-16 border-t border-black flex flex-col lg:flex-row scroll-mt-4">
+      <div className="flex-1 px-5 sm:px-8 lg:px-12 py-16 flex flex-col gap-5">
+        <Label>{num} Design your own program</Label>
+        <h2 className="font-heading text-3xl sm:text-5xl font-bold tracking-[-0.03em] leading-[1.06]">Need something built for you?</h2>
+        <p className="text-base text-black/70 leading-relaxed max-w-lg">
+          Tell me what the program is for. A sport, an event, a goal, a body part you want to look after. I will reply with what I would build, how long it takes and the price.
+        </p>
+        <p className="text-sm text-black/60 leading-relaxed max-w-lg">The more detail you give, the better the program. Programs are general training advice and not medical advice.</p>
+      </div>
+      <div className="flex-1 bg-white px-5 sm:px-8 lg:px-12 py-16">
+        {submit.isSuccess ? (
+          <p className="font-heading text-2xl font-bold leading-snug">Thanks. I have your request and will reply by email.</p>
+        ) : (
+          <form onSubmit={onSubmit} className="flex flex-col gap-4 max-w-xl" noValidate>
+            <label className="flex flex-col gap-1.5 text-sm font-medium">Your name
+              <input className={field} value={f.name} onChange={set("name")} autoComplete="name" />
+            </label>
+            <label className="flex flex-col gap-1.5 text-sm font-medium">Email
+              <input className={field} type="email" value={f.email} onChange={set("email")} autoComplete="email" />
+            </label>
+            <label className="flex flex-col gap-1.5 text-sm font-medium">What is the program for?
+              <textarea className={field} rows={3} value={f.goal} onChange={set("goal")} placeholder="For example: a surf trip in 10 weeks, my first marathon, stronger shoulders for climbing." />
+            </label>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <label className="flex flex-col gap-1.5 text-sm font-medium">How many weeks do you have?
+                <select className={field} value={f.weeks} onChange={set("weeks")}>
+                  <option value="">Choose</option>
+                  <option>4 weeks</option>
+                  <option>6 weeks</option>
+                  <option>8 weeks</option>
+                  <option>More than 8 weeks</option>
+                </select>
+              </label>
+              <label className="flex flex-col gap-1.5 text-sm font-medium">Days a week you can train
+                <select className={field} value={f.days} onChange={set("days")}>
+                  <option value="">Choose</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5 or more</option>
+                </select>
+              </label>
+            </div>
+            <label className="flex flex-col gap-1.5 text-sm font-medium">Where do you train and what equipment do you have?
+              <input className={field} value={f.kit} onChange={set("kit")} placeholder="Full gym, home dumbbells, hotel room" />
+            </label>
+            <label className="flex flex-col gap-1.5 text-sm font-medium">Injuries or limits I should know about
+              <textarea className={field} rows={2} value={f.notes} onChange={set("notes")} />
+            </label>
+            {err ? <p role="alert" className="text-sm text-[#B00020]">{err}</p> : null}
+            <button type="submit" disabled={submit.isPending} className="self-start bg-black text-white text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black/80 transition-colors disabled:opacity-60">
+              {submit.isPending ? "Sending" : "Send my request"}
+            </button>
+          </form>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function Library() {
   const { track } = useAnalytics();
   const num = (n: number) => String(n).padStart(2, "0");
@@ -67,7 +159,7 @@ export default function Library() {
           <div className="relative flex flex-col sm:flex-row" style={{ containerType: "inline-size" }}>
             {HERO_PHOTOS.map(h => (
               <div key={h.src} className="relative flex-1 min-h-[220px] sm:min-h-[400px] bg-[#D9D9D9] overflow-hidden">
-                <img src={h.src} alt={h.alt} className="absolute inset-0 w-full h-full object-cover" loading="eager" />
+                <img src={h.src} alt={h.alt} className="absolute inset-0 w-full h-full object-cover" style={{ filter: "grayscale(1) contrast(1.12)" }} loading="eager" />
                 <span className="absolute left-4 bottom-4 bg-white text-[#0B2530] text-[13px] font-semibold px-3 py-1.5 rounded-full">
                   {"\u{1F4CD}"} {h.pin}
                 </span>
@@ -111,6 +203,9 @@ export default function Library() {
               {s.title}
             </a>
           ))}
+          <a href="#custom" className="bg-white border border-black/15 text-xs tracking-[0.12em] uppercase px-4 py-2 hover:border-black transition-colors font-medium">
+            Design your own
+          </a>
         </nav>
 
         <div className="px-5 sm:px-8 lg:px-12">
@@ -167,6 +262,11 @@ export default function Library() {
                         <span className="text-[11px] tracking-[0.1em] uppercase text-black/55">{u.tag}</span>
                         <h3 className="font-heading font-bold text-[22px] leading-tight">{u.name}</h3>
                         <p className="text-[15px] text-black/70 leading-relaxed">{u.line}</p>
+                        <ul className="space-y-1.5">
+                          {u.highlights.map(h => (
+                            <li key={h} className="text-sm text-black/70 leading-snug">{h}</li>
+                          ))}
+                        </ul>
                         <p className="text-[13px] text-black/55 pt-3 border-t border-black/10 mt-auto">
                           {u.weeks} weeks, {u.sessionsPerWeek} sessions a week · {u.place}
                         </p>
@@ -204,10 +304,13 @@ export default function Library() {
           })}
         </div>
 
+        {/* Design your own */}
+        <CustomProgram num={num(SECTIONS.length + 2)} />
+
         {/* Where the program lives */}
         <section id="bridge" className="mt-16 border-t border-black flex flex-col lg:flex-row scroll-mt-4">
           <div className="flex-1 px-5 sm:px-8 lg:px-12 py-16 flex flex-col gap-5">
-            <Label>{num(SECTIONS.length + 2)} Where your program lives</Label>
+            <Label>{num(SECTIONS.length + 3)} Where your program lives</Label>
             <h2 className="font-heading text-3xl sm:text-5xl font-bold tracking-[-0.03em] leading-[1.06]">Your program lives in the Bridge app.</h2>
             <p className="text-base text-black/70 leading-relaxed max-w-xl">
               Bridge is the training app I use with the Australian Men's Water Polo Team and my coaching clients. When you buy, you get an invite by email. Download the app, sign in, and your program is waiting.
@@ -229,16 +332,32 @@ export default function Library() {
             </div>
           </div>
           <div className="flex-1 bg-[#D9D9D9] flex items-center justify-center p-6 sm:p-10">
-            <figure className="max-w-[520px] w-full">
-              <img src="/images/library/bridge-app.webp" alt="The Max Power and Strength program in Bridge, showing weekly volume, difficulty and load" className="w-full h-auto shadow-lg" loading="lazy" />
-              <figcaption className="text-xs text-black/60 mt-3">A real program in Bridge: volume, difficulty and load for every week.</figcaption>
+            <figure className="flex flex-col items-center">
+              <div className="w-[260px] rounded-[38px] bg-[#121212] p-3 shadow-xl">
+                <div className="rounded-[28px] bg-white p-4 flex flex-col gap-3 min-h-[470px]">
+                  <span className="text-[10px] tracking-[0.1em] uppercase text-black/55">Today</span>
+                  <span className="font-heading font-bold text-lg leading-tight">Water Polo Max Strength and Power</span>
+                  <span className="text-xs text-black/60">Week 1, Day 1</span>
+                  <ul className="flex flex-col gap-2">
+                    {["Trap bar deadlift", "Bench press", "Zercher squat"].map(x => (
+                      <li key={x} className="flex items-center gap-3 bg-[#F4F4F4] p-2.5">
+                        <span className="w-10 h-10 bg-[#D9D9D9] flex items-center justify-center text-[10px] text-black/50" aria-hidden="true">Video</span>
+                        <span className="text-[13px] font-semibold leading-tight">{x}<span className="block text-[11px] font-normal text-black/55">Paired with a jump or a throw</span></span>
+                      </li>
+                    ))}
+                  </ul>
+                  <span className="text-[11px] text-black/55 leading-snug">Rate each set by percent difficulty.</span>
+                  <span className="mt-auto bg-black text-white text-[13px] font-semibold text-center py-3">Start workout</span>
+                </div>
+              </div>
+              <figcaption className="text-xs text-black/60 mt-4 text-center max-w-[300px]">What you see in the Bridge app: each session, a video for every exercise, and a place to log your sets.</figcaption>
             </figure>
           </div>
         </section>
 
         {/* Guides */}
         <section id="blog" className="px-5 sm:px-8 lg:px-12 py-16 border-t border-black scroll-mt-4">
-          <div className="mb-3"><Label>{num(SECTIONS.length + 3)} The guides</Label></div>
+          <div className="mb-3"><Label>{num(SECTIONS.length + 4)} The guides</Label></div>
           <h2 className="font-heading text-3xl sm:text-5xl font-bold tracking-[-0.03em] leading-[1.06] mb-8 max-w-4xl">
             Every program has a guide that answers the questions first.
           </h2>
@@ -256,7 +375,7 @@ export default function Library() {
         {/* Free guide */}
         <section id="guide" className="border-t border-black flex flex-col lg:flex-row scroll-mt-4">
           <div className="flex-1 px-5 sm:px-8 lg:px-12 py-16 flex flex-col gap-5 justify-center">
-            <Label>{num(SECTIONS.length + 4)} Free</Label>
+            <Label>{num(SECTIONS.length + 5)} Free</Label>
             <h2 className="font-heading text-3xl sm:text-4xl font-bold tracking-[-0.03em] leading-[1.08]">Not ready to buy? Start with the free Recovery Guide.</h2>
             <p className="text-base text-black/70 leading-relaxed max-w-lg">
               How to recover between sessions. Add your email and we send it now. We will also tell you when new programs land.
