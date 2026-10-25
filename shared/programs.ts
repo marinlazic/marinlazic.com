@@ -2,6 +2,15 @@
 // section it belongs to. Programs are sold and delivered in Bridge: the Buy link
 // is the Bridge checkout page, and a purchase puts the buyer in the Bridge team
 // "Program Library". No discounts or sale pricing yet.
+//
+// Pricing. Net price (what Marin keeps) by length: 4 weeks $79, 6 weeks $119,
+// 8 weeks $159. Specialist programs add $20 (water polo, women) and leader and
+// corporate programs add $40. The shown price covers Stripe fees, assuming
+// about 2% plus $0.30 a sale: price = round up((net + 0.30) / 0.98).
+// Net $99 shows as $102. All prices are AUD and GST is not added.
+export function shownPrice(net: number) {
+  return Math.ceil((net + 0.3) / 0.98);
+}
 
 export type ProgramSection = {
   id: string;
@@ -90,7 +99,7 @@ export const PROGRAMS: Program[] = [
     weeks: 4,
     place: "Gym",
     level: "Water polo players",
-    price: 99,
+    price: shownPrice(99),
     currency: "AUD",
     image: "/images/library/hypertrophy.webp",
     imageAlt: "A water polo player squatting in the gym with a foam roller",
@@ -128,7 +137,7 @@ export const PROGRAMS: Program[] = [
     sessionsPerWeek: 3,
     place: "Gym",
     level: "Water polo players",
-    price: 99,
+    price: shownPrice(99),
     currency: "AUD",
     image: "/images/library/max-strength.webp",
     imageAlt: "An athlete throwing a medicine ball overhead",
