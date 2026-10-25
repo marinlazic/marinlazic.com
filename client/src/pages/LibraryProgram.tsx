@@ -55,6 +55,15 @@ export default function LibraryProgram() {
             </div>
           </div>
 
+          <section className="mt-16 border-t border-black/10 pt-7 max-w-3xl">
+            <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">Inside the program</h2>
+            <ul className="space-y-3">
+              {p.highlights.map(t => (
+                <li key={t} className="text-sm sm:text-base text-black/70 leading-relaxed">{t}</li>
+              ))}
+            </ul>
+          </section>
+
           <div className="mt-16 grid md:grid-cols-2 gap-10">
             <section className="border-t border-black/10 pt-7">
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">Who it is for</h2>

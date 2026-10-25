@@ -24,6 +24,8 @@ export type Program = {
   name: string;
   line: string;
   description: string;
+  // Longer copy shown on the card and page. Facts from the Bridge product page only.
+  highlights: string[];
   weeks: number;
   sessionsPerWeek?: number;
   place: string;
@@ -32,10 +34,6 @@ export type Program = {
   currency: "AUD";
   image: string;
   imageAlt: string;
-  // Thumbnail look: a big word sits behind the cut out person.
-  cutout: string;
-  word: string;
-  emoji: string;
   focus: string;
   buyUrl: string;
   forWho: string[];
@@ -95,18 +93,21 @@ export const PROGRAMS: Program[] = [
     name: "Water Polo Hypertrophy",
     line: "Build muscle for the pool over 4 weeks.",
     description:
-      "A four week gym program for water polo players who want more muscle. It comes from the strength and conditioning work Marin Lazic does with the Australian Men's Water Polo Team.",
+      "A four week gym program for water polo players who want more muscle, strength that holds up in contact and shoulders that stay healthy. It is hypertrophy training built for water polo, not general bodybuilding. It comes from the strength and conditioning work Marin Lazic does as the Strength and Conditioning Coach of the Australian Men's Water Polo Team, including the Paris Olympic Games.",
+    highlights: [
+      "Water polo specific hypertrophy",
+      "Shoulder smart training volume",
+      "A simple 4 week progression",
+      "Gym work that supports performance in the pool",
+    ],
     weeks: 4,
     place: "Gym",
     level: "Water polo players",
     price: shownPrice(99),
     currency: "AUD",
     image: "/images/library/hypertrophy.webp",
-    imageAlt: "A water polo player squatting in the gym with a foam roller",
-    cutout: "/images/library/hypertrophy-cut.webp",
-    word: "muscle",
-    emoji: "\u{1F4AA}",
-    focus: "center",
+    imageAlt: "An athlete training in a gym with a weight rack",
+    focus: "center 60%",
     buyUrl: "https://bridgeathletic.com/product/waterpolohypertrophy-1694014",
     forWho: [
       "Water polo players in or near the pre season who want to add muscle",
@@ -132,7 +133,13 @@ export const PROGRAMS: Program[] = [
     name: "Water Polo Max Strength and Power",
     line: "Get stronger and more powerful in 4 weeks, 3 sessions a week.",
     description:
-      "A four week gym program with three sessions a week. It builds maximum strength and power for water polo players, using the approach Marin Lazic applies with the Australian Men's Water Polo Team.",
+      "A four week gym program, three days a week, that builds maximum strength and power for water polo players. Each main lift is paired with a jump or a throw, so the strength you build gets used at speed. It comes from the work Marin Lazic does as the Strength and Conditioning Coach of the Australian Men's Water Polo Team.",
+    highlights: [
+      "Trap bar deadlift, bench press and Zercher squat, each paired with a jump or a throw",
+      "3 pulls for every 1 push, to look after your shoulders",
+      "You rate each set by percent difficulty, so the load matches how you feel",
+      "4 weeks, 3 sessions a week",
+    ],
     weeks: 4,
     sessionsPerWeek: 3,
     place: "Gym",
@@ -140,11 +147,8 @@ export const PROGRAMS: Program[] = [
     price: shownPrice(99),
     currency: "AUD",
     image: "/images/library/max-strength.webp",
-    imageAlt: "An athlete throwing a medicine ball overhead",
-    cutout: "/images/library/max-strength-cut.webp",
-    word: "power",
-    emoji: "\u{1F525}",
-    focus: "center 20%",
+    imageAlt: "A water polo goal and net seen from the pool edge, with a player in the water",
+    focus: "center 60%",
     buyUrl: "https://bridgeathletic.com/product/waterpolomaxstrengthandpower-1747737",
     forWho: [
       "Water polo players who want more strength and power in the water",

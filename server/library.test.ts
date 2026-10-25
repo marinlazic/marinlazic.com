@@ -32,7 +32,7 @@ describe("program library", () => {
     expect(getPageMeta("/library/nope").notFound).toBe(true);
   });
   it("uses no dashes in program copy", () => {
-    const text = JSON.stringify(PROGRAMS.map(({ buyUrl, image, cutout, slug, section, modified, ...rest }) => rest));
+    const text = JSON.stringify(PROGRAMS.map(({ buyUrl, image, slug, section, modified, ...rest }) => rest));
     expect(text).not.toMatch(/[-–—]/);
   });
 });

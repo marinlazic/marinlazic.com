@@ -79,7 +79,12 @@ export default function Library() {
                                 {p.name}
                               </a>
                             </h3>
-                            <p className="text-sm text-black/65 leading-relaxed mb-4">{p.line}</p>
+                            <p className="text-sm text-black/65 leading-relaxed mb-4">{p.description}</p>
+                            <ul className="mb-5 space-y-1.5">
+                              {p.highlights.map(h => (
+                                <li key={h} className="text-sm text-black/70 leading-snug">{h}</li>
+                              ))}
+                            </ul>
                             <p className="text-[10px] tracking-[0.16em] uppercase text-black/45 mb-5">
                               {programLength(p)} · {p.place}
                             </p>
