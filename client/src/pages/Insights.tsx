@@ -1,6 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowRight, ArrowLeft } from "lucide-react";
+import { Navigation } from "./InformationPage";
+import { WordTile } from "@/components/WordTile";
 import {
   articles,
   CATEGORIES,
@@ -20,6 +22,18 @@ function formatDate(dateStr: string) {
   });
 }
 
+const WORDS: Record<string, [string, string]> = {
+  Performance: ["lift", "\u{1F3CB}\uFE0F"],
+  Recovery: ["recover", "\u{1F9CA}"],
+  Methodology: ["method", "\u{1F4DD}"],
+  "Mindset & Energy": ["mindset", "\u{1F9E0}"],
+  "Nutrition & Lifestyle": ["eat", "\u{1F957}"],
+};
+function tileFor(a: Article, i: number) {
+  const [w, e] = WORDS[a.category] ?? [a.category.split(" ")[0].toLowerCase().slice(0, 8), "\u{1F4AA}"];
+  return { word: w, emoji: e, pin: a.readTime };
+}
+
 // ─── Article Card ──────────────────────────
 function ArticleCard({
   article,
@@ -34,13 +48,8 @@ function ArticleCard({
         href={`/insights/${article.slug}`}
         className="group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white border border-black/5 hover:border-black/15 transition-all duration-300 hover:shadow-sm"
       >
-        <div className="aspect-[16/10] lg:aspect-auto overflow-hidden">
-          <img
-            src={article.image}
-            alt={article.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
+        <div className="overflow-hidden">
+          <WordTile src={article.image} alt={article.title} {...tileFor(article, 0)} aspect="aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[360px]" />
         </div>
         <div className="p-8 lg:p-12 flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-4">
@@ -85,14 +94,7 @@ function ArticleCard({
       href={`/insights/${article.slug}`}
       className="group bg-white border border-black/5 hover:border-black/15 transition-all duration-300 hover:shadow-sm"
     >
-      <div className="aspect-[16/9] overflow-hidden">
-        <img
-          src={article.image}
-          alt={article.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
-      </div>
+      <WordTile src={article.image} alt={article.title} {...tileFor(article, 1)} aspect="aspect-[16/10]" />
       <div className="p-6">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
@@ -155,7 +157,7 @@ export default function Insights() {
   return (
     <div className="min-h-screen bg-[#F4F4F4] text-black">
       {/* Nav - same as Home */}
-      <InsightsNav />
+      <Navigation />
 
       {/* Hero */}
       <section className="pt-24 pb-16 lg:pt-32 lg:pb-20 border-b border-black/10">
@@ -175,9 +177,7 @@ export default function Insights() {
                 </span>
               </div>
               <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
-                Performance
-                <br />
-                Insights
+                Performance insights
               </h1>
               <p className="text-sm text-black/50 mt-4 leading-relaxed max-w-sm">
                 Research linked articles on training, recovery, sleep and nutrition,
@@ -185,13 +185,7 @@ export default function Insights() {
               </p>
             </div>
             <div className="lg:col-span-8">
-              <div className="aspect-[21/9] overflow-hidden">
-                <img
-                  src={HERO_IMAGE}
-                  alt="Performance Insights"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <WordTile src={HERO_IMAGE} alt="Performance Insights" word="insights" emoji={"\u{1F4DA}"} pin="Research linked" aspect="aspect-[21/9]" eager />
             </div>
           </div>
         </div>
@@ -366,121 +360,3 @@ export default function Insights() {
   );
 }
 
-// ─── Insights Nav (simplified) ──────────────────────────
-function InsightsNav() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
-
-  const links = [
-    { label: "About", href: "/about" },
-    { label: "Experience", href: "/#experience" },
-    { label: "Coaching", href: "/executive-health-performance" },
-    { label: "Otion", href: "/corporate-health-performance" },
-    { label: "Speaking", href: "/speaking" },
-    { label: "Insights", href: "/insights" },
-    { label: "Resources", href: "/resources" },
-    { label: "Media", href: "/media" },
-    { label: "Contact", href: "/#contact" },
-  ];
-
-  return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#F4F4F4]/95 backdrop-blur-sm border-b border-black/10" : "bg-white border-b border-black/5"}`}
-    >
-      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between h-16">
-        <a
-          href="/"
-          className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
-        >
-          ML
-        </a>
-        <div className="hidden md:flex items-center gap-8">
-          {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
-              {...("external" in l && l.external
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
-              className={`text-xs tracking-[0.15em] uppercase font-medium transition-colors ${
-                l.label === "Insights"
-                  ? "text-black"
-                  : "text-black/60 hover:text-black"
-              }`}
-            >
-              {l.label}
-            </a>
-          ))}
-          <a
-            href="/assessment"
-            className="border border-black/20 text-black text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:border-black/60 transition-colors font-medium"
-          >
-            Check Your Score
-          </a>
-          <a
-            href="/apply"
-            className="bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
-          >
-            Apply for Coaching
-          </a>
-        </div>
-        <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <span
-            className={`block w-5 h-[1.5px] bg-black transition-transform ${mobileOpen ? "rotate-45 translate-y-[5px]" : ""}`}
-          />
-          <span
-            className={`block w-5 h-[1.5px] bg-black transition-opacity ${mobileOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block w-5 h-[1.5px] bg-black transition-transform ${mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""}`}
-          />
-        </button>
-      </div>
-      {mobileOpen && (
-        <div className="md:hidden bg-white border-b border-black/10 px-5 pb-6 pt-2">
-          {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMobileOpen(false)}
-              {...("external" in l && l.external
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
-              className={`block py-3 text-sm tracking-[0.1em] uppercase border-b border-black/5 last:border-0 ${
-                l.label === "Insights"
-                  ? "text-black font-medium"
-                  : "text-black/70 hover:text-black"
-              }`}
-            >
-              {l.label}
-            </a>
-          ))}
-          <a
-            href="/apply"
-            onClick={() => setMobileOpen(false)}
-            className="block mt-4 bg-[#FFD400] text-black border-2 border-black text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
-          >
-            Apply for Coaching
-          </a>
-          <a
-            href="/assessment"
-            onClick={() => setMobileOpen(false)}
-            className="block mt-2 border border-black/20 text-black text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
-          >
-            Check Your Score
-          </a>
-        </div>
-      )}
-    </nav>
-  );
-}

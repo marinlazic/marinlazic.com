@@ -2,6 +2,7 @@
 // Moved here from marinlazicspeak.com (a separate Manus site) on 20 Oct 2026.
 // The enquiry form posts to leads.submit like the home page form, with
 // speaking: true so Kit tags speaking_enquiry and the confirmation reads right.
+import { WordTile } from "@/components/WordTile";
 import { PageBand } from "@/components/PageBand";
 import { useState } from "react";
 import { AlertCircle, CheckCircle } from "lucide-react";
@@ -367,7 +368,7 @@ export default function Speaking() {
                     </form>
                   )}
                 </div>
-                <div className="hidden lg:block lg:col-span-5 ml-gradient min-h-[320px]" aria-hidden="true" />
+                <div className="hidden lg:block lg:col-span-5"><WordTile src="/images/guide/team.jpg" alt="A team talk on the pool deck" word="invite" emoji={"\u{1F3A4}"} pin="Speaking" aspect="aspect-[4/3]" /></div>
               </div>
             </section>
           </div>

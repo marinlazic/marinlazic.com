@@ -328,7 +328,7 @@ function TrustBar() {
                 key={logo.name}
                 src={logo.src}
                 alt={logo.name}
-                className={`${logo.height} w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale`}
+                className={`${logo.height} w-auto object-contain `}
               />
             ))}
           </div>
@@ -1110,7 +1110,7 @@ function FreeGuide() {
                   See what is inside
                 </a>
               </div>
-              <div className="hidden lg:block lg:col-span-4 ml-gradient min-h-[260px]" aria-hidden="true" />
+              <div className="hidden lg:block lg:col-span-4"><WordTile src="/images/guide/sunrise.jpg" alt="Sunrise over the ocean" word="sleep" emoji={"\u{1F634}"} pin="Recovery" aspect="aspect-[4/5]" /></div>
             </div>
           </div>
         </div>

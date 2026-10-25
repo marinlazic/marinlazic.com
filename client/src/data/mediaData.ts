@@ -19,6 +19,7 @@ export type MediaItem = {
   meta: string;
   paragraphs: string[];
   links: { label: string; href: string }[];
+  videos?: { id: string; title: string }[];
 };
 
 export const mediaItems: MediaItem[] = [
@@ -29,6 +30,12 @@ export const mediaItems: MediaItem[] = [
       "Kelly and Juliet Starrett asked me about the day I was dropped from my national team four weeks before a World Championship, and what it taught me about stress and performance. My fitness had not changed. My ability to use it had.",
       "We covered how I coach the Aussie Sharks now. Why happy athletes perform better. Warm up games before matches to take the edge off performance anxiety. Beating Serbia at the Paris Olympics, the six weeks in Europe before the Games, and removing decision fatigue on match day. The quarterfinal shootout loss to the USA.",
       "On the training side we talked about the physicality of elite water polo, borrowing from wrestling and MMA for strength in the water, eye training and vision work, breath work, how I structure sessions, and coaching on the road with whatever equipment is there. Influences we discussed: Peter Twist, Dan John and Pavel Tsatsouline. My book pick was Legacy by James Kerr.",
+    ],
+    videos: [
+      { id: "mpW9QbWSkG0", title: "Why We Laughed Before an Olympic Match" },
+      { id: "OBjo8yAk94g", title: "The Olympic Mindset That Changed Everything" },
+      { id: "CTeNQ6LR7RQ", title: "Can You Build an Olympian Without a Fancy Gym?" },
+      { id: "1KT-aeg5SuI", title: "The Moment I Learned Stress Is Physical" },
     ],
     links: [
       { label: "Listen on The Ready State", href: READY_STATE_URL },

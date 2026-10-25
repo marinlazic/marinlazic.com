@@ -31,6 +31,8 @@ export type InformationSection = {
   meta?: string;
   content: string[];
   links?: InformationLink[];
+  /** YouTube clips shown as embedded players. */
+  videos?: { id: string; title: string }[];
   /** Render links as a grid of square photo cards instead of a list. */
   cards?: boolean;
 };
@@ -230,6 +232,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
         heading: item.heading,
         meta: item.meta,
         content: item.paragraphs,
+        videos: item.videos,
         links: item.links.map(l => ({ label: l.label, href: l.href, external: true })),
       })),
       {
@@ -431,6 +434,25 @@ export default function InformationPage() {
                     </p>
                   ))}
                 </div>
+                {section.videos && (
+                  <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {section.videos.map(v => (
+                      <div key={v.id}>
+                        <div className="aspect-[9/16] bg-black overflow-hidden">
+                          <iframe
+                            src={`https://www.youtube-nocookie.com/embed/${v.id}`}
+                            title={v.title}
+                            loading="lazy"
+                            className="w-full h-full border-0"
+                            allow="accelerometer; encrypted-media; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                        <p className="text-sm font-medium mt-3 leading-snug">{v.title}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {section.links && section.cards && (
                   <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {section.links.map(link => {
