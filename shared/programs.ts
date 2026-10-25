@@ -15,10 +15,13 @@ export function shownPrice(net: number) {
 export type ProgramSection = {
   id: string;
   title: string;
+  heading: string;
   blurb: string;
 };
 
 export type Thumb = {
+  cutout?: string;
+  tag?: string;
   image: string;
   imageAlt: string;
   focus: string;
@@ -50,29 +53,34 @@ export type Program = Thumb & {
 export const SECTIONS: ProgramSection[] = [
   {
     id: "water-polo",
+    heading: "Written for water polo players.",
     title: "Water polo",
     blurb:
-      "Gym programs from the Strength and Conditioning Coach of the Australian Men's Water Polo Team.",
+      "Built by the strength and conditioning coach of the Australian Men's Water Polo Team.",
   },
   {
     id: "hobbies",
+    heading: "Train for the thing you love.",
     title: "Hobbies",
-    blurb: "Programs built around the sport or hobby you want to be better at.",
+    blurb: "Strength work built around one hobby, so you move better, last longer and get hurt less.",
   },
   {
     id: "women",
+    heading: "Strength built for women.",
     title: "Women",
-    blurb: "Programs for women, including perimenopause, menopause and bone density.",
+    blurb: "Programs for each stage of life. Heavy, progressive training with clear explanations of why.",
   },
   {
     id: "leaders",
+    heading: "Programs for people who lead.",
     title: "Leaders",
-    blurb: "Programs for founders and executives who train around a full calendar.",
+    blurb: "Short sessions for a full calendar. Built from the work I do with founders and executives.",
   },
   {
     id: "corporate-athlete",
+    heading: "Train your team like athletes.",
     title: "Corporate athlete",
-    blurb: "Training, recovery and sleep for people who perform at work.",
+    blurb: "The same method used with elite athletes, for people at work and for whole teams.",
   },
 ];
 
@@ -112,9 +120,11 @@ export const PROGRAMS: Program[] = [
     currency: "AUD",
     image: "/images/library/hypertrophy.webp",
     imageAlt: "An athlete training in a gym with a weight rack",
+    cutout: "/images/library/hypertrophy-cut.webp",
+    tag: "water polo",
     word: "muscle",
     emoji: "\u{1F4AA}",
-    focus: "center 60%",
+    focus: "center",
     buyUrl: "https://bridgeathletic.com/product/waterpolohypertrophy-1694014",
     forWho: [
       "Water polo players in or near the pre season who want to add muscle",
@@ -155,9 +165,10 @@ export const PROGRAMS: Program[] = [
     currency: "AUD",
     image: "/images/library/max-strength.webp",
     imageAlt: "A water polo goal and net seen from the pool edge, with a player in the water",
+    tag: "water polo",
     word: "power",
     emoji: "\u{1F525}",
-    focus: "center 60%",
+    focus: "center",
     buyUrl: "https://bridgeathletic.com/product/waterpolomaxstrengthandpower-1747737",
     forWho: [
       "Water polo players who want more strength and power in the water",
@@ -187,21 +198,22 @@ export type Upcoming = Thumb & {
   line: string;
   weeks: number;
   sessionsPerWeek: number;
+  price: number;
 };
 export const UPCOMING: Upcoming[] = [
-  { section: "hobbies", name: "Strength for Runners", line: "Stronger legs and hips for 5k, half marathon and marathon runners. Fits around your running week.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "run", emoji: "\u{1F3C3}", image: "/images/guide/walk.jpg", imageAlt: "Strength for Runners", focus: "center" },
-  { section: "hobbies", name: "Strength for Golfers", line: "Power, hips and a back that holds up over 18 holes. Built for the weeks before your season.", weeks: 4, sessionsPerWeek: 3, place: "Gym", word: "drive", emoji: "\u26F3", image: "/images/guide/dawn.jpg", imageAlt: "Strength for Golfers", focus: "center" },
-  { section: "hobbies", name: "Strength for Tennis Players", line: "Legs, shoulders and trunk for longer matches and fewer niggles.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "serve", emoji: "\u{1F3BE}", image: "/images/guide/shore.jpg", imageAlt: "Strength for Tennis Players", focus: "center" },
-  { section: "hobbies", name: "Strength for Boxing", line: "Ground force, trunk and shoulder strength for bag work and sparring.", weeks: 4, sessionsPerWeek: 3, place: "Gym", word: "punch", emoji: "\u{1F94A}", image: "/images/guide/pushup.jpg", imageAlt: "Strength for Boxing", focus: "center" },
-  { section: "hobbies", name: "Strength for Swimmers", line: "Lat, shoulder and trunk strength that carries over to the water.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "swim", emoji: "\u{1F3CA}", image: "/images/guide/lane.jpg", imageAlt: "Strength for Swimmers", focus: "center" },
-  { section: "hobbies", name: "Ski and Snowboard Pre Season", line: "Legs and knees ready for the first day on the snow.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "snow", emoji: "\u{1F3C2}", image: "/images/guide/coast.jpg", imageAlt: "Ski and Snowboard Pre Season", focus: "center" },
-  { section: "women", name: "Perimenopause Strength", line: "Build strength and keep your energy steady as your hormones start to change.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "steady", emoji: "\u{1F338}", image: "/images/guide/floor.jpg", imageAlt: "Perimenopause Strength", focus: "center" },
-  { section: "women", name: "Menopause Strength", line: "Lift heavier with a plan built for life after your periods stop.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "strong", emoji: "\u{1F4AA}", image: "/images/guide/gym.jpg", imageAlt: "Menopause Strength", focus: "center" },
-  { section: "women", name: "Strength for Bone Health", line: "Heavy, progressive loading for stronger bones. Check with your doctor first.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "bones", emoji: "\u{1F9B4}", image: "/images/guide/muscles.jpg", imageAlt: "Strength for Bone Health", focus: "center" },
-  { section: "women", name: "Women Leaders Performance", line: "Strength, energy and stress control for women who run teams and companies.", weeks: 6, sessionsPerWeek: 3, place: "Gym or home", word: "lead", emoji: "\u{1F451}", image: "/images/guide/notes.jpg", imageAlt: "Women Leaders Performance", focus: "center" },
-  { section: "leaders", name: "Leader Performance Program", line: "Strength, energy and sleep habits for people with too many meetings.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "lead", emoji: "\u{1F4BC}", image: "/images/guide/phone.jpg", imageAlt: "Leader Performance Program", focus: "center" },
-  { section: "leaders", name: "Travel Week Training", line: "30 minute hotel room sessions that keep your training alive on the road.", weeks: 4, sessionsPerWeek: 3, place: "Hotel room", word: "travel", emoji: "\u2708\uFE0F", image: "/images/guide/boat.jpg", imageAlt: "Travel Week Training", focus: "center" },
-  { section: "corporate-athlete", name: "The Corporate Athlete", line: "Train, recover and perform at work the way an athlete prepares for a season.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "perform", emoji: "\u{1F3C6}", image: "/images/guide/wave.jpg", imageAlt: "The Corporate Athlete", focus: "center" },
+  { section: "hobbies", name: "Strength for Runners", line: "Stronger legs and hips for 5k, half marathon and marathon runners. Fits around your running week.", weeks: 6, sessionsPerWeek: 3, price: shownPrice(119), tag: "hobby", place: "Gym", word: "run", emoji: "\u{1F3C3}", image: "/images/guide/walk.jpg", imageAlt: "Strength for Runners", focus: "center" },
+  { section: "hobbies", name: "Strength for Golfers", line: "Power, hips and a back that holds up over 18 holes. Built for the weeks before your season.", weeks: 4, sessionsPerWeek: 3, price: shownPrice(79), tag: "hobby", place: "Gym", word: "drive", emoji: "\u26F3", image: "/images/guide/dawn.jpg", imageAlt: "Strength for Golfers", focus: "center" },
+  { section: "hobbies", name: "Strength for Tennis Players", line: "Legs, shoulders and trunk for longer matches and fewer niggles.", weeks: 6, sessionsPerWeek: 3, price: shownPrice(119), tag: "hobby", place: "Gym", word: "serve", emoji: "\u{1F3BE}", image: "/images/guide/shore.jpg", imageAlt: "Strength for Tennis Players", focus: "center" },
+  { section: "hobbies", name: "Strength for Boxing", line: "Ground force, trunk and shoulder strength for bag work and sparring.", weeks: 4, sessionsPerWeek: 3, price: shownPrice(79), tag: "hobby", place: "Gym", word: "punch", emoji: "\u{1F94A}", image: "/images/guide/pushup.jpg", imageAlt: "Strength for Boxing", focus: "center" },
+  { section: "hobbies", name: "Strength for Swimmers", line: "Lat, shoulder and trunk strength that carries over to the water.", weeks: 6, sessionsPerWeek: 3, price: shownPrice(119), tag: "hobby", place: "Gym", word: "swim", emoji: "\u{1F3CA}", image: "/images/guide/lane.jpg", imageAlt: "Strength for Swimmers", focus: "center" },
+  { section: "hobbies", name: "Ski and Snowboard Pre Season", line: "Legs and knees ready for the first day on the snow.", weeks: 8, sessionsPerWeek: 3, price: shownPrice(159), tag: "hobby", place: "Gym", word: "snow", emoji: "\u{1F3C2}", image: "/images/guide/coast.jpg", imageAlt: "Ski and Snowboard Pre Season", focus: "center" },
+  { section: "women", name: "Perimenopause Strength", line: "Build strength and keep your energy steady as your hormones start to change.", weeks: 8, sessionsPerWeek: 3, price: shownPrice(179), tag: "women", place: "Gym", word: "steady", emoji: "\u{1F338}", image: "/images/guide/floor.jpg", imageAlt: "Perimenopause Strength", focus: "center" },
+  { section: "women", name: "Menopause Strength", line: "Lift heavier with a plan built for life after your periods stop.", weeks: 8, sessionsPerWeek: 3, price: shownPrice(179), tag: "women", place: "Gym", word: "strong", emoji: "\u{1F4AA}", image: "/images/guide/gym.jpg", imageAlt: "Menopause Strength", focus: "center" },
+  { section: "women", name: "Strength for Bone Health", line: "Heavy, progressive loading for stronger bones. Check with your doctor first.", weeks: 8, sessionsPerWeek: 3, price: shownPrice(179), tag: "women", place: "Gym", word: "bones", emoji: "\u{1F9B4}", image: "/images/guide/muscles.jpg", imageAlt: "Strength for Bone Health", focus: "center" },
+  { section: "women", name: "Women Leaders Performance", line: "Strength, energy and stress control for women who run teams and companies.", weeks: 6, sessionsPerWeek: 3, price: shownPrice(139), tag: "women", place: "Gym or home", word: "lead", emoji: "\u{1F451}", image: "/images/guide/notes.jpg", imageAlt: "Women Leaders Performance", focus: "center" },
+  { section: "leaders", name: "Leader Performance Program", line: "Strength, energy and sleep habits for people with too many meetings.", weeks: 6, sessionsPerWeek: 3, price: shownPrice(159), tag: "leaders", place: "Gym", word: "lead", emoji: "\u{1F4BC}", image: "/images/guide/phone.jpg", imageAlt: "Leader Performance Program", focus: "center" },
+  { section: "leaders", name: "Travel Week Training", line: "30 minute hotel room sessions that keep your training alive on the road.", weeks: 4, sessionsPerWeek: 3, price: shownPrice(119), tag: "leaders", place: "Hotel room", word: "travel", emoji: "\u2708\uFE0F", image: "/images/guide/boat.jpg", imageAlt: "Travel Week Training", focus: "center" },
+  { section: "corporate-athlete", name: "The Corporate Athlete", line: "Train, recover and perform at work the way an athlete prepares for a season.", weeks: 8, sessionsPerWeek: 3, price: shownPrice(199), tag: "corporate athlete", place: "Gym", word: "perform", emoji: "\u{1F3C6}", image: "/images/guide/wave.jpg", imageAlt: "The Corporate Athlete", focus: "center" },
 ];
 
 export function programPath(p: Program) {
