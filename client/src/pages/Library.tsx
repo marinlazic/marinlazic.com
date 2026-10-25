@@ -350,7 +350,7 @@ export default function Library() {
                   <span className="mt-auto bg-black text-white text-[13px] font-semibold text-center py-3">Start workout</span>
                 </div>
               </div>
-              <figcaption className="text-xs text-black/60 mt-4 text-center max-w-[300px]">What you see in the Bridge app: each session, a video for every exercise, and a place to log your sets.</figcaption>
+              <figcaption className="text-xs text-black/60 mt-4 text-center max-w-[300px]">Your program in the app: each session, a video for every exercise, and a place to log your sets.</figcaption>
             </figure>
           </div>
         </section>
