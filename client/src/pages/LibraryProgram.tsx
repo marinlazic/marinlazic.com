@@ -5,6 +5,7 @@ import { findProgram, programLength } from "@shared/programs";
 import NotFound from "./NotFound";
 import { Navigation } from "./InformationPage";
 import { LibraryFooter } from "./Library";
+import { ProgramThumb } from "@/components/ProgramThumb";
 
 export default function LibraryProgram() {
   const { track } = useAnalytics();
@@ -24,15 +25,7 @@ export default function LibraryProgram() {
             <span aria-current="page" className="text-black/70">{p.name}</span>
           </nav>
           <div className="grid lg:grid-cols-2 gap-10 items-start">
-            <img
-              src={p.image}
-              alt={p.imageAlt}
-              className="w-full aspect-[4/3] object-cover block"
-              width={1200}
-              height={900}
-              loading="eager"
-              decoding="async"
-            />
+            <ProgramThumb p={p} eager />
             <div>
               <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
               <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">

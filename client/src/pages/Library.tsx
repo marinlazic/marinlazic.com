@@ -4,6 +4,7 @@ import { useAnalytics } from "@/hooks/useAnalytics";
 import { PROGRAMS, SECTIONS, programLength, programPath } from "@shared/programs";
 import { Breadcrumbs, Navigation } from "./InformationPage";
 import { GuideSignup } from "@/components/GuideSignup";
+import { ProgramThumb } from "@/components/ProgramThumb";
 
 export function LibraryFooter() {
   return (
@@ -70,15 +71,7 @@ export default function Library() {
                       {items.map(p => (
                         <li key={p.slug} className="bg-white border border-black/10 flex flex-col">
                           <a href={programPath(p)} className="block">
-                            <img
-                              src={p.image}
-                              alt={p.imageAlt}
-                              className="w-full aspect-[4/3] object-cover block"
-                              width={800}
-                              height={600}
-                              loading="lazy"
-                              decoding="async"
-                            />
+                            <ProgramThumb p={p} />
                           </a>
                           <div className="p-5 flex flex-col flex-1">
                             <h3 className="font-heading font-bold text-xl tracking-[-0.02em] mb-2">

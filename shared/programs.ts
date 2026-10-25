@@ -23,6 +23,11 @@ export type Program = {
   currency: "AUD";
   image: string;
   imageAlt: string;
+  // Thumbnail look: a big word sits behind the cut out person.
+  cutout: string;
+  word: string;
+  emoji: string;
+  focus: string;
   buyUrl: string;
   forWho: string[];
   includes: string[];
@@ -87,8 +92,12 @@ export const PROGRAMS: Program[] = [
     level: "Water polo players",
     price: 99,
     currency: "AUD",
-    image: "/images/articles/article-chinup-b3w94tbnjqHCj5eJMpGWRR.webp",
-    imageAlt: "A chin up in the gym",
+    image: "/images/library/hypertrophy.webp",
+    imageAlt: "A water polo player squatting in the gym with a foam roller",
+    cutout: "/images/library/hypertrophy-cut.webp",
+    word: "muscle",
+    emoji: "\u{1F4AA}",
+    focus: "center",
     buyUrl: "https://bridgeathletic.com/product/waterpolohypertrophy-1694014",
     forWho: [
       "Water polo players in or near the pre season who want to add muscle",
@@ -121,8 +130,12 @@ export const PROGRAMS: Program[] = [
     level: "Water polo players",
     price: 99,
     currency: "AUD",
-    image: "/images/articles/article-periodisation-EvdvYK7AKq2qNs5Tup927x.webp",
-    imageAlt: "A training plan laid out over several weeks",
+    image: "/images/library/max-strength.webp",
+    imageAlt: "An athlete throwing a medicine ball overhead",
+    cutout: "/images/library/max-strength-cut.webp",
+    word: "power",
+    emoji: "\u{1F525}",
+    focus: "center 20%",
     buyUrl: "https://bridgeathletic.com/product/waterpolomaxstrengthandpower-1747737",
     forWho: [
       "Water polo players who want more strength and power in the water",
