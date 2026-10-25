@@ -100,7 +100,7 @@ const DEFAULT_FAQS = [
   },
 ];
 
-export const PROGRAMS: Program[] = [
+const BASE_PROGRAMS: Program[] = [
   {
     slug: "water-polo-hypertrophy",
     section: "water-polo",
@@ -209,7 +209,7 @@ export type Upcoming = Thumb & {
   price: number;
   highlights: string[];
 };
-export const UPCOMING: Upcoming[] = [
+const PLANNED: Upcoming[] = [
   {
     section: "hobbies",
     name: "Strength for Runners",
@@ -419,6 +419,93 @@ export const UPCOMING: Upcoming[] = [
     focus: "center",
   },
 ];
+
+// Programs that are live in Bridge. Each one is built from its planned entry above,
+// so the copy, price and thumbnail stay in one place.
+const LIVE: Record<string, { slug: string; buyUrl: string; level: string; forWho: string[]; faq: string }> = {
+  "Strength for Runners": {
+    slug: "strength-for-runners",
+    buyUrl: "https://bridgeathletic.com/product/strengthforrunners-1748727",
+    level: "Runners",
+    forWho: ["Runners training for a 5k, 10k, half marathon or marathon", "Runners who want stronger legs and fewer niggles"],
+    faq: "How long is the Strength for Runners program?",
+  },
+  "Strength for Golfers": {
+    slug: "strength-for-golfers",
+    buyUrl: "https://bridgeathletic.com/product/strengthforgolfers-1748728",
+    level: "Golfers",
+    forWho: ["Golfers who want more rotational power and a back that holds up", "Golfers getting ready for the season"],
+    faq: "How long is the Strength for Golfers program?",
+  },
+  "Strength for Tennis Players": {
+    slug: "strength-for-tennis-players",
+    buyUrl: "https://bridgeathletic.com/product/strengthfortennisplayers-1748729",
+    level: "Tennis players",
+    forWho: ["Tennis players who want to move quicker and last longer in matches", "Players who want stronger shoulders and legs"],
+    faq: "How long is the Strength for Tennis Players program?",
+  },
+  "Strength for Boxing": {
+    slug: "strength-for-boxing",
+    buyUrl: "https://bridgeathletic.com/product/strengthforboxing-1748730",
+    level: "Boxers",
+    forWho: ["People who train in a boxing gym and want more ground force", "Boxers who want stronger trunks and shoulders for bag work and sparring"],
+    faq: "How long is the Strength for Boxing program?",
+  },
+  "Strength for Swimmers": {
+    slug: "strength-for-swimmers",
+    buyUrl: "https://bridgeathletic.com/product/strengthforswimmers-1748731",
+    level: "Swimmers",
+    forWho: ["Lap swimmers and open water swimmers who want dryland strength", "Swimmers who want stronger lats, shoulders and trunks"],
+    faq: "How long is the Strength for Swimmers program?",
+  },
+  "Ski and Snowboard Pre Season": {
+    slug: "ski-and-snowboard-pre-season",
+    buyUrl: "https://bridgeathletic.com/product/skiandsnowboardpreseason-1748732",
+    level: "Skiers and snowboarders",
+    forWho: ["Skiers and snowboarders getting ready for a trip or a season", "People who want stronger legs, glutes and knees before the snow"],
+    faq: "How long is the Ski and Snowboard Pre Season program?",
+  },
+};
+
+const NUM_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight"];
+
+const LIVE_PROGRAMS: Program[] = PLANNED.filter(u => LIVE[u.name]).map(u => {
+  const l = LIVE[u.name];
+  return {
+    slug: l.slug,
+    section: u.section,
+    name: u.name,
+    line: u.line,
+    description: u.line,
+    highlights: u.highlights,
+    weeks: u.weeks,
+    sessionsPerWeek: u.sessionsPerWeek,
+    level: l.level,
+    price: u.price,
+    currency: "AUD" as const,
+    buyUrl: l.buyUrl,
+    forWho: l.forWho,
+    includes: [
+      `${u.weeks} weeks, ${u.sessionsPerWeek} gym sessions a week, in the Bridge app`,
+      "Sets, reps and exercise demos for each session",
+      "A log for your weights, so you can see progress week to week",
+    ],
+    faqs: [{ q: l.faq, a: `${NUM_WORDS[u.weeks][0].toUpperCase()}${NUM_WORDS[u.weeks].slice(1)} weeks, ${NUM_WORDS[u.sessionsPerWeek]} sessions a week.` }, ...DEFAULT_FAQS],
+    modified: "2026-10-25",
+    image: u.image,
+    imageAlt: u.imageAlt,
+    cutout: u.cutout,
+    wordTop: u.wordTop,
+    tag: u.tag,
+    focus: u.focus,
+    word: u.word,
+    emoji: u.emoji,
+    place: u.place,
+  };
+});
+
+export const PROGRAMS: Program[] = [...BASE_PROGRAMS, ...LIVE_PROGRAMS];
+export const UPCOMING: Upcoming[] = PLANNED.filter(u => !LIVE[u.name]);
 
 export function programPath(p: Program) {
   return `/library/${p.slug}`;
