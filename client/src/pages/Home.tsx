@@ -290,11 +290,11 @@ function Hero() {
 
 // ─── QUICK WIN #3: Trust Bar / Credential Logos ──────────
 const LOGO_AOC =
-  "/images/site/logo-aoc_4dbb2319.png";
+  "/images/site/logo-aoc-color.png";
 const LOGO_OTION =
   "/images/site/logo-otion_f3da2ae0.png";
 const LOGO_PARIS =
-  "/images/site/logo-paris2024_5f63ac2a.png";
+  "/images/site/logo-paris2024-color.png";
 
 function TrustBar() {
   const logos = [

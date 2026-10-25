@@ -1,3 +1,4 @@
+import { PageBand } from "@/components/PageBand";
 import { useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useState, useEffect } from "react";
@@ -138,7 +139,8 @@ export default function PaymentSuccess() {
           </div>
         </header>
 
-        <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
+        <PageBand src="/images/guide/wave.jpg" alt="A wave breaking at sunrise" word="thanks" emoji={"\u{1F64C}"} pin="Payment received" />
+      <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
           <div className="max-w-2xl w-full">
             {/* Hero confirmation */}
             <motion.div
@@ -354,6 +356,7 @@ export default function PaymentSuccess() {
         </div>
       </header>
 
+      <PageBand src="/images/guide/wave.jpg" alt="A wave breaking at sunrise" word="almost" emoji={"\u{1F64C}"} pin="Processing" />
       <main className="flex-1 flex items-center justify-center px-5 py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

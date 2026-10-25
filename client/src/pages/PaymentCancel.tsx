@@ -1,3 +1,4 @@
+import { PageBand } from "@/components/PageBand";
 import { ArrowRight, XCircle } from "lucide-react";
 
 export default function PaymentCancel() {
@@ -10,6 +11,7 @@ export default function PaymentCancel() {
         </div>
       </header>
 
+      <PageBand src="/images/guide/shore.jpg" alt="Calm shoreline" word="paused" emoji={"\u23F8\uFE0F"} pin="No charge" />
       <main className="flex-1 flex items-center justify-center px-5 py-16">
         <div className="max-w-lg w-full text-center">
           <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8">

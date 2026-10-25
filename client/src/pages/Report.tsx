@@ -1,3 +1,4 @@
+import { PageBand } from "@/components/PageBand";
 import { useParams } from "wouter";
 import { Download, ArrowLeft } from "lucide-react";
 import { trpc } from "@/lib/trpc";
@@ -14,6 +15,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">Saved report</span>
         </div>
       </header>
+      <PageBand src="/images/guide/lane.jpg" alt="A pool lane at dawn" word="report" emoji={"\u{1F4CA}"} pin="Your report" />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
         <div className="max-w-2xl mx-auto">{children}</div>
       </main>
