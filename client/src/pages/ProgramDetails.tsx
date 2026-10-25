@@ -12,7 +12,7 @@ export default function ProgramDetails() {
             ML
           </a>
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-            🔥 Program
+            Program
           </span>
         </div>
       </header>
@@ -32,7 +32,7 @@ export default function ProgramDetails() {
           <div className="space-y-10 mb-12">
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                ⚙️ How it works
+                How it works
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -71,7 +71,7 @@ export default function ProgramDetails() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                ✅ What you get
+                What you get
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -111,7 +111,7 @@ export default function ProgramDetails() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                🎯 Who this is for
+                Who this is for
               </h2>
               <p className="text-sm text-black/70 leading-relaxed">
                 Busy adults who want a repeatable training plan. The right

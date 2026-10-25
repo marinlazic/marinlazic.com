@@ -219,96 +219,70 @@ function Section({
 // ─── Hero ────────────────────────────────────────────────
 function Hero() {
   const { track } = useAnalytics();
+  const band = [
+    { src: "/images/guide/gym.jpg", alt: "A gym with free weights", pin: "Strength" },
+    { src: HEADSHOT_URL, alt: "Marin Lazic, Strength and Conditioning Coach for the Australian Men's Water Polo Team, at Paris 2024", pin: "Coach", pos: "top" },
+    { src: "/images/guide/pool.jpg", alt: "A water polo pool", pin: "Water polo" },
+  ];
 
   return (
-    <section
-      id="hero"
-      className="min-h-screen flex items-center relative pt-16"
-    >
-      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left: Text content */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
-            {/* Red accent square */}
-            <div
-              className="w-3 h-3 bg-[#FFD400] mb-8"
-              aria-hidden="true"
-              role="presentation"
+    <section id="hero" className="pt-16 border-b border-black">
+      <div className="relative flex flex-col sm:flex-row" style={{ containerType: "inline-size" }}>
+        {band.map(h => (
+          <div key={h.src} className="relative flex-1 min-h-[220px] sm:min-h-[460px] bg-[#D9D9D9] overflow-hidden">
+            <img
+              src={h.src}
+              alt={h.alt}
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ filter: "grayscale(1) contrast(1.12)", objectPosition: h.pos ?? "center" }}
+              loading="eager"
             />
-            <h1 className="font-heading font-bold text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] tracking-[-0.03em] text-black uppercase">
-              Marin
-              <br /> Lazic
-            </h1>
-            <div
-              className="w-16 h-[1.5px] bg-black mt-6 mb-6"
-              aria-hidden="true"
-              role="presentation"
-            />
-            <p className="text-base sm:text-lg text-black/70 max-w-lg leading-relaxed font-light">
-              Performance coach for founders, training and recovery. Strength
-              and Conditioning Coach for the Australian Men's Water Polo Team.
-              Worked with the team at Paris 2024 and supports the LA28 pathway.
-            </p>
-            {/* Hero CTAs: Apply primary, Assessment secondary */}
-            <div className="flex flex-wrap gap-4 mt-10">
-              <a
-                href="/apply"
-                onClick={() =>
-                  track("cta_click", { button: "hero_apply_coaching" })
-                }
-                className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
-              >
-                Apply for Coaching
-              </a>
-              <a
-                href="/assessment"
-                onClick={() =>
-                  track("cta_click", { button: "hero_assessment" })
-                }
-                className="inline-flex items-center border border-black/20 text-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:border-black/60 transition-colors font-medium"
-              >
-                Take the Free Assessment
-              </a>
-              <a
-                href="#about"
-                className="inline-flex items-center gap-2 text-sm tracking-[0.15em] uppercase text-black/60 hover:text-black px-4 py-4 transition-colors font-medium"
-              >
-                The Story <ArrowDown className="w-3.5 h-3.5" />
-              </a>
-            </div>
+            <span className="absolute left-4 bottom-4 bg-white text-[#0B2530] text-[13px] font-semibold px-3 py-1.5 rounded-full">
+              {"\u{1F4CD}"} {h.pin}
+            </span>
           </div>
-          {/* Right: Photo */}
-          <div className="lg:col-span-5 order-1 lg:order-2 relative">
-            <div className="relative">
-              {/* Brand gradient panel behind the photo */}
-              <div
-                className="absolute -top-5 -right-5 w-full h-full ml-gradient hidden lg:block"
-                aria-hidden="true"
-                role="presentation"
-              />
-              <img
-                src={HEADSHOT_URL}
-                alt="Marin Lazic, Strength and Conditioning Coach for the Australian Men's Water Polo Team, at Paris 2024"
-                className="relative w-full aspect-[3/4] object-cover object-top grayscale"
-              />
-              {/* Small red square accent */}
-              <div
-                className="absolute bottom-6 -left-3 w-6 h-6 bg-[#FFD400] hidden lg:block"
-                aria-hidden="true"
-                role="presentation"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-black/30">
-        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+        ))}
         <div
-          className="w-[1px] h-8 bg-black/20"
           aria-hidden="true"
-          role="presentation"
-        />
+          className="absolute inset-x-[3%] top-1/2 -translate-y-1/2 font-heading font-black lowercase leading-[0.8] tracking-[-0.05em] pointer-events-none"
+          style={{ fontSize: "17cqw", color: "#FFD400", textShadow: "0 3px 20px rgba(0,0,0,0.4)" }}
+        >
+          marin lazic
+        </div>
+        <span aria-hidden="true" className="absolute right-6 top-4 text-6xl rotate-12">{"\u{1F4A6}"}</span>
+        <span aria-hidden="true" className="absolute left-6 bottom-12 text-6xl -rotate-12">{"\u{1F4AA}"}</span>
+      </div>
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 pt-12 pb-14">
+        <div className="w-3 h-3 bg-[#FFD400] mb-6" aria-hidden="true" role="presentation" />
+        <h1 className="font-heading text-4xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] max-w-4xl mb-6">
+          <span className="sr-only">Marin Lazic. </span>Performance coaching for{" "}
+          <span style={{ background: "#F4F59A", padding: "0 10px" }}>founders, training and recovery.</span>
+        </h1>
+        <p className="text-base sm:text-lg text-black/70 leading-relaxed max-w-xl mb-8">
+          Strength and Conditioning Coach for the Australian Men's Water Polo Team. Worked with the team at Paris 2024 and supports the LA28 pathway.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href="/apply"
+            onClick={() => track("cta_click", { button: "hero_apply_coaching" })}
+            className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black hover:text-[#FFD400] transition-colors"
+          >
+            Apply for Coaching
+          </a>
+          <a
+            href="/library"
+            className="inline-flex border border-black text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black hover:text-white transition-colors"
+          >
+            Browse the library
+          </a>
+          <a
+            href="/assessment"
+            onClick={() => track("cta_click", { button: "hero_assessment" })}
+            className="inline-flex border border-black text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black hover:text-white transition-colors"
+          >
+            Take the Free Assessment
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -379,10 +353,10 @@ function About() {
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                👋 About
+                About
               </span>
             </div>
-            <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
+            <h2 className="font-heading font-bold text-3xl sm:text-5xl tracking-[-0.03em] leading-[1.06]">
               The Work
               <br />
               Behind the
@@ -484,10 +458,10 @@ function Timeline() {
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                🏆 Experience
+                Experience
               </span>
             </div>
-            <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
+            <h2 className="font-heading font-bold text-3xl sm:text-5xl tracking-[-0.03em] leading-[1.06]">
               Experience
               <br />
               and context
@@ -593,10 +567,10 @@ function Services() {
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                💪 Services
+                Services
               </span>
             </div>
-            <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
+            <h2 className="font-heading font-bold text-3xl sm:text-5xl tracking-[-0.03em] leading-[1.06]">
               Coaching and
               <br />
               Programs
@@ -782,10 +756,10 @@ function AssessmentPreview() {
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                🎁 Free Report
+                Free Report
               </span>
             </div>
-            <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
+            <h2 className="font-heading font-bold text-3xl sm:text-5xl tracking-[-0.03em] leading-[1.06]">
               See Where
               <br />
               You Stand
@@ -1020,7 +994,7 @@ function LatestInsights() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                ✍️ Latest Writing
+                Latest Writing
               </span>
             </div>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
@@ -1104,7 +1078,7 @@ function FreeGuide() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">🎁 Free guide</span>
+              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">Free guide</span>
             </div>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
               The Recovery
@@ -1163,7 +1137,7 @@ function SubstackArticles() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                📬 Substack
+                Substack
               </span>
             </div>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
@@ -1320,10 +1294,10 @@ function Contact() {
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                📞 Contact
+                Contact
               </span>
             </div>
-            <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
+            <h2 className="font-heading font-bold text-3xl sm:text-5xl tracking-[-0.03em] leading-[1.06]">
               Get in
               <br />
               touch
@@ -1445,7 +1419,7 @@ function FAQ() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="max-w-3xl">
           <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-            ❓ Frequently Asked Questions
+            Frequently Asked Questions
           </span>
           <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-[0.95] mt-3 mb-10">
             Common Questions

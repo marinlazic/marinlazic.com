@@ -193,7 +193,7 @@ html {
 /* Sun theme: bright yellow accent, matches the Library page */
 :root { --sun: #FFD400; }
 @layer base {
-  h1, h2 {
+  h1, h2:not(.text-xs) {
     text-decoration-line: underline;
     text-decoration-color: var(--sun);
     text-decoration-thickness: 0.22em;

@@ -10,7 +10,7 @@ export default function HrvConditioning() {
             ML
           </a>
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-            ❤️ HRV Conditioning
+            HRV Conditioning
           </span>
         </div>
       </header>
@@ -31,7 +31,7 @@ export default function HrvConditioning() {
           <div className="space-y-10 mb-12">
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                ⚙️ How it works
+                How it works
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -111,7 +111,7 @@ export default function HrvConditioning() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                🎯 Who this is for
+                Who this is for
               </h2>
               <p className="text-sm text-black/70 leading-relaxed">
                 Adults who already use a wearable capable of estimating HRV and

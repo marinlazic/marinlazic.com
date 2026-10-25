@@ -163,7 +163,7 @@ export default function Apply() {
             ML
           </a>
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-            📝 Coaching Application
+            Coaching Application
           </span>
         </div>
       </header>

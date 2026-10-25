@@ -10,7 +10,7 @@ export default function BloodWork() {
             ML
           </a>
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-            🩸 Blood Work Service
+            Blood Work Service
           </span>
         </div>
       </header>
@@ -61,7 +61,7 @@ export default function BloodWork() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                ⚙️ How it works
+                How it works
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -97,7 +97,7 @@ export default function BloodWork() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                🎯 Who this is for
+                Who this is for
               </h2>
               <p className="text-sm text-black/70 leading-relaxed">
                 People who have received relevant advice from a treating
@@ -109,7 +109,7 @@ export default function BloodWork() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                💰 Pricing
+                Pricing
               </h2>
               <p className="text-sm text-black/70 leading-relaxed">
                 [MARIN TO CONFIRM: price and availability]

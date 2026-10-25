@@ -1,3 +1,4 @@
+import { WordTile } from "@/components/WordTile";
 import { useLocation } from "wouter";
 import {
   resourcePhoto,
@@ -355,6 +356,13 @@ export function Breadcrumbs({ label }: { label: string }) {
   );
 }
 
+const INFO_TILES: Record<string, { src: string; alt: string; word: string; emoji: string; pin: string }> = {
+  "/executive-health-performance": { src: "/images/guide/gym.jpg", alt: "A gym with free weights", word: "lead", emoji: "\u{1F4BC}", pin: "One to one" },
+  "/corporate-health-performance": { src: "/images/guide/floor.jpg", alt: "People training together on a gym floor", word: "team", emoji: "\u{1F3E2}", pin: "Your workplace" },
+  "/media": { src: "/images/guide/coach.jpg", alt: "Coach working with an athlete", word: "listen", emoji: "\u{1F3A5}", pin: "Media" },
+  "/about": { src: "/images/guide/marin.jpg", alt: "Marin Lazic coaching", word: "about", emoji: "\u{1F44B}", pin: "Sydney" },
+};
+
 export default function InformationPage() {
   const [location] = useLocation();
   const normalisedLocation =
@@ -384,7 +392,7 @@ export default function InformationPage() {
               <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">
                 {page.label}
               </p>
-              <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
+              <h1 className="font-heading text-4xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] mb-6">
                 {page.h1}
               </h1>
               <p className={`text-base sm:text-lg text-black/65 leading-relaxed max-w-2xl ${page.hero ? "mb-12" : ""}`}>
@@ -392,7 +400,12 @@ export default function InformationPage() {
               </p>
             </div>
             {!page.hero && (
-              <div className="hidden lg:block lg:col-span-5 ml-gradient min-h-[260px]" aria-hidden="true" />
+              <div className="lg:col-span-5">
+                {(() => {
+                  const t = INFO_TILES[normalisedLocation] ?? INFO_TILES["/about"];
+                  return <WordTile src={t.src} alt={t.alt} word={t.word} emoji={t.emoji} pin={t.pin} eager />;
+                })()}
+              </div>
             )}
           </div>
 

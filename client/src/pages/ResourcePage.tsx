@@ -601,7 +601,7 @@ export default function ResourcePage() {
           <div className="mt-12 border-t border-black/10 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
             <div>
               <p className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
-                📚 More resources
+                More resources
               </p>
               <p className="text-sm text-black/60">
                 Browse the full library of short guides.

@@ -751,7 +751,7 @@ export default function Assessment() {
               ML
             </a>
             <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-              📊 Performance Assessment
+              Performance Assessment
             </span>
           </div>
         </header>

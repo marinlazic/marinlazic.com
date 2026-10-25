@@ -2,7 +2,20 @@
 // short lists either side, then every guide as a card. Photos are black and
 // white, bright enough to read the subject at a glance.
 import { Navigation, Breadcrumbs, Picture } from "./InformationPage";
-import { resourcesHero } from "@/data/resourceImages";
+import { resourcesHero, resourceImagePath } from "@/data/resourceImages";
+import { WordTile } from "@/components/WordTile";
+
+const TILE_WORDS: Record<string, { word: string; emoji: string }> = {
+  template: { word: "lift", emoji: "\u{1F3CB}\uFE0F" },
+  groove: { word: "groove", emoji: "\u{1F4AA}" },
+  routine: { word: "daily", emoji: "\u{1F305}" },
+  move: { word: "warm up", emoji: "\u{1F938}" },
+  protein: { word: "eat", emoji: "\u{1F373}" },
+  engine: { word: "engine", emoji: "\u{1FAC0}" },
+  recover: { word: "recover", emoji: "\u{1F30A}" },
+  week3: { word: "week 3", emoji: "\u{1F4D3}" },
+  sleep: { word: "sleep", emoji: "\u{1F634}" },
+};
 import { GuideSignup } from "@/components/GuideSignup";
 import { featuredResource, popularResources, resourceCards, startHereResources, type ResourceCard } from "@/data/resourceIndex";
 
@@ -37,10 +50,12 @@ function Card({ card }: { card: ResourceCard }) {
     <li>
       <a href={card.href} className="group block">
         {card.photo && (
-          <Picture
-            photo={card.photo}
-            sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
-            className="w-full aspect-[4/3] object-cover block"
+          <WordTile
+            src={resourceImagePath(card.photo.base, 1200, "jpg")}
+            alt={card.photo.alt}
+            word={(TILE_WORDS[card.alias] ?? { word: "read" }).word}
+            emoji={(TILE_WORDS[card.alias] ?? { emoji: "\u{1F4D6}" }).emoji}
+            pin={card.category}
           />
         )}
         <span className="block pt-4">
@@ -66,7 +81,7 @@ export default function ResourcesIndex() {
           <Breadcrumbs label="Resources" />
           <div className="w-3 h-3 bg-[#FFD400] mb-6" aria-hidden="true" />
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 lg:mb-12">
-            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.035em] leading-[0.93]">
+            <h1 className="font-heading text-4xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02]">
               Resources
             </h1>
             <p className="text-base sm:text-lg text-black/65 leading-relaxed max-w-xl">
@@ -87,7 +102,15 @@ export default function ResourcesIndex() {
 
             <section className="lg:col-span-6 order-1 lg:order-2" aria-labelledby="featured-heading">
               <a href={featured.href} className="group block">
-                <Picture photo={resourcesHero} sizes="(min-width: 1024px) 620px, 100vw" className="w-full aspect-[3/2] object-cover block" eager />
+                <WordTile
+                  src={resourceImagePath(resourcesHero.base, 1800, "jpg")}
+                  alt={resourcesHero.alt}
+                  word="start"
+                  emoji={"\u{1F3CB}\uFE0F"}
+                  pin="Featured guide"
+                  aspect="aspect-[3/2]"
+                  eager
+                />
                 <span className="block text-[10px] tracking-[0.18em] uppercase text-black font-semibold mt-5 mb-3">
                   Featured guide. {featured.category}
                 </span>
