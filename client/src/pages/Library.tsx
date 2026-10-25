@@ -332,25 +332,13 @@ export default function Library() {
             </div>
           </div>
           <div className="flex-1 bg-[#D9D9D9] flex items-center justify-center p-6 sm:p-10">
-            <figure className="flex flex-col items-center">
-              <div className="w-[260px] rounded-[38px] bg-[#121212] p-3 shadow-xl">
-                <div className="rounded-[28px] bg-white p-4 flex flex-col gap-3 min-h-[470px]">
-                  <span className="text-[10px] tracking-[0.1em] uppercase text-black/55">Today</span>
-                  <span className="font-heading font-bold text-lg leading-tight">Water Polo Max Strength and Power</span>
-                  <span className="text-xs text-black/60">Week 1, Day 1</span>
-                  <ul className="flex flex-col gap-2">
-                    {["Trap bar deadlift", "Bench press", "Zercher squat"].map(x => (
-                      <li key={x} className="flex items-center gap-3 bg-[#F4F4F4] p-2.5">
-                        <span className="w-10 h-10 bg-[#D9D9D9] flex items-center justify-center text-[10px] text-black/50" aria-hidden="true">Video</span>
-                        <span className="text-[13px] font-semibold leading-tight">{x}<span className="block text-[11px] font-normal text-black/55">Paired with a jump or a throw</span></span>
-                      </li>
-                    ))}
-                  </ul>
-                  <span className="text-[11px] text-black/55 leading-snug">Rate each set by percent difficulty.</span>
-                  <span className="mt-auto bg-black text-white text-[13px] font-semibold text-center py-3">Start workout</span>
-                </div>
+            <figure className="w-full max-w-[640px]">
+              <div className="grid grid-cols-3 gap-3 sm:gap-5">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/b5/04/0e/b5040eba-10a5-1c44-e1fa-5b9a83e6b28a/01_Intro_1.png/600x900bb.jpg" alt="The BridgeAthletic app welcome screen" className="w-full h-auto rounded-2xl shadow-lg" loading="lazy" />
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/2b/86/7b/2b867b73-427b-cedb-1bc2-0073b7dec2e5/02_Log_workouts_2.png/600x900bb.jpg" alt="Logging a workout in the BridgeAthletic app" className="w-full h-auto rounded-2xl shadow-lg" loading="lazy" />
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/be/63/82/be6382b2-8712-d46d-e98d-ba06e717b074/03_Video_1.png/600x900bb.jpg" alt="An exercise video in the BridgeAthletic app" className="w-full h-auto rounded-2xl shadow-lg" loading="lazy" />
               </div>
-              <figcaption className="text-xs text-black/60 mt-4 text-center max-w-[300px]">Your program in the app: each session, a video for every exercise, and a place to log your sets.</figcaption>
+              <figcaption className="text-xs text-black/60 mt-4">Screenshots from the BridgeAthletic app: your session, logging your sets and a video for every exercise.</figcaption>
             </figure>
           </div>
         </section>
