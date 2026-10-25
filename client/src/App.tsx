@@ -21,6 +21,8 @@ import InformationPage from "./pages/InformationPage";
 import ResourcesIndex from "./pages/ResourcesIndex";
 import RecoveryGuide from "./pages/RecoveryGuide";
 import Speaking from "./pages/Speaking";
+import Library from "./pages/Library";
+import LibraryProgram from "./pages/LibraryProgram";
 import { Head } from "./components/Head";
 import { RouteAnalytics } from "./components/RouteAnalytics";
 import Report from "./pages/Report";
@@ -58,6 +60,8 @@ function Routes() {
       <Route path="/recovery-guide" component={RecoveryGuide} />
       <Route path="/media" component={InformationPage} />
       <Route path="/speaking" component={Speaking} />
+      <Route path="/library" component={Library} />
+      <Route path="/library/:slug" component={LibraryProgram} />
       <Route path="/resources/:slug" component={ResourcePage} />
       <Route path="/about" component={InformationPage} />
       <Route path="/executive-health-performance" component={InformationPage} />

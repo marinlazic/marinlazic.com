@@ -1,6 +1,7 @@
 import { articles } from "./articlesData";
 import { articleCitations, articleWordCount } from "./articleMetadata";
 import { resources } from "../pages/ResourcePage";
+import { PROGRAMS, SECTIONS, findProgram, programPath } from "@shared/programs";
 import { HOME_FAQS, APPLY_FAQS } from "@shared/siteFaq";
 import { MEDIA_TITLE, MEDIA_DESCRIPTION, mediaSubjects, YOUTUBE_URL } from "./mediaData";
 
@@ -114,6 +115,16 @@ export const PUBLIC_PAGES: Record<string, Page> = {
       "Olympic level performance science for business leaders. Eight practical sessions on HRV, recovery, sleep, jet lag and training.",
     label: "Speaking",
     modified: "2026-10-20",
+  },
+  "/library": {
+    title: "Training Program Library | Marin Lazic",
+    description:
+      "Buy training programs from Marin Lazic, Strength and Conditioning Coach of the Australian Men's Water Polo Team. Water polo gym programs now, more sections coming. Delivered in the Bridge app.",
+    socialTitle: "Program library | Marin Lazic",
+    socialDescription:
+      "Training programs you buy once and run in the Bridge app. Water polo programs are available now.",
+    label: "Program library",
+    modified: "2026-10-25",
   },
   "/apply": {
     title: "Apply for Executive Performance Coaching | Marin Lazic",
@@ -328,8 +339,11 @@ export function getPageMeta(url: string): HeadMeta {
   const article = path.match(/^\/insights\/([^/]+)$/);
   const record = article && articles.find(a => a.slug === article[1]);
   const resource = resources.find(r => resourcePath(r) === path);
+  const program = path.startsWith("/library/")
+    ? findProgram(path.slice("/library/".length))
+    : undefined;
   const page = PUBLIC_PAGES[path];
-  if (!page && !record && !resource)
+  if (!page && !record && !resource && !program)
     return {
       title: `Page not found | ${SITE_NAME}`,
       description:
@@ -340,11 +354,15 @@ export function getPageMeta(url: string): HeadMeta {
   const head: HeadMeta = {
     title: record
       ? `${record.seoTitle ?? record.title} | ${SITE_NAME}`
+      : program
+        ? `${program.name}: ${program.weeks} Week Program | ${SITE_NAME}`
       : resource
         ? `${resource.title} | ${SITE_NAME}`
         : page!.title,
     description: record
       ? record.excerpt
+      : program
+        ? program.description
       : resource
         ? resource.intro
         : page!.description,
@@ -355,6 +373,8 @@ export function getPageMeta(url: string): HeadMeta {
     ogImage: record ? record.image : DEFAULT_IMAGE,
     ogImageAlt: record
       ? record.title
+      : program
+        ? program.name
       : resource
         ? resource.title
         : "Marin Lazic, health and performance coach",
@@ -376,7 +396,7 @@ export function getPageMeta(url: string): HeadMeta {
         ? "WebPage"
         : path === "/about"
           ? "AboutPage"
-          : path === "/insights" || path === "/resources"
+          : path === "/insights" || path === "/resources" || path === "/library"
             ? "CollectionPage"
             : "WebPage",
       "@id": `${CANONICAL_ORIGIN}${path}#webpage`,
@@ -421,9 +441,18 @@ export function getPageMeta(url: string): HeadMeta {
         { name: resource.title, path },
       ])
     );
+  } else if (program) {
+    graph.push(
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Program library", path: "/library" },
+        { name: program.name, path },
+      ])
+    );
   } else if (
     [
       "/about",
+      "/library",
       "/resources",
       "/recovery-guide",
       "/media",
@@ -477,6 +506,40 @@ export function getPageMeta(url: string): HeadMeta {
         },
       },
     });
+  if (path === "/library")
+    graph.push({
+      "@type": "ItemList",
+      "@id": `${CANONICAL_ORIGIN}/library#list`,
+      name: "Training programs by Marin Lazic",
+      itemListElement: PROGRAMS.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${CANONICAL_ORIGIN}${programPath(p)}`,
+        name: p.name,
+      })),
+    });
+  if (program) {
+    const url = `${CANONICAL_ORIGIN}${path}`;
+    graph.push({
+      "@type": "Product",
+      "@id": `${url}#product`,
+      name: program.name,
+      description: program.description,
+      image: `${CANONICAL_ORIGIN}${program.image}`,
+      category: SECTIONS.find(s => s.id === program.section)?.title,
+      brand: { "@id": PERSON_ID },
+      url,
+      offers: {
+        "@type": "Offer",
+        price: String(program.price),
+        priceCurrency: program.currency,
+        availability: "https://schema.org/InStock",
+        url: program.buyUrl,
+        seller: { "@id": PERSON_ID },
+      },
+    });
+    graph.push(faqGraph(program.faqs, path));
+  }
   if (path === "/speaking")
     graph.push({
       "@type": "Service",
@@ -515,5 +578,6 @@ export function sitemapEntries() {
       path: resourcePath(r),
       lastmod: PREVIOUS_CONTENT_DATE,
     })),
+    ...PROGRAMS.map(p => ({ path: programPath(p), lastmod: p.modified })),
   ];
 }

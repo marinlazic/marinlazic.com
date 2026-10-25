@@ -25,7 +25,7 @@ const normalizePublicUrl: RequestHandler = (req, res, next) => {
   );
   if (staticMatch) target = staticMatch;
   else
-    target = target.replace(/^\/(insights|resources)(?=\/)/i, m =>
+    target = target.replace(/^\/(insights|resources|library)(?=\/)/i, m =>
       m.toLowerCase()
     );
   target = canonicalPathFor(target);
