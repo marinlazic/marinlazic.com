@@ -18,7 +18,16 @@ export type ProgramSection = {
   blurb: string;
 };
 
-export type Program = {
+export type Thumb = {
+  image: string;
+  imageAlt: string;
+  focus: string;
+  word: string;
+  emoji: string;
+  place: string;
+};
+
+export type Program = Thumb & {
   slug: string;
   section: string;
   name: string;
@@ -28,13 +37,9 @@ export type Program = {
   highlights: string[];
   weeks: number;
   sessionsPerWeek?: number;
-  place: string;
   level: string;
   price: number;
   currency: "AUD";
-  image: string;
-  imageAlt: string;
-  focus: string;
   buyUrl: string;
   forWho: string[];
   includes: string[];
@@ -107,6 +112,8 @@ export const PROGRAMS: Program[] = [
     currency: "AUD",
     image: "/images/library/hypertrophy.webp",
     imageAlt: "An athlete training in a gym with a weight rack",
+    word: "muscle",
+    emoji: "\u{1F4AA}",
     focus: "center 60%",
     buyUrl: "https://bridgeathletic.com/product/waterpolohypertrophy-1694014",
     forWho: [
@@ -148,6 +155,8 @@ export const PROGRAMS: Program[] = [
     currency: "AUD",
     image: "/images/library/max-strength.webp",
     imageAlt: "A water polo goal and net seen from the pool edge, with a player in the water",
+    word: "power",
+    emoji: "\u{1F525}",
     focus: "center 60%",
     buyUrl: "https://bridgeathletic.com/product/waterpolomaxstrengthandpower-1747737",
     forWho: [
@@ -168,6 +177,31 @@ export const PROGRAMS: Program[] = [
     ],
     modified: "2026-10-25",
   },
+];
+
+// Planned programs. They show on the library page as coming soon, with no
+// buy link, no price and no page of their own until they exist in Bridge.
+export type Upcoming = Thumb & {
+  section: string;
+  name: string;
+  line: string;
+  weeks: number;
+  sessionsPerWeek: number;
+};
+export const UPCOMING: Upcoming[] = [
+  { section: "hobbies", name: "Strength for Runners", line: "Stronger legs and hips for 5k, half marathon and marathon runners. Fits around your running week.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "run", emoji: "\u{1F3C3}", image: "/images/guide/walk.jpg", imageAlt: "Strength for Runners", focus: "center" },
+  { section: "hobbies", name: "Strength for Golfers", line: "Power, hips and a back that holds up over 18 holes. Built for the weeks before your season.", weeks: 4, sessionsPerWeek: 3, place: "Gym", word: "drive", emoji: "\u26F3", image: "/images/guide/dawn.jpg", imageAlt: "Strength for Golfers", focus: "center" },
+  { section: "hobbies", name: "Strength for Tennis Players", line: "Legs, shoulders and trunk for longer matches and fewer niggles.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "serve", emoji: "\u{1F3BE}", image: "/images/guide/shore.jpg", imageAlt: "Strength for Tennis Players", focus: "center" },
+  { section: "hobbies", name: "Strength for Boxing", line: "Ground force, trunk and shoulder strength for bag work and sparring.", weeks: 4, sessionsPerWeek: 3, place: "Gym", word: "punch", emoji: "\u{1F94A}", image: "/images/guide/pushup.jpg", imageAlt: "Strength for Boxing", focus: "center" },
+  { section: "hobbies", name: "Strength for Swimmers", line: "Lat, shoulder and trunk strength that carries over to the water.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "swim", emoji: "\u{1F3CA}", image: "/images/guide/lane.jpg", imageAlt: "Strength for Swimmers", focus: "center" },
+  { section: "hobbies", name: "Ski and Snowboard Pre Season", line: "Legs and knees ready for the first day on the snow.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "snow", emoji: "\u{1F3C2}", image: "/images/guide/coast.jpg", imageAlt: "Ski and Snowboard Pre Season", focus: "center" },
+  { section: "women", name: "Perimenopause Strength", line: "Build strength and keep your energy steady as your hormones start to change.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "steady", emoji: "\u{1F338}", image: "/images/guide/floor.jpg", imageAlt: "Perimenopause Strength", focus: "center" },
+  { section: "women", name: "Menopause Strength", line: "Lift heavier with a plan built for life after your periods stop.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "strong", emoji: "\u{1F4AA}", image: "/images/guide/gym.jpg", imageAlt: "Menopause Strength", focus: "center" },
+  { section: "women", name: "Strength for Bone Health", line: "Heavy, progressive loading for stronger bones. Check with your doctor first.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "bones", emoji: "\u{1F9B4}", image: "/images/guide/muscles.jpg", imageAlt: "Strength for Bone Health", focus: "center" },
+  { section: "women", name: "Women Leaders Performance", line: "Strength, energy and stress control for women who run teams and companies.", weeks: 6, sessionsPerWeek: 3, place: "Gym or home", word: "lead", emoji: "\u{1F451}", image: "/images/guide/notes.jpg", imageAlt: "Women Leaders Performance", focus: "center" },
+  { section: "leaders", name: "Leader Performance Program", line: "Strength, energy and sleep habits for people with too many meetings.", weeks: 6, sessionsPerWeek: 3, place: "Gym", word: "lead", emoji: "\u{1F4BC}", image: "/images/guide/phone.jpg", imageAlt: "Leader Performance Program", focus: "center" },
+  { section: "leaders", name: "Travel Week Training", line: "30 minute hotel room sessions that keep your training alive on the road.", weeks: 4, sessionsPerWeek: 3, place: "Hotel room", word: "travel", emoji: "\u2708\uFE0F", image: "/images/guide/boat.jpg", imageAlt: "Travel Week Training", focus: "center" },
+  { section: "corporate-athlete", name: "The Corporate Athlete", line: "Train, recover and perform at work the way an athlete prepares for a season.", weeks: 8, sessionsPerWeek: 3, place: "Gym", word: "perform", emoji: "\u{1F3C6}", image: "/images/guide/wave.jpg", imageAlt: "The Corporate Athlete", focus: "center" },
 ];
 
 export function programPath(p: Program) {

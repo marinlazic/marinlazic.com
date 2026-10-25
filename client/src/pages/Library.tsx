@@ -1,7 +1,7 @@
 // /library: the program library. Programs live in shared/programs.ts and are
 // sold and delivered in Bridge. Sections with no programs yet show a note.
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { PROGRAMS, SECTIONS, programLength, programPath } from "@shared/programs";
+import { PROGRAMS, UPCOMING, SECTIONS, programLength, programPath } from "@shared/programs";
 import { Breadcrumbs, Navigation } from "./InformationPage";
 import { GuideSignup } from "@/components/GuideSignup";
 import { ProgramThumb } from "@/components/ProgramThumb";
@@ -56,6 +56,7 @@ export default function Library() {
           <div className="space-y-16">
             {SECTIONS.map((s, i) => {
               const items = PROGRAMS.filter(p => p.section === s.id);
+              const soon = UPCOMING.filter(u => u.section === s.id);
               return (
                 <section key={s.id} id={s.id} className="border-t border-black/10 pt-7 scroll-mt-8">
                   <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
@@ -64,7 +65,7 @@ export default function Library() {
                   <p className="text-sm sm:text-base text-black/70 leading-relaxed max-w-2xl mb-8">
                     {s.blurb}
                   </p>
-                  {items.length === 0 ? (
+                  {items.length === 0 && soon.length === 0 ? (
                     <p className="text-sm text-black/55">Programs coming soon.</p>
                   ) : (
                     <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -101,6 +102,23 @@ export default function Library() {
                               >
                                 Buy
                               </a>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                      {soon.map(u => (
+                        <li key={u.name} className="bg-white border border-black/10 flex flex-col">
+                          <ProgramThumb p={u} />
+                          <div className="p-5 flex flex-col flex-1">
+                            <h3 className="font-heading font-bold text-xl tracking-[-0.02em] mb-2">{u.name}</h3>
+                            <p className="text-sm text-black/65 leading-relaxed mb-4">{u.line}</p>
+                            <p className="text-[10px] tracking-[0.16em] uppercase text-black/45 mb-5">
+                              {u.weeks} weeks, {u.sessionsPerWeek} sessions a week · {u.place}
+                            </p>
+                            <div className="mt-auto">
+                              <span className="inline-flex border border-black/20 text-xs tracking-[0.15em] uppercase px-5 py-3 font-medium text-black/55">
+                                Coming soon
+                              </span>
                             </div>
                           </div>
                         </li>
