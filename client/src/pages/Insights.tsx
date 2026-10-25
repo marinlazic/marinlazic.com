@@ -234,7 +234,7 @@ export default function Insights() {
                 onClick={() => setActiveTag(activeTag === tag ? null : tag)}
                 className={`whitespace-nowrap text-[10px] tracking-[0.1em] uppercase px-2.5 py-1 border transition-colors ${
                   activeTag === tag
-                    ? "border-[#2F6BF0] text-black bg-black/5"
+                    ? "border-[#FFD400] text-black bg-black/5"
                     : "border-black/10 text-black/40 hover:border-black/20 hover:text-black/60"
                 }`}
               >

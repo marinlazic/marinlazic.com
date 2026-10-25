@@ -2,6 +2,7 @@
 // Moved here from marinlazicspeak.com (a separate Manus site) on 20 Oct 2026.
 // The enquiry form posts to leads.submit like the home page form, with
 // speaking: true so Kit tags speaking_enquiry and the confirmation reads right.
+import { PageBand } from "@/components/PageBand";
 import { useState } from "react";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { trpc } from "@/lib/trpc";
@@ -114,6 +115,7 @@ export default function Speaking() {
   return (
     <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
       <Navigation />
+      <PageBand src="/images/guide/field.jpg" alt="A team training on a field" word="speak" emoji={"\u{1F3A4}"} pin="Speaking" position="center" />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
         <div className="max-w-[1280px] mx-auto mb-12">
           <img
@@ -133,7 +135,7 @@ export default function Speaking() {
           <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">
             Speaking
           </p>
-          <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6 max-w-4xl">
+          <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-[-0.03em] leading-[0.93] mb-6 max-w-4xl">
             Olympic level performance science for business leaders
           </h1>
           <p className="text-base sm:text-lg text-black/65 leading-relaxed max-w-2xl mb-8">

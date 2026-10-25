@@ -358,7 +358,7 @@ function ArticleContent({ content }: { content: string }) {
                 return (
                   <div
                     key={idx}
-                    className="bg-white border-l-3 border-[#2F6BF0] p-6 sm:p-8 my-6"
+                    className="bg-white border-l-3 border-[#FFD400] p-6 sm:p-8 my-6"
                   >
                     <p className="text-[15px] leading-[1.85] text-black/75">
                       {renderInline(section.content)}
@@ -408,7 +408,7 @@ function ArticleContent({ content }: { content: string }) {
               return (
                 <blockquote
                   key={idx}
-                  className="relative my-10 py-6 px-8 bg-white border-l-3 border-[#2F6BF0]"
+                  className="relative my-10 py-6 px-8 bg-white border-l-3 border-[#FFD400]"
                 >
                   <div className="absolute -top-3 left-6 text-black text-4xl font-serif leading-none">
                     "

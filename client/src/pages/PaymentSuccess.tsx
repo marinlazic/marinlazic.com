@@ -162,7 +162,7 @@ export default function PaymentSuccess() {
                 transition={{ delay: 0.3 }}
               >
                 <div className="w-3 h-3 bg-[#FFD400] mx-auto mb-6" />
-                <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
+                <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight leading-[0.95] mb-4">
                   Welcome to<br />the Team.
                 </h1>
                 <p className="text-lg text-black/50 leading-relaxed max-w-md mx-auto">
@@ -363,7 +363,7 @@ export default function PaymentSuccess() {
           <div className="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-8">
             <Loader2 className="w-8 h-8 text-yellow-600 animate-spin" />
           </div>
-          <h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight mb-4">
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             Almost There...
           </h1>
           <p className="text-base text-black/50 leading-relaxed mb-4">

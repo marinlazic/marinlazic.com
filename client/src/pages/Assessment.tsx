@@ -1,3 +1,4 @@
+import { PageBand } from "@/components/PageBand";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { trpc } from "@/lib/trpc";
@@ -367,7 +368,7 @@ export function AnalysisSection({
       );
     if (line.startsWith("> "))
       return (
-        <blockquote key={i} className="border-l-2 border-[#2F6BF0] pl-4 my-3">
+        <blockquote key={i} className="border-l-2 border-[#FFD400] pl-4 my-3">
           <p className="text-sm text-black/60 italic leading-relaxed">
             {line.replace("> ", "")}
           </p>
@@ -756,10 +757,11 @@ export default function Assessment() {
           </div>
         </header>
 
+        <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-2xl w-full">
             <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
-            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight leading-[0.95] mb-6">
+            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[0.95] mb-6">
               Performance
               <br />
               Assessment
@@ -838,10 +840,11 @@ export default function Assessment() {
           </div>
         </header>
 
+        <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-lg w-full text-center">
             <Loader2 className="w-12 h-12 animate-spin text-black mx-auto mb-8" />
-            <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-4">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-4">
               Building Your Analysis
             </h2>
             <p className="text-base text-black/50 leading-relaxed mb-6">
@@ -955,6 +958,7 @@ export default function Assessment() {
           </div>
         </header>
 
+        <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
         <main className="flex-1 px-5 py-12 sm:py-16">
           <div className="max-w-4xl mx-auto">
             {/* ── HERO: Overall Score Ring ── */}
@@ -1644,7 +1648,7 @@ export default function Assessment() {
               <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
                 Act on your results
               </h3>
-              <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-4 leading-tight">
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-4 leading-tight">
                 The 4 week programme
               </h2>
               <p className="text-sm sm:text-base text-black/60 leading-relaxed mb-6 max-w-2xl">
@@ -1664,7 +1668,7 @@ export default function Assessment() {
                   <h3 className="text-[10px] tracking-[0.2em] uppercase text-white/40 font-medium mb-4">
                     What Happens Next
                   </h3>
-                  <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-6 leading-tight">
+                  <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-6 leading-tight">
                     This Is Where Most People Stop
                   </h2>
                   <div className="w-8 h-0.5 bg-[#FFD400] mb-8" />
@@ -1779,6 +1783,7 @@ export default function Assessment() {
         </div>
       </header>
 
+      <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
           <AnimatePresence mode="popLayout">
@@ -1819,7 +1824,7 @@ export default function Assessment() {
               </div>
 
               {/* Question */}
-              <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-tight mb-2">
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight leading-tight mb-2">
                 {question.text}
               </h2>
               <p className="text-sm text-black/40 mb-10">{question.subtext}</p>

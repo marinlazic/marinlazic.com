@@ -15,7 +15,7 @@ export default function PaymentCancel() {
           <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8">
             <XCircle className="w-8 h-8 text-black" />
           </div>
-          <h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight mb-4">
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             No Worries.
           </h1>
           <p className="text-base text-black/50 leading-relaxed mb-4">

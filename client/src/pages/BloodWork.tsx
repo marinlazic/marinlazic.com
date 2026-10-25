@@ -1,3 +1,4 @@
+import { PageBand } from "@/components/PageBand";
 export default function BloodWork() {
   return (
     <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
@@ -15,10 +16,11 @@ export default function BloodWork() {
         </div>
       </header>
 
+      <PageBand src="/images/guide/plate.jpg" alt="A plate of food" word="labs" emoji={"\u{1FA78}"} pin="Blood work" position="center" />
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
           <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
-          <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
+          <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[0.95] mb-4">
             Blood Work Coaching Context
           </h1>
           <p className="text-base text-black/50 leading-relaxed mb-10 max-w-xl">

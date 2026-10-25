@@ -510,7 +510,7 @@ export default function ResourcePage() {
           <p className="text-xs tracking-[0.15em] uppercase text-black font-semibold mb-4">
             Keyword: {resource.keyword}
           </p>
-          <h1 className="font-heading text-3xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
+          <h1 className="font-heading text-3xl sm:text-5xl font-bold tracking-[-0.03em] leading-[0.93] mb-6">
             {resource.title}
           </h1>
           <div
@@ -548,7 +548,7 @@ export default function ResourcePage() {
           )}
 
           <aside
-            className="border-l-2 border-[#2F6BF0] bg-black/[0.025] px-5 py-4 mb-12"
+            className="border-l-2 border-[#FFD400] bg-black/[0.025] px-5 py-4 mb-12"
             aria-label="Educational and safety notice"
           >
             <p className="text-sm text-black/65 leading-relaxed">

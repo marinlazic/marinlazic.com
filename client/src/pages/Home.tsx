@@ -1,3 +1,4 @@
+import { WordTile } from "@/components/WordTile";
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { trpc } from "@/lib/trpc";
@@ -220,37 +221,36 @@ function Section({
 function Hero() {
   const { track } = useAnalytics();
   const band = [
-    { src: "/images/guide/gym.jpg", alt: "A gym with free weights", pin: "Strength" },
-    { src: HEADSHOT_URL, alt: "Marin Lazic, Strength and Conditioning Coach for the Australian Men's Water Polo Team, at Paris 2024", pin: "Coach", pos: "top" },
-    { src: "/images/guide/pool.jpg", alt: "A water polo pool", pin: "Water polo" },
+    { src: "/images/guide/gym.jpg", alt: "A gym session with suspension trainers", pin: "Team training", pos: "center" },
+    { src: HEADSHOT_URL, alt: "Marin Lazic, Strength and Conditioning Coach for the Australian Men's Water Polo Team", pin: "Marin", pos: "50% 18%" },
+    { src: "/images/guide/olympic.jpg", alt: "Marin Lazic at the Paris 2024 Olympic Games", pin: "Paris 2024", pos: "center 30%" },
   ];
 
   return (
     <section id="hero" className="pt-16 border-b border-black">
       <div className="relative flex flex-col sm:flex-row" style={{ containerType: "inline-size" }}>
         {band.map(h => (
-          <div key={h.src} className="relative flex-1 min-h-[220px] sm:min-h-[460px] bg-[#D9D9D9] overflow-hidden">
+          <div key={h.src} className="relative flex-1 min-h-[260px] sm:min-h-[520px] bg-[#D9D9D9] overflow-hidden">
             <img
               src={h.src}
               alt={h.alt}
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ filter: "grayscale(1) contrast(1.12)", objectPosition: h.pos ?? "center" }}
+              style={{ filter: "grayscale(1) contrast(1.12)", objectPosition: h.pos }}
               loading="eager"
             />
-            <span className="absolute left-4 bottom-4 bg-white text-[#0B2530] text-[13px] font-semibold px-3 py-1.5 rounded-full">
+            <span className="absolute left-4 top-4 bg-white text-[#0B2530] text-[13px] font-semibold px-3 py-1.5 rounded-full">
               {"\u{1F4CD}"} {h.pin}
             </span>
           </div>
         ))}
         <div
           aria-hidden="true"
-          className="absolute inset-x-[3%] top-1/2 -translate-y-1/2 font-heading font-black lowercase leading-[0.8] tracking-[-0.05em] pointer-events-none"
-          style={{ fontSize: "17cqw", color: "#FFD400", textShadow: "0 3px 20px rgba(0,0,0,0.4)" }}
+          className="absolute inset-x-[3%] bottom-[5%] font-heading font-black lowercase leading-[0.8] tracking-[-0.05em] pointer-events-none"
+          style={{ fontSize: "11.5cqw", color: "#FFD400", textShadow: "0 3px 20px rgba(0,0,0,0.45)" }}
         >
           marin lazic
         </div>
         <span aria-hidden="true" className="absolute right-6 top-4 text-6xl rotate-12">{"\u{1F4A6}"}</span>
-        <span aria-hidden="true" className="absolute left-6 bottom-12 text-6xl -rotate-12">{"\u{1F4AA}"}</span>
       </div>
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 pt-12 pb-14">
         <div className="w-3 h-3 bg-[#FFD400] mb-6" aria-hidden="true" role="presentation" />
@@ -319,7 +319,7 @@ function TrustBar() {
     <div className="border-t border-b border-black/10 py-6 sm:py-8 bg-white">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-          <span className="text-[10px] tracking-[0.2em] uppercase text-black/30 font-medium shrink-0">
+          <span className="text-[11px] tracking-[0.2em] uppercase text-black/60 font-medium shrink-0">
             Experience includes
           </span>
           <div className="flex items-center gap-10 sm:gap-16 flex-wrap justify-center">
@@ -346,13 +346,14 @@ function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Label column */}
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/marin.jpg" alt="Marin Lazic coaching on a training field" word="story" emoji={"\u{1F44B}"} pin="Sydney" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
                 About
               </span>
             </div>
@@ -407,7 +408,7 @@ function About() {
                   <p className="font-heading font-bold text-lg sm:text-xl tracking-[-0.02em]">
                     {stat.value}
                   </p>
-                  <p className="text-xs text-black/40 mt-1 tracking-[0.05em] uppercase">
+                  <p className="text-xs text-black/60 mt-1 tracking-[0.05em] uppercase">
                     {stat.label}
                   </p>
                 </div>
@@ -451,13 +452,14 @@ function Timeline() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/paris.jpg" alt="Water polo at the Paris 2024 Olympic Games" word="paris" emoji={"\u{1F3C6}"} pin="Paris 2024" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
                 Experience
               </span>
             </div>
@@ -466,7 +468,7 @@ function Timeline() {
               <br />
               and context
             </h2>
-            <p className="text-sm text-black/50 mt-4 leading-relaxed">
+            <p className="text-base text-black/70 mt-4 leading-relaxed">
               Experience across high performance sport and health coaching.
             </p>
           </div>
@@ -477,7 +479,7 @@ function Timeline() {
                   key={i}
                   className="group grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-2 sm:gap-8 py-8 border-b border-black/10 first:pt-0 last:border-0"
                 >
-                  <div className="text-xs tracking-[0.1em] uppercase text-black/40 font-medium pt-1">
+                  <div className="text-xs tracking-[0.1em] uppercase text-black/60 font-medium pt-1">
                     {item.year}
                   </div>
                   <div>
@@ -560,13 +562,14 @@ function Services() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/muscles.jpg" alt="Athlete training in a gym with a foam roller" word="train" emoji={"\u{1F4AA}"} pin="Coaching" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
                 Services
               </span>
             </div>
@@ -575,15 +578,15 @@ function Services() {
               <br />
               Programs
             </h2>
-            <p className="text-sm text-black/50 mt-4 leading-relaxed">
+            <p className="text-base text-black/70 mt-4 leading-relaxed">
               Clear support shaped around the person, team or organisation.
             </p>
             {/* Availability note */}
             <div className="mt-6 p-4 border border-black/20 bg-black/5">
-              <p className="text-[10px] tracking-[0.15em] uppercase text-black font-semibold mb-1">
+              <p className="text-[11px] tracking-[0.15em] uppercase text-black font-semibold mb-1">
                 Availability
               </p>
-              <p className="text-xs text-black/50 leading-relaxed">
+              <p className="text-xs text-black/70 leading-relaxed">
                 Applications are reviewed before coaching places are confirmed.
               </p>
             </div>
@@ -639,7 +642,7 @@ function Services() {
                           </a>
                           <a
                             href={service.href}
-                            className="text-xs text-black/50 hover:text-black transition-colors"
+                            className="text-xs text-black/70 hover:text-black transition-colors"
                           >
                             {service.linkLabel}
                           </a>
@@ -651,7 +654,7 @@ function Services() {
                               button: "service_01_assessment",
                             })
                           }
-                          className="inline-flex items-center gap-1.5 text-xs text-black/50 hover:text-black/70 transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs text-black/70 hover:text-black/70 transition-colors"
                         >
                           Not sure yet? Take the free assessment
                         </a>
@@ -749,13 +752,14 @@ function AssessmentPreview() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-16">
           {/* Left label column */}
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free report" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
                 Free Report
               </span>
             </div>
@@ -764,7 +768,7 @@ function AssessmentPreview() {
               <br />
               You Stand
             </h2>
-            <p className="text-sm text-black/50 mt-4 leading-relaxed">
+            <p className="text-base text-black/70 mt-4 leading-relaxed">
               27 questions and a personal report to help you consider your
               training, recovery and daily habits.
             </p>
@@ -778,7 +782,7 @@ function AssessmentPreview() {
               >
                 Get Your Free Report
               </a>
-              <p className="text-[10px] text-black/30 mt-3 tracking-[0.05em]">
+              <p className="text-[11px] text-black/60 mt-3 tracking-[0.05em]">
                 About 5 minutes.
               </p>
             </div>
@@ -790,7 +794,7 @@ function AssessmentPreview() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
               {/* Radar chart */}
               <div>
-                <p className="text-[10px] tracking-[0.2em] uppercase text-black/30 font-medium mb-4 sm:mb-6">
+                <p className="text-[11px] tracking-[0.2em] uppercase text-black/60 font-medium mb-4 sm:mb-6">
                   Performance Radar
                 </p>
                 <div className="flex justify-center">
@@ -863,7 +867,7 @@ function AssessmentPreview() {
                     })}
                   </svg>
                 </div>
-                <p className="text-center text-[10px] text-black/25 mt-3 italic">
+                <p className="text-center text-[11px] text-black/25 mt-3 italic">
                   Illustrative scores only. This report is not a clinical
                   diagnosis.
                 </p>
@@ -871,7 +875,7 @@ function AssessmentPreview() {
 
               {/* Category bars */}
               <div>
-                <p className="text-[10px] tracking-[0.2em] uppercase text-black/30 font-medium mb-4 sm:mb-6">
+                <p className="text-[11px] tracking-[0.2em] uppercase text-black/60 font-medium mb-4 sm:mb-6">
                   Category Scores
                 </p>
                 <div className="space-y-3 sm:space-y-4">
@@ -910,7 +914,7 @@ function AssessmentPreview() {
 
             {/* Pro Tips */}
             <div>
-              <p className="text-[10px] tracking-[0.2em] uppercase text-black/30 font-medium mb-4 sm:mb-6">
+              <p className="text-[11px] tracking-[0.2em] uppercase text-black/60 font-medium mb-4 sm:mb-6">
                 Sample Pro Tips From Your Report
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
@@ -953,7 +957,7 @@ function AssessmentPreview() {
             </div>
 
             {/* Bottom line */}
-            <p className="text-[10px] sm:text-xs text-black/30 mt-8 sm:mt-10">
+            <p className="text-[11px] sm:text-xs text-black/60 mt-8 sm:mt-10">
               Scores are illustrative and are designed to prompt reflection, not
               to diagnose a health condition.
             </p>
@@ -991,9 +995,10 @@ function LatestInsights() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left label */}
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/notes.jpg" alt="A handwritten training plan" word="read" emoji={"\u{270D}\uFE0F"} pin="Writing" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
                 Latest Writing
               </span>
             </div>
@@ -1002,7 +1007,7 @@ function LatestInsights() {
               <br />
               Insights
             </h2>
-            <p className="text-sm text-black/50 mt-4 leading-relaxed">
+            <p className="text-base text-black/70 mt-4 leading-relaxed">
               Practical writing on training, recovery and health.
             </p>
             <a
@@ -1039,11 +1044,11 @@ function LatestInsights() {
                   </div>
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
+                      <span className="text-[11px] tracking-[0.2em] uppercase text-black font-medium">
                         {article.category}
                       </span>
-                      <span className="text-[10px] text-black/30">|</span>
-                      <span className="text-[10px] tracking-[0.15em] uppercase text-black/35 font-medium">
+                      <span className="text-[11px] text-black/60">|</span>
+                      <span className="text-[11px] tracking-[0.15em] uppercase text-black/35 font-medium">
                         {formatDate(article.date)}
                       </span>
                     </div>
@@ -1076,16 +1081,17 @@ function FreeGuide() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/ice.jpg" alt="Ice baths used for recovery" word="recover" emoji={"\u{1F9CA}"} pin="Free guide" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">Free guide</span>
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">Free guide</span>
             </div>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
               The Recovery
               <br />
               Guide
             </h2>
-            <p className="text-sm text-black/50 mt-4 leading-relaxed">34 pages. {RECOVERY_GUIDE.subtitle}.</p>
+            <p className="text-base text-black/70 mt-4 leading-relaxed">34 pages. {RECOVERY_GUIDE.subtitle}.</p>
           </div>
           <div className="lg:col-span-9">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -1100,7 +1106,7 @@ function FreeGuide() {
                   ))}
                 </ul>
                 <GuideSignup placement="home" />
-                <a href="/recovery-guide" className="inline-block mt-4 text-xs tracking-[0.15em] uppercase text-black/50 hover:text-black transition-colors font-medium">
+                <a href="/recovery-guide" className="inline-block mt-4 text-xs tracking-[0.15em] uppercase text-black/70 hover:text-black transition-colors font-medium">
                   See what is inside
                 </a>
               </div>
@@ -1134,9 +1140,10 @@ function SubstackArticles() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left label */}
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/morning.jpg" alt="Surf at sunrise" word="weekly" emoji={"\u{1F4EC}"} pin="Substack" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
                 Substack
               </span>
             </div>
@@ -1145,7 +1152,7 @@ function SubstackArticles() {
               <br />
               Substack
             </h2>
-            <p className="text-sm text-black/50 mt-4 leading-relaxed">
+            <p className="text-base text-black/70 mt-4 leading-relaxed">
               Long form writing on training and recovery.
             </p>
             <a
@@ -1201,7 +1208,7 @@ function SubstackArticles() {
                       </div>
                     )}
                     <div className="p-6">
-                      <span className="text-[10px] tracking-[0.15em] uppercase text-black/35 font-medium">
+                      <span className="text-[11px] tracking-[0.15em] uppercase text-black/35 font-medium">
                         {formatDate(article.pubDate)}
                       </span>
                       <h3 className="font-heading font-bold text-base sm:text-lg tracking-[-0.01em] leading-snug mt-2 mb-3 group-hover:text-black/60 transition-colors">
@@ -1219,7 +1226,7 @@ function SubstackArticles() {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-black/40">
+              <p className="text-sm text-black/60">
                 No articles available right now.
               </p>
             )}
@@ -1287,13 +1294,14 @@ function Contact() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-3">
+            <WordTile src="/images/guide/coast.jpg" alt="Coastline near Sydney" word="talk" emoji={"\u{1F4DE}"} pin="Sydney" className="mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+              <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
                 Contact
               </span>
             </div>
@@ -1350,13 +1358,13 @@ function Contact() {
 
                 {/* Email capture as tertiary path */}
                 <div className="border-t border-black/10 pt-8">
-                  <p className="text-xs tracking-[0.15em] uppercase text-black/40 font-medium mb-4">
+                  <p className="text-xs tracking-[0.15em] uppercase text-black/60 font-medium mb-4">
                     Email enquiry or updates
                   </p>
                   <form onSubmit={handleSubmit} className="max-w-lg">
                     <label
                       htmlFor="contact-message"
-                      className="block text-xs text-black/50 mb-2"
+                      className="block text-xs text-black/70 mb-2"
                     >
                       Your enquiry (optional)
                     </label>
@@ -1371,7 +1379,7 @@ function Contact() {
                     />
                     <label
                       htmlFor="contact-email"
-                      className="block text-xs text-black/50 mb-2"
+                      className="block text-xs text-black/70 mb-2"
                     >
                       Email
                     </label>
@@ -1383,7 +1391,7 @@ function Contact() {
                         onChange={e => setEmail(e.target.value)}
                         placeholder="your@email.com"
                         required
-                        className="flex-1 border border-black/20 bg-transparent px-4 py-3.5 text-sm placeholder:text-black/30 focus:outline-none focus:border-black transition-colors"
+                        className="flex-1 border border-black/20 bg-transparent px-4 py-3.5 text-sm placeholder:text-black/60 focus:outline-none focus:border-black transition-colors"
                       />
                       <button
                         type="submit"
@@ -1418,10 +1426,10 @@ function FAQ() {
     <section className="py-20 lg:py-28 border-t border-black/10">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="max-w-3xl">
-          <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
+          <span className="text-xs tracking-[0.2em] uppercase text-black font-semibold">
             Frequently Asked Questions
           </span>
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-[0.95] mt-3 mb-10">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight leading-[0.95] mt-3 mb-10">
             Common Questions
           </h2>
           <div className="space-y-8">
@@ -1453,7 +1461,7 @@ function Footer() {
             <span className="font-heading font-bold text-sm tracking-[0.2em] uppercase">
               Marin Lazic
             </span>
-            <p className="text-xs text-black/40 mt-2">
+            <p className="text-xs text-black/60 mt-2">
               Health and performance coaching in Sydney and online.
             </p>
             <div className="flex flex-wrap gap-4 mt-4">
@@ -1465,25 +1473,25 @@ function Footer() {
               </a>
               <a
                 href="/assessment"
-                className="text-xs tracking-[0.1em] uppercase text-black/50 hover:text-black transition-colors"
+                className="text-xs tracking-[0.1em] uppercase text-black/70 hover:text-black transition-colors"
               >
                 Free Assessment
               </a>
               <a
                 href="/library"
-                className="text-xs tracking-[0.1em] uppercase text-black/50 hover:text-black transition-colors"
+                className="text-xs tracking-[0.1em] uppercase text-black/70 hover:text-black transition-colors"
               >
                 Program library
               </a>
               <a
                 href="/resources"
-                className="text-xs tracking-[0.1em] uppercase text-black/50 hover:text-black transition-colors"
+                className="text-xs tracking-[0.1em] uppercase text-black/70 hover:text-black transition-colors"
               >
                 Resources
               </a>
               <a
                 href="/media"
-                className="text-xs tracking-[0.1em] uppercase text-black/50 hover:text-black transition-colors"
+                className="text-xs tracking-[0.1em] uppercase text-black/70 hover:text-black transition-colors"
               >
                 Media and interviews
               </a>
@@ -1495,7 +1503,7 @@ function Footer() {
                 href="https://www.instagram.com/marinLazic"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black/40 hover:text-black transition-colors"
+                className="text-black/60 hover:text-black transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-4 h-4" />
@@ -1504,7 +1512,7 @@ function Footer() {
                 href="https://www.linkedin.com/in/marinlazic?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black/40 hover:text-black transition-colors"
+                className="text-black/60 hover:text-black transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-4 h-4" />
@@ -1513,7 +1521,7 @@ function Footer() {
                 href="https://x.com/marinlazic"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black/40 hover:text-black transition-colors"
+                className="text-black/60 hover:text-black transition-colors"
                 aria-label="X (Twitter)"
               >
                 <Twitter className="w-4 h-4" />
@@ -1521,7 +1529,7 @@ function Footer() {
             </div>
           </div>
           <div className="md:col-span-4 md:text-right">
-            <p className="text-xs text-black/30">
+            <p className="text-xs text-black/60">
               &copy; {new Date().getFullYear()} Marin Lazic. All rights
               reserved.
             </p>
@@ -1548,7 +1556,7 @@ function StickyApplyBar() {
     <>
       {/* Mobile: slim bottom bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#F4F4F4]/95 backdrop-blur-sm border-t border-black/10 px-4 py-3 flex items-center justify-between">
-        <span className="text-[10px] tracking-[0.1em] uppercase text-black/50 font-medium">
+        <span className="text-[11px] tracking-[0.1em] uppercase text-black/70 font-medium">
           Coaching applications
         </span>
         <a
@@ -1676,7 +1684,7 @@ function ExitIntentPopup() {
           >
             <button
               onClick={dismiss}
-              className="absolute top-4 right-4 text-black/30 hover:text-black transition-colors"
+              className="absolute top-4 right-4 text-black/60 hover:text-black transition-colors"
               aria-label="Close popup"
             >
               <X className="w-5 h-5" />
@@ -1701,7 +1709,7 @@ function ExitIntentPopup() {
 
             <button
               onClick={dismiss}
-              className="w-full mt-3 text-xs text-black/30 hover:text-black/50 transition-colors py-2"
+              className="w-full mt-3 text-xs text-black/60 hover:text-black/70 transition-colors py-2"
             >
               Close
             </button>

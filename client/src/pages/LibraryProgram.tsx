@@ -28,7 +28,7 @@ export default function LibraryProgram() {
             <ProgramThumb p={p} eager />
             <div>
               <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
-              <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
+              <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-[-0.03em] leading-[0.93] mb-6">
                 {p.name}
               </h1>
               <p className="text-base sm:text-lg text-black/65 leading-relaxed mb-6">{p.description}</p>

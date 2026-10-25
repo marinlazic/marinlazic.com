@@ -1,5 +1,6 @@
 // /recovery-guide: the page every Instagram link and email can point to.
 // What the guide is, what is inside, the signup, and a taste of section 04.
+import { PageBand } from "@/components/PageBand";
 import { Breadcrumbs, Navigation } from "./InformationPage";
 import { GuideSignup } from "@/components/GuideSignup";
 import { GUIDE_PHOTOS, RECOVERY_GUIDE } from "@shared/recoveryGuide";
@@ -11,6 +12,7 @@ export default function RecoveryGuide() {
   return (
     <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
       <Navigation />
+      <PageBand src="/images/guide/ice.jpg" alt="Ice baths used for recovery" word="recover" emoji={"\u{1F9CA}"} pin="Recovery guide" position="center" />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
         <div className="max-w-[1280px] mx-auto">
           <Breadcrumbs label="Recovery Guide" />
@@ -19,7 +21,7 @@ export default function RecoveryGuide() {
             <div className="lg:col-span-7">
               <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
               <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">Free guide, 34 pages</p>
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
+              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[0.93] mb-6">
                 {G.title}
               </h1>
               <p className="font-heading text-xl sm:text-2xl tracking-[-0.02em] leading-snug mb-6">{G.subtitle}</p>
