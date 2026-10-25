@@ -75,6 +75,7 @@ export function Nav() {
     { label: "About", href: "/about" },
     { label: "Executive", href: "/executive-health-performance" },
     { label: "Corporate", href: "/corporate-health-performance" },
+    { label: "Library", href: "/library" },
     { label: "Resources", href: "/resources" },
     { label: "Media", href: "/media" },
     { label: "Speaking", href: "/speaking" },
@@ -1493,6 +1494,12 @@ function Footer() {
                 className="text-xs tracking-[0.1em] uppercase text-black/50 hover:text-black transition-colors"
               >
                 Free Assessment
+              </a>
+              <a
+                href="/library"
+                className="text-xs tracking-[0.1em] uppercase text-black/50 hover:text-black transition-colors"
+              >
+                Program library
               </a>
               <a
                 href="/resources"

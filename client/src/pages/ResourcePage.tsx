@@ -442,6 +442,12 @@ function ResourceNavigation() {
             Insights
           </a>
           <a
+            href="/library"
+            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
+          >
+            Library
+          </a>
+          <a
             href="/resources"
             className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black hover:text-black/60 transition-colors font-medium"
           >
