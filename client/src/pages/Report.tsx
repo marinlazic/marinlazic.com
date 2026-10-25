@@ -44,14 +44,14 @@ export default function Report() {
   if (!report) {
     return (
       <Shell>
-        <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+        <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
         <h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
           Report not found
         </h1>
         <p className="text-base text-black/65 leading-relaxed mb-8">
           This link has expired or is not right. Reports stay available for 90 days. You can take the assessment again at any time.
         </p>
-        <a href="/assessment" className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-colors font-bold">
+        <a href="/assessment" className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-bold">
           Take the assessment
         </a>
       </Shell>
@@ -66,7 +66,7 @@ export default function Report() {
       <a href="/" className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-black/40 hover:text-black transition-colors mb-8">
         <ArrowLeft className="w-3.5 h-3.5" /> Back to site
       </a>
-      <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+      <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
       <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">Performance assessment</p>
       <h1 className="font-heading text-3xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
         {firstName}, your report

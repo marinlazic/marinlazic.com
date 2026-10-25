@@ -17,7 +17,7 @@ export default function RecoveryGuide() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch mb-16">
             <div className="lg:col-span-7">
-              <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+              <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
               <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">Free guide, 34 pages</p>
               <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
                 {G.title}
@@ -81,7 +81,7 @@ export default function RecoveryGuide() {
                 <p className="text-sm text-black/70 leading-relaxed mb-5">
                   The free assessment takes about ten minutes and scores your sleep, stress, training, nutrition and recovery, with a report on what to fix first.
                 </p>
-                <a href="/assessment" className="inline-flex bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium">
+                <a href="/assessment" className="inline-flex bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium">
                   Take the assessment
                 </a>
               </div>

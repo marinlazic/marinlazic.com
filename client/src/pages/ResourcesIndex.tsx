@@ -9,7 +9,7 @@ import { featuredResource, popularResources, resourceCards, startHereResources, 
 function SectionLabel({ children }: { children: string }) {
   return (
     <div className="flex items-center gap-3 mb-5">
-      <span className="w-2.5 h-2.5 bg-[#2F6BF0]" aria-hidden="true" />
+      <span className="w-2.5 h-2.5 bg-[#FFD400]" aria-hidden="true" />
       <h2 className="font-heading text-xs tracking-[0.22em] uppercase font-semibold">{children}</h2>
     </div>
   );
@@ -64,7 +64,7 @@ export default function ResourcesIndex() {
       <main className="flex-1 px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
         <div className="max-w-[1280px] mx-auto">
           <Breadcrumbs label="Resources" />
-          <div className="w-3 h-3 bg-[#2F6BF0] mb-6" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#FFD400] mb-6" aria-hidden="true" />
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 lg:mb-12">
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.035em] leading-[0.93]">
               Resources
@@ -114,7 +114,7 @@ export default function ResourcesIndex() {
           {/* Every guide */}
           <section className="mt-14 lg:mt-20 border-t border-black/10 pt-8" aria-labelledby="all-guides">
             <div className="flex items-center gap-3 mb-6">
-              <span className="w-2.5 h-2.5 bg-[#2F6BF0]" aria-hidden="true" />
+              <span className="w-2.5 h-2.5 bg-[#FFD400]" aria-hidden="true" />
               <h2 id="all-guides" className="font-heading text-xs tracking-[0.22em] uppercase font-semibold">
                 All guides
               </h2>
@@ -140,7 +140,7 @@ export default function ResourcesIndex() {
                 Take the free assessment for a score and a written report, or apply for coaching and I build the plan around your week.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href="/assessment" className="inline-flex items-center bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-colors font-medium">
+                <a href="/assessment" className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium">
                   Take the assessment
                 </a>
                 <a href="/apply" className="inline-flex items-center border border-black text-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-white transition-colors font-medium">

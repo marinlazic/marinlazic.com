@@ -72,14 +72,14 @@ export function Nav() {
   }, []);
 
   const links: { label: string; href: string; external?: boolean }[] = [
-    { label: "About", href: "/about" },
-    { label: "Executive", href: "/executive-health-performance" },
-    { label: "Corporate", href: "/corporate-health-performance" },
-    { label: "Library", href: "/library" },
-    { label: "Resources", href: "/resources" },
-    { label: "Media", href: "/media" },
-    { label: "Speaking", href: "/speaking" },
-    { label: "Contact", href: "#contact" },
+    { label: "👋 About", href: "/about" },
+    { label: "💼 Executive", href: "/executive-health-performance" },
+    { label: "🏢 Corporate", href: "/corporate-health-performance" },
+    { label: "📚 Library", href: "/library" },
+    { label: "🧠 Resources", href: "/resources" },
+    { label: "🎥 Media", href: "/media" },
+    { label: "🎤 Speaking", href: "/speaking" },
+    { label: "💬 Contact", href: "#contact" },
   ];
 
   return (
@@ -100,7 +100,7 @@ export function Nav() {
           ML
         </a>
         {/* Desktop */}
-        <div className="hidden xl:flex items-center gap-8 shrink-0 whitespace-nowrap">
+        <div className="hidden xl:flex items-center gap-3 shrink-0 whitespace-nowrap">
           {links.map(l => (
             <a
               key={l.href}
@@ -108,7 +108,7 @@ export function Nav() {
               {...(l.external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="text-xs tracking-[0.15em] uppercase text-black/60 hover:text-black transition-colors font-medium"
+              className="text-[11px] tracking-[0.08em] uppercase text-black/70 hover:text-black transition-colors font-medium"
             >
               {l.label}
             </a>
@@ -124,7 +124,7 @@ export function Nav() {
           <a
             href="/apply"
             onClick={() => track("cta_click", { button: "nav_apply_coaching" })}
-            className="bg-black text-white text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black/80 transition-colors font-medium"
+            className="bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
           >
             Apply for Coaching
           </a>
@@ -173,7 +173,7 @@ export function Nav() {
               setMobileOpen(false);
               track("cta_click", { button: "nav_apply_coaching_mobile" });
             }}
-            className="block mt-4 bg-black text-white text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
+            className="block mt-4 bg-[#FFD400] text-black border-2 border-black text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
           >
             Apply for Coaching
           </a>
@@ -231,7 +231,7 @@ function Hero() {
           <div className="lg:col-span-7 order-2 lg:order-1">
             {/* Red accent square */}
             <div
-              className="w-3 h-3 bg-[#2F6BF0] mb-8"
+              className="w-3 h-3 bg-[#FFD400] mb-8"
               aria-hidden="true"
               role="presentation"
             />
@@ -256,7 +256,7 @@ function Hero() {
                 onClick={() =>
                   track("cta_click", { button: "hero_apply_coaching" })
                 }
-                className="inline-flex items-center bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
+                className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
               >
                 Apply for Coaching
               </a>
@@ -293,7 +293,7 @@ function Hero() {
               />
               {/* Small red square accent */}
               <div
-                className="absolute bottom-6 -left-3 w-6 h-6 bg-[#2F6BF0] hidden lg:block"
+                className="absolute bottom-6 -left-3 w-6 h-6 bg-[#FFD400] hidden lg:block"
                 aria-hidden="true"
                 role="presentation"
               />
@@ -374,12 +374,12 @@ function About() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#2F6BF0]"
+                className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                About
+                👋 About
               </span>
             </div>
             <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
@@ -479,12 +479,12 @@ function Timeline() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#2F6BF0]"
+                className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                Experience
+                🏆 Experience
               </span>
             </div>
             <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
@@ -588,12 +588,12 @@ function Services() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#2F6BF0]"
+                className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                Services
+                💪 Services
               </span>
             </div>
             <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
@@ -641,7 +641,7 @@ function Services() {
                     </p>
                     {service.outcomes.map((outcome, j) => (
                       <div key={j} className="flex items-start gap-3">
-                        <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-1.5 shrink-0" />
+                        <div className="w-1.5 h-1.5 bg-[#FFD400] mt-1.5 shrink-0" />
                         <p className="text-sm text-black/55 leading-relaxed">
                           {outcome}
                         </p>
@@ -658,7 +658,7 @@ function Services() {
                             onClick={() =>
                               track("cta_click", { button: "service_01_apply" })
                             }
-                            className="inline-flex items-center gap-2 bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3 hover:bg-black/80 transition-colors font-medium"
+                            className="inline-flex items-center gap-2 bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
                           >
                             Apply for Coaching{" "}
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -719,7 +719,7 @@ function Services() {
                 onClick={() =>
                   track("cta_click", { button: "services_apply_coaching" })
                 }
-                className="inline-flex items-center bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
+                className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
               >
                 Apply for Coaching
               </a>
@@ -777,12 +777,12 @@ function AssessmentPreview() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#2F6BF0]"
+                className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                Free Report
+                🎁 Free Report
               </span>
             </div>
             <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
@@ -800,7 +800,7 @@ function AssessmentPreview() {
                 onClick={() =>
                   track("cta_click", { button: "preview_get_report" })
                 }
-                className="inline-flex items-center bg-black text-white text-xs sm:text-sm tracking-[0.15em] uppercase px-6 sm:px-8 py-3.5 sm:py-4 hover:bg-black/80 transition-colors font-medium"
+                className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-xs sm:text-sm tracking-[0.15em] uppercase px-6 sm:px-8 py-3.5 sm:py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
               >
                 Get Your Free Report
               </a>
@@ -941,7 +941,7 @@ function AssessmentPreview() {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-1.5 sm:mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-1.5 sm:mt-2 shrink-0" />
                   <div>
                     <p className="text-xs tracking-[0.1em] uppercase text-black font-semibold mb-1">
                       Stress
@@ -963,7 +963,7 @@ function AssessmentPreview() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-1.5 sm:mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-1.5 sm:mt-2 shrink-0" />
                   <div>
                     <p className="text-xs tracking-[0.1em] uppercase text-black font-semibold mb-1">
                       Sleep
@@ -1018,9 +1018,9 @@ function LatestInsights() {
           {/* Left label */}
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
+              <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                Latest Writing
+                ✍️ Latest Writing
               </span>
             </div>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
@@ -1103,8 +1103,8 @@ function FreeGuide() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
-              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">Free guide</span>
+              <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
+              <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">🎁 Free guide</span>
             </div>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
               The Recovery
@@ -1120,7 +1120,7 @@ function FreeGuide() {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 mb-8 max-w-2xl">
                   {RECOVERY_GUIDE.whatsInside.slice(0, 4).map(item => (
                     <li key={item} className="flex gap-3 text-sm text-black/65 leading-relaxed">
-                      <span className="w-2 h-2 bg-[#2F6BF0] mt-2 shrink-0" aria-hidden="true" />
+                      <span className="w-2 h-2 bg-[#FFD400] mt-2 shrink-0" aria-hidden="true" />
                       {item}
                     </li>
                   ))}
@@ -1161,9 +1161,9 @@ function SubstackArticles() {
           {/* Left label */}
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
+              <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                Substack
+                📬 Substack
               </span>
             </div>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.1]">
@@ -1315,12 +1315,12 @@ function Contact() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <div
-                className="w-2.5 h-2.5 bg-[#2F6BF0]"
+                className="w-2.5 h-2.5 bg-[#FFD400]"
                 aria-hidden="true"
                 role="presentation"
               />
               <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-                Contact
+                📞 Contact
               </span>
             </div>
             <h2 className="font-heading font-bold text-2xl lg:text-3xl tracking-[-0.02em]">
@@ -1359,7 +1359,7 @@ function Contact() {
                     onClick={() =>
                       track("cta_click", { button: "contact_apply_coaching" })
                     }
-                    className="inline-flex items-center bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
+                    className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
                   >
                     Apply for Coaching
                   </a>
@@ -1414,7 +1414,7 @@ function Contact() {
                       <button
                         type="submit"
                         disabled={submitMutation.isPending}
-                        className="bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium disabled:opacity-50 whitespace-nowrap"
+                        className="bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium disabled:opacity-50 whitespace-nowrap"
                       >
                         {submitMutation.isPending
                           ? "Sending..."
@@ -1445,7 +1445,7 @@ function FAQ() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="max-w-3xl">
           <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
-            Frequently Asked Questions
+            ❓ Frequently Asked Questions
           </span>
           <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight leading-[0.95] mt-3 mb-10">
             Common Questions
@@ -1579,7 +1579,7 @@ function StickyApplyBar() {
         </span>
         <a
           href="/apply"
-          className="bg-black text-white text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black/80 transition-colors font-medium"
+          className="bg-[#FFD400] text-black border-2 border-black text-[11px] tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
         >
           Apply for Coaching
         </a>
@@ -1587,7 +1587,7 @@ function StickyApplyBar() {
       {/* Desktop: floating button bottom-right */}
       <a
         href="/apply"
-        className="hidden md:flex fixed bottom-8 right-8 z-50 items-center gap-2 bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-all shadow-lg hover:shadow-xl font-medium"
+        className="hidden md:flex fixed bottom-8 right-8 z-50 items-center gap-2 bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-[#FFD400] transition-all shadow-lg hover:shadow-xl font-medium"
       >
         Apply for Coaching <ArrowRight className="w-3.5 h-3.5" />
       </a>
@@ -1626,7 +1626,7 @@ function CookieConsent() {
         </p>
         <button
           onClick={accept}
-          className="bg-black text-white text-xs tracking-[0.1em] uppercase px-6 py-2.5 hover:bg-black/80 transition-colors font-medium shrink-0"
+          className="bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.1em] uppercase px-6 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium shrink-0"
         >
           Accept
         </button>
@@ -1708,7 +1708,7 @@ function ExitIntentPopup() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="w-3 h-3 bg-[#2F6BF0] mb-6" aria-hidden="true" />
+            <div className="w-3 h-3 bg-[#FFD400] mb-6" aria-hidden="true" />
 
             <h3 className="font-heading font-bold text-xl sm:text-2xl tracking-[-0.02em] mb-3">
               Before you leave
@@ -1720,7 +1720,7 @@ function ExitIntentPopup() {
 
             <button
               onClick={goToAssessment}
-              className="w-full bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
+              className="w-full bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
             >
               Take the Performance Assessment
             </button>

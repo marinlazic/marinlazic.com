@@ -28,7 +28,7 @@ export default function PaymentCancel() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/assessment"
-              className="inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-[#FFD400] text-black border-2 border-black px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
             >
               Retake Assessment <ArrowRight className="w-3 h-3" />
             </a>

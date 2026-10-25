@@ -73,7 +73,7 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
         required
         className="flex-1 min-w-[14rem] border border-black/20 bg-white px-4 py-3.5 text-sm placeholder:text-black/30 focus:outline-none focus:border-black transition-colors"
       />
-      <button type="submit" disabled={subscribe.isPending} className="bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium disabled:opacity-50 whitespace-nowrap">
+      <button type="submit" disabled={subscribe.isPending} className="bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium disabled:opacity-50 whitespace-nowrap">
         {subscribe.isPending ? "Sending" : "Send me the guide"}
       </button>
     </form>
@@ -83,7 +83,7 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
     return (
       <aside className={`border-t border-b border-black/10 py-8 ${className}`} aria-labelledby={`guide-${placement}`}>
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
           <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">Free guide</span>
         </div>
         <h3 id={`guide-${placement}`} className="font-heading font-bold text-xl sm:text-2xl tracking-[-0.02em] leading-tight mb-2">

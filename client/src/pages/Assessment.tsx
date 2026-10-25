@@ -249,7 +249,7 @@ function ShareResults({
                     href={xUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 bg-black text-white px-5 py-3.5 text-xs tracking-[0.1em] uppercase font-bold hover:bg-black/80 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 bg-[#FFD400] text-black border-2 border-black px-5 py-3.5 text-xs tracking-[0.1em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
                     onClick={() => {
                       track("share_click", {
                         platform: "x",
@@ -497,7 +497,7 @@ export function KickstartCheckoutButton({
     <button
       onClick={handleCheckout}
       disabled={loading}
-      className="w-full sm:w-auto bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+      className="w-full sm:w-auto bg-[#FFD400] text-black border-2 border-black px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
     >
       {loading ? (
         <>
@@ -751,14 +751,14 @@ export default function Assessment() {
               ML
             </a>
             <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-              Performance Assessment
+              📊 Performance Assessment
             </span>
           </div>
         </header>
 
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-2xl w-full">
-            <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+            <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight leading-[0.95] mb-6">
               Performance
               <br />
@@ -788,7 +788,7 @@ export default function Assessment() {
                   track("assessment_started");
                   setPhase("quiz");
                 }}
-                className="bg-black text-white px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
+                className="bg-[#FFD400] text-black border-2 border-black px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
               >
                 Start the Assessment
               </button>
@@ -863,7 +863,7 @@ export default function Assessment() {
                   transition={{ delay: i * 2, duration: 0.3 }}
                   className="flex items-center gap-3 text-sm text-black/40"
                 >
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] rounded-full" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] rounded-full" />
                   {step}
                 </motion.div>
               ))}
@@ -964,7 +964,7 @@ export default function Assessment() {
               className="text-center mb-16"
             >
               <div
-                className="w-3 h-3 bg-[#2F6BF0] mx-auto mb-8"
+                className="w-3 h-3 bg-[#FFD400] mx-auto mb-8"
                 aria-hidden="true"
               />
               <h2 className="font-heading text-xl sm:text-2xl font-bold uppercase tracking-tight mb-8 text-black/40">
@@ -1157,7 +1157,7 @@ export default function Assessment() {
                 {/* Weakest */}
                 <div className="bg-red-50 border border-red-200 p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-[#2F6BF0] rounded-full" />
+                    <div className="w-2 h-2 bg-[#FFD400] rounded-full" />
                     <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
                       Biggest Opportunity
                     </span>
@@ -1559,7 +1559,7 @@ export default function Assessment() {
                                   className="flex-1 flex flex-col items-center gap-1"
                                 >
                                   <motion.div
-                                    className={`w-full rounded-sm ${isYou ? "bg-[#2F6BF0]" : "bg-black/10"}`}
+                                    className={`w-full rounded-sm ${isYou ? "bg-[#FFD400]" : "bg-black/10"}`}
                                     initial={{ height: 0 }}
                                     animate={{ height: `${val}%` }}
                                     transition={{
@@ -1659,7 +1659,7 @@ export default function Assessment() {
 
             {/* ── This Is Where Most People Stop ── */}
             <div className="border-t border-black/10 pt-12 mb-16">
-              <div className="bg-black text-white p-8 sm:p-12">
+              <div className="bg-[#FFD400] text-black border-2 border-black p-8 sm:p-12">
                 <div className="max-w-2xl">
                   <h3 className="text-[10px] tracking-[0.2em] uppercase text-white/40 font-medium mb-4">
                     What Happens Next
@@ -1667,7 +1667,7 @@ export default function Assessment() {
                   <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-6 leading-tight">
                     This Is Where Most People Stop
                   </h2>
-                  <div className="w-8 h-0.5 bg-[#2F6BF0] mb-8" />
+                  <div className="w-8 h-0.5 bg-[#FFD400] mb-8" />
                   <p className="text-sm sm:text-base text-white/60 leading-relaxed mb-6">
                     You have the data. You know what is holding you back. The
                     difference between knowing and doing is having someone build
@@ -1705,7 +1705,7 @@ export default function Assessment() {
                   {/* CTA Button */}
                   <a
                     href={`/apply?name=${encodeURIComponent((answers.name as string) || "")}&email=${encodeURIComponent((answers.email as string) || "")}${utmSource ? `&utm_source=${encodeURIComponent(utmSource)}` : ""}${utmMedium ? `&utm_medium=${encodeURIComponent(utmMedium)}` : ""}${utmCampaign ? `&utm_campaign=${encodeURIComponent(utmCampaign)}` : ""}`}
-                    className="inline-flex items-center gap-2 bg-black text-white px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#c62828] transition-colors mb-4"
+                    className="inline-flex items-center gap-2 bg-[#FFD400] text-black border-2 border-black px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#c62828] transition-colors mb-4"
                   >
                     Apply for Coaching
                   </a>
@@ -1772,7 +1772,7 @@ export default function Assessment() {
         {/* Progress bar */}
         <div className="w-full h-0.5 bg-black/5">
           <motion.div
-            className="h-full bg-[#2F6BF0]"
+            className="h-full bg-[#FFD400]"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.3 }}
           />
@@ -1899,7 +1899,7 @@ export default function Assessment() {
                       !answers[question.id] ||
                       (answers[question.id] as string[]).length === 0
                     }
-                    className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="bg-[#FFD400] text-black border-2 border-black px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                   </button>
@@ -1931,7 +1931,7 @@ export default function Assessment() {
                   <div className="flex gap-3">
                     <button
                       onClick={handleTextSubmit}
-                      className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
+                      className="bg-[#FFD400] text-black border-2 border-black px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
                     >
                       Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                     </button>
@@ -1991,7 +1991,7 @@ export default function Assessment() {
                   <div className="flex gap-3">
                     <button
                       onClick={handleTextSubmit}
-                      className="bg-black text-white px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black/80 transition-colors"
+                      className="bg-[#FFD400] text-black border-2 border-black px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
                     >
                       Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                     </button>

@@ -27,7 +27,7 @@ export default function LibraryProgram() {
           <div className="grid lg:grid-cols-2 gap-10 items-start">
             <ProgramThumb p={p} eager />
             <div>
-              <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+              <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
               <h1 className="font-heading text-4xl sm:text-5xl font-bold uppercase tracking-[-0.035em] leading-[0.93] mb-6">
                 {p.name}
               </h1>
@@ -44,7 +44,7 @@ export default function LibraryProgram() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => track("cta_click", { button: `library_buy_${p.slug}` })}
-                  className="inline-flex bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
+                  className="inline-flex bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
                 >
                   Buy on Bridge
                 </a>

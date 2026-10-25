@@ -326,7 +326,7 @@ export function Navigation() {
           </a>
           <a
             href="/apply"
-            className="bg-black text-white text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-black/80 transition-colors font-medium"
+            className="bg-[#FFD400] text-black border-2 border-black text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
           >
             Apply
           </a>
@@ -380,7 +380,7 @@ export default function InformationPage() {
           <Breadcrumbs label={page.label} />
           <div className={page.hero ? "" : "grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch mb-12"}>
             <div className={page.hero ? "" : "lg:col-span-7"}>
-              <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+              <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
               <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">
                 {page.label}
               </p>
@@ -489,7 +489,7 @@ export default function InformationPage() {
             <div className="mt-12">
               <a
                 href={page.cta.href}
-                className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-colors font-bold"
+                className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-bold"
               >
                 {page.cta.label}
               </a>

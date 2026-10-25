@@ -10,14 +10,14 @@ export default function BloodWork() {
             ML
           </a>
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-            Blood Work Service
+            🩸 Blood Work Service
           </span>
         </div>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
-          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
             Blood Work Coaching Context
           </h1>
@@ -35,7 +35,7 @@ export default function BloodWork() {
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Coaching context for training after you have discussed
                     testing and results with your GP or another appropriate
@@ -43,14 +43,14 @@ export default function BloodWork() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Support to apply clinician-cleared exercise and nutrition
                     guidance within a coaching plan.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Coaching does not replace medical care or individual dietary
                     advice from an Accredited Practising Dietitian.
@@ -61,7 +61,7 @@ export default function BloodWork() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                How it works
+                ⚙️ How it works
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -97,7 +97,7 @@ export default function BloodWork() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                Who this is for
+                🎯 Who this is for
               </h2>
               <p className="text-sm text-black/70 leading-relaxed">
                 People who have received relevant advice from a treating
@@ -109,7 +109,7 @@ export default function BloodWork() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                Pricing
+                💰 Pricing
               </h2>
               <p className="text-sm text-black/70 leading-relaxed">
                 [MARIN TO CONFIRM: price and availability]
@@ -129,7 +129,7 @@ export default function BloodWork() {
           <div className="flex flex-wrap gap-4">
             <a
               href="/#contact"
-              className="inline-flex items-center bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-bold"
+              className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-bold"
             >
               Contact About Availability
             </a>

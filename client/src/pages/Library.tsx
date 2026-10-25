@@ -51,7 +51,7 @@ const GUIDES = [
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <span className="flex items-center gap-2.5 text-[11px] tracking-[0.16em] uppercase text-black/55">
-      <span className="inline-block w-2 h-2 bg-[#2F6BF0]" aria-hidden="true" />
+      <span className="inline-block w-2 h-2 bg-[#FFD400]" aria-hidden="true" />
       {children}
     </span>
   );
@@ -137,7 +137,7 @@ function CustomProgram({ num }: { num: string }) {
               <textarea className={field} rows={2} value={f.notes} onChange={set("notes")} />
             </label>
             {err ? <p role="alert" className="text-sm text-[#B00020]">{err}</p> : null}
-            <button type="submit" disabled={submit.isPending} className="self-start bg-black text-white text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black/80 transition-colors disabled:opacity-60">
+            <button type="submit" disabled={submit.isPending} className="self-start bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-60">
               {submit.isPending ? "Sending" : "Send my request"}
             </button>
           </form>
@@ -186,7 +186,7 @@ export default function Library() {
               Pick your sport, your hobby, your stage of life or your job. Every program lives in the Bridge app on your phone.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#water-polo" className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black/80 transition-colors">
+              <a href="#water-polo" className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black hover:text-[#FFD400] transition-colors">
                 Browse the library
               </a>
               <a href="#guide" className="inline-flex border border-black text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black hover:text-white transition-colors">
@@ -244,7 +244,7 @@ export default function Library() {
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => track("cta_click", { button: `library_buy_${p.slug}` })}
-                            className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-colors font-medium"
+                            className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
                           >
                             Buy now
                           </a>
@@ -256,7 +256,7 @@ export default function Library() {
                     <li key={u.name} className="bg-white flex flex-col">
                       <div className="relative">
                         <ProgramThumb p={u} />
-                        <span className="absolute top-3 right-3 text-[11px] tracking-[0.08em] uppercase bg-black text-white px-2 py-1">Coming soon</span>
+                        <span className="absolute top-3 right-3 text-[11px] tracking-[0.08em] uppercase bg-[#FFD400] text-black border-2 border-black px-2 py-1">Coming soon</span>
                       </div>
                       <div className="p-5 flex flex-col gap-3 flex-1">
                         <span className="text-[11px] tracking-[0.1em] uppercase text-black/55">{u.tag}</span>
@@ -291,7 +291,7 @@ export default function Library() {
                         <p className="text-[13px] text-black/55 pt-3 border-t border-black/10 mt-auto">6 weeks, 3 sessions a week · Gym or home</p>
                         <div className="flex items-center justify-between gap-3">
                           <span className="font-heading font-bold text-3xl">Enquire</span>
-                          <a href="/apply" className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black/80 transition-colors font-medium">
+                          <a href="/apply" className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium">
                             Enquire now
                           </a>
                         </div>
@@ -325,7 +325,7 @@ export default function Library() {
               ))}
             </ol>
             <div className="flex flex-wrap gap-3 mt-2">
-              <a href="https://apps.apple.com/app/id1024299963" target="_blank" rel="noopener noreferrer" className="inline-flex bg-black text-white text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black/80 transition-colors">
+              <a href="https://apps.apple.com/app/id1024299963" target="_blank" rel="noopener noreferrer" className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-7 py-4 font-medium hover:bg-black hover:text-[#FFD400] transition-colors">
                 Download on the App Store
               </a>
               <span className="inline-flex items-center text-sm text-black/60">On Android, search for BridgeAthletic in Google Play.</span>

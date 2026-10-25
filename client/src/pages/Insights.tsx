@@ -169,7 +169,7 @@ export default function Insights() {
                 <ArrowLeft className="w-3.5 h-3.5" /> Back to home
               </a>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-3 bg-[#2F6BF0]" aria-hidden="true" />
+                <div className="w-3 h-3 bg-[#FFD400]" aria-hidden="true" />
                 <span className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium">
                   Insights
                 </span>
@@ -322,7 +322,7 @@ export default function Insights() {
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="/apply"
-              className="inline-block bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium"
+              className="inline-block bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
             >
               Apply for Coaching
             </a>
@@ -425,7 +425,7 @@ function InsightsNav() {
           </a>
           <a
             href="/apply"
-            className="bg-black text-white text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black/80 transition-colors font-medium"
+            className="bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-5 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
           >
             Apply for Coaching
           </a>
@@ -468,7 +468,7 @@ function InsightsNav() {
           <a
             href="/apply"
             onClick={() => setMobileOpen(false)}
-            className="block mt-4 bg-black text-white text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
+            className="block mt-4 bg-[#FFD400] text-black border-2 border-black text-center text-sm tracking-[0.1em] uppercase px-5 py-3"
           >
             Apply for Coaching
           </a>

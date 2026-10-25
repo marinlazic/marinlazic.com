@@ -278,7 +278,7 @@ function ArticleContent({ content }: { content: string }) {
                   key={bi}
                   className="flex gap-4 py-3.5 border-b border-black/5 last:border-0"
                 >
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2.5 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2.5 shrink-0" />
                   <p className="text-[15px] leading-[1.8] text-black/70">
                     {renderInline(item)}
                   </p>
@@ -311,7 +311,7 @@ function ArticleContent({ content }: { content: string }) {
                     key={ni}
                     className="flex gap-4 py-3.5 border-b border-black/5 last:border-0"
                   >
-                    <div className="w-6 h-6 bg-[#2F6BF0] flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-6 h-6 bg-[#FFD400] flex items-center justify-center shrink-0 mt-0.5">
                       <span className="text-white font-heading font-bold text-[11px]">
                         {num}
                       </span>
@@ -339,7 +339,7 @@ function ArticleContent({ content }: { content: string }) {
                       {section.content}
                     </h2>
                   </div>
-                  <div className="w-12 h-0.5 bg-[#2F6BF0]" />
+                  <div className="w-12 h-0.5 bg-[#FFD400]" />
                 </div>
               );
             }
@@ -376,7 +376,7 @@ function ArticleContent({ content }: { content: string }) {
                       key={idx}
                       className="mt-10 mb-4 flex items-start gap-4"
                     >
-                      <div className="shrink-0 w-10 h-10 bg-[#2F6BF0] flex items-center justify-center">
+                      <div className="shrink-0 w-10 h-10 bg-[#FFD400] flex items-center justify-center">
                         <span className="text-white font-heading font-bold text-sm">
                           {stepMatch[1].replace("Step ", "")}
                         </span>
@@ -536,7 +536,7 @@ export default function ArticleDetail() {
             </a>
             <a
               href="/apply"
-              className="bg-black text-white text-xs tracking-[0.15em] uppercase px-4 py-2 hover:bg-black/80 transition-colors font-medium"
+              className="bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-4 py-2 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
             >
               Apply
             </a>
@@ -651,7 +651,7 @@ export default function ArticleDetail() {
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="/apply"
-              className="inline-block bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium"
+              className="inline-block bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
             >
               Apply for Coaching
             </a>

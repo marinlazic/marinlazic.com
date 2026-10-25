@@ -189,3 +189,19 @@ html {
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0 2px, transparent 2px 9px, rgba(255, 255, 255, 0.25) 9px 10px, transparent 10px 23px),
     linear-gradient(180deg, #FFFFFF 0%, #C2D9FB 38%, #548DF8 72%, #3068F0 100%);
 }
+
+/* Sun theme: bright yellow accent, matches the Library page */
+:root { --sun: #FFD400; }
+@layer base {
+  h1, h2 {
+    text-decoration-line: underline;
+    text-decoration-color: var(--sun);
+    text-decoration-thickness: 0.22em;
+    text-underline-offset: -0.14em;
+    text-decoration-skip-ink: none;
+  }
+  .bg-black h1, .bg-black h2, .bg-black h3,
+  footer h1, footer h2, footer h3 { color: var(--sun); text-decoration: none; }
+  ::selection { background: var(--sun); color: #000; }
+  a[href]:focus-visible, button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+}

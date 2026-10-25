@@ -43,7 +43,7 @@ export default function Waitlist() {
               ML
             </a>
             <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-              Waitlist
+              ⏳ Waitlist
             </span>
           </div>
         </header>
@@ -80,14 +80,14 @@ export default function Waitlist() {
             ML
           </a>
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-            Waitlist
+            ⏳ Waitlist
           </span>
         </div>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
-          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
             Join the Waitlist
           </h1>
@@ -104,21 +104,21 @@ export default function Waitlist() {
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     The intended focus is strength and aerobic conditioning with
                     a manageable training plan.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Sleep and recovery habits can support the training plan.
                     Final inclusions will be confirmed before enrolment.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Training should fit your available time, starting fitness
                     and individual context.
@@ -133,19 +133,19 @@ export default function Waitlist() {
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     An email update if a programme becomes available.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Pricing, dates and delivery details before you decide.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Registering interest is not a purchase or a commitment to
                     join.
@@ -184,7 +184,7 @@ export default function Waitlist() {
             <button
               type="submit"
               disabled={joinWaitlist.isPending}
-              className="w-full bg-black text-white text-xs tracking-[0.2em] uppercase font-bold py-4 hover:bg-black/80 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.2em] uppercase font-bold py-4 hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {joinWaitlist.isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

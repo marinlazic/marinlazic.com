@@ -10,14 +10,14 @@ export default function HrvConditioning() {
             ML
           </a>
           <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-            HRV Conditioning
+            ❤️ HRV Conditioning
           </span>
         </div>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
-          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[0.95] mb-4">
             HRV Guided Conditioning
           </h1>
@@ -31,11 +31,11 @@ export default function HrvConditioning() {
           <div className="space-y-10 mb-12">
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                How it works
+                ⚙️ How it works
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     If you use HRV, take readings with the same device and
                     method so your individual trend can be considered
@@ -43,7 +43,7 @@ export default function HrvConditioning() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     An upward or steady personal trend may be discussed with
                     sleep, symptoms and recent load when considering a harder
@@ -51,7 +51,7 @@ export default function HrvConditioning() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     A mixed trend may lead to a discussion about keeping the
                     session easier, shortening it or selecting a lower-load
@@ -59,7 +59,7 @@ export default function HrvConditioning() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     A sustained change from your usual trend, especially with
                     symptoms or poor sleep, is a prompt to review load and seek
@@ -75,7 +75,7 @@ export default function HrvConditioning() {
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Illustrative session options may include easier aerobic
                     work, intervals or rest, selected in context rather than
@@ -83,7 +83,7 @@ export default function HrvConditioning() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Session frequency, intensity and progression would be
                     tailored to training history, current capacity and relevant
@@ -91,7 +91,7 @@ export default function HrvConditioning() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     A simple tracking approach may help record device-consistent
                     HRV trends alongside sleep, symptoms and training load.
@@ -99,7 +99,7 @@ export default function HrvConditioning() {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0" />
+                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">
                     Check-ins, group delivery and support arrangements are not
                     confirmed and will be published only if the service
@@ -111,7 +111,7 @@ export default function HrvConditioning() {
 
             <div>
               <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
-                Who this is for
+                🎯 Who this is for
               </h2>
               <p className="text-sm text-black/70 leading-relaxed">
                 Adults who already use a wearable capable of estimating HRV and
@@ -135,7 +135,7 @@ export default function HrvConditioning() {
           <div className="flex flex-wrap gap-4">
             <a
               href="/waitlist"
-              className="inline-flex items-center bg-black text-white text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-bold"
+              className="inline-flex items-center bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-bold"
             >
               Join the Waitlist
             </a>

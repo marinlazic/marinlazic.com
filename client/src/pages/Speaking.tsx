@@ -129,7 +129,7 @@ export default function Speaking() {
 
         <div className="max-w-[1280px] mx-auto">
           <Breadcrumbs label="Speaking" />
-          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
           <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">
             Speaking
           </p>
@@ -145,7 +145,7 @@ export default function Speaking() {
             <a
               href="#enquire"
               onClick={() => track("cta_click", { button: "speaking_hero_enquire" })}
-              className="inline-flex bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black/80 transition-colors font-medium"
+              className="inline-flex bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
             >
               Enquire about an event
             </a>
@@ -189,7 +189,7 @@ export default function Speaking() {
               <ul className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-6">
                 {FACTS.map(f => (
                   <li key={f.big} className="border-t border-black/10 pt-4">
-                    <span className="block w-2.5 h-2.5 bg-[#2F6BF0] mb-4" aria-hidden="true" />
+                    <span className="block w-2.5 h-2.5 bg-[#FFD400] mb-4" aria-hidden="true" />
                     <span className="block font-heading font-bold text-xl sm:text-2xl tracking-[-0.02em]">
                       {f.big}
                     </span>
@@ -258,7 +258,7 @@ export default function Speaking() {
                     key={c}
                     className="flex gap-4 border-b border-black/10 py-4 text-sm sm:text-base text-black/75 leading-relaxed"
                   >
-                    <span className="w-2 h-2 bg-[#2F6BF0] mt-2 shrink-0" aria-hidden="true" />
+                    <span className="w-2 h-2 bg-[#FFD400] mt-2 shrink-0" aria-hidden="true" />
                     {c}
                   </li>
                 ))}
@@ -352,7 +352,7 @@ export default function Speaking() {
                       <button
                         type="submit"
                         disabled={submit.isPending}
-                        className="bg-black text-white text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black/80 transition-colors font-medium disabled:opacity-50"
+                        className="bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium disabled:opacity-50"
                       >
                         {submit.isPending ? "Sending..." : "Send enquiry"}
                       </button>

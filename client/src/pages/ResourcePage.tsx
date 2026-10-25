@@ -461,7 +461,7 @@ function ResourceNavigation() {
           </a>
           <a
             href="/apply"
-            className="bg-black text-white text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-black/80 transition-colors font-medium"
+            className="bg-[#FFD400] text-black border-2 border-black text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
           >
             Apply
           </a>
@@ -506,7 +506,7 @@ export default function ResourcePage() {
             </span>
           </nav>
 
-          <div className="w-3 h-3 bg-[#2F6BF0] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
           <p className="text-xs tracking-[0.15em] uppercase text-black font-semibold mb-4">
             Keyword: {resource.keyword}
           </p>
@@ -575,7 +575,7 @@ export default function ResourcePage() {
                   {section.content.map(line => (
                     <div key={line} className="flex items-start gap-3">
                       <div
-                        className="w-1.5 h-1.5 bg-[#2F6BF0] mt-2 shrink-0"
+                        className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0"
                         aria-hidden="true"
                       />
                       <p className="text-sm sm:text-base text-black/70 leading-relaxed">
@@ -601,7 +601,7 @@ export default function ResourcePage() {
           <div className="mt-12 border-t border-black/10 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
             <div>
               <p className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
-                More resources
+                📚 More resources
               </p>
               <p className="text-sm text-black/60">
                 Browse the full library of short guides.

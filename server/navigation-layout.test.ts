@@ -36,7 +36,7 @@ describe("Homepage logo and navigation separation", () => {
     expect(row.div["@class"]).toContain("hidden xl:flex");
     expect(row.div["@class"]).toContain("shrink-0");
     expect(row.div["@class"]).toContain("whitespace-nowrap");
-    expect(row.div.a[0]["#text"]).toBe("About");
+    expect(row.div.a[0]["#text"]).toBe("👋 About");
     expect(row.button["@class"]).toContain("xl:hidden");
     expect(row.button["@class"]).toContain("min-w-11");
     expect(row.button["@aria-expanded"]).toBe("false");
