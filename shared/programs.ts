@@ -465,6 +465,55 @@ const LIVE: Record<string, { slug: string; buyUrl: string; level: string; forWho
     forWho: ["Skiers and snowboarders getting ready for a trip or a season", "People who want stronger legs, glutes and knees before the snow"],
     faq: "How long is the Ski and Snowboard Pre Season program?",
   },
+  "Perimenopause Strength": {
+    slug: "perimenopause-strength",
+    buyUrl: "https://bridgeathletic.com/product/perimenopausestrength-1748852",
+    level: "Women in perimenopause",
+    forWho: ["Women in perimenopause who want to build strength and keep their energy steady", "Women who want a clear plan for heavy, progressive lifting"],
+    faq: "How long is the Perimenopause Strength program?",
+  },
+  "Menopause Strength": {
+    slug: "menopause-strength",
+    buyUrl: "https://bridgeathletic.com/product/menopausestrength-1748853",
+    level: "Women in menopause",
+    forWho: ["Women in menopause and after who want to lift heavier", "Women who want a plan built for life after their periods stop"],
+    faq: "How long is the Menopause Strength program?",
+  },
+  "Strength for Bone Health": {
+    slug: "strength-for-bone-health",
+    buyUrl: "https://bridgeathletic.com/product/strengthforbonehealth-1748854",
+    level: "Bone health",
+    forWho: ["Women who want to build stronger bones with heavy, progressive loading", "People who want a step by step gym plan (check with your doctor first)"],
+    faq: "How long is the Strength for Bone Health program?",
+  },
+  "Women Leaders Performance": {
+    slug: "women-leaders-performance",
+    buyUrl: "https://bridgeathletic.com/product/womenleadersperformance-1748828",
+    level: "Women leaders",
+    forWho: ["Women who run teams or companies and want more strength and energy", "Women who want to train at the gym or at home"],
+    faq: "How long is the Women Leaders Performance program?",
+  },
+  "Leader Performance Program": {
+    slug: "leader-performance-program",
+    buyUrl: "https://bridgeathletic.com/product/leaderperformanceprogram-1748829",
+    level: "Executives and founders",
+    forWho: ["Executives and founders with a full calendar", "People who want strength, energy and better sleep habits"],
+    faq: "How long is the Leader Performance Program?",
+  },
+  "Travel Week Training": {
+    slug: "travel-week-training",
+    buyUrl: "https://bridgeathletic.com/product/travelweektraining-1748851",
+    level: "Frequent travellers",
+    forWho: ["People who travel for work and miss sessions", "People who want 30 minute hotel room workouts with no gym"],
+    faq: "How long is the Travel Week Training program?",
+  },
+  "The Corporate Athlete": {
+    slug: "the-corporate-athlete",
+    buyUrl: "https://bridgeathletic.com/product/thecorporateathlete-1748827",
+    level: "Corporate athletes",
+    forWho: ["Professionals who want to train, recover and perform at work like an athlete", "People who want training, recovery and sleep in one plan"],
+    faq: "How long is The Corporate Athlete program?",
+  },
 };
 
 const NUM_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight"];
