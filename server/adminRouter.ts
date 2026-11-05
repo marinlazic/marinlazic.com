@@ -22,6 +22,7 @@ import { importEvents, loadFollowups, logContact, refreshFollowups } from "./fol
 import { disconnect as gmailDisconnect, gmailStatus, recordSyncError, syncGmail } from "./gmail";
 import { describePurge, removeContact } from "./testData";
 import { AI_CRAWLERS, crawlerById, matchAiReferrer } from "./aiCrawlers";
+import { runGeoScore } from "./geoScore";
 import { ENV } from "./_core/env";
 
 export { answersFromMessage, labelAnswer, leadKind };
@@ -737,57 +738,13 @@ async function emailsForContact(email: string) {
  * Crawler rows start from the day the server side logging went live, so the
  * page reports that date rather than pretending the history is complete.
  */
-let readinessCache: { at: number; value: Awaited<ReturnType<typeof checkReadiness>> } | null = null;
+let scoreCache: { at: number; value: Awaited<ReturnType<typeof runGeoScore>> } | null = null;
 
-async function checkReadiness() {
-  const origin = ENV.siteOrigin;
-  const get = async (path: string) => {
-    try {
-      const res = await fetch(origin + path, {
-        headers: { "user-agent": "marinlazic-geo-check" },
-        signal: AbortSignal.timeout(8000),
-      });
-      const body = res.ok ? await res.text() : "";
-      return { ok: res.ok, status: res.status, body };
-    } catch (e) {
-      return { ok: false, status: 0, body: "", error: String((e as Error)?.message ?? e) };
-    }
-  };
-
-  const [llms, llmsFull, robots, sitemap, feed] = await Promise.all([
-    get("/llms.txt"),
-    get("/llms-full.txt"),
-    get("/robots.txt"),
-    get("/sitemap.xml"),
-    get("/feed.xml"),
-  ]);
-
-  // Which AI crawlers robots.txt turns away. A Disallow of / under a named
-  // agent, or under *, is the thing that stops the site being read at all.
-  const blocked: string[] = [];
-  if (robots.ok) {
-    const blocks = robots.body.split(/\n(?=user-agent:)/i);
-    for (const c of AI_CRAWLERS) {
-      const name = c.match.source.split("|")[0].replace(/[^A-Za-z-]/g, "");
-      const block = blocks.find(b => new RegExp(`user-agent:\\s*${name}\\b`, "i").test(b));
-      if (block && /disallow:\s*\/\s*$/im.test(block)) blocked.push(c.label);
-    }
-    const star = blocks.find(b => /user-agent:\s*\*/i.test(b));
-    if (star && /disallow:\s*\/\s*$/im.test(star)) blocked.push("Everyone (Disallow: / under *)");
+async function geoScorecard() {
+  if (!scoreCache || Date.now() - scoreCache.at > 600_000) {
+    scoreCache = { at: Date.now(), value: await runGeoScore(AI_CRAWLERS.map(c => c.match.source.split("|")[0].replace(/[^A-Za-z-]/g, ""))) };
   }
-
-  const lastmods = (sitemap.body.match(/<lastmod>[^<]+<\/lastmod>/g) ?? []).map(m => m.replace(/<\/?lastmod>/g, ""));
-  const newest = lastmods.sort().at(-1) ?? null;
-  const urlCount = (sitemap.body.match(/<loc>/g) || []).length;
-
-  const checks = [
-    { id: "llms", label: "llms.txt", ok: llms.ok && llms.body.length > 200, detail: llms.ok ? `${llms.body.length.toLocaleString()} characters` : `not served (${llms.status})` },
-    { id: "llms-full", label: "llms-full.txt", ok: llmsFull.ok && llmsFull.body.length > 1000, detail: llmsFull.ok ? `${llmsFull.body.length.toLocaleString()} characters` : `not served (${llmsFull.status})` },
-    { id: "robots", label: "robots.txt", ok: robots.ok && blocked.length === 0, detail: !robots.ok ? `not served (${robots.status})` : blocked.length ? `blocks ${blocked.join(", ")}` : "every AI crawler allowed" },
-    { id: "sitemap", label: "sitemap.xml", ok: sitemap.ok && urlCount > 0, detail: sitemap.ok ? `${urlCount} pages, newest change ${newest ?? "unknown"}` : `not served (${sitemap.status})` },
-    { id: "feed", label: "feed.xml", ok: feed.ok && feed.body.includes("<item"), detail: feed.ok ? `${(feed.body.match(/<item>/g) || []).length} articles` : `not served (${feed.status})` },
-  ];
-  return { checks, checkedAt: new Date().toISOString() };
+  return scoreCache.value;
 }
 
 async function geo(days: number) {
@@ -878,9 +835,7 @@ async function geo(days: number) {
 
   const daily = dayKeys(since, now).map(date => ({ date, crawls: crawlByDate.get(date) ?? 0 }));
 
-  if (!readinessCache || Date.now() - readinessCache.at > 600_000) {
-    readinessCache = { at: Date.now(), value: await checkReadiness() };
-  }
+  const scorecard = await geoScorecard();
 
   return {
     period: { since: since.toISOString(), now: now.toISOString(), days },
@@ -892,7 +847,7 @@ async function geo(days: number) {
     referrals,
     referralTotal,
     referralPrevious,
-    readiness: readinessCache.value,
+    scorecard,
   };
 }
 

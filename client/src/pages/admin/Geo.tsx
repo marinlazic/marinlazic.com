@@ -28,7 +28,8 @@ export function Geo({ days, setDays }: { days: number; setDays: (d: number) => v
 
   const totalCrawls = data.crawlers.reduce((s, c) => s + c.hits, 0);
   const prevCrawls = data.crawlers.reduce((s, c) => s + c.previous, 0);
-  const failing = data.readiness.checks.filter(c => !c.ok);
+  const score = data.scorecard;
+  const failing = score.items.filter(i => !i.ok);
 
   return (
     <div className="space-y-6">
@@ -90,23 +91,42 @@ export function Geo({ days, setDays }: { days: number; setDays: (d: number) => v
           )}
         </Panel>
 
-        <Panel title="Ready to be read">
-          <ul className="p-4 space-y-3">
-            {data.readiness.checks.map(c => (
-              <li key={c.id} className="flex items-start gap-3">
-                <span className={`mt-1.5 w-2 h-2 shrink-0 rounded-full ${c.ok ? "bg-green-600" : "bg-black"}`} />
+        <Panel title="Scorecard">
+          <div className="px-5 py-4 border-b border-black/10">
+            <div className="flex items-baseline gap-2">
+              <span className="font-heading text-4xl font-semibold tabular-nums">{score.score}</span>
+              <span className="text-sm text-black/50">out of 100</span>
+            </div>
+            <div className="mt-3 space-y-2">
+              {score.pillars.map(p => (
+                <div key={p.pillar}>
+                  <div className="flex items-baseline justify-between text-xs">
+                    <span className="font-medium">{p.pillar}</span>
+                    <span className="tabular-nums text-black/50">{p.score}%</span>
+                  </div>
+                  <div className="h-1 bg-black/10 mt-1">
+                    <div className="h-1 bg-black" style={{ width: `${p.score}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <ul className="p-4 space-y-2.5">
+            {score.items.map(i => (
+              <li key={i.id} className="flex items-start gap-3">
+                <span className={`mt-1.5 w-2 h-2 shrink-0 rounded-full ${i.ok ? "bg-green-600" : "bg-black"}`} />
                 <div className="min-w-0">
-                  <div className="text-sm font-medium">{c.label}</div>
-                  <div className="text-xs text-black/50 break-words">{c.detail}</div>
+                  <div className="text-sm font-medium">{i.label}</div>
+                  <div className="text-xs text-black/50 break-words">{i.detail}</div>
                 </div>
               </li>
             ))}
           </ul>
           <div className="px-4 pb-4">
             <Label>
-              {failing.length === 0 ? "Everything a crawler looks for is being served" : `${failing.length} to fix`}
+              {failing.length === 0 ? "Every check passing" : `${failing.length} to fix`}
               {" · checked "}
-              {fmtAgo(data.readiness.checkedAt)}
+              {fmtAgo(score.checkedAt)}
             </Label>
           </div>
         </Panel>
@@ -194,6 +214,22 @@ export function Geo({ days, setDays }: { days: number; setDays: (d: number) => v
             </tbody>
           </table>
         )}
+      </Panel>
+
+      <Panel title="Off site, and needs you">
+        <p className="px-5 pt-4 text-xs text-black/50">
+          None of these can be checked or done from the site, so they are not scored. They are what the rest of the web says about you,
+          which is what decides whether an assistant names you at all.
+        </p>
+        <ul className="p-4 pt-3 space-y-3">
+          {score.open.map(o => (
+            <li key={o.id} className="border-b border-black/5 last:border-0 pb-3 last:pb-0">
+              <div className="text-sm font-medium">{o.label}</div>
+              <div className="text-xs text-black/50">{o.why}</div>
+              <div className="text-xs text-black/40 mt-0.5">{o.who}</div>
+            </li>
+          ))}
+        </ul>
       </Panel>
     </div>
   );
