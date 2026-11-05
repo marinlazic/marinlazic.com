@@ -103,7 +103,7 @@ export default function Report() {
       <div className="border-t border-black/10 pt-10 mt-4">
         <h2 className="font-heading text-2xl font-bold uppercase tracking-tight mb-4">The 4 week programme</h2>
         <p className="text-sm sm:text-base text-black/60 leading-relaxed mb-6">
-          A structured four week programme built from these answers. One payment of $299 AUD. Marin is in touch within one business day.
+          A structured four week programme built from these answers. One payment. Marin is in touch within one business day.
         </p>
         <KickstartCheckoutButton email={report.email} name={report.name || ""} source="report_page" />
       </div>

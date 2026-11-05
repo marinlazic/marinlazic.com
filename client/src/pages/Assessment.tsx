@@ -506,7 +506,7 @@ export function KickstartCheckoutButton({
         </>
       ) : (
         <>
-          <CreditCard className="w-4 h-4" /> Start the 4 week programme, $299 AUD
+          <CreditCard className="w-4 h-4" /> Start the 4 week programme
         </>
       )}
     </button>
@@ -523,7 +523,7 @@ export function ProgrammeCheckout({ source }: { source: string }) {
         Start now
       </p>
       <p className="text-sm text-black/60 leading-relaxed mb-6 max-w-xl">
-        Four weeks, built from your assessment answers. One payment of $299 AUD. Marin will be in touch within one business day of your payment.
+        Four weeks, built from your assessment answers. One payment. Marin will be in touch within one business day of your payment.
       </p>
       <div className="grid sm:grid-cols-2 gap-3 mb-4 max-w-xl">
         <input
@@ -1652,7 +1652,7 @@ export default function Assessment() {
                 The 4 week programme
               </h2>
               <p className="text-sm sm:text-base text-black/60 leading-relaxed mb-6 max-w-2xl">
-                A structured four week programme built from these answers. Periodised training, sleep, recovery and nutrition guidance, with weekly email check ins. One payment of $299 AUD.
+                A structured four week programme built from these answers. Periodised training, sleep, recovery and nutrition guidance, with weekly email check ins. One payment.
               </p>
               <KickstartCheckoutButton
                 email={(answers.email as string) || ""}
@@ -1719,12 +1719,6 @@ export default function Assessment() {
 
                   {/* Pricing */}
                   <div className="border-t border-white/10 pt-6">
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-heading text-2xl font-bold text-white">
-                        $2,400
-                      </span>
-                      <span className="text-sm text-white/40">/month</span>
-                    </div>
                     <p className="text-xs text-white/30 mt-2">
                       Limited spots available. Application required.
                     </p>

@@ -66,7 +66,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/executive-health-performance": {
     title: "Executive Health and Performance Coaching | Marin Lazic",
     description:
-      "Online coaching for founders and executives, based in Sydney. Individual training, sleep and recovery plans. $2,400 AUD per month, minimum 3 months.",
+      "Online coaching for founders and executives, based in Sydney. Individual training, sleep and recovery plans. Minimum 3 months.",
     label: "Executive health and performance",
     modified: PREVIOUS_CONTENT_DATE,
   },
@@ -129,7 +129,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/apply": {
     title: "Apply for Executive Performance Coaching | Marin Lazic",
     description:
-      "Apply for 1:1 coaching with Marin Lazic. $2,400 AUD per month, minimum 3 months. Personal email follow up, no sales call required.",
+      "Apply for 1:1 coaching with Marin Lazic. Minimum 3 months. Personal email follow up, no sales call required.",
     label: "Apply for coaching",
     modified: PREVIOUS_CONTENT_DATE,
   },
@@ -494,16 +494,8 @@ export function getPageMeta(url: string): HeadMeta {
       url: `${CANONICAL_ORIGIN}/executive-health-performance`,
       offers: {
         "@type": "Offer",
-        price: "2400",
-        priceCurrency: "AUD",
         url: `${CANONICAL_ORIGIN}/apply`,
         description: "Monthly 1:1 coaching, minimum commitment 3 months.",
-        priceSpecification: {
-          "@type": "UnitPriceSpecification",
-          price: "2400",
-          priceCurrency: "AUD",
-          unitText: "month",
-        },
       },
     });
   if (path === "/library")
@@ -531,8 +523,6 @@ export function getPageMeta(url: string): HeadMeta {
       url,
       offers: {
         "@type": "Offer",
-        price: String(program.price),
-        priceCurrency: program.currency,
         availability: "https://schema.org/InStock",
         url: program.buyUrl,
         seller: { "@id": PERSON_ID },

@@ -298,7 +298,7 @@ export default function Apply() {
             {/* Q3: Investment readiness */}
             <div>
               <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
-                The investment is $2,400 AUD per month for a minimum of 3
+                Coaching is a monthly commitment with a minimum of 3
                 months. Are you ready to invest at that level? *
               </label>
               <div className="space-y-3 mt-3">

@@ -1290,7 +1290,7 @@ function buildPdfHtml(params: {
       </div>
     </div>
 
-    <div class="p4-investment">Investment: <strong>$2,400 AUD / MONTH</strong> &middot; minimum 3-month commitment</div>
+    <div class="p4-investment">Minimum <strong>3 month</strong> commitment</div>
 
     <div class="p4-cta-box">
       <div class="p4-cta-left">

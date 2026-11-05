@@ -238,7 +238,7 @@ export default function Library() {
                         </ul>
                         <p className="text-[13px] text-black/55 pt-3 border-t border-black/10 mt-auto">{programLength(p)} · {p.place}</p>
                         <div className="flex items-center justify-between gap-3">
-                          <span className="font-heading font-bold text-3xl">${p.price}</span>
+                          <span aria-hidden="true" />
                           <a
                             href={p.buyUrl}
                             target="_blank"
@@ -271,7 +271,7 @@ export default function Library() {
                           {u.weeks} weeks, {u.sessionsPerWeek} sessions a week · {u.place}
                         </p>
                         <div className="flex items-center justify-between gap-3">
-                          <span className="font-heading font-bold text-3xl">${u.price}</span>
+                          <span aria-hidden="true" />
                           <a href="#guide" className="inline-flex border border-black text-xs tracking-[0.12em] uppercase px-5 py-3.5 hover:bg-black hover:text-white transition-colors font-medium">
                             Tell me when it is ready
                           </a>

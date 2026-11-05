@@ -237,7 +237,7 @@ describe("buildPdfHtml", () => {
     expect(html).toContain("NEXT STEP");
     expect(html).toContain("Turn insight into");
     expect(html).toContain("1:1 COACHING");
-    expect(html).toContain("$2,400 AUD / MONTH");
+    expect(html).toContain("3 month");
     expect(html).toContain("Bridge Athletic");
     expect(html).toContain("marin@marinlazic.coach");
     expect(html).toContain("APPLY FOR COACHING");

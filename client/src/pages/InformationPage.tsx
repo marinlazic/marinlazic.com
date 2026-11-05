@@ -110,7 +110,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
         heading: "One to one coaching",
         content: [
           "This is one to one health and performance coaching for executives who want a clear training and recovery plan that fits the reality of work and life.",
-          "Coaching is $2,400 AUD per month with a minimum three month commitment. The programme is agreed after an application, so the scope is appropriate for the person and their context.",
+          "Coaching is a monthly commitment with a minimum of three months. Pricing is shared after you apply. The programme is agreed after an application, so the scope is appropriate for the person and their context.",
         ],
       },
       {

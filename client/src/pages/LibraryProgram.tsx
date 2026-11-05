@@ -36,9 +36,6 @@ export default function LibraryProgram() {
                 {programLength(p)} · {p.place} · {p.level}
               </p>
               <div className="flex items-center gap-6">
-                <span className="font-heading font-bold text-3xl">
-                  ${p.price} <span className="text-sm font-medium text-black/45">{p.currency}</span>
-                </span>
                 <a
                   href={p.buyUrl}
                   target="_blank"

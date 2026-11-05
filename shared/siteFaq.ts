@@ -5,7 +5,7 @@ export const HOME_FAQS = [
   },
   {
     q: "How much does coaching with Marin Lazic cost?",
-    a: "1:1 executive performance coaching is $2,400 AUD per month with a minimum commitment of 3 months. The training plan, recovery work and communication are agreed before you start. The online Performance Assessment is free.",
+    a: "1:1 executive performance coaching runs monthly with a minimum commitment of 3 months. Pricing is shared after you apply. The training plan, recovery work and communication are agreed before you start. The online Performance Assessment is free.",
   },
   {
     q: "Who is this coaching for?",
@@ -40,7 +40,7 @@ export const HOME_FAQS = [
 export const APPLY_FAQS = [
   {
     q: "What is the coaching investment?",
-    a: "1:1 coaching costs $2,400 AUD per month, with a minimum commitment of 3 months. Submitting the application does not charge you or enrol you in coaching.",
+    a: "1:1 coaching is a monthly commitment with a minimum of 3 months. Pricing is shared after you apply. Submitting the application does not charge you or enrol you in coaching.",
   },
   {
     q: "What happens after I apply?",
