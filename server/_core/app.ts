@@ -12,6 +12,7 @@ import { registerDiagnosticsRoute } from "../diagnostics";
 import { registerManusImportRoute } from "../manusImport";
 import { registerGmailRoutes } from "../gmail";
 import { registerShortLinks } from "../shortLinks";
+import { registerAiCrawlerLog } from "../aiCrawlers";
 
 /**
  * Builds the Express app. Used by the local server (index.ts) and by the
@@ -43,6 +44,9 @@ export async function createApp(options: { httpServer?: Server } = {}): Promise<
 
   // Tagged short links: /ig, /yt/a and the like redirect with UTM tags attached
   registerShortLinks(app);
+
+  // Record page requests from AI crawlers, which the browser tracking never sees
+  registerAiCrawlerLog(app);
 
   // tRPC API
   app.use(

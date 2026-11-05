@@ -21,6 +21,8 @@ import { answersFromMessage, labelAnswer, leadKind, parseAnswers } from "./conta
 import { importEvents, loadFollowups, logContact, refreshFollowups } from "./followup";
 import { disconnect as gmailDisconnect, gmailStatus, recordSyncError, syncGmail } from "./gmail";
 import { describePurge, removeContact } from "./testData";
+import { AI_CRAWLERS, crawlerById, matchAiReferrer } from "./aiCrawlers";
+import { ENV } from "./_core/env";
 
 export { answersFromMessage, labelAnswer, leadKind };
 
@@ -723,12 +725,184 @@ async function emailsForContact(email: string) {
 
 // ─── Router ────────────────────────────────────────────────────────────────
 
+// ─── GEO, AEO and LLMO ─────────────────────────────────────────────────────
+
+/**
+ * How the AI world sees the site. Three separate things, kept apart because
+ * they answer different questions:
+ *   crawlers   which AI companies read the pages, and which pages
+ *   referrals  people who arrived from ChatGPT, Perplexity and the rest
+ *   readiness  whether the files crawlers look for are actually being served
+ *
+ * Crawler rows start from the day the server side logging went live, so the
+ * page reports that date rather than pretending the history is complete.
+ */
+let readinessCache: { at: number; value: Awaited<ReturnType<typeof checkReadiness>> } | null = null;
+
+async function checkReadiness() {
+  const origin = ENV.siteOrigin;
+  const get = async (path: string) => {
+    try {
+      const res = await fetch(origin + path, {
+        headers: { "user-agent": "marinlazic-geo-check" },
+        signal: AbortSignal.timeout(8000),
+      });
+      const body = res.ok ? await res.text() : "";
+      return { ok: res.ok, status: res.status, body };
+    } catch (e) {
+      return { ok: false, status: 0, body: "", error: String((e as Error)?.message ?? e) };
+    }
+  };
+
+  const [llms, llmsFull, robots, sitemap, feed] = await Promise.all([
+    get("/llms.txt"),
+    get("/llms-full.txt"),
+    get("/robots.txt"),
+    get("/sitemap.xml"),
+    get("/feed.xml"),
+  ]);
+
+  // Which AI crawlers robots.txt turns away. A Disallow of / under a named
+  // agent, or under *, is the thing that stops the site being read at all.
+  const blocked: string[] = [];
+  if (robots.ok) {
+    const blocks = robots.body.split(/\n(?=user-agent:)/i);
+    for (const c of AI_CRAWLERS) {
+      const name = c.match.source.split("|")[0].replace(/[^A-Za-z-]/g, "");
+      const block = blocks.find(b => new RegExp(`user-agent:\\s*${name}\\b`, "i").test(b));
+      if (block && /disallow:\s*\/\s*$/im.test(block)) blocked.push(c.label);
+    }
+    const star = blocks.find(b => /user-agent:\s*\*/i.test(b));
+    if (star && /disallow:\s*\/\s*$/im.test(star)) blocked.push("Everyone (Disallow: / under *)");
+  }
+
+  const lastmods = (sitemap.body.match(/<lastmod>[^<]+<\/lastmod>/g) ?? []).map(m => m.replace(/<\/?lastmod>/g, ""));
+  const newest = lastmods.sort().at(-1) ?? null;
+  const urlCount = (sitemap.body.match(/<loc>/g) || []).length;
+
+  const checks = [
+    { id: "llms", label: "llms.txt", ok: llms.ok && llms.body.length > 200, detail: llms.ok ? `${llms.body.length.toLocaleString()} characters` : `not served (${llms.status})` },
+    { id: "llms-full", label: "llms-full.txt", ok: llmsFull.ok && llmsFull.body.length > 1000, detail: llmsFull.ok ? `${llmsFull.body.length.toLocaleString()} characters` : `not served (${llmsFull.status})` },
+    { id: "robots", label: "robots.txt", ok: robots.ok && blocked.length === 0, detail: !robots.ok ? `not served (${robots.status})` : blocked.length ? `blocks ${blocked.join(", ")}` : "every AI crawler allowed" },
+    { id: "sitemap", label: "sitemap.xml", ok: sitemap.ok && urlCount > 0, detail: sitemap.ok ? `${urlCount} pages, newest change ${newest ?? "unknown"}` : `not served (${sitemap.status})` },
+    { id: "feed", label: "feed.xml", ok: feed.ok && feed.body.includes("<item"), detail: feed.ok ? `${(feed.body.match(/<item>/g) || []).length} articles` : `not served (${feed.status})` },
+  ];
+  return { checks, checkedAt: new Date().toISOString() };
+}
+
+async function geo(days: number) {
+  const { since, previousSince, now } = windows(days);
+
+  const CRAWL = sql`${analyticsEvents.eventType} = 'ai_crawl'`;
+  const crawlerKey = sql`${EV_JSON} ->> 'crawler'`;
+
+  const totals = await raw<{ crawler: string; hits: number }>(sql`
+    select ${crawlerKey} as crawler, count(*) as hits from ${analyticsEvents}
+    where ${CRAWL} and ${analyticsEvents.createdAt} >= ${since}
+    group by 1 order by hits desc`);
+  const prevTotals = await raw<{ crawler: string; hits: number }>(sql`
+    select ${crawlerKey} as crawler, count(*) as hits from ${analyticsEvents}
+    where ${CRAWL} and ${analyticsEvents.createdAt} >= ${previousSince} and ${analyticsEvents.createdAt} < ${since}
+    group by 1`);
+  const prevByCrawler = new Map(prevTotals.map(r => [r.crawler, n(r.hits)]));
+
+  const crawlers = totals.map(r => {
+    const meta = crawlerById(String(r.crawler));
+    return {
+      id: String(r.crawler),
+      label: meta?.label ?? String(r.crawler),
+      owner: meta?.owner ?? "Unknown",
+      kind: meta?.kind ?? "training",
+      hits: n(r.hits),
+      previous: prevByCrawler.get(r.crawler) ?? 0,
+    };
+  });
+
+  const byKind = (["live", "search", "training"] as const).map(kind => ({
+    kind,
+    hits: crawlers.filter(c => c.kind === kind).reduce((s, c) => s + c.hits, 0),
+    previous: crawlers.filter(c => c.kind === kind).reduce((s, c) => s + c.previous, 0),
+  }));
+
+  const crawlDayCol = sql<string>`to_char(${analyticsEvents.createdAt} at time zone 'UTC', 'YYYY-MM-DD')`;
+  const crawlRows = await raw<{ date: string; hits: number }>(sql`
+    select ${crawlDayCol} as date, count(*) as hits from ${analyticsEvents}
+    where ${CRAWL} and ${analyticsEvents.createdAt} >= ${since}
+    group by 1`);
+  const crawlByDate = new Map(crawlRows.map(r => [r.date, n(r.hits)]));
+
+  const pages = await raw<{ path: string; hits: number; crawlers: number }>(sql`
+    select ${EV_JSON} ->> 'path' as path, count(*) as hits,
+           count(distinct ${crawlerKey}) as crawlers
+    from ${analyticsEvents}
+    where ${CRAWL} and ${analyticsEvents.createdAt} >= ${since}
+    group by 1 order by hits desc limit 20`);
+
+  const [firstRow] = await raw<{ first: string | null }>(sql`
+    select min(${analyticsEvents.createdAt}) as first from ${analyticsEvents} where ${CRAWL}`);
+
+  // People sent here by an assistant. These are human page views, so the bot
+  // filter still applies.
+  const refRows = await raw<{ referrer: string; sessions: number; views: number }>(sql`
+    select ${analyticsEvents.referrer} as referrer,
+           count(distinct ${analyticsEvents.sessionId}) as sessions, count(*) as views
+    from ${analyticsEvents}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${since}
+      and ${HUMAN_EVENT} and coalesce(${analyticsEvents.referrer}, '') <> ''
+    group by 1`);
+  const prevRefRows = await raw<{ referrer: string; sessions: number }>(sql`
+    select ${analyticsEvents.referrer} as referrer, count(distinct ${analyticsEvents.sessionId}) as sessions
+    from ${analyticsEvents}
+    where ${analyticsEvents.eventType} = 'page_view' and ${analyticsEvents.createdAt} >= ${previousSince}
+      and ${analyticsEvents.createdAt} < ${since} and ${HUMAN_EVENT} and coalesce(${analyticsEvents.referrer}, '') <> ''
+    group by 1`);
+
+  const tally = (rows: { referrer: string; sessions: number }[]) => {
+    const out = new Map<string, { id: string; label: string; sessions: number }>();
+    for (const row of rows) {
+      const hit = matchAiReferrer(row.referrer);
+      if (!hit) continue;
+      const cur = out.get(hit.id) ?? { id: hit.id, label: hit.label, sessions: 0 };
+      cur.sessions += n(row.sessions);
+      out.set(hit.id, cur);
+    }
+    return out;
+  };
+  const current = tally(refRows);
+  const previous = tally(prevRefRows);
+  const referrals = Array.from(current.values())
+    .map(r => ({ ...r, previous: previous.get(r.id)?.sessions ?? 0 }))
+    .sort((a, b) => b.sessions - a.sessions);
+  const referralTotal = referrals.reduce((s, r) => s + r.sessions, 0);
+  const referralPrevious = Array.from(previous.values()).reduce((s, r) => s + r.sessions, 0);
+
+  const daily = dayKeys(since, now).map(date => ({ date, crawls: crawlByDate.get(date) ?? 0 }));
+
+  if (!readinessCache || Date.now() - readinessCache.at > 600_000) {
+    readinessCache = { at: Date.now(), value: await checkReadiness() };
+  }
+
+  return {
+    period: { since: since.toISOString(), now: now.toISOString(), days },
+    loggingSince: firstRow?.first ? new Date(firstRow.first).toISOString() : null,
+    crawlers,
+    byKind,
+    daily,
+    pages: pages.map(p => ({ path: String(p.path ?? "/"), hits: n(p.hits), crawlers: n(p.crawlers) })),
+    referrals,
+    referralTotal,
+    referralPrevious,
+    readiness: readinessCache.value,
+  };
+}
+
 const daysInput = z.object({ days: z.number().int().min(1).max(365).default(30) }).optional();
 
 export const adminRouter = router({
   overview: adminProcedure.input(daysInput).query(({ input }) => overview(input?.days ?? 30)),
   content: adminProcedure.input(daysInput).query(({ input }) => content(input?.days ?? 30)),
   traffic: adminProcedure.input(daysInput).query(({ input }) => traffic(input?.days ?? 30)),
+  geo: adminProcedure.input(daysInput).query(({ input }) => geo(input?.days ?? 30)),
   assessments: adminProcedure.input(daysInput).query(({ input }) => assessments(input?.days ?? 90)),
   system: adminProcedure.input(z.object({ force: z.boolean().optional() }).optional()).query(({ input }) => system(input?.force)),
 
