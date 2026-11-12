@@ -34,16 +34,16 @@ export default function Waitlist() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
-        <header className="border-b border-black/10">
+      <div className="min-h-screen bg-ivory flex flex-col">
+        <header className="border-b border-line">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
               href="/"
-              className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+              className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
             >
-              ML
+              Marin Lazic
             </a>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
+            <span className="text-[13px] text-mute">
               ⏳ Waitlist
             </span>
           </div>
@@ -55,13 +55,13 @@ export default function Waitlist() {
             <h1 className="font-heading text-3xl font-bold tracking-tight mb-4">
               You are on the list
             </h1>
-            <p className="text-base text-black/50 leading-relaxed mb-8">
+            <p className="text-base text-mute leading-relaxed mb-8">
               Your interest has been recorded. Pricing, dates, availability and
               inclusions will be confirmed before enrolment.
             </p>
             <a
               href="/"
-              className="inline-flex items-center border border-black/20 px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold text-black/60 hover:text-black hover:border-black transition-colors"
+              className="inline-flex items-center px-8 py-4 text-[15px] font-medium text-ink hover:text-black transition-colors bg-stone rounded-lg hover:bg-[#D9D5C9]"
             >
               Back to Site
             </a>
@@ -72,16 +72,16 @@ export default function Waitlist() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
-      <header className="border-b border-black/10">
+    <div className="min-h-screen bg-ivory flex flex-col">
+      <header className="border-b border-line">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
             href="/"
-            className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+            className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
           >
-            ML
+            Marin Lazic
           </a>
-          <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
+          <span className="text-[13px] text-mute">
             ⏳ Waitlist
           </span>
         </div>
@@ -90,11 +90,11 @@ export default function Waitlist() {
       <PageBand src="/images/guide/dawn.jpg" alt="Ocean at dawn" word="soon" emoji={"\u23F3"} pin="Waitlist" position="center" />
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
-          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[0.95] mb-4">
             Join the Waitlist
           </h1>
-          <p className="text-base text-black/50 leading-relaxed mb-10 max-w-xl">
+          <p className="text-base text-mute leading-relaxed mb-10 max-w-xl">
             Register interest in future structured training programmes. Joining
             the waitlist does not enrol you or take payment. Details and
             availability are not yet confirmed.
@@ -102,27 +102,27 @@ export default function Waitlist() {
 
           <div className="space-y-6 mb-10">
             <div>
-              <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-3">
+              <h2 className="text-[13px] text-mute font-medium mb-3">
                 What the program is
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
-                  <p className="text-sm text-black/70 leading-relaxed">
+                  <div className="w-1.5 h-1.5 bg-ink rounded-full mt-2 shrink-0" />
+                  <p className="text-sm text-body leading-relaxed">
                     The intended focus is strength and aerobic conditioning with
                     a manageable training plan.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
-                  <p className="text-sm text-black/70 leading-relaxed">
+                  <div className="w-1.5 h-1.5 bg-ink rounded-full mt-2 shrink-0" />
+                  <p className="text-sm text-body leading-relaxed">
                     Sleep and recovery habits can support the training plan.
                     Final inclusions will be confirmed before enrolment.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
-                  <p className="text-sm text-black/70 leading-relaxed">
+                  <div className="w-1.5 h-1.5 bg-ink rounded-full mt-2 shrink-0" />
+                  <p className="text-sm text-body leading-relaxed">
                     Training should fit your available time, starting fitness
                     and individual context.
                   </p>
@@ -131,25 +131,25 @@ export default function Waitlist() {
             </div>
 
             <div>
-              <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-3">
+              <h2 className="text-[13px] text-mute font-medium mb-3">
                 What the waitlist gets you
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
-                  <p className="text-sm text-black/70 leading-relaxed">
+                  <div className="w-1.5 h-1.5 bg-ink rounded-full mt-2 shrink-0" />
+                  <p className="text-sm text-body leading-relaxed">
                     An email update if a programme becomes available.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
-                  <p className="text-sm text-black/70 leading-relaxed">
+                  <div className="w-1.5 h-1.5 bg-ink rounded-full mt-2 shrink-0" />
+                  <p className="text-sm text-body leading-relaxed">
                     Pricing, dates and delivery details before you decide.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0" />
-                  <p className="text-sm text-black/70 leading-relaxed">
+                  <div className="w-1.5 h-1.5 bg-ink rounded-full mt-2 shrink-0" />
+                  <p className="text-sm text-body leading-relaxed">
                     Registering interest is not a purchase or a commitment to
                     join.
                   </p>
@@ -160,7 +160,7 @@ export default function Waitlist() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 Name
               </label>
               <input
@@ -168,11 +168,11 @@ export default function Waitlist() {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="Your name"
-                className="w-full border border-black/20 px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-black/30"
+                className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F]"
               />
             </div>
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 Email
               </label>
               <input
@@ -180,14 +180,14 @@ export default function Waitlist() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full border border-black/20 px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-black/30"
+                className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F]"
               />
             </div>
             {error && <p className="text-red-600 text-xs">{error}</p>}
             <button
               type="submit"
               disabled={joinWaitlist.isPending}
-              className="w-full bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.2em] uppercase font-bold py-4 hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] text-[15px] font-medium py-4 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {joinWaitlist.isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -199,11 +199,11 @@ export default function Waitlist() {
         </div>
       </main>
 
-      <footer className="border-t border-black/10 py-6">
+      <footer className="border-t border-line py-6">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
           <a
             href="/"
-            className="text-xs tracking-[0.1em] uppercase text-black/40 hover:text-black transition-colors"
+            className="text-[13px] text-mute hover:text-black transition-colors"
           >
             Back to marinlazic.com
           </a>

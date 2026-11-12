@@ -107,16 +107,16 @@ export default function Apply() {
   // ─── Confirmation Screen (persistent, not a toast) ──────
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
-        <header className="border-b border-black/10">
+      <div className="min-h-screen bg-ivory flex flex-col">
+        <header className="border-b border-line">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
               href="/"
-              className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+              className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
             >
-              ML
+              Marin Lazic
             </a>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
+            <span className="text-[13px] text-mute">
               Application Received
             </span>
           </div>
@@ -134,16 +134,16 @@ export default function Apply() {
             <h1 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight mb-4">
               Application Received
             </h1>
-            <div className="w-12 h-[2px] bg-[#FFD400] mx-auto mb-8" />
-            <p className="text-lg text-black/60 leading-relaxed mb-4">
+            <div className="w-12 h-[2px] hidden mx-auto mb-8" />
+            <p className="text-lg text-mute leading-relaxed mb-4">
               You will hear from me personally by email.
             </p>
-            <p className="text-base text-black/40 leading-relaxed mb-10">
+            <p className="text-base text-mute leading-relaxed mb-10">
               Check your inbox.
             </p>
             <a
               href="/"
-              className="inline-flex items-center gap-2 border border-black/20 px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold text-black/60 hover:text-black hover:border-black transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 text-[15px] font-medium text-ink hover:text-black transition-colors bg-stone rounded-lg hover:bg-[#D9D5C9]"
             >
               Back to Site
             </a>
@@ -155,16 +155,16 @@ export default function Apply() {
 
   // ─── Application Form ──────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
-      <header className="border-b border-black/10">
+    <div className="min-h-screen bg-ivory flex flex-col">
+      <header className="border-b border-line">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
             href="/"
-            className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+            className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
           >
-            ML
+            Marin Lazic
           </a>
-          <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
+          <span className="text-[13px] text-mute">
             Coaching Application
           </span>
         </div>
@@ -174,25 +174,25 @@ export default function Apply() {
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
           {/* Headline */}
-          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
+          <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
           <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[0.95] mb-4">
             Apply for Coaching
           </h1>
-          <p className="text-base text-black/50 leading-relaxed mb-8 max-w-xl">
+          <p className="text-base text-mute leading-relaxed mb-8 max-w-xl">
             Short application. Personal email follow up.
           </p>
 
           {/* Proof Block */}
-          <div className="border-l-2 border-[#FFD400] pl-5 mb-8 space-y-2">
-            <p className="text-sm text-black/70 leading-relaxed">
+          <div className="border-l-2 border-ink pl-5 mb-8 space-y-2">
+            <p className="text-sm text-body leading-relaxed">
               Strength and Conditioning Coach for the Australian Men's Water
               Polo Team, including preparation for Paris 2024.
             </p>
-            <p className="text-sm text-black/70 leading-relaxed">
+            <p className="text-sm text-body leading-relaxed">
               Your training and recovery plan is shaped around your goals,
               current fitness and available time.
             </p>
-            <p className="text-sm text-black/70 leading-relaxed">
+            <p className="text-sm text-body leading-relaxed">
               The coaching scope, communication and availability are agreed
               before you start.
             </p>
@@ -200,8 +200,8 @@ export default function Apply() {
 
           {/* Scarcity line */}
           <div className="mb-12 flex items-center gap-3">
-            <div className="w-2 h-2 bg-[#FFD400] rounded-full animate-pulse" />
-            <p className="text-xs tracking-[0.1em] uppercase text-black font-semibold">
+            <div className="w-2 h-2 bg-ink rounded-full rounded-full animate-pulse" />
+            <p className="text-[13px] text-black font-semibold">
               Availability is confirmed after your application
             </p>
           </div>
@@ -209,7 +209,7 @@ export default function Apply() {
           <form onSubmit={handleSubmit} className="space-y-8" noValidate>
             {/* Name */}
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 Name *
               </label>
               <input
@@ -218,10 +218,10 @@ export default function Apply() {
                 onChange={e => setName(e.target.value)}
                 onBlur={() => handleBlur("name")}
                 placeholder="Your name"
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-black/30 ${
+                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] ${
                   touched.name && errors.name
                     ? "border-red-500"
-                    : "border-black/20 focus:border-black"
+                    : "border-[#C9C6BA] focus:border-black"
                 }`}
               />
               {touched.name && errors.name && (
@@ -231,7 +231,7 @@ export default function Apply() {
 
             {/* Email */}
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 Email *
               </label>
               <input
@@ -240,10 +240,10 @@ export default function Apply() {
                 onChange={e => setEmail(e.target.value)}
                 onBlur={() => handleBlur("email")}
                 placeholder="your@email.com"
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-black/30 ${
+                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] ${
                   touched.email && errors.email
                     ? "border-red-500"
-                    : "border-black/20 focus:border-black"
+                    : "border-[#C9C6BA] focus:border-black"
                 }`}
               />
               {touched.email && errors.email && (
@@ -253,7 +253,7 @@ export default function Apply() {
 
             {/* Q1: 90-day goal */}
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 What do you want to change in the next 90 days? *
               </label>
               <textarea
@@ -262,10 +262,10 @@ export default function Apply() {
                 onBlur={() => handleBlur("q1")}
                 placeholder="Be specific. What does success look like?"
                 rows={3}
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-black/30 resize-none ${
+                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] resize-none ${
                   touched.q1 && errors.q1
                     ? "border-red-500"
-                    : "border-black/20 focus:border-black"
+                    : "border-[#C9C6BA] focus:border-black"
                 }`}
               />
               {touched.q1 && errors.q1 && (
@@ -275,7 +275,7 @@ export default function Apply() {
 
             {/* Q2: Biggest obstacle */}
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 What is your biggest obstacle right now? *
               </label>
               <textarea
@@ -284,10 +284,10 @@ export default function Apply() {
                 onBlur={() => handleBlur("q2")}
                 placeholder="What is holding you back from where you want to be?"
                 rows={3}
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-black/30 resize-none ${
+                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] resize-none ${
                   touched.q2 && errors.q2
                     ? "border-red-500"
-                    : "border-black/20 focus:border-black"
+                    : "border-[#C9C6BA] focus:border-black"
                 }`}
               />
               {touched.q2 && errors.q2 && (
@@ -297,7 +297,7 @@ export default function Apply() {
 
             {/* Q3: Investment readiness */}
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 Coaching is a monthly commitment with a minimum of 3
                 months. Are you ready to invest at that level? *
               </label>
@@ -319,10 +319,10 @@ export default function Apply() {
                         return next;
                       });
                     }}
-                    className={`w-full text-left border px-5 py-4 transition-all duration-200 flex items-center justify-between min-h-[52px] ${
+                    className={`w-full text-left border rounded-lg px-5 py-4 transition-colors duration-200 flex items-center justify-between min-h-[52px] ${
                       q3 === opt.value
-                        ? "border-black bg-black text-white"
-                        : "border-black/15 hover:border-black/40"
+                        ? "border-ink bg-ink text-white"
+                        : "border-line bg-oat hover:border-ink/50"
                     }`}
                   >
                     <span
@@ -343,7 +343,7 @@ export default function Apply() {
 
             {/* Q4: Anything else */}
             <div>
-              <label className="block text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <label className="block text-[13px] text-mute font-medium mb-2">
                 Anything else I should know?
               </label>
               <textarea
@@ -351,7 +351,7 @@ export default function Apply() {
                 onChange={e => setQ4(e.target.value)}
                 placeholder="Optional. Injuries, timeline, questions."
                 rows={3}
-                className="w-full border border-black/20 px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-black/30 resize-none"
+                className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F] resize-none"
               />
             </div>
 
@@ -364,7 +364,7 @@ export default function Apply() {
             <button
               type="submit"
               disabled={submitApplication.isPending}
-              className="w-full sm:w-auto bg-[#FFD400] text-black border-2 border-black px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[52px]"
+              className="w-full sm:w-auto bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-10 py-4 text-[15px] font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[52px]"
             >
               {submitApplication.isPending ? (
                 <>
@@ -378,13 +378,13 @@ export default function Apply() {
             </button>
 
             {/* Reassurance line */}
-            <p className="text-sm text-black/40 leading-relaxed max-w-lg">
+            <p className="text-sm text-mute leading-relaxed max-w-lg">
               I read every application myself and reply by email. No sales call.
               If coaching is not right for you, I will tell you straight.
             </p>
           </form>
           <section
-            className="mt-16 border-t border-black/10 pt-10"
+            className="mt-16 border-t border-line pt-10"
             aria-labelledby="application-questions"
           >
             <h2
@@ -397,7 +397,7 @@ export default function Apply() {
               {APPLY_FAQS.map(f => (
                 <div key={f.q}>
                   <h3 className="text-sm font-semibold mb-2">{f.q}</h3>
-                  <p className="text-sm text-black/60 leading-relaxed">{f.a}</p>
+                  <p className="text-sm text-mute leading-relaxed">{f.a}</p>
                 </div>
               ))}
             </div>
@@ -405,9 +405,9 @@ export default function Apply() {
         </div>
       </main>
 
-      <footer className="border-t border-black/10 py-6 mt-16">
+      <footer className="border-t border-line py-6 mt-16">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
-          <p className="text-[10px] tracking-[0.15em] uppercase text-black/30">
+          <p className="text-[13px] text-mute">
             Marin Lazic. Health and Performance Coach. Sydney, Australia.
           </p>
         </div>

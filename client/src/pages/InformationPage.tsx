@@ -1,4 +1,6 @@
+import { SiteFooter } from "@/components/site/SiteFooter";
 import { WordTile } from "@/components/WordTile";
+import { SiteNav } from "@/components/site/SiteNav";
 import { useLocation } from "wouter";
 import {
   resourcePhoto,
@@ -287,64 +289,14 @@ export function Picture({
 }
 
 export function Navigation() {
-  return (
-    <header className="border-b border-black/10">
-      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-6">
-        <a
-          href="/"
-          className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
-          aria-label="Marin Lazic home"
-        >
-          ML
-        </a>
-        <nav aria-label="Primary" className="flex items-center gap-4 sm:gap-6">
-          <a
-            href="/"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Home
-          </a>
-          <a
-            href="/insights"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Insights
-          </a>
-          <a
-            href="/library"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Library
-          </a>
-          <a
-            href="/resources"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Resources
-          </a>
-          <a
-            href="/media"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Media
-          </a>
-          <a
-            href="/apply"
-            className="bg-[#FFD400] text-black border-2 border-black text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
-          >
-            Apply
-          </a>
-        </nav>
-      </div>
-    </header>
-  );
+  return <SiteNav />;
 }
 
 export function Breadcrumbs({ label }: { label: string }) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="mb-8 text-[10px] tracking-[0.16em] uppercase text-black/45"
+      className="mb-6 text-[13px] font-medium text-mute"
     >
       <a href="/" className="hover:text-black transition-colors">
         Home
@@ -352,18 +304,18 @@ export function Breadcrumbs({ label }: { label: string }) {
       <span className="mx-2" aria-hidden="true">
         /
       </span>
-      <span aria-current="page" className="text-black/70">
+      <span aria-current="page" className="text-ink">
         {label}
       </span>
     </nav>
   );
 }
 
-const INFO_TILES: Record<string, { src: string; alt: string; word: string; emoji: string; pin: string }> = {
+const INFO_TILES: Record<string, { src: string; alt: string; word: string; emoji: string; pin: string; aspect?: string; className?: string; position?: string }> = {
   "/executive-health-performance": { src: "/images/guide/pushup.jpg", alt: "Athlete doing a push up in a gym", word: "lead", emoji: "\u{1F4BC}", pin: "One to one" },
   "/corporate-health-performance": { src: "/images/guide/floor.jpg", alt: "People training together on a gym floor", word: "team", emoji: "\u{1F3E2}", pin: "Your workplace" },
   "/media": { src: "/images/guide/paris.jpg", alt: "Water polo at the Paris 2024 Olympic Games", word: "listen", emoji: "\u{1F3A5}", pin: "Media" },
-  "/about": { src: "/images/guide/marin.jpg", alt: "Marin Lazic coaching", word: "about", emoji: "\u{1F44B}", pin: "Sydney" },
+  "/about": { src: "/images/site/marin-paris-2024-1120.jpg", alt: "Marin Lazic standing in front of the Paris 2024 rings", word: "about", emoji: "\u{1F44B}", pin: "Sydney", aspect: "aspect-[4/5]", className: "max-w-[440px] lg:ml-auto" },
 };
 
 export default function InformationPage() {
@@ -374,7 +326,7 @@ export default function InformationPage() {
     informationPages[normalisedLocation] ?? informationPages["/about"];
 
   return (
-    <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
+    <div className="min-h-screen bg-ivory text-black flex flex-col">
       <Navigation />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
         {page.hero && (
@@ -391,8 +343,8 @@ export default function InformationPage() {
           <Breadcrumbs label={page.label} />
           <div className={page.hero ? "" : "grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch mb-12"}>
             <div className={page.hero ? "" : "lg:col-span-7"}>
-              <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
-              <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">
+              <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
+              <p className="text-[13px] text-black font-semibold mb-4">
                 {page.label}
               </p>
               <h1 className="font-heading text-4xl sm:text-6xl font-bold tracking-[-0.03em] leading-[1.02] mb-6">
@@ -406,7 +358,7 @@ export default function InformationPage() {
               <div className="lg:col-span-5">
                 {(() => {
                   const t = INFO_TILES[normalisedLocation] ?? INFO_TILES["/about"];
-                  return <WordTile src={t.src} alt={t.alt} word={t.word} emoji={t.emoji} pin={t.pin} eager />;
+                  return <WordTile src={t.src} alt={t.alt} word={t.word} emoji={t.emoji} pin={t.pin} aspect={t.aspect} position={t.position} className={t.className} eager />;
                 })()}
               </div>
             )}
@@ -416,19 +368,19 @@ export default function InformationPage() {
             {page.sections.map(section => (
               <section
                 key={section.heading}
-                className="border-t border-black/10 pt-7"
+                className="border-t border-line pt-7"
               >
-                <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
+                <h2 className="text-[13px] text-mute font-medium mb-5">
                   {section.heading}
                 </h2>
                 {section.meta && (
-                  <p className="text-xs text-black/50 mb-4 max-w-2xl">{section.meta}</p>
+                  <p className="text-xs text-mute mb-4 max-w-2xl">{section.meta}</p>
                 )}
                 <div className="space-y-4 max-w-2xl">
                   {section.content.map(paragraph => (
                     <p
                       key={paragraph}
-                      className="text-sm sm:text-base text-black/70 leading-relaxed"
+                      className="text-sm sm:text-base text-body leading-relaxed"
                     >
                       {paragraph}
                     </p>
@@ -458,7 +410,7 @@ export default function InformationPage() {
                     {section.links.map(link => {
                       const photo = link.photo ? resourcePhoto(link.photo) : undefined;
                       return (
-                        <li key={link.href} className="border border-black/10">
+                        <li key={link.href} className="border border-line">
                           <a href={link.href} className="group block">
                             {photo && (
                               <Picture
@@ -468,11 +420,11 @@ export default function InformationPage() {
                               />
                             )}
                             <span className="block p-5">
-                              <span className="block text-sm font-semibold text-black group-hover:text-black/60 transition-colors">
+                              <span className="block text-sm font-semibold text-black group-hover:text-mute transition-colors">
                                 {link.label}
                               </span>
                               {link.description && (
-                                <span className="block mt-1 text-sm text-black/55 leading-relaxed">
+                                <span className="block mt-1 text-sm text-mute leading-relaxed">
                                   {link.description}
                                 </span>
                               )}
@@ -484,11 +436,11 @@ export default function InformationPage() {
                   </ul>
                 )}
                 {section.links && !section.cards && (
-                  <ul className="mt-6 border-t border-black/10 max-w-2xl">
+                  <ul className="mt-6 border-t border-line max-w-2xl">
                     {section.links.map(link => (
                       <li
                         key={link.href}
-                        className="border-b border-black/10 py-4"
+                        className="border-b border-line py-4"
                       >
                         <a
                           href={link.href}
@@ -497,11 +449,11 @@ export default function InformationPage() {
                             : {})}
                           className="group block"
                         >
-                          <span className="text-sm font-semibold text-black group-hover:text-black/60 transition-colors">
+                          <span className="text-sm font-semibold text-black group-hover:text-mute transition-colors">
                             {link.label}
                           </span>
                           {link.description && (
-                            <span className="block mt-1 text-sm text-black/55 leading-relaxed">
+                            <span className="block mt-1 text-sm text-mute leading-relaxed">
                               {link.description}
                             </span>
                           )}
@@ -515,7 +467,7 @@ export default function InformationPage() {
           </div>
 
           {page.closing && (
-            <p className="mt-12 text-sm sm:text-base text-black/70 leading-relaxed max-w-2xl border-t border-black/10 pt-7">
+            <p className="mt-12 text-sm sm:text-base text-body leading-relaxed max-w-2xl border-t border-line pt-7">
               {page.closing}
             </p>
           )}
@@ -524,7 +476,7 @@ export default function InformationPage() {
             <div className="mt-12">
               <a
                 href={page.cta.href}
-                className="inline-flex bg-[#FFD400] text-black border-2 border-black text-xs tracking-[0.15em] uppercase px-6 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-bold"
+                className="inline-flex bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] text-[15px] px-6 py-3.5 transition-colors font-medium"
               >
                 {page.cta.label}
               </a>
@@ -532,16 +484,7 @@ export default function InformationPage() {
           )}
         </div>
       </main>
-      <footer className="border-t border-black/10 py-6">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
-          <a
-            href="/"
-            className="text-xs tracking-[0.1em] uppercase text-black/40 hover:text-black transition-colors"
-          >
-            Marin Lazic
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

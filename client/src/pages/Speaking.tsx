@@ -2,6 +2,7 @@
 // Moved here from marinlazicspeak.com (a separate Manus site) on 20 Oct 2026.
 // The enquiry form posts to leads.submit like the home page form, with
 // speaking: true so Kit tags speaking_enquiry and the confirmation reads right.
+import { SiteFooter } from "@/components/site/SiteFooter";
 import { WordTile } from "@/components/WordTile";
 import { PageBand } from "@/components/PageBand";
 import { useState } from "react";
@@ -109,12 +110,12 @@ export default function Speaking() {
   };
 
   const label =
-    "block text-xs text-black/50 mb-2";
+    "block text-xs text-mute mb-2";
   const field =
-    "w-full border border-black/20 bg-white px-4 py-3.5 text-sm placeholder:text-black/30 focus:outline-none focus:border-black transition-colors";
+    "w-full border border-[#C9C6BA] bg-ivory px-4 py-3.5 text-sm placeholder:text-[#8A887F] focus:outline-none focus:border-black transition-colors rounded-lg";
 
   return (
-    <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
+    <div className="min-h-screen bg-ivory text-black flex flex-col">
       <Navigation />
       <PageBand src="/images/guide/field.jpg" alt="A team training on a field" word="speak" emoji={"\u{1F3A4}"} pin="Speaking" position="center" />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
@@ -132,8 +133,8 @@ export default function Speaking() {
 
         <div className="max-w-[1280px] mx-auto">
           <Breadcrumbs label="Speaking" />
-          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
-          <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-4">
+          <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
+          <p className="text-[13px] text-black font-semibold mb-4">
             Speaking
           </p>
           <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-[-0.03em] leading-[0.93] mb-6 max-w-4xl">
@@ -148,40 +149,40 @@ export default function Speaking() {
             <a
               href="#enquire"
               onClick={() => track("cta_click", { button: "speaking_hero_enquire" })}
-              className="inline-flex bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
+              className="inline-flex bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] text-[15px] px-8 py-4 transition-colors font-medium"
             >
               Enquire about an event
             </a>
             <a
               href="#sessions"
-              className="inline-flex border border-black/20 text-black text-sm tracking-[0.15em] uppercase px-8 py-4 hover:border-black/60 transition-colors font-medium"
+              className="inline-flex text-ink text-[15px] px-8 py-4 transition-colors font-medium bg-stone rounded-lg hover:bg-[#D9D5C9]"
             >
               See the sessions
             </a>
           </div>
 
           <div className="space-y-16">
-            <section id="about" className="border-t border-black/10 pt-7">
-              <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
+            <section id="about" className="border-t border-line pt-7">
+              <h2 className="text-[13px] text-mute font-medium mb-5">
                 About
               </h2>
               <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-6">
                 Performance is biology.
               </p>
               <div className="space-y-4 max-w-2xl">
-                <p className="text-sm sm:text-base text-black/70 leading-relaxed">
+                <p className="text-sm sm:text-base text-body leading-relaxed">
                   Marin is the Strength and Conditioning Coach for the Australian
                   Men's Water Polo Team and founder of Otion. He has prepared
                   athletes for the Paris 2024 Olympic Games, three World
                   Championships (2023, 2024 and 2025) and the 2022 World Cup.
                 </p>
-                <p className="text-sm sm:text-base text-black/70 leading-relaxed">
+                <p className="text-sm sm:text-base text-body leading-relaxed">
                   Founders and executives break down in the same ways athletes
                   do. Stress is biology, not a mindset problem. Ignore it and it
                   shows up in your decisions, your energy and eventually your
                   business.
                 </p>
-                <p className="text-sm sm:text-base text-black/70 leading-relaxed">
+                <p className="text-sm sm:text-base text-body leading-relaxed">
                   The Australian team crosses more time zones than most
                   nations. Marin built protocols around eye training, breathing
                   and movement that cut recovery time, reduce illness and limit
@@ -191,12 +192,12 @@ export default function Speaking() {
               </div>
               <ul className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-6">
                 {FACTS.map(f => (
-                  <li key={f.big} className="border-t border-black/10 pt-4">
-                    <span className="block w-2.5 h-2.5 bg-[#FFD400] mb-4" aria-hidden="true" />
+                  <li key={f.big} className="border-t border-line pt-4">
+                    <span className="block w-2.5 h-2.5 hidden mb-4" aria-hidden="true" />
                     <span className="block font-heading font-bold text-xl sm:text-2xl tracking-[-0.02em]">
                       {f.big}
                     </span>
-                    <span className="block text-[10px] tracking-[0.16em] uppercase text-black/45 mt-1">
+                    <span className="block text-[13px] text-mute mt-1">
                       {f.small}
                     </span>
                   </li>
@@ -204,34 +205,34 @@ export default function Speaking() {
               </ul>
             </section>
 
-            <section id="sessions" className="border-t border-black/10 pt-7 scroll-mt-8">
-              <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
+            <section id="sessions" className="border-t border-line pt-7 scroll-mt-8">
+              <h2 className="text-[13px] text-mute font-medium mb-5">
                 Speaking topics
               </h2>
               <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-4">
                 Sessions built for leaders
               </p>
-              <p className="text-sm sm:text-base text-black/70 leading-relaxed max-w-2xl mb-10">
+              <p className="text-sm sm:text-base text-body leading-relaxed max-w-2xl mb-10">
                 Each session is for founders, CEOs and executives who want
                 practical content they can use that week. Not motivation.
                 Systems.
               </p>
               <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                 {SESSIONS.map((s, i) => (
-                  <li key={s.title} className="flex gap-5 border-t border-black/10 pt-5">
-                    <span className="font-heading text-3xl text-black/30 tracking-[-0.04em] leading-none w-12 shrink-0">
+                  <li key={s.title} className="flex gap-5 border-t border-line pt-5">
+                    <span className="font-heading text-3xl text-mute tracking-[-0.04em] leading-none w-12 shrink-0">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
                       <h3 className="font-heading font-bold text-lg tracking-[-0.01em] mb-2">
                         {s.title}
                       </h3>
-                      <p className="text-sm text-black/70 leading-relaxed">{s.body}</p>
+                      <p className="text-sm text-body leading-relaxed">{s.body}</p>
                     </div>
                   </li>
                 ))}
               </ol>
-              <p className="text-xs text-black/50 mt-10 max-w-2xl">
+              <p className="text-xs text-mute mt-10 max-w-2xl">
                 Sessions are education and coaching, not medical care. They do
                 not diagnose conditions or replace advice from a qualified
                 health professional.
@@ -248,25 +249,25 @@ export default function Speaking() {
               decoding="async"
             />
 
-            <section id="credentials" className="border-t border-black/10 pt-7">
-              <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
+            <section id="credentials" className="border-t border-line pt-7">
+              <h2 className="text-[13px] text-mute font-medium mb-5">
                 Credentials
               </h2>
               <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-6">
                 Built on real experience
               </p>
-              <ul className="max-w-2xl border-t border-black/10">
+              <ul className="max-w-2xl border-t border-line">
                 {CREDENTIALS.map(c => (
                   <li
                     key={c}
-                    className="flex gap-4 border-b border-black/10 py-4 text-sm sm:text-base text-black/75 leading-relaxed"
+                    className="flex gap-4 border-b border-line py-4 text-sm sm:text-base text-black/75 leading-relaxed"
                   >
-                    <span className="w-2 h-2 bg-[#FFD400] mt-2 shrink-0" aria-hidden="true" />
+                    <span className="w-2 h-2 bg-ink rounded-full mt-2 shrink-0" aria-hidden="true" />
                     {c}
                   </li>
                 ))}
               </ul>
-              <p className="text-sm text-black/60 mt-6">
+              <p className="text-sm text-mute mt-6">
                 More on the{" "}
                 <a href="/about" className="underline underline-offset-4 hover:text-black">
                   About page
@@ -275,16 +276,16 @@ export default function Speaking() {
               </p>
             </section>
 
-            <section id="enquire" className="border-t border-black/10 pt-7 scroll-mt-8">
+            <section id="enquire" className="border-t border-line pt-7 scroll-mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div className="lg:col-span-7">
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
+                  <h2 className="text-[13px] text-mute font-medium mb-5">
                     Contact
                   </h2>
                   <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-4">
                     Enquire about an event
                   </p>
-                  <p className="text-sm sm:text-base text-black/70 leading-relaxed max-w-xl mb-8">
+                  <p className="text-sm sm:text-base text-body leading-relaxed max-w-xl mb-8">
                     A board meeting, corporate retreat or leadership summit. Tell
                     me about the event and I will reply by email within one
                     business day.
@@ -296,7 +297,7 @@ export default function Speaking() {
                         <h3 className="font-heading font-semibold text-xl mb-2">
                           Thanks for getting in touch.
                         </h3>
-                        <p className="text-black/60 leading-relaxed">
+                        <p className="text-mute leading-relaxed">
                           Your enquiry has been received. A confirmation is on its way to your inbox.
                         </p>
                       </div>
@@ -355,7 +356,7 @@ export default function Speaking() {
                       <button
                         type="submit"
                         disabled={submit.isPending}
-                        className="bg-[#FFD400] text-black border-2 border-black text-sm tracking-[0.15em] uppercase px-8 py-3.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium disabled:opacity-50"
+                        className="bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] text-[15px] px-8 py-3.5 transition-colors font-medium disabled:opacity-50"
                       >
                         {submit.isPending ? "Sending..." : "Send enquiry"}
                       </button>
@@ -374,12 +375,7 @@ export default function Speaking() {
           </div>
         </div>
       </main>
-      <footer className="border-t border-black/10">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 py-8 flex flex-wrap justify-between gap-4 text-[10px] tracking-[0.16em] uppercase text-black/45">
-          <span>Marin Lazic</span>
-          <a href="/" className="hover:text-black transition-colors">marinlazic.com</a>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,4 +1,6 @@
+import { SiteFooter } from "@/components/site/SiteFooter";
 import { useParams } from "wouter";
+import { SiteNav } from "@/components/site/SiteNav";
 import NotFound from "./NotFound";
 import { resourcePhoto, resourceImagePath, srcSet } from "@/data/resourceImages";
 import { GuideSignup } from "@/components/GuideSignup";
@@ -418,57 +420,7 @@ export const resources: Resource[] = [
 ];
 
 function ResourceNavigation() {
-  return (
-    <header className="border-b border-black/10">
-      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-6">
-        <a
-          href="/"
-          className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
-          aria-label="Marin Lazic home"
-        >
-          ML
-        </a>
-        <nav aria-label="Primary" className="flex items-center gap-4 sm:gap-6">
-          <a
-            href="/"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Home
-          </a>
-          <a
-            href="/insights"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Insights
-          </a>
-          <a
-            href="/library"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Library
-          </a>
-          <a
-            href="/resources"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black hover:text-black/60 transition-colors font-medium"
-          >
-            Resources
-          </a>
-          <a
-            href="/media"
-            className="text-[10px] sm:text-xs tracking-[0.14em] uppercase text-black/60 hover:text-black transition-colors font-medium"
-          >
-            Media
-          </a>
-          <a
-            href="/apply"
-            className="bg-[#FFD400] text-black border-2 border-black text-[10px] sm:text-xs tracking-[0.14em] uppercase px-3 sm:px-4 py-2.5 hover:bg-black hover:text-[#FFD400] transition-colors font-medium"
-          >
-            Apply
-          </a>
-        </nav>
-      </div>
-    </header>
-  );
+  return <SiteNav />;
 }
 
 export default function ResourcePage() {
@@ -481,13 +433,13 @@ export default function ResourcePage() {
   const photo = resourcePhoto(resource.aliases[0]);
 
   return (
-    <div className="min-h-screen bg-[#F4F4F4] text-black flex flex-col">
+    <div className="min-h-screen bg-ivory text-black flex flex-col">
       <ResourceNavigation />
       <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
         <article className="max-w-2xl mx-auto">
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 text-[10px] tracking-[0.16em] uppercase text-black/45"
+            className="mb-8 text-[13px] text-mute"
           >
             <a href="/" className="hover:text-black transition-colors">
               Home
@@ -501,13 +453,13 @@ export default function ResourcePage() {
             <span className="mx-2" aria-hidden="true">
               /
             </span>
-            <span aria-current="page" className="text-black/70">
+            <span aria-current="page" className="text-body">
               {resource.title}
             </span>
           </nav>
 
-          <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
-          <p className="text-xs tracking-[0.15em] uppercase text-black font-semibold mb-4">
+          <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
+          <p className="text-[13px] text-black font-semibold mb-4">
             Keyword: {resource.keyword}
           </p>
           <h1 className="font-heading text-3xl sm:text-5xl font-bold tracking-[-0.03em] leading-[0.93] mb-6">
@@ -520,7 +472,7 @@ export default function ResourcePage() {
             {resource.tags.map(tag => (
               <span
                 key={tag}
-                className="border border-black/15 px-2 py-1 text-[10px] tracking-[0.12em] uppercase text-black/55"
+                className="px-2 py-1 text-[15px] text-mute bg-stone text-ink rounded-lg hover:bg-[#D9D5C9]"
               >
                 {tag}
               </span>
@@ -548,7 +500,7 @@ export default function ResourcePage() {
           )}
 
           <aside
-            className="border-l-2 border-[#FFD400] bg-black/[0.025] px-5 py-4 mb-12"
+            className="bg-oat rounded-xl px-6 py-5 mb-12"
             aria-label="Educational and safety notice"
           >
             <p className="text-sm text-black/65 leading-relaxed">
@@ -564,10 +516,10 @@ export default function ResourcePage() {
             {resource.sections.map(section => (
               <section
                 key={section.heading ?? "resource-section"}
-                className="border-t border-black/10 pt-7"
+                className="border-t border-line pt-7"
               >
                 {section.heading && (
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-black/45 font-medium mb-5">
+                  <h2 className="text-[13px] text-mute font-medium mb-5">
                     {section.heading}
                   </h2>
                 )}
@@ -575,10 +527,10 @@ export default function ResourcePage() {
                   {section.content.map(line => (
                     <div key={line} className="flex items-start gap-3">
                       <div
-                        className="w-1.5 h-1.5 bg-[#FFD400] mt-2 shrink-0"
+                        className="w-1.5 h-1.5 bg-ink rounded-full mt-2 shrink-0"
                         aria-hidden="true"
                       />
-                      <p className="text-sm sm:text-base text-black/70 leading-relaxed">
+                      <p className="text-sm sm:text-base text-body leading-relaxed">
                         {line}
                       </p>
                     </div>
@@ -589,8 +541,8 @@ export default function ResourcePage() {
           </div>
 
           {resource.footer && (
-            <div className="mt-10 border-t border-black/10 pt-8">
-              <p className="text-sm text-black/55 leading-relaxed italic">
+            <div className="mt-10 border-t border-line pt-8">
+              <p className="text-sm text-mute leading-relaxed italic">
                 {resource.footer}
               </p>
             </div>
@@ -598,34 +550,25 @@ export default function ResourcePage() {
 
           <GuideSignup placement="resource" variant="inline" className="mt-12" />
 
-          <div className="mt-12 border-t border-black/10 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+          <div className="mt-12 border-t border-line pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
             <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-black/40 font-medium mb-2">
+              <p className="text-[13px] text-mute font-medium mb-2">
                 More resources
               </p>
-              <p className="text-sm text-black/60">
+              <p className="text-sm text-mute">
                 Browse the full library of short guides.
               </p>
             </div>
             <a
               href="/resources"
-              className="inline-flex w-fit border border-black/20 text-black text-xs tracking-[0.15em] uppercase px-5 py-3 hover:border-black/60 transition-colors font-bold"
+              className="inline-flex w-fit text-ink text-[15px] px-5 py-3 transition-colors font-medium bg-stone rounded-lg hover:bg-[#D9D5C9]"
             >
               All resources
             </a>
           </div>
         </article>
       </main>
-      <footer className="border-t border-black/10 py-6">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
-          <a
-            href="/"
-            className="text-xs tracking-[0.1em] uppercase text-black/40 hover:text-black transition-colors"
-          >
-            Marin Lazic
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

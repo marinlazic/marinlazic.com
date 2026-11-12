@@ -18,47 +18,49 @@ function navigation() {
   return { html, nav: parsed.nav };
 }
 
-describe("Homepage logo and navigation separation", () => {
-  it("reserves a fixed logo zone and a minimum gap before the links", () => {
+describe("Site header layout and destinations", () => {
+  it("keeps the name as the home link with a full size tap target", () => {
     const { nav } = navigation();
     const row = nav.div;
-    expect(row["@class"]).toContain("gap-12");
+    expect(nav["@aria-label"]).toBe("Main navigation");
     expect(row.a["@aria-label"]).toBe("Marin Lazic home");
-    expect(row.a["@class"]).toContain("min-w-16");
+    expect(row.a["@href"]).toBe("/");
     expect(row.a["@class"]).toContain("shrink-0");
     expect(row.a["@class"]).toContain("min-h-11");
-    expect(row.a["#text"]).toBe("ML");
+    expect(row.a["#text"]).toBe("Marin Lazic");
   });
 
-  it("uses the tablet menu until the full header has enough desktop space", () => {
+  it("uses the menu button until the full header has enough desktop space", () => {
     const { nav } = navigation();
-    const row = nav.div;
-    expect(row.div["@class"]).toContain("hidden xl:flex");
-    expect(row.div["@class"]).toContain("shrink-0");
-    expect(row.div["@class"]).toContain("whitespace-nowrap");
-    expect(row.div.a[0]["#text"]).toBe("👋 About");
-    expect(row.button["@class"]).toContain("xl:hidden");
-    expect(row.button["@class"]).toContain("min-w-11");
-    expect(row.button["@aria-expanded"]).toBe("false");
-    expect(row.button["@aria-controls"]).toBe("main-mobile-menu");
+    const [left, right, compact] = nav.div.div;
+    expect(left["@class"]).toContain("hidden xl:flex");
+    expect(left["@class"]).toContain("whitespace-nowrap");
+    expect(right["@class"]).toContain("hidden xl:flex");
+    expect(compact["@class"]).toContain("xl:hidden");
+    expect(compact.a["@href"]).toBe("/assessment");
+    expect(compact.button["@class"]).toContain("min-w-11");
+    expect(compact.button["@aria-expanded"]).toBe("false");
+    expect(compact.button["@aria-controls"]).toBe("main-mobile-menu");
   });
 
   it("keeps every existing navigation and conversion destination", () => {
     const { nav } = navigation();
-    expect(nav["@aria-label"]).toBe("Main navigation");
-    expect(
-      nav.div.div.a.map((a: Record<string, string>) => a["@href"])
-    ).toEqual([
-      "/about",
+    const [left, right] = nav.div.div;
+    const hrefs = (group: { a: Record<string, string>[] }) =>
+      group.a.map(a => a["@href"]);
+    expect(hrefs(left)).toEqual([
+      "/library",
       "/executive-health-performance",
       "/corporate-health-performance",
-      "/library",
       "/resources",
-      "/media",
+    ]);
+    expect(hrefs(right)).toEqual([
+      "/about",
       "/speaking",
-      "#contact",
-      "/assessment",
+      "/media",
+      "/#contact",
       "/apply",
+      "/assessment",
     ]);
   });
 });

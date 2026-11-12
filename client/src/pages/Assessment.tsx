@@ -1,4 +1,3 @@
-import { PageBand } from "@/components/PageBand";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { trpc } from "@/lib/trpc";
@@ -55,56 +54,56 @@ const SECTIONS: Section[] = [
     title: "About You",
     subtitle: "A few details to put your responses in context",
     icon: <User className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
   {
     id: "goals",
     title: "Goals",
     subtitle: "What would you like to work towards?",
     icon: <Target className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
   {
     id: "sleep",
     title: "Sleep",
     subtitle: "Your recent sleep habits and experience",
     icon: <Moon className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
   {
     id: "stress",
     title: "Stress & Mental",
     subtitle: "Your workload, stress and focus",
     icon: <Brain className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
   {
     id: "training",
     title: "Current Training",
     subtitle: "What you are doing now",
     icon: <Dumbbell className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
   {
     id: "injuries",
     title: "Injuries & Health",
     subtitle: "Health and pain considerations for training",
     icon: <Heart className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
   {
     id: "nutrition",
     title: "Nutrition & Energy",
     subtitle: "Your current eating and energy patterns",
     icon: <Utensils className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
   {
     id: "recovery",
     title: "Recovery & Technology",
     subtitle: "How you recover and what you track",
     icon: <Watch className="w-5 h-5" />,
-    color: "#2F6BF0",
+    color: "#FF5A36",
   },
 ];
 
@@ -171,11 +170,11 @@ function ShareResults({
       transition={{ delay: 1.2 }}
       className="mb-16"
     >
-      <div className="border border-black/10 bg-white p-6 sm:p-8">
+      <div className="border border-line bg-ivory p-6 sm:p-8 rounded-lg">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Share2 className="w-4 h-4 text-black" />
-            <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium">
+            <h3 className="text-[13px] text-mute font-medium">
               Share Your Results
             </h3>
           </div>
@@ -184,7 +183,7 @@ function ShareResults({
               if (!showPanel) track("share_panel_open", { score: overallPct });
               setShowPanel(!showPanel);
             }}
-            className="text-xs tracking-[0.1em] uppercase text-black font-bold hover:text-[#c62828] transition-colors flex items-center gap-1.5"
+            className="text-[13px] text-black font-bold hover:text-[#c62828] transition-colors flex items-center gap-1.5"
           >
             {showPanel ? "Close" : "Share"}
             <ChevronDown
@@ -193,7 +192,7 @@ function ShareResults({
           </button>
         </div>
 
-        <p className="text-sm text-black/50 leading-relaxed">
+        <p className="text-sm text-mute leading-relaxed">
           Challenge your network. Share your score and see who takes the
           assessment.
         </p>
@@ -207,13 +206,13 @@ function ShareResults({
               transition={{ duration: 0.25 }}
               className="overflow-hidden"
             >
-              <div className="mt-6 pt-6 border-t border-black/10">
+              <div className="mt-6 pt-6 border-t border-line">
                 {/* Preview of what gets shared */}
-                <div className="bg-white border border-black/10 p-4 mb-6">
-                  <p className="text-[9px] tracking-[0.15em] uppercase text-black/30 font-medium mb-2">
+                <div className="bg-ivory border border-line p-4 mb-6 rounded-lg">
+                  <p className="text-[11px] text-mute font-medium mb-2">
                     Preview
                   </p>
-                  <p className="text-sm text-black/70 leading-relaxed">
+                  <p className="text-sm text-body leading-relaxed">
                     {shareText}
                   </p>
                   <p className="text-xs text-black mt-2">{assessmentUrl}</p>
@@ -226,7 +225,7 @@ function ShareResults({
                     href={linkedInUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 bg-[#0A66C2] text-white px-5 py-3.5 text-xs tracking-[0.1em] uppercase font-bold hover:bg-[#004182] transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 bg-[#0A66C2] text-white px-5 py-3.5 text-[13px] font-bold hover:bg-[#004182] transition-colors"
                     onClick={() => {
                       track("share_click", {
                         platform: "linkedin",
@@ -250,7 +249,7 @@ function ShareResults({
                     href={xUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 bg-[#FFD400] text-black border-2 border-black px-5 py-3.5 text-xs tracking-[0.1em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-5 py-3.5 text-[15px] font-medium transition-colors"
                     onClick={() => {
                       track("share_click", {
                         platform: "x",
@@ -272,7 +271,7 @@ function ShareResults({
                   {/* Copy Link */}
                   <button
                     onClick={handleCopyLink}
-                    className="flex-1 flex items-center justify-center gap-2 border-2 border-black text-black px-5 py-3.5 text-xs tracking-[0.1em] uppercase font-bold hover:bg-black hover:text-white transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 border-2 text-ink px-5 py-3.5 text-[15px] font-medium transition-colors bg-stone rounded-lg hover:bg-[#D9D5C9]"
                   >
                     {copied ? (
                       <>
@@ -294,6 +293,19 @@ function ShareResults({
   );
 }
 
+// Turns **bold** inside a line of the written analysis into real bold text.
+function inlineBold(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, k) =>
+    part.startsWith("**") && part.endsWith("**") ? (
+      <strong key={k} className="text-ink font-semibold">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      part
+    )
+  );
+}
+
 // ─── Collapsible Analysis Section ──────────────────────
 export function AnalysisSection({
   analysisResult,
@@ -310,7 +322,7 @@ export function AnalysisSection({
       return (
         <h3
           key={i}
-          className="font-heading text-base font-bold uppercase tracking-tight mt-6 mb-2"
+          className="font-heading text-[17px] font-bold tracking-[-0.01em] mt-6 mb-2"
         >
           {line.replace("### ", "")}
         </h3>
@@ -319,7 +331,7 @@ export function AnalysisSection({
       return (
         <h2
           key={i}
-          className="font-heading text-lg font-bold uppercase tracking-tight mt-8 mb-3"
+          className="font-heading text-xl font-bold tracking-[-0.01em] mt-8 mb-3"
         >
           {line.replace("## ", "")}
         </h2>
@@ -328,7 +340,7 @@ export function AnalysisSection({
       return (
         <h1
           key={i}
-          className="font-heading text-xl font-bold uppercase tracking-tight mt-8 mb-3"
+          className="font-heading text-2xl font-bold tracking-[-0.01em] mt-8 mb-3"
         >
           {line.replace("# ", "")}
         </h1>
@@ -339,9 +351,9 @@ export function AnalysisSection({
         return (
           <div key={i} className="flex items-start gap-3 mb-1.5">
             <span className="text-black mt-1 shrink-0 text-xs">&bull;</span>
-            <p className="text-sm text-black/70 leading-relaxed">
+            <p className="text-sm text-body leading-relaxed">
               <strong className="text-black">{match[1]}</strong>
-              {match[2] ? `: ${match[2]}` : ""}
+              {match[2] ? <>: {inlineBold(match[2])}</> : ""}
             </p>
           </div>
         );
@@ -350,40 +362,40 @@ export function AnalysisSection({
       return (
         <div key={i} className="flex items-start gap-3 mb-1.5">
           <span className="text-black mt-1 shrink-0 text-xs">&bull;</span>
-          <p className="text-sm text-black/70 leading-relaxed">
-            {line.replace("- ", "")}
+          <p className="text-sm text-body leading-relaxed">
+            {inlineBold(line.replace("- ", ""))}
           </p>
         </div>
       );
     if (line.match(/^\d+\.\s/))
       return (
         <div key={i} className="flex items-start gap-3 mb-1.5">
-          <span className="text-[10px] font-bold text-black mt-1 shrink-0 w-4 text-right">
+          <span className="text-xs font-bold text-ink mt-0.5 shrink-0 w-4 text-right">
             {line.match(/^(\d+)\./)?.[1]}.
           </span>
-          <p className="text-sm text-black/70 leading-relaxed">
-            {line.replace(/^\d+\.\s*/, "")}
+          <p className="text-sm text-body leading-relaxed">
+            {inlineBold(line.replace(/^\d+\.\s*/, ""))}
           </p>
         </div>
       );
     if (line.startsWith("> "))
       return (
-        <blockquote key={i} className="border-l-2 border-[#FFD400] pl-4 my-3">
-          <p className="text-sm text-black/60 italic leading-relaxed">
-            {line.replace("> ", "")}
+        <blockquote key={i} className="border-l-2 border-ink pl-4 my-3">
+          <p className="text-sm text-mute italic leading-relaxed">
+            {inlineBold(line.replace("> ", ""))}
           </p>
         </blockquote>
       );
     return (
-      <p key={i} className="text-sm text-black/70 leading-relaxed mb-2">
-        {line}
+      <p key={i} className="text-sm text-body leading-relaxed mb-2">
+        {inlineBold(line)}
       </p>
     );
   };
 
   if (analysisError) {
     return (
-      <div className="border-t border-black/10 pt-12 mb-16">
+      <div className="border-t border-line pt-12 mb-16">
         <div className="bg-red-50 border border-red-200 p-6">
           <p className="text-sm text-red-600">{analysisError}</p>
         </div>
@@ -393,8 +405,8 @@ export function AnalysisSection({
 
   if (!analysisResult) {
     return (
-      <div className="border-t border-black/10 pt-12 mb-16">
-        <div className="flex items-center gap-3 text-black/40">
+      <div className="border-t border-line pt-12 mb-16">
+        <div className="flex items-center gap-3 text-mute">
           <Loader2 className="w-4 h-4 animate-spin" />
           <span className="text-sm">
             Generating your personalised analysis...
@@ -409,17 +421,17 @@ export function AnalysisSection({
   const hasMore = lines.length > 12;
 
   return (
-    <div className="border-t border-black/10 pt-12 mb-16">
+    <div className="border-t border-line pt-12 mb-16">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-1">
+          <h3 className="text-[13px] text-mute font-medium mb-1">
             Your Personalised Analysis
           </h3>
         </div>
         {hasMore && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-1 text-xs tracking-[0.1em] uppercase text-black font-bold hover:text-[#c62828] transition-colors"
+            className="flex items-center gap-1 text-[13px] text-black font-bold hover:text-[#c62828] transition-colors"
           >
             {expanded ? "Collapse" : "Read Full Analysis"}
             <ChevronDown
@@ -429,7 +441,7 @@ export function AnalysisSection({
         )}
       </div>
 
-      <div className="bg-white border border-black/10 p-6 sm:p-8">
+      <div className="bg-ivory border border-line p-6 sm:p-8 rounded-lg">
         <div className="prose prose-sm max-w-none">
           {expanded || !hasMore ? (
             lines.map((line, i) => renderLine(line, i))
@@ -441,7 +453,7 @@ export function AnalysisSection({
               </div>
               <button
                 onClick={() => setExpanded(true)}
-                className="mt-4 flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-black font-bold hover:text-[#c62828] transition-colors"
+                className="mt-4 flex items-center gap-2 text-[13px] text-black font-bold hover:text-[#c62828] transition-colors"
               >
                 Read Full Analysis <ChevronDown className="w-3 h-3" />
               </button>
@@ -498,7 +510,7 @@ export function KickstartCheckoutButton({
     <button
       onClick={handleCheckout}
       disabled={loading}
-      className="w-full sm:w-auto bg-[#FFD400] text-black border-2 border-black px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+      className="w-full sm:w-auto bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-8 py-4 text-[15px] font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
     >
       {loading ? (
         <>
@@ -518,11 +530,11 @@ export function ProgrammeCheckout({ source }: { source: string }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   return (
-    <div className="border border-black/10 p-6 sm:p-8">
-      <p className="text-[10px] tracking-[0.2em] uppercase text-black font-semibold mb-3">
+    <div className="border border-line p-6 sm:p-8">
+      <p className="text-[13px] text-black font-semibold mb-3">
         Start now
       </p>
-      <p className="text-sm text-black/60 leading-relaxed mb-6 max-w-xl">
+      <p className="text-sm text-mute leading-relaxed mb-6 max-w-xl">
         Four weeks, built from your assessment answers. One payment. Marin will be in touch within one business day of your payment.
       </p>
       <div className="grid sm:grid-cols-2 gap-3 mb-4 max-w-xl">
@@ -532,7 +544,7 @@ export function ProgrammeCheckout({ source }: { source: string }) {
           onChange={e => setName(e.target.value)}
           placeholder="Your name"
           aria-label="Your name"
-          className="border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-black"
+          className="border border-[#C9C6BA] px-4 py-3 text-sm focus:outline-none focus:border-black"
         />
         <input
           type="email"
@@ -540,7 +552,7 @@ export function ProgrammeCheckout({ source }: { source: string }) {
           onChange={e => setEmail(e.target.value)}
           placeholder="Your email"
           aria-label="Your email"
-          className="border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-black"
+          className="border border-[#C9C6BA] px-4 py-3 text-sm focus:outline-none focus:border-black"
         />
       </div>
       <KickstartCheckoutButton email={email.trim()} name={name.trim()} source={source} />
@@ -742,79 +754,76 @@ export default function Assessment() {
   // ─── Intro Screen ────────────────────────────────────
   if (phase === "intro") {
     return (
-      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
-        <header className="border-b border-black/10">
-          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
+      <div className="min-h-screen bg-ivory text-ink flex flex-col">
+        <header>
+          <div className="ml-wrap h-[68px] flex items-center justify-between">
             <a
               href="/"
-              className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+              aria-label="Marin Lazic home"
+              className="inline-flex items-center min-h-11 font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
             >
-              ML
+              Marin Lazic
             </a>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
-              Performance Assessment
-            </span>
+            <a href="/" className="ml-pill min-h-11">
+              Back to site
+            </a>
           </div>
         </header>
 
-        <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
-        <main className="flex-1 flex items-center justify-center px-5 py-16">
-          <div className="max-w-2xl w-full">
-            <div className="w-3 h-3 bg-[#FFD400] mb-8" aria-hidden="true" />
-            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[0.95] mb-6">
-              Performance
-              <br />
-              Assessment
-            </h1>
-            <div className="w-16 h-[2px] bg-black mb-8" aria-hidden="true" />
-            <p className="text-lg sm:text-xl text-black/60 leading-relaxed mb-4 max-w-xl">
-              This questionnaire helps you reflect on your recent sleep, stress,
-              energy, training and recovery habits. It can support a coaching
-              conversation and help identify areas to discuss.
-            </p>
-            <p className="text-base text-black/40 leading-relaxed mb-4 max-w-xl">
-              It takes about five minutes. At the end, you will receive a
-              summary based on your responses, lifestyle and goals.
-            </p>
-            <p className="text-base text-black/40 leading-relaxed mb-10 max-w-xl font-medium">
-              This is a coaching tool, not a medical assessment. Your responses
-              and any wearable data are indicative only and should be considered
-              in your personal context. For persistent fatigue, pain, sleep
-              concerns or other health concerns, speak with a GP or appropriate
-              clinician.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button
-                onClick={() => {
-                  track("assessment_started");
-                  setPhase("quiz");
-                }}
-                className="bg-[#FFD400] text-black border-2 border-black px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
-              >
-                Start the Assessment
-              </button>
-              <a
-                href="/"
-                className="border border-black/20 px-8 py-4 text-xs tracking-[0.15em] uppercase font-bold text-black/60 hover:text-black hover:border-black transition-colors text-center"
-              >
-                Back to Site
-              </a>
+        <main className="flex-1 ml-wrap pt-6 lg:pt-12 pb-16">
+          <div className="grid gap-9 lg:gap-[72px] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-start">
+            <div className="min-w-0">
+              <div className="ml-meta">
+                <span className="ml-tag">Free</span>
+                <span>About 5 minutes</span>
+              </div>
+              <h1 className="font-heading font-bold text-[38px] sm:text-5xl lg:text-[64px] leading-[1.04] tracking-[-0.025em] mt-4">
+                <span className="block font-sans font-semibold text-sm tracking-normal leading-normal text-mute mb-2">
+                  Performance Assessment
+                </span>
+                See where you stand.
+              </h1>
+              <p className="ml-lede mt-5 max-w-xl">
+                This questionnaire helps you reflect on your recent sleep, stress,
+                energy, training and recovery habits. It can support a coaching
+                conversation and help identify areas to discuss.
+              </p>
+              <p className="ml-lede mt-3 max-w-xl">
+                It takes about five minutes. At the end, you will receive a
+                summary based on your responses, lifestyle and goals.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2.5 mt-7">
+                <button
+                  onClick={() => {
+                    track("assessment_started");
+                    setPhase("quiz");
+                  }}
+                  className="ml-btn ml-btn-dark"
+                >
+                  Start the assessment <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </button>
+              </div>
+              <p className="ml-small mt-6 max-w-xl">
+                This is a coaching tool, not a medical assessment. Your responses
+                and any wearable data are indicative only and should be considered
+                in your personal context. For persistent fatigue, pain, sleep
+                concerns or other health concerns, speak with a GP or appropriate
+                clinician.
+              </p>
             </div>
 
             {/* Section preview */}
-            <div className="border-t border-black/10 pt-8">
-              <p className="text-[10px] tracking-[0.2em] uppercase text-black/30 mb-6">
-                What we'll cover
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="bg-oat rounded-xl p-5 lg:p-8 min-w-0">
+              <h2 className="font-heading font-bold text-sm">What we'll cover</h2>
+              <div className="mt-3 border-b border-line">
                 {SECTIONS.map(s => (
-                  <div key={s.id} className="flex items-center gap-2">
-                    <span className="text-black/30">{s.icon}</span>
-                    <span className="text-xs text-black/50">{s.title}</span>
+                  <div key={s.id} className="flex items-center gap-3 py-3 border-t border-line text-[15px] font-medium">
+                    <span className="text-mute" aria-hidden="true">{s.icon}</span>
+                    <span>{s.title}</span>
                   </div>
                 ))}
               </div>
+              <p className="ml-small mt-3.5">30 questions. A score, a category breakdown and a personal report at the end.</p>
             </div>
           </div>
         </main>
@@ -825,29 +834,28 @@ export default function Assessment() {
   // ─── Analyzing Screen ────────────────────────────────
   if (phase === "analyzing") {
     return (
-      <div className="min-h-screen bg-[#F4F4F4] flex flex-col">
-        <header className="border-b border-black/10">
+      <div className="min-h-screen bg-ivory flex flex-col">
+        <header className="border-b border-line">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
               href="/"
-              className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+              className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
             >
-              ML
+              Marin Lazic
             </a>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
+            <span className="text-[13px] text-mute">
               Analysing Your Results
             </span>
           </div>
         </header>
 
-        <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-lg w-full text-center">
             <Loader2 className="w-12 h-12 animate-spin text-black mx-auto mb-8" />
             <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-4">
               Building Your Analysis
             </h2>
-            <p className="text-base text-black/50 leading-relaxed mb-6">
+            <p className="text-base text-mute leading-relaxed mb-6">
               Our AI is reviewing your answers and generating a personalised
               performance report. This takes about 15 to 30 seconds.
             </p>
@@ -864,9 +872,9 @@ export default function Assessment() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 2, duration: 0.3 }}
-                  className="flex items-center gap-3 text-sm text-black/40"
+                  className="flex items-center gap-3 text-sm text-mute"
                 >
-                  <div className="w-1.5 h-1.5 bg-[#FFD400] rounded-full" />
+                  <div className="w-1.5 h-1.5 bg-ink rounded-full rounded-full" />
                   {step}
                 </motion.div>
               ))}
@@ -903,7 +911,7 @@ export default function Assessment() {
       if (pct >= 80)
         return { label: "More consistent responses", color: "#16a34a" };
       if (pct >= 60)
-        return { label: "Some consistent responses", color: "#2F6BF0" };
+        return { label: "Some consistent responses", color: "#FF5A36" };
       if (pct >= 40) return { label: "Mixed responses", color: "#f59e0b" };
       return { label: "Areas to review", color: "#121212" };
     };
@@ -943,22 +951,21 @@ export default function Assessment() {
         .join(" ") + " Z";
 
     return (
-      <div className="min-h-screen bg-[#F4F4F4] flex flex-col" ref={containerRef}>
-        <header className="border-b border-black/10">
+      <div className="min-h-screen bg-ivory flex flex-col" ref={containerRef}>
+        <header className="border-b border-line">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
             <a
               href="/"
-              className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+              className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
             >
-              ML
+              Marin Lazic
             </a>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
+            <span className="text-[13px] text-mute">
               Your Results
             </span>
           </div>
         </header>
 
-        <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
         <main className="flex-1 px-5 py-12 sm:py-16">
           <div className="max-w-4xl mx-auto">
             {/* ── HERO: Overall Score Ring ── */}
@@ -968,11 +975,11 @@ export default function Assessment() {
               className="text-center mb-16"
             >
               <div
-                className="w-3 h-3 bg-[#FFD400] mx-auto mb-8"
+                className="w-3 h-3 hidden mx-auto mb-8"
                 aria-hidden="true"
               />
-              <h2 className="font-heading text-xl sm:text-2xl font-bold uppercase tracking-tight mb-8 text-black/40">
-                {userName}'s Performance Profile
+              <h2 className="font-heading text-2xl sm:text-[32px] font-bold tracking-[-0.02em] mb-8 text-ink">
+                {userName}'s performance profile
               </h2>
 
               {/* Circular Score Gauge */}
@@ -984,7 +991,7 @@ export default function Assessment() {
                     cy="100"
                     r="85"
                     fill="none"
-                    stroke="#f0f0f0"
+                    stroke="#E6E3DA"
                     strokeWidth="12"
                   />
                   {/* Score arc */}
@@ -1014,7 +1021,7 @@ export default function Assessment() {
                   >
                     {overallPct}
                   </motion.span>
-                  <span className="text-xs text-black/30 uppercase tracking-widest mt-1">
+                  <span className="text-[13px] text-mute mt-1">
                     out of 100
                   </span>
                 </div>
@@ -1024,12 +1031,13 @@ export default function Assessment() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
-                className="inline-block px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em]"
-                style={{
-                  backgroundColor: overallLabel.color + "15",
-                  color: overallLabel.color,
-                }}
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-[13px] font-semibold rounded-full bg-oat text-ink"
               >
+                <span
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: overallLabel.color }}
+                  aria-hidden="true"
+                />
                 {overallLabel.label}
               </motion.div>
             </motion.div>
@@ -1050,8 +1058,8 @@ export default function Assessment() {
               className="grid md:grid-cols-2 gap-8 mb-16"
             >
               {/* Radar Chart */}
-              <div className="bg-white border border-black/10 p-6 sm:p-8 flex flex-col items-center">
-                <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-6 self-start">
+              <div className="bg-oat border border-line p-6 sm:p-8 flex flex-col items-center rounded-xl">
+                <h3 className="text-[13px] text-mute font-medium mb-6 self-start">
                   Performance Radar
                 </h3>
                 <svg
@@ -1096,7 +1104,7 @@ export default function Assessment() {
                   <motion.path
                     d={radarPath}
                     fill="rgba(47, 107, 240, 0.12)"
-                    stroke="#2F6BF0"
+                    stroke="#FF5A36"
                     strokeWidth="2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -1109,7 +1117,7 @@ export default function Assessment() {
                       cx={p.x}
                       cy={p.y}
                       r="4"
-                      fill="#2F6BF0"
+                      fill="#FF5A36"
                       initial={{ opacity: 0, r: 0 }}
                       animate={{ opacity: 1, r: 4 }}
                       transition={{ delay: 0.8 + i * 0.1 }}
@@ -1125,8 +1133,8 @@ export default function Assessment() {
                         y={labelPoint.y}
                         textAnchor="middle"
                         dominantBaseline="middle"
-                        className="text-[9px] uppercase tracking-wider"
-                        fill="#666"
+                        className="text-[10px]"
+                        fill="#5E5D59"
                       >
                         {cat.title}
                       </text>
@@ -1138,38 +1146,38 @@ export default function Assessment() {
               {/* Quick Stats */}
               <div className="flex flex-col gap-4">
                 {/* Strongest */}
-                <div className="bg-green-50 border border-green-200 p-5">
+                <div className="bg-oat border border-line rounded-xl p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full" />
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-green-600 font-medium">
-                      Strongest Area
+                    <div className="w-2 h-2 bg-[#16a34a] rounded-full" />
+                    <span className="text-[13px] text-mute font-medium">
+                      Strongest area
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-green-600">{strongest?.icon}</span>
-                      <span className="font-heading text-lg font-bold uppercase">
+                      <span className="text-ink">{strongest?.icon}</span>
+                      <span className="font-heading text-lg font-bold">
                         {strongest?.title}
                       </span>
                     </div>
-                    <span className="font-heading text-2xl font-bold text-green-600">
+                    <span className="font-heading text-2xl font-bold text-ink">
                       {strongest?.percentage}%
                     </span>
                   </div>
                 </div>
 
                 {/* Weakest */}
-                <div className="bg-red-50 border border-red-200 p-5">
+                <div className="bg-oat border border-line rounded-xl p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-[#FFD400] rounded-full" />
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-black font-medium">
-                      Biggest Opportunity
+                    <div className="w-2 h-2 bg-signal rounded-full" />
+                    <span className="text-[13px] text-mute font-medium">
+                      Biggest opportunity
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="text-black">{weakest?.icon}</span>
-                      <span className="font-heading text-lg font-bold uppercase">
+                      <span className="font-heading text-lg font-bold">
                         {weakest?.title}
                       </span>
                     </div>
@@ -1190,7 +1198,7 @@ export default function Assessment() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 + i * 0.1 }}
-                        className="bg-white border border-black/10 p-3 flex flex-col items-center"
+                        className="bg-oat border border-line p-3 flex flex-col items-center rounded-xl"
                       >
                         <div className="relative w-16 h-16 mb-2">
                           <svg
@@ -1202,7 +1210,7 @@ export default function Assessment() {
                               cy="35"
                               r="30"
                               fill="none"
-                              stroke="#f0f0f0"
+                              stroke="#E6E3DA"
                               strokeWidth="5"
                             />
                             <motion.circle
@@ -1232,7 +1240,7 @@ export default function Assessment() {
                             </span>
                           </div>
                         </div>
-                        <span className="text-[8px] tracking-[0.1em] uppercase text-black/40 font-medium text-center leading-tight">
+                        <span className="text-[11px] text-mute font-medium text-center leading-tight">
                           {cat.title}
                         </span>
                       </motion.div>
@@ -1252,19 +1260,19 @@ export default function Assessment() {
 
               const getHRVRating = (_v: number) => ({
                 label: "Indicative reading",
-                color: "#2F6BF0",
+                color: "#FF5A36",
                 desc: "Use this reading as one data point alongside your own recent trend, sleep, symptoms and training load. A single reading does not indicate health, fitness or a diagnosis.",
                 pct: 50,
               });
               const getRHRRating = (_v: number) => ({
                 label: "Indicative reading",
-                color: "#2F6BF0",
+                color: "#FF5A36",
                 desc: "Compare readings taken with the same device and method over time. A single reading does not establish a health or fitness rating and is not a diagnosis.",
                 pct: 50,
               });
               const getRRRating = (_v: number) => ({
                 label: "Indicative reading",
-                color: "#2F6BF0",
+                color: "#FF5A36",
                 desc: "Compare this estimate with your usual device-consistent trend. Wearable respiratory readings are not diagnostic and should not be used as a stand-alone health assessment.",
                 pct: 50,
               });
@@ -1313,18 +1321,18 @@ export default function Assessment() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.55 }}
-                  className="border-t border-black/10 pt-12 mb-16"
+                  className="border-t border-line pt-12 mb-16"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Heart className="w-4 h-4 text-black" />
-                    <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium">
+                    <h3 className="text-[13px] text-mute font-medium">
                       Your Biometrics
                     </h3>
                   </div>
-                  <p className="text-sm text-black/40 mb-3">
+                  <p className="text-sm text-mute mb-3">
                     Indicative readings from your wearable
                   </p>
-                  <p className="text-xs text-black/50 leading-relaxed mb-8 max-w-2xl">
+                  <p className="text-xs text-mute leading-relaxed mb-8 max-w-2xl">
                     Wearable data are estimates for coaching context, not
                     medical tests or diagnoses. Compare readings from the same
                     device and method with your personal baseline. For
@@ -1339,12 +1347,12 @@ export default function Assessment() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 + mi * 0.1 }}
-                        className="border border-black/10 bg-white"
+                        className="border border-line bg-oat"
                       >
                         <div className="p-5 sm:p-6 grid sm:grid-cols-[200px_1fr] gap-6">
                           {/* Value display */}
                           <div className="flex flex-col items-center justify-center text-center">
-                            <span className="text-[9px] tracking-[0.15em] uppercase text-black/30 font-medium mb-2">
+                            <span className="text-[11px] text-mute font-medium mb-2">
                               {m.label}
                             </span>
                             <div className="relative w-28 h-28 mb-2">
@@ -1357,7 +1365,7 @@ export default function Assessment() {
                                   cy="60"
                                   r="50"
                                   fill="none"
-                                  stroke="#f0f0f0"
+                                  stroke="#E6E3DA"
                                   strokeWidth="8"
                                 />
                                 <motion.circle
@@ -1389,18 +1397,19 @@ export default function Assessment() {
                                 <span className="font-heading text-2xl font-bold">
                                   {m.value}
                                 </span>
-                                <span className="text-[9px] text-black/30 uppercase">
+                                <span className="text-[11px] text-mute">
                                   {m.unit}
                                 </span>
                               </div>
                             </div>
                             <span
-                              className="text-[9px] uppercase tracking-wider font-bold px-3 py-1"
-                              style={{
-                                backgroundColor: m.rating.color + "15",
-                                color: m.rating.color,
-                              }}
+                              className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1 rounded-full bg-ivory text-ink"
                             >
+                              <span
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: m.rating.color }}
+                                aria-hidden="true"
+                              />
                               {m.rating.label}
                             </span>
                           </div>
@@ -1409,23 +1418,23 @@ export default function Assessment() {
                           <div className="flex flex-col gap-4">
                             <div>
                               <div className="flex items-center gap-2 mb-2">
-                                <Brain className="w-3.5 h-3.5 text-black/30" />
-                                <span className="text-[9px] tracking-[0.15em] uppercase text-black/30 font-medium">
+                                <Brain className="w-3.5 h-3.5 text-mute" />
+                                <span className="text-[11px] text-mute font-medium">
                                   Why This Matters
                                 </span>
                               </div>
-                              <p className="text-xs text-black/50 leading-relaxed">
+                              <p className="text-xs text-mute leading-relaxed">
                                 {m.why}
                               </p>
                             </div>
-                            <div className="bg-white border border-black/5 p-4">
+                            <div className="bg-ivory border border-line p-4 rounded-lg">
                               <div className="flex items-center gap-2 mb-2">
                                 <Target className="w-3.5 h-3.5 text-black" />
-                                <span className="text-[9px] tracking-[0.15em] uppercase text-black font-bold">
+                                <span className="text-[11px] text-ink font-bold">
                                   Your Reading
                                 </span>
                               </div>
-                              <p className="text-xs text-black/60 leading-relaxed">
+                              <p className="text-xs text-mute leading-relaxed">
                                 {m.rating.desc}
                               </p>
                             </div>
@@ -1443,9 +1452,9 @@ export default function Assessment() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="border-t border-black/10 pt-12 mb-16"
+              className="border-t border-line pt-12 mb-16"
             >
-              <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-8">
+              <h3 className="text-[13px] text-mute font-medium mb-8">
                 Detailed Breakdown
               </h3>
               <div className="space-y-8">
@@ -1506,23 +1515,24 @@ export default function Assessment() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7 + i * 0.08 }}
-                      className="border border-black/10 bg-white"
+                      className="border border-line bg-oat"
                     >
                       {/* Header */}
-                      <div className="p-5 sm:p-6 border-b border-black/5">
+                      <div className="p-5 sm:p-6 border-b border-line">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <span style={{ color: cat.color }}>{cat.icon}</span>
-                            <span className="font-heading text-sm font-bold uppercase tracking-[0.05em]">
+                            <span className="font-heading text-[13px] font-bold">
                               {cat.title}
                             </span>
                             <span
-                              className="text-[9px] uppercase tracking-wider font-medium px-2 py-0.5"
-                              style={{
-                                backgroundColor: catLabel.color + "15",
-                                color: catLabel.color,
-                              }}
+                              className="inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full bg-ivory text-ink"
                             >
+                              <span
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: catLabel.color }}
+                                aria-hidden="true"
+                              />
                               {catLabel.label}
                             </span>
                           </div>
@@ -1530,7 +1540,7 @@ export default function Assessment() {
                             {cat.percentage}%
                           </span>
                         </div>
-                        <div className="w-full h-3 bg-black/5 rounded-full overflow-hidden">
+                        <div className="w-full h-3 bg-oat rounded-full overflow-hidden">
                           <motion.div
                             className="h-full rounded-full"
                             style={{ backgroundColor: cat.color }}
@@ -1549,10 +1559,10 @@ export default function Assessment() {
                       <div className="p-5 sm:p-6 grid sm:grid-cols-2 gap-6">
                         {/* Mini Bar Chart */}
                         <div>
-                          <p className="text-[9px] tracking-[0.15em] uppercase text-black/30 font-medium mb-3">
+                          <p className="text-[11px] text-mute font-medium mb-3">
                             Where You Stand
                           </p>
-                          <div className="flex items-end gap-1.5 h-24">
+                          <div className="flex items-stretch gap-1.5 h-28">
                             {catTip.graph.map((val, gi) => {
                               const isYou =
                                 gi ===
@@ -1562,22 +1572,24 @@ export default function Assessment() {
                                   key={gi}
                                   className="flex-1 flex flex-col items-center gap-1"
                                 >
-                                  <motion.div
-                                    className={`w-full rounded-sm ${isYou ? "bg-[#FFD400]" : "bg-black/10"}`}
-                                    initial={{ height: 0 }}
-                                    animate={{ height: `${val}%` }}
-                                    transition={{
-                                      duration: 0.6,
-                                      delay: 1 + gi * 0.05,
-                                    }}
-                                  />
+                                  <div className="flex-1 min-h-0 w-full flex items-end">
+                                    <motion.div
+                                      className={`w-full rounded-sm ${isYou ? "bg-signal" : "bg-[#D5D1C4]"}`}
+                                      initial={{ height: 0 }}
+                                      animate={{ height: `${val}%` }}
+                                      transition={{
+                                        duration: 0.6,
+                                        delay: 1 + gi * 0.05,
+                                      }}
+                                    />
+                                  </div>
                                   {isYou && (
-                                    <span className="text-[8px] font-bold text-black uppercase">
+                                    <span className="text-[11px] font-bold text-ink h-4 leading-4">
                                       You
                                     </span>
                                   )}
-                                  {!isYou && barLabels[gi] && (
-                                    <span className="text-[7px] text-black/20 uppercase">
+                                  {!isYou && (
+                                    <span className="text-[10px] text-mute h-4 leading-4">
                                       {barLabels[gi]}
                                     </span>
                                   )}
@@ -1585,20 +1597,20 @@ export default function Assessment() {
                               );
                             })}
                           </div>
-                          <p className="text-[8px] text-black/25 mt-2 italic">
+                          <p className="text-[11px] text-mute mt-2">
                             {catTip.context}
                           </p>
                         </div>
 
                         {/* Pro Tip */}
-                        <div className="bg-white border border-black/5 p-4">
+                        <div className="bg-ivory border border-line p-4 rounded-lg">
                           <div className="flex items-center gap-2 mb-2">
                             <Zap className="w-3.5 h-3.5 text-black" />
-                            <span className="text-[9px] tracking-[0.15em] uppercase text-black font-bold">
+                            <span className="text-[11px] text-ink font-bold">
                               Pro Tip
                             </span>
                           </div>
-                          <p className="text-xs text-black/60 leading-relaxed">
+                          <p className="text-xs text-mute leading-relaxed">
                             {catTip.tip}
                           </p>
                         </div>
@@ -1611,8 +1623,8 @@ export default function Assessment() {
 
             {/* Wearable note */}
             {hasWhoop === "no" && (
-              <div className="bg-white border border-black/10 p-6 sm:p-8 mb-16">
-                <p className="text-sm text-black/60 leading-relaxed">
+              <div className="bg-ivory border border-line p-6 sm:p-8 mb-16 rounded-lg">
+                <p className="text-sm text-mute leading-relaxed">
                   If you use a wearable, its device-consistent trend can be one
                   input alongside sleep, symptoms and training load. It does not
                   make decisions on its own.
@@ -1627,16 +1639,16 @@ export default function Assessment() {
             />
 
             {reportUrl && (
-              <div className="border border-black/10 p-6 sm:p-8 mb-12">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-3">
+              <div className="border border-line p-6 sm:p-8 mb-12">
+                <p className="text-[13px] text-mute font-medium mb-3">
                   Your saved report
                 </p>
-                <p className="text-sm text-black/60 leading-relaxed mb-4">
+                <p className="text-sm text-mute leading-relaxed mb-4">
                   This page is not saved in your browser. Your report and the PDF are at the link below for 90 days, and the same link is in your email.
                 </p>
                 <a
                   href={reportUrl}
-                  className="text-sm font-semibold text-black underline underline-offset-4 hover:text-black/60 transition-colors break-all"
+                  className="text-sm font-semibold text-black underline underline-offset-4 hover:text-mute transition-colors break-all"
                 >
                   {reportUrl}
                 </a>
@@ -1645,13 +1657,13 @@ export default function Assessment() {
 
             {/* Four week programme */}
             <div className="mb-16">
-              <h3 className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium mb-4">
+              <h3 className="text-[13px] text-mute font-medium mb-4">
                 Act on your results
               </h3>
               <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-4 leading-tight">
                 The 4 week programme
               </h2>
-              <p className="text-sm sm:text-base text-black/60 leading-relaxed mb-6 max-w-2xl">
+              <p className="text-sm sm:text-base text-mute leading-relaxed mb-6 max-w-2xl">
                 A structured four week programme built from these answers. Periodised training, sleep, recovery and nutrition guidance, with weekly email check ins. One payment.
               </p>
               <KickstartCheckoutButton
@@ -1662,22 +1674,22 @@ export default function Assessment() {
             </div>
 
             {/* ── This Is Where Most People Stop ── */}
-            <div className="border-t border-black/10 pt-12 mb-16">
-              <div className="bg-[#FFD400] text-black border-2 border-black p-8 sm:p-12">
+            <div className="border-t border-line pt-12 mb-16">
+              <div className="bg-ink text-ivory rounded-xl p-8 sm:p-12">
                 <div className="max-w-2xl">
-                  <h3 className="text-[10px] tracking-[0.2em] uppercase text-white/40 font-medium mb-4">
+                  <h3 className="text-[13px] text-white/60 font-medium mb-4">
                     What Happens Next
                   </h3>
                   <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-6 leading-tight">
                     This Is Where Most People Stop
                   </h2>
-                  <div className="w-8 h-0.5 bg-[#FFD400] mb-8" />
-                  <p className="text-sm sm:text-base text-white/60 leading-relaxed mb-6">
+                  <div className="w-8 h-0.5 hidden mb-8" />
+                  <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-6">
                     You have the data. You know what is holding you back. The
                     difference between knowing and doing is having someone build
                     the system for you and hold you accountable to it.
                   </p>
-                  <p className="text-sm sm:text-base text-white/60 leading-relaxed mb-8">
+                  <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-8">
                     Coaching is shaped around your assessment responses,
                     training history and day to day context. It does not
                     diagnose, treat or replace medical, allied health or
@@ -1686,7 +1698,7 @@ export default function Assessment() {
 
                   {/* What You Get */}
                   <div className="border-t border-white/10 pt-8 mb-8">
-                    <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/40 font-medium mb-5">
+                    <h4 className="text-[13px] text-white/60 font-medium mb-5">
                       What You Get
                     </h4>
                     <div className="grid sm:grid-cols-2 gap-4">
@@ -1699,8 +1711,8 @@ export default function Assessment() {
                         "Direct access to your coach",
                       ].map((item, i) => (
                         <div key={i} className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-black shrink-0 mt-0.5" />
-                          <span className="text-sm text-white/70">{item}</span>
+                          <CheckCircle className="w-4 h-4 text-ivory shrink-0 mt-0.5" />
+                          <span className="text-sm text-white/80">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -1709,17 +1721,17 @@ export default function Assessment() {
                   {/* CTA Button */}
                   <a
                     href={`/apply?name=${encodeURIComponent((answers.name as string) || "")}&email=${encodeURIComponent((answers.email as string) || "")}${utmSource ? `&utm_source=${encodeURIComponent(utmSource)}` : ""}${utmMedium ? `&utm_medium=${encodeURIComponent(utmMedium)}` : ""}${utmCampaign ? `&utm_campaign=${encodeURIComponent(utmCampaign)}` : ""}`}
-                    className="inline-flex items-center gap-2 bg-[#FFD400] text-black border-2 border-black px-10 py-4 text-xs tracking-[0.15em] uppercase font-bold hover:bg-[#c62828] transition-colors mb-4"
+                    className="inline-flex items-center gap-2 bg-ivory text-ink rounded-lg hover:bg-stone px-8 py-3.5 text-[15px] font-medium transition-colors mb-4"
                   >
                     Apply for Coaching
                   </a>
-                  <p className="text-xs text-white/40 mb-8">
+                  <p className="text-xs text-white/60 mb-8">
                     Short application. Each application is reviewed personally.
                   </p>
 
                   {/* Pricing */}
                   <div className="border-t border-white/10 pt-6">
-                    <p className="text-xs text-white/30 mt-2">
+                    <p className="text-xs text-white/60 mt-2">
                       Limited spots available. Application required.
                     </p>
                   </div>
@@ -1728,10 +1740,10 @@ export default function Assessment() {
             </div>
 
             {/* Back to site */}
-            <div className="border-t border-black/10 pt-8 text-center">
+            <div className="border-t border-line pt-8 text-center">
               <a
                 href="/"
-                className="text-xs tracking-[0.1em] uppercase text-black/40 hover:text-black transition-colors"
+                className="text-[13px] text-mute hover:text-black transition-colors"
               >
                 Back to Site
               </a>
@@ -1739,9 +1751,9 @@ export default function Assessment() {
           </div>
         </main>
 
-        <footer className="border-t border-black/10 py-6 mt-16">
+        <footer className="border-t border-line py-6 mt-16">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
-            <p className="text-[10px] tracking-[0.15em] uppercase text-black/30">
+            <p className="text-[13px] text-mute">
               Marin Lazic. Health and Performance Coach. Sydney, Australia.
             </p>
           </div>
@@ -1752,32 +1764,31 @@ export default function Assessment() {
 
   // ─── Quiz Screen ──────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#F4F4F4] flex flex-col" ref={containerRef}>
-      <header className="border-b border-black/10">
+    <div className="min-h-screen bg-ivory flex flex-col" ref={containerRef}>
+      <header className="border-b border-line">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
           <a
             href="/"
-            className="font-heading font-bold text-sm tracking-[0.2em] uppercase"
+            className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
           >
-            ML
+            Marin Lazic
           </a>
           <div className="flex items-center gap-4">
-            <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">
+            <span className="text-[13px] text-mute">
               {currentQ + 1} / {totalQuestions}
             </span>
           </div>
         </div>
         {/* Progress bar */}
-        <div className="w-full h-0.5 bg-black/5">
+        <div className="w-full h-1 bg-stone">
           <motion.div
-            className="h-full bg-[#FFD400]"
+            className="h-full bg-ink"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.3 }}
           />
         </div>
       </header>
 
-      <PageBand src="/images/guide/phone.jpg" alt="A phone showing a training app" word="score" emoji={"\u{1F4CA}"} pin="Free assessment" position="center" />
       <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
         <div className="max-w-2xl w-full">
           <AnimatePresence mode="popLayout">
@@ -1791,17 +1802,17 @@ export default function Assessment() {
             >
               {/* Section header - synced with current question */}
               {isNewSection && section && (
-                <div className="border border-black/10 bg-white px-4 py-3 mb-6 flex items-center gap-3">
+                <div className="border border-line bg-ivory px-4 py-3 mb-6 flex items-center gap-3 rounded-lg">
                   <span style={{ color: section.color }}>{section.icon}</span>
                   <div>
-                    <span className="text-xs font-bold tracking-[0.1em] uppercase">
+                    <span className="text-[13px] font-bold">
                       {section.title}
                     </span>
-                    <span className="text-[10px] text-black/40 block">
+                    <span className="text-[12px] text-mute block">
                       {section.subtitle}
                     </span>
                   </div>
-                  <span className="ml-auto text-[10px] tracking-[0.1em] uppercase text-black/30">
+                  <span className="ml-auto text-[13px] text-mute">
                     Section {currentSectionIndex + 1} of {SECTIONS.length}
                   </span>
                 </div>
@@ -1812,7 +1823,7 @@ export default function Assessment() {
                 <span style={{ color: getSectionColor(sectionId) }}>
                   {getSectionIcon(sectionId)}
                 </span>
-                <span className="text-[10px] tracking-[0.2em] uppercase text-black/40 font-medium">
+                <span className="text-[13px] text-mute font-medium">
                   {section?.title}
                 </span>
               </div>
@@ -1821,7 +1832,7 @@ export default function Assessment() {
               <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight leading-tight mb-2">
                 {question.text}
               </h2>
-              <p className="text-sm text-black/40 mb-10">{question.subtext}</p>
+              <p className="text-sm text-mute mb-10">{question.subtext}</p>
 
               {/* ── Select / Single Choice ── */}
               {(question.type === "select" || question.type === "single") &&
@@ -1833,10 +1844,10 @@ export default function Assessment() {
                         <button
                           key={opt.value}
                           onClick={() => handleSelectAnswer(opt.value)}
-                          className={`w-full text-left border px-5 py-4 transition-all duration-200 group flex items-center justify-between ${
+                          className={`w-full text-left border rounded-lg px-5 py-4 transition-colors duration-200 group flex items-center justify-between ${
                             isSelected
-                              ? "border-black bg-black text-white"
-                              : "border-black/15 hover:border-black/40"
+                              ? "border-ink bg-ink text-white"
+                              : "border-line bg-oat hover:border-ink/50"
                           }`}
                         >
                           <div>
@@ -1847,7 +1858,7 @@ export default function Assessment() {
                             </span>
                             {opt.description && (
                               <span
-                                className={`block text-xs mt-0.5 ${isSelected ? "text-white/60" : "text-black/30"}`}
+                                className={`block text-xs mt-0.5 ${isSelected ? "text-white/60" : "text-mute"}`}
                               >
                                 {opt.description}
                               </span>
@@ -1874,10 +1885,10 @@ export default function Assessment() {
                         <button
                           key={opt.value}
                           onClick={() => handleMultiSelect(opt.value)}
-                          className={`w-full text-left border px-5 py-4 transition-all duration-200 flex items-center justify-between ${
+                          className={`w-full text-left border rounded-lg px-5 py-4 transition-colors duration-200 flex items-center justify-between ${
                             selected
-                              ? "border-black bg-black text-white"
-                              : "border-black/15 hover:border-black/40"
+                              ? "border-ink bg-ink text-white"
+                              : "border-line bg-oat hover:border-ink/50"
                           }`}
                         >
                           <span
@@ -1898,7 +1909,7 @@ export default function Assessment() {
                       !answers[question.id] ||
                       (answers[question.id] as string[]).length === 0
                     }
-                    className="bg-[#FFD400] text-black border-2 border-black px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-8 py-3 min-h-[44px] text-[15px] font-medium transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                   </button>
@@ -1917,7 +1928,7 @@ export default function Assessment() {
                       setValidationError("");
                     }}
                     placeholder={question.placeholder}
-                    className="w-full border border-black/20 px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-black/30 mb-4"
+                    className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F] mb-4"
                     onKeyDown={e => {
                       if (e.key === "Enter") handleTextSubmit();
                     }}
@@ -1930,7 +1941,7 @@ export default function Assessment() {
                   <div className="flex gap-3">
                     <button
                       onClick={handleTextSubmit}
-                      className="bg-[#FFD400] text-black border-2 border-black px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
+                      className="bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-8 py-3 min-h-[44px] text-[15px] font-medium transition-colors"
                     >
                       Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                     </button>
@@ -1939,7 +1950,7 @@ export default function Assessment() {
                         setTextInput("");
                         advanceToNext({ ...answers, [question.id]: "0" });
                       }}
-                      className="border border-black/20 px-6 py-3 min-h-[44px] text-xs tracking-[0.1em] uppercase text-black/40 hover:text-black hover:border-black transition-colors"
+                      className="px-6 py-3 min-h-[44px] text-[15px] text-mute hover:text-black transition-colors bg-stone text-ink rounded-lg hover:bg-[#D9D5C9]"
                     >
                       I don't know
                     </button>
@@ -1959,7 +1970,7 @@ export default function Assessment() {
                         setValidationError("");
                       }}
                       placeholder={question.placeholder}
-                      className="w-full border border-black/20 px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-black/30 mb-4"
+                      className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F] mb-4"
                       onKeyDown={e => {
                         if (e.key === "Enter") handleTextSubmit();
                       }}
@@ -1973,7 +1984,7 @@ export default function Assessment() {
                       }}
                       placeholder={question.placeholder}
                       rows={question.required ? 2 : 4}
-                      className="w-full border border-black/20 px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-black/30 mb-4 resize-none"
+                      className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F] mb-4 resize-none"
                       onKeyDown={e => {
                         if (e.key === "Enter" && !e.shiftKey) {
                           e.preventDefault();
@@ -1990,7 +2001,7 @@ export default function Assessment() {
                   <div className="flex gap-3">
                     <button
                       onClick={handleTextSubmit}
-                      className="bg-[#FFD400] text-black border-2 border-black px-8 py-3 min-h-[44px] text-xs tracking-[0.15em] uppercase font-bold hover:bg-black hover:text-[#FFD400] transition-colors"
+                      className="bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-8 py-3 min-h-[44px] text-[15px] font-medium transition-colors"
                     >
                       Continue <ArrowRight className="w-3 h-3 inline ml-2" />
                     </button>
@@ -2000,7 +2011,7 @@ export default function Assessment() {
                           setTextInput("");
                           advanceToNext({ ...answers, [question.id]: "" });
                         }}
-                        className="border border-black/20 px-6 py-3 min-h-[44px] text-xs tracking-[0.1em] uppercase text-black/40 hover:text-black hover:border-black transition-colors"
+                        className="px-6 py-3 min-h-[44px] text-[15px] text-mute hover:text-black transition-colors bg-stone text-ink rounded-lg hover:bg-[#D9D5C9]"
                       >
                         Skip
                       </button>
@@ -2010,17 +2021,17 @@ export default function Assessment() {
               )}
 
               {/* Navigation */}
-              <div className="flex items-center justify-between mt-10 pt-6 border-t border-black/10">
+              <div className="flex items-center justify-between mt-10 pt-6 border-t border-line">
                 <button
                   onClick={handleBack}
                   disabled={currentQ === 0}
-                  className="flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-black/40 hover:text-black transition-colors disabled:opacity-20 disabled:cursor-not-allowed min-h-[44px] px-3"
+                  className="flex items-center gap-2 text-[13px] text-mute hover:text-black transition-colors disabled:opacity-20 disabled:cursor-not-allowed min-h-[44px] px-3"
                 >
                   <ArrowLeft className="w-3 h-3" /> Previous
                 </button>
                 <a
                   href="/"
-                  className="text-xs tracking-[0.1em] uppercase text-black/30 hover:text-black/60 transition-colors min-h-[44px] flex items-center px-3"
+                  className="text-[13px] text-mute hover:text-mute transition-colors min-h-[44px] flex items-center px-3"
                 >
                   Exit
                 </a>

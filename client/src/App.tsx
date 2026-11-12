@@ -35,7 +35,7 @@ const PaymentCancel = lazy(() => import("./pages/PaymentCancel"));
 const Loading = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div
-      className="w-5 h-5 border-2 border-black/20 border-t-black animate-spin"
+      className="w-5 h-5 border-2 border-[#C9C6BA] border-t-black animate-spin"
       role="status"
       aria-label="Loading"
     />
