@@ -1,5 +1,5 @@
 import { PageBand } from "@/components/PageBand";
-import { ProgrammeCheckout } from "./Assessment";
+import { CallRequest } from "@/components/CallRequest";
 
 export default function ProgramDetails() {
   return (
@@ -124,7 +124,7 @@ export default function ProgramDetails() {
           </div>
 
           <div className="mb-12">
-            <ProgrammeCheckout source="program_page" />
+            <CallRequest placement="program_page" heading="Not sure where to start? Talk it through with me." />
           </div>
 
           <div className="flex flex-wrap gap-4">

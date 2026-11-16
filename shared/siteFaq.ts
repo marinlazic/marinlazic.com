@@ -9,7 +9,7 @@ export const HOME_FAQS = [
   },
   {
     q: "Who is this coaching for?",
-    a: "Founders, executives and professionals who want a training and recovery plan that fits a demanding schedule. Your goals, health context and available time are considered before coaching starts.",
+    a: "Founders, CEOs, business owners and senior professionals who want a training and recovery plan that fits a demanding schedule. Your goals, health context and available time are considered before coaching starts.",
   },
   {
     q: "Is coaching delivered online?",

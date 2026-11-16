@@ -109,15 +109,6 @@ export default function BloodWork() {
               </p>
             </div>
 
-            <div>
-              <h2 className="text-[13px] text-mute font-medium mb-4">
-                Pricing
-              </h2>
-              <p className="text-sm text-body leading-relaxed">
-                [MARIN TO CONFIRM: price and availability]
-              </p>
-            </div>
-
             <div className="bg-oat p-5 border border-line">
               <p className="text-xs text-mute leading-relaxed">
                 <strong className="text-body">Important:</strong> This

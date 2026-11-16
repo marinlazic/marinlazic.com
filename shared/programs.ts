@@ -53,25 +53,6 @@ export type Program = Thumb & {
 
 export const SECTIONS: ProgramSection[] = [
   {
-    id: "water-polo",
-    heading: "Written for water polo players.",
-    title: "Water polo",
-    blurb:
-      "Built by the strength and conditioning coach of the Australian Men's Water Polo Team.",
-  },
-  {
-    id: "hobbies",
-    heading: "Train for the thing you love.",
-    title: "Hobbies",
-    blurb: "Strength work built around one hobby, so you move better, last longer and get hurt less.",
-  },
-  {
-    id: "women",
-    heading: "Strength built for women.",
-    title: "Women",
-    blurb: "Programs for each stage of life. Heavy, progressive training with clear explanations of why.",
-  },
-  {
     id: "leaders",
     heading: "Programs for people who lead.",
     title: "Leaders",
@@ -82,6 +63,25 @@ export const SECTIONS: ProgramSection[] = [
     heading: "Train your team like athletes.",
     title: "Corporate athlete",
     blurb: "The same method used with elite athletes, for people at work and for whole teams.",
+  },
+  {
+    id: "women",
+    heading: "Strength built for women.",
+    title: "Women",
+    blurb: "Programs for each stage of life. Heavy, progressive training with clear explanations of why.",
+  },
+  {
+    id: "hobbies",
+    heading: "Train for the thing you love.",
+    title: "Hobbies",
+    blurb: "Strength work built around one hobby, so you move better, last longer and get hurt less.",
+  },
+  {
+    id: "water-polo",
+    heading: "Written for water polo players.",
+    title: "Water polo",
+    blurb:
+      "Built by the strength and conditioning coach of the Australian Men's Water Polo Team.",
   },
 ];
 

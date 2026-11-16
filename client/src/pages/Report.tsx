@@ -1,7 +1,8 @@
 import { useParams } from "wouter";
 import { Download, ArrowLeft } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { AnalysisSection, KickstartCheckoutButton } from "./Assessment";
+import { AnalysisSection } from "./Assessment";
+import { CallRequest, scoreContext } from "@/components/CallRequest";
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
@@ -99,11 +100,12 @@ export default function Report() {
       <AnalysisSection analysisResult={report.analysis} analysisError={null} />
 
       <div className="border-t border-line pt-10 mt-4">
-        <h2 className="font-heading text-2xl font-bold tracking-[-0.01em] mb-4">The 4 week programme</h2>
-        <p className="text-sm sm:text-base text-mute leading-relaxed mb-6">
-          A structured four week programme built from these answers. One payment. Marin is in touch within one business day.
-        </p>
-        <KickstartCheckoutButton email={report.email} name={report.name || ""} source="report_page" />
+        <CallRequest
+          placement="report_page"
+          email={report.email}
+          name={report.name || ""}
+          context={scoreContext(report.scores.overallPct, report.scores.categories)}
+        />
       </div>
     </Shell>
   );

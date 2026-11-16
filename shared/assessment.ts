@@ -24,59 +24,35 @@ export interface Question {
 }
 
 
+/** The questions shown on the landing page before the quiz asks for a name or an email. */
+export const QUICK_START_IDS = ["occupation", "primary-goal", "age"] as const;
+
 export const QUESTIONS: Question[] = [
-  // ── PERSONAL ──
-  {
-    id: "name",
-    section: "personal",
-    type: "text",
-    required: true,
-    text: "What's your name?",
-    subtext: "First name is enough.",
-    placeholder: "Your name",
-  },
-  {
-    id: "email",
-    section: "personal",
-    type: "text",
-    required: true,
-    text: "What's your email?",
-    subtext: "We will use this to send your assessment summary.",
-    placeholder: "your@email.com",
-  },
-  {
-    id: "age",
-    section: "personal",
-    type: "select",
-    text: "What's your age range?",
-    subtext: "This helps put training and recovery habits in context.",
-    options: [
-      { label: "Under 25", value: "under-25" },
-      { label: "25–34", value: "25-34" },
-      { label: "35–44", value: "35-44" },
-      { label: "45–54", value: "45-54" },
-      { label: "55+", value: "55+" },
-    ],
-  },
+  // ── QUICK START: three taps, no typing, no email yet ──
   {
     id: "occupation",
-    section: "personal",
+    section: "start",
     type: "select",
     text: "What best describes your role?",
     subtext: "This helps us understand your daily demands and stress profile.",
     options: [
       {
-        label: "C-Suite / Founder",
+        label: "CEO, C suite or founder",
         value: "executive",
         description: "Running the show",
       },
       {
-        label: "Senior Leader / Director",
+        label: "Business owner or self employed",
+        value: "entrepreneur",
+        description: "Building something",
+      },
+      {
+        label: "Senior leader or director",
         value: "senior-leader",
         description: "High stakes, high pressure",
       },
       {
-        label: "Professional / Manager",
+        label: "Professional or manager",
         value: "professional",
         description: "Career-focused",
       },
@@ -85,19 +61,12 @@ export const QUESTIONS: Question[] = [
         value: "athlete",
         description: "Sport is your life",
       },
-      {
-        label: "Entrepreneur / Self-Employed",
-        value: "entrepreneur",
-        description: "Building something",
-      },
       { label: "Other", value: "other", description: "None of the above" },
     ],
   },
-
-  // ── GOALS ──
   {
     id: "primary-goal",
-    section: "goals",
+    section: "start",
     type: "select",
     text: "What's your primary goal right now?",
     subtext:
@@ -141,6 +110,42 @@ export const QUESTIONS: Question[] = [
     ],
   },
   {
+    id: "age",
+    section: "start",
+    type: "select",
+    text: "What's your age range?",
+    subtext: "This helps put training and recovery habits in context.",
+    options: [
+      { label: "Under 25", value: "under-25" },
+      { label: "25 to 34", value: "25-34" },
+      { label: "35 to 44", value: "35-44" },
+      { label: "45 to 54", value: "45-54" },
+      { label: "55+", value: "55+" },
+    ],
+  },
+
+  // ── ABOUT YOU ──
+  {
+    id: "name",
+    section: "personal",
+    type: "text",
+    required: true,
+    text: "What's your first name?",
+    subtext: "So your report speaks to you.",
+    placeholder: "Your name",
+  },
+  {
+    id: "email",
+    section: "personal",
+    type: "text",
+    required: true,
+    text: "What's your email?",
+    subtext: "Your score and personal report go here. No spam.",
+    placeholder: "your@email.com",
+  },
+
+  // ── GOALS ──
+  {
     id: "goals-detail",
     section: "goals",
     type: "text",
@@ -172,19 +177,19 @@ export const QUESTIONS: Question[] = [
         description: "Very short sleep opportunity",
       },
       {
-        label: "5–6 hours",
+        label: "5 to 6 hours",
         value: "5-6",
         score: 2,
         description: "Short sleep opportunity",
       },
       {
-        label: "6–7 hours",
+        label: "6 to 7 hours",
         value: "6-7",
         score: 3,
         description: "Moderate sleep opportunity",
       },
       {
-        label: "7–8 hours",
+        label: "7 to 8 hours",
         value: "7-8",
         score: 4,
         description: "Longer sleep opportunity",
@@ -367,7 +372,7 @@ export const QUESTIONS: Question[] = [
     subtext: "Include planned exercise and training.",
     options: [
       {
-        label: "0–1 days",
+        label: "0 to 1 days",
         value: "0-1",
         score: 1,
         description: "Infrequent training",
@@ -380,7 +385,7 @@ export const QUESTIONS: Question[] = [
         description: "Regular training",
       },
       {
-        label: "4–5 days",
+        label: "4 to 5 days",
         value: "4-5",
         score: 4,
         description: "Frequent training",
@@ -592,8 +597,8 @@ export const QUESTIONS: Question[] = [
       "Fluids in drinks and food contribute. Needs vary with climate, activity and medical context.",
     options: [
       { label: "Less than 1 litre", value: "under-1", score: 1 },
-      { label: "1–2 litres", value: "1-2", score: 2 },
-      { label: "2–3 litres", value: "2-3", score: 4 },
+      { label: "1 to 2 litres", value: "1-2", score: 2 },
+      { label: "2 to 3 litres", value: "2-3", score: 4 },
       { label: "3+ litres", value: "3+", score: 5 },
     ],
   },
@@ -625,7 +630,7 @@ export const QUESTIONS: Question[] = [
         description: "Sporadic",
       },
       {
-        label: "1–2 planned sessions per week",
+        label: "1 to 2 planned sessions per week",
         value: "regular",
         score: 4,
         description: "Intentional",

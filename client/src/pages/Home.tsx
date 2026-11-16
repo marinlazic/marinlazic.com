@@ -10,6 +10,7 @@ import { CheckCircle, AlertCircle, X, ArrowRight, Plus } from "lucide-react";
 import { articles as insightsData } from "@/data/articlesData";
 import { HOME_FAQS } from "@shared/siteFaq";
 import { GuideSignup } from "@/components/GuideSignup";
+import { QuickStart } from "@/components/QuickStart";
 import { RECOVERY_GUIDE } from "@shared/recoveryGuide";
 import { PROGRAMS, SECTIONS, programPath } from "@shared/programs";
 import { cardLine } from "@/data/programCards";
@@ -57,12 +58,13 @@ function Hero() {
       <div className="font-heading text-[28px] leading-[1.17] tracking-[-0.02em] sm:text-[34px] lg:text-[42px] max-w-[1200px] text-ink">
         <h1 className="inline font-bold">
           <span className="sr-only">Marin Lazic. </span>Performance coaching for
-          founders, training and recovery.
+          founders, CEOs and business owners.
         </h1>{" "}
         <p className="inline font-normal text-body">
-          I'm Marin Lazic, strength and conditioning coach for the Australian
-          Men's Water Polo Team. I worked with the team at Paris 2024 and I
-          support the LA28 pathway.
+          I'm Marin Lazic. I help people who run things keep their training,
+          sleep and recovery working through a heavy year. I use the same
+          methods I use as strength and conditioning coach for the Australian
+          Men's Water Polo Team, at Paris 2024 and on the LA28 pathway.
         </p>
       </div>
       <div className="mt-6 lg:mt-[30px] flex flex-wrap items-center gap-2.5">
@@ -120,7 +122,7 @@ function Ways() {
       tag: "Programs",
       kind: "Library",
       title: "The program library",
-      body: "Pick your sport, your hobby, your stage of life or your job. Every program lives in the Bridge app on your phone.",
+      body: "Programs for leaders, founders and busy professionals first. Sport and hobby programs are there too. Every program lives in the Bridge app on your phone.",
       rows: [["Programs", String(PROGRAMS.length)], ["Length", "4 to 8 weeks"]],
       cta: "Browse the library",
       href: "/library",
@@ -248,8 +250,9 @@ function AssessmentPreview() {
           <h2 className="ml-h2">See where you stand.</h2>
           <p className="ml-lede mt-4 max-w-[520px]">
             30 questions and a personal report to help you consider your
-            training, recovery and daily habits.
+            training, recovery and daily habits. Start with three taps here.
           </p>
+          <QuickStart placement="home" className="mt-6 max-w-[520px]" />
           <div className="mt-6 lg:mt-9 border-b border-line">
             {AREAS.map(([a, b]) => (
               <div key={a} className="grid gap-x-6 gap-y-1 sm:grid-cols-[190px_minmax(0,1fr)] py-3.5 border-t border-line">
@@ -257,16 +260,6 @@ function AssessmentPreview() {
                 <span className="text-[15px] leading-normal text-body">{b}</span>
               </div>
             ))}
-          </div>
-          <div className="mt-7 flex flex-wrap items-center gap-3.5">
-            <a
-              href="/assessment"
-              onClick={() => track("cta_click", { button: "preview_get_report" })}
-              className="ml-btn ml-btn-dark w-full sm:w-auto"
-            >
-              Get your free report <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </a>
-            <span className="text-sm text-mute">About 5 minutes.</span>
           </div>
         </div>
         <div className="bg-oat rounded-xl p-5 lg:p-8 min-w-0 w-full max-w-[520px]">
@@ -376,16 +369,6 @@ function Services() {
     },
     {
       number: "02",
-      kind: "Athletes",
-      title: "Athlete Performance Programming",
-      body: "Strength and conditioning built around the demands of your sport, season and training history.",
-      graphic: <WaveGraphic />,
-      href: "/#contact",
-      link: "Get in touch",
-      event: "service_email_02",
-    },
-    {
-      number: "03",
       kind: "Organisations",
       title: "Corporate Health and Performance Programs",
       body: "Otion programs for staff health, movement, recovery and sustainable work habits.",
@@ -395,7 +378,7 @@ function Services() {
       event: "service_03_details",
     },
     {
-      number: "04",
+      number: "03",
       kind: "Travel",
       title: "Travel and Jet Lag Recovery Protocols",
       body: "Sleep timing, light, meals and training planned around your route and arrival.",
@@ -403,6 +386,16 @@ function Services() {
       href: "/#contact",
       link: "Get in touch",
       event: "service_email_04",
+    },
+    {
+      number: "04",
+      kind: "Athletes",
+      title: "Athlete Performance Programming",
+      body: "Strength and conditioning built around the demands of your sport, season and training history.",
+      graphic: <WaveGraphic />,
+      href: "/#contact",
+      link: "Get in touch",
+      event: "service_email_02",
     },
   ];
   return (
@@ -494,12 +487,12 @@ function About() {
             language or tools to deal with it.
           </p>
           <p className="ml-lede mt-3.5">
-            That experience shaped how I coach. In my current role as Strength
-            and Conditioning Coach for the Australian Men's Water Polo Team, I
-            supported preparation for Paris 2024 and continue to support the
-            LA28 pathway. I also work with founders and executives who want
-            training and recovery plans that fit their work and family
-            commitments.
+            That experience shaped how I coach. I work with founders, CEOs and
+            business owners who want training and recovery plans that fit
+            their work and family commitments. The method comes from my role as
+            Strength and Conditioning Coach for the Australian Men's Water Polo
+            Team, where I supported preparation for Paris 2024 and continue to
+            support the LA28 pathway.
           </p>
           <p className="ml-lede mt-3.5">
             I founded Otion to offer health and performance support to

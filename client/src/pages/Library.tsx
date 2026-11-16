@@ -71,7 +71,7 @@ function CustomProgram() {
         <div className="min-w-0">
           <h2 className="ml-h2">Need something built for you?</h2>
           <p className="ml-lede mt-4 max-w-[520px]">
-            Tell me what the program is for. A sport, an event, a goal, a body part you want to look after. I will reply with what I would build, how long it takes and the price.
+            Tell me what the program is for. A sport, an event, a goal, a body part you want to look after. I will reply with what I would build and how long it takes.
           </p>
           <p className="ml-small mt-3 max-w-[520px]">The more detail you give, the better the program. Programs are general training advice and not medical advice.</p>
         </div>
@@ -359,7 +359,7 @@ export default function Library() {
         </section>
 
         <div className="mt-7 ml-small flex flex-col gap-2 max-w-[900px]">
-          <span>Prices in Australian dollars. These programs are general training advice and not medical advice. If you have a health condition, are pregnant or have not trained for a long time, check with your doctor before you start.</span>
+          <span>These programs are general training advice and not medical advice. If you have a health condition, are pregnant or have not trained for a long time, check with your doctor before you start.</span>
           <span>Marin Lazic, ASCA Level 2 Strength and Conditioning Coach. Sydney.</span>
         </div>
       </main>

@@ -20,7 +20,6 @@ import {
   ChevronDown,
   Loader2,
   ExternalLink,
-  CreditCard,
   Share2,
   Copy,
   Check,
@@ -28,6 +27,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { CallRequest, scoreContext } from "@/components/CallRequest";
+import { QuickStart, takeQuickStart } from "@/components/QuickStart";
 import { useSearch } from "wouter";
 import { getCampaignValue } from "@/lib/attribution";
 import {
@@ -49,6 +50,13 @@ interface Section {
 
 // ─── Sections ──────────────────────────────────────────
 const SECTIONS: Section[] = [
+  {
+    id: "start",
+    title: "Quick start",
+    subtitle: "Three taps. No email needed yet.",
+    icon: <Zap className="w-5 h-5" />,
+    color: "#FF5A36",
+  },
   {
     id: "personal",
     title: "About You",
@@ -465,99 +473,32 @@ export function AnalysisSection({
   );
 }
 
-// ─── Kickstart Checkout Button ─────────────────────────
-export function KickstartCheckoutButton({
-  email,
-  name,
-  source,
-}: {
-  email: string;
-  name: string;
-  source: string;
-}) {
-  const createSession = trpc.checkout.createSession.useMutation();
-  const { track } = useAnalytics();
-  const [loading, setLoading] = useState(false);
-
-  async function handleCheckout() {
-    if (!email) {
-      toast.error("Email is required to proceed with checkout.");
-      return;
+// The first question with no answer yet. Used when a quiz is resumed or carried over.
+function firstUnanswered(answers: Record<string, string | string[]>) {
+  const i = QUESTIONS.findIndex(q => {
+    if (q.conditional) {
+      const dep = answers[q.conditional.questionId];
+      const shown = Array.isArray(dep) ? dep.includes(q.conditional.value) : dep === q.conditional.value;
+      if (!shown) return false;
     }
-    setLoading(true);
-    track("checkout_started", { product: "kickstart-4-week", source });
-    try {
-      const result = await createSession.mutateAsync({
-        productId: "kickstart-4-week",
-        email,
-        name: name || undefined,
-        origin: window.location.origin,
-      });
-      if (result.url) {
-        window.location.href = result.url;
-      } else {
-        toast.error("Failed to create checkout session. Please try again.");
-        setLoading(false);
-      }
-    } catch (err: any) {
-      console.error("Checkout error:", err);
-      toast.error("Something went wrong. Please try again or contact us.");
-      setLoading(false);
-    }
-  }
-
-  return (
-    <button
-      onClick={handleCheckout}
-      disabled={loading}
-      className="w-full sm:w-auto bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-8 py-4 text-[15px] font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
-    >
-      {loading ? (
-        <>
-          <Loader2 className="w-4 h-4 animate-spin" /> Opening checkout
-        </>
-      ) : (
-        <>
-          <CreditCard className="w-4 h-4" /> Start the 4 week programme
-        </>
-      )}
-    </button>
-  );
+    const a = answers[q.id];
+    return a === undefined || a === "" || (Array.isArray(a) && a.length === 0);
+  });
+  return i === -1 ? QUESTIONS.length - 1 : i;
 }
 
-/** Email capture form plus the checkout button, for pages without a known email. */
-export function ProgrammeCheckout({ source }: { source: string }) {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  return (
-    <div className="border border-line p-6 sm:p-8">
-      <p className="text-[13px] text-black font-semibold mb-3">
-        Start now
-      </p>
-      <p className="text-sm text-mute leading-relaxed mb-6 max-w-xl">
-        Four weeks, built from your assessment answers. One payment. Marin will be in touch within one business day of your payment.
-      </p>
-      <div className="grid sm:grid-cols-2 gap-3 mb-4 max-w-xl">
-        <input
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder="Your name"
-          aria-label="Your name"
-          className="border border-[#C9C6BA] px-4 py-3 text-sm focus:outline-none focus:border-black"
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Your email"
-          aria-label="Your email"
-          className="border border-[#C9C6BA] px-4 py-3 text-sm focus:outline-none focus:border-black"
-        />
-      </div>
-      <KickstartCheckoutButton email={email.trim()} name={name.trim()} source={source} />
-    </div>
-  );
+// Facts sent with a call request so the reply can start from the person's own result.
+function callContext(answers: Record<string, string | string[]>) {
+  const scores = calculateScores(answers);
+  const label = (id: string) => {
+    const q = QUESTIONS.find(x => x.id === id);
+    return q?.options?.find(o => o.value === answers[id])?.label;
+  };
+  const role = label("occupation");
+  const goal = label("primary-goal");
+  return [scoreContext(scores.overallPct, scores.categories), role ? `Role: ${role}.` : "", goal ? `Main goal: ${goal}.` : ""]
+    .filter(Boolean)
+    .join(" ");
 }
 
 // ─── Assessment Page ────────────────────────────────────
@@ -596,14 +537,26 @@ export default function Assessment() {
 
   useEffect(() => {
     if (resumedData && !resumedData.completed) {
-      setAnswers(resumedData.answers || {});
-      setCurrentQ(resumedData.answeredCount || 0);
+      const saved = (resumedData.answers || {}) as Record<string, string | string[]>;
+      setAnswers(saved);
+      setCurrentQ(firstUnanswered(saved));
       setPhase("quiz");
       if (resumedData.answers?.name) {
         setTextInput("");
       }
     }
   }, [resumedData]);
+
+  // Answers tapped on the home page carry straight into the quiz.
+  useEffect(() => {
+    if (resumeParam) return;
+    const quick = takeQuickStart();
+    if (!quick) return;
+    setAnswers(quick);
+    setCurrentQ(firstUnanswered(quick));
+    setPhase("quiz");
+    track("assessment_started", { via: "home_quick_start" });
+  }, []);
 
   // Auto-save progress after email is captured and on each answer
   useEffect(() => {
@@ -792,17 +745,16 @@ export default function Assessment() {
                 It takes about five minutes. At the end, you will receive a
                 summary based on your responses, lifestyle and goals.
               </p>
-              <div className="flex flex-col sm:flex-row gap-2.5 mt-7">
-                <button
-                  onClick={() => {
-                    track("assessment_started");
-                    setPhase("quiz");
-                  }}
-                  className="ml-btn ml-btn-dark"
-                >
-                  Start the assessment <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                </button>
-              </div>
+              <QuickStart
+                placement="assessment"
+                className="mt-7 max-w-xl"
+                onDone={quick => {
+                  track("assessment_started", { via: "assessment_page" });
+                  setAnswers(quick);
+                  setCurrentQ(firstUnanswered(quick));
+                  setPhase("quiz");
+                }}
+              />
               <p className="ml-small mt-6 max-w-xl">
                 This is a coaching tool, not a medical assessment. Your responses
                 and any wearable data are indicative only and should be considered
@@ -816,7 +768,7 @@ export default function Assessment() {
             <div className="bg-oat rounded-xl p-5 lg:p-8 min-w-0">
               <h2 className="font-heading font-bold text-sm">What we'll cover</h2>
               <div className="mt-3 border-b border-line">
-                {SECTIONS.map(s => (
+                {SECTIONS.filter(s => s.id !== "start").map(s => (
                   <div key={s.id} className="flex items-center gap-3 py-3 border-t border-line text-[15px] font-medium">
                     <span className="text-mute" aria-hidden="true">{s.icon}</span>
                     <span>{s.title}</span>
@@ -894,7 +846,7 @@ export default function Assessment() {
     // and Kit all show the same numbers.
     const shared = calculateScores(answers);
     const scoredCategories = SECTIONS.filter(
-      s => !["personal", "goals"].includes(s.id)
+      s => !["start", "personal", "goals"].includes(s.id)
     ).map(s => {
       const c = shared.categories.find(x => x.id === s.id);
       return {
@@ -1655,21 +1607,13 @@ export default function Assessment() {
               </div>
             )}
 
-            {/* Four week programme */}
+            {/* Short call */}
             <div className="mb-16">
-              <h3 className="text-[13px] text-mute font-medium mb-4">
-                Act on your results
-              </h3>
-              <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-4 leading-tight">
-                The 4 week programme
-              </h2>
-              <p className="text-sm sm:text-base text-mute leading-relaxed mb-6 max-w-2xl">
-                A structured four week programme built from these answers. Periodised training, sleep, recovery and nutrition guidance, with weekly email check ins. One payment.
-              </p>
-              <KickstartCheckoutButton
+              <CallRequest
+                placement="assessment_results"
                 email={(answers.email as string) || ""}
                 name={(answers.name as string) || ""}
-                source="assessment_results"
+                context={callContext(answers)}
               />
             </div>
 

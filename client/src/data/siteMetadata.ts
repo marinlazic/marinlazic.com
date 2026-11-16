@@ -119,7 +119,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/library": {
     title: "Training Program Library | Marin Lazic",
     description:
-      "Buy training programs from Marin Lazic, Strength and Conditioning Coach of the Australian Men's Water Polo Team. Water polo gym programs now, more sections coming. Delivered in the Bridge app.",
+      "Training programs for leaders, founders and busy professionals from Marin Lazic, Strength and Conditioning Coach of the Australian Men's Water Polo Team. Women, hobby and water polo programs too. Delivered in the Bridge app.",
     socialTitle: "Program library | Marin Lazic",
     socialDescription:
       "Training programs you buy once and run in the Bridge app. Water polo programs are available now.",
@@ -167,7 +167,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/waitlist": {
     title: "Programme Updates Waitlist | Marin Lazic",
     description:
-      "Register your interest in future training programmes. Dates, pricing and availability will be confirmed before enrolment.",
+      "Register your interest in future training programmes. Dates and availability will be confirmed before enrolment.",
     label: "Waitlist",
     noindex: true,
   },
@@ -189,7 +189,7 @@ export const PUBLIC_PAGES: Record<string, Page> = {
   "/hrv-program": {
     title: "HRV Guided Conditioning | Marin Lazic",
     description:
-      "Use personal HRV trends alongside sleep, symptoms and training history. Programme pricing, dates and availability remain unconfirmed.",
+      "Use personal HRV trends alongside sleep, symptoms and training history. Programme dates and availability remain unconfirmed.",
     label: "HRV conditioning",
     noindex: true,
     modified: PREVIOUS_CONTENT_DATE,

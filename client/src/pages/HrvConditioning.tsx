@@ -123,15 +123,6 @@ export default function HrvConditioning() {
                 a GP or appropriate clinician.
               </p>
             </div>
-
-            <div>
-              <h2 className="text-[13px] text-mute font-medium mb-4">
-                Pricing and start date
-              </h2>
-              <p className="text-sm text-body leading-relaxed">
-                [MARIN TO CONFIRM: price, cohort start date, and group size]
-              </p>
-            </div>
           </div>
 
           <div className="flex flex-wrap gap-4">

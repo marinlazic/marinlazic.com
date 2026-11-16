@@ -1,4 +1,5 @@
 import { PageBand } from "@/components/PageBand";
+import { CallRequest } from "@/components/CallRequest";
 export default function BookACall() {
   return (
     <div className="min-h-screen bg-ivory text-black flex flex-col">
@@ -22,31 +23,16 @@ export default function BookACall() {
       <main className="flex-1 max-w-3xl mx-auto w-full px-5 py-16 sm:py-24">
         <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
         <h1 className="font-heading text-3xl sm:text-5xl font-bold tracking-tight mb-6">
-          Coaching enquiries
+          Request a short call
         </h1>
-        <p className="text-mute leading-relaxed mb-6">
-          Online appointment booking is not currently available. You can apply
-          for coaching and discuss your goals with Marin by email. You do not
-          need a sales call to apply.
+        <p className="text-mute leading-relaxed mb-8">
+          Tell me where to reach you and what you want to cover. I reply by email with a few times.
+          It is not a sales pitch, and asking for a call does not enrol you in anything.
         </p>
-        <p className="text-sm text-mute mb-10">
-          If you came from an earlier booking link, use the application below.
-          Submitting it does not take payment or enrol you.
+        <CallRequest placement="call_page" heading="Request a short call." />
+        <p className="text-sm text-mute mt-8">
+          Prefer to start with your numbers? <a href="/assessment" className="underline underline-offset-2 text-ink">Take the free assessment</a>.
         </p>
-        <div className="flex flex-wrap gap-4">
-          <a
-            href="/apply"
-            className="bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-7 py-4 text-[15px] tracking-wider"
-          >
-            Apply for coaching
-          </a>
-          <a
-            href="/assessment"
-            className="px-7 py-4 text-[15px] tracking-wider bg-stone text-ink rounded-lg hover:bg-[#D9D5C9]"
-          >
-            Free online assessment
-          </a>
-        </div>
       </main>
       <footer className="border-t border-line px-5 py-8 text-center">
         <a href="/" className="text-xs text-black/50">
