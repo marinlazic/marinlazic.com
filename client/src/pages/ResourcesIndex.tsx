@@ -36,9 +36,7 @@ function ListItem({ card }: { card: ResourceCard }) {
   return (
     <li className="border-b border-line last:border-b-0">
       <a href={card.href} className="group flex gap-4 py-4">
-        {card.photo && (
-          <Picture photo={card.photo} sizes="96px" className="w-24 h-24 object-cover shrink-0 block" />
-        )}
+        <img src={guideArt(card.alias)} alt="" width={96} height={96} loading="lazy" className="w-24 h-24 object-cover shrink-0 block rounded-md bg-oat" />
         <span className="min-w-0">
           <span className="block text-[13px] text-mute font-medium mb-1">{card.category}</span>
           <span className="block font-heading font-bold text-[15px] leading-snug text-black group-hover:text-mute transition-colors">{card.title}</span>
@@ -96,6 +94,21 @@ const YOUTUBE_PICKS = [
   { id: "Q4iXOp4-LP8", title: "Lateral lunge with offset load" },
   { id: "erH4wjFwAN0", title: "The only thing that matters is doing the thing" },
 ];
+
+// One drawing per guide, made to show what the guide is about. The files are
+// client/public/images/site/guide-<alias>.svg, in the program image style.
+const guideArt = (alias: string) => `/images/site/guide-${alias}.svg`;
+const GUIDE_ALT: Record<string, string> = {
+  template: "Five round signs for push, pull, hinge, squat and carry",
+  groove: "A pull up bar with a tally of small sets under it",
+  routine: "A clock with five minutes marked, above seven dots for the days of the week",
+  move: "Arrows pointing forward, to each side and around in a turn",
+  protein: "A plate with an egg on it, a fork and a knife",
+  engine: "Four bars, each a little taller than the last",
+  recover: "A checklist with four of five boxes ticked",
+  week3: "Four rows of seven dots. Three dots are missing in the third row",
+  sleep: "A bed under a crescent moon",
+};
 
 const postDate = (d: string) => {
   const t = new Date(d);
@@ -163,9 +176,7 @@ function GuideCard({ card }: { card: ResourceCard }) {
   return (
     <li>
       <a href={card.href} className="group block">
-        {card.photo && (
-          <Picture photo={card.photo} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="block w-full aspect-[3/2] object-cover rounded-lg bg-oat" />
-        )}
+        <img src={guideArt(card.alias)} alt={GUIDE_ALT[card.alias] ?? ""} width={1200} height={800} loading="lazy" className="block w-full aspect-[3/2] object-cover rounded-lg bg-oat" />
         <span className="block text-[13px] font-semibold mt-4">{card.category}</span>
         <span className="block font-heading font-bold text-[21px] leading-tight mt-1.5 group-hover:text-mute transition-colors">{card.title}</span>
         <span className="block mt-2 text-[15px] text-body leading-normal">{card.summary}</span>
@@ -181,7 +192,8 @@ export default function ResourcesIndex() {
   const cover = mediaItems[0];
   const clips = cover.videos ?? [];
   const story = cover.links.find(l => l.href.includes("substack.com"))?.href ?? SUBSTACK_URL;
-  const [clip, setClip] = useState(clips[0]?.id ?? "");
+  const current = clips.find(c => /stress/i.test(c.title)) ?? clips[0];
+  const moreClips = clips.filter(c => c !== current);
   const [playing, setPlaying] = useState(false);
   const live = trpc.articles.latest.useQuery({ limit: 6 }, { staleTime: 10 * 60 * 1000, retry: false });
   const posts = live.data && live.data.length ? live.data : SUBSTACK_SNAPSHOT;
@@ -189,7 +201,6 @@ export default function ResourcesIndex() {
   const h2 = "font-heading font-bold text-[32px] leading-[1.05] tracking-[-0.02em] lg:text-[48px]";
   const kicker = "text-[13px] font-semibold text-mute";
   const rule = "mt-14 lg:mt-24 border-t border-ink pt-6 lg:pt-8";
-  const current = clips.find(c => c.id === clip) ?? clips[0];
 
   return (
     <div className="min-h-screen bg-ivory text-black flex flex-col">
@@ -219,7 +230,7 @@ export default function ResourcesIndex() {
                 </div>
                 <div className="lg:col-span-4">
                   <p className={kicker}>Cover story</p>
-                  <h2 id="cover-heading" className={`${h2} mt-3`}>Happy athletes perform better.</h2>
+                  <h2 id="cover-heading" className={`${h2} mt-3`}>The moment I learned stress is physical.</h2>
                   <p className="text-[13px] font-semibold mt-4">
                     The Ready State Podcast with Kelly and Juliet Starrett. 23 July 2026. 1 hour 13 minutes.
                   </p>
@@ -234,28 +245,6 @@ export default function ResourcesIndex() {
                   </div>
                 </div>
               </div>
-              <p className="text-[13px] font-semibold mt-9 lg:mt-12 border-t border-line pt-4">Four clips from the episode</p>
-              <ul className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-7">
-                {clips.map(c => (
-                  <li key={c.id}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setClip(c.id);
-                        setPlaying(true);
-                        document.getElementById("cover-heading")?.scrollIntoView({ block: "center", behavior: "smooth" });
-                      }}
-                      aria-label={`Play: ${c.title}`}
-                      className="group block w-full text-left cursor-pointer"
-                    >
-                      <span className={`relative block aspect-video overflow-hidden rounded-lg bg-ink ${c.id === current.id ? "outline outline-2 outline-offset-2 outline-ink" : ""}`}>
-                        <img src={`https://i.ytimg.com/vi/${c.id}/hqdefault.jpg`} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-                      </span>
-                      <span className="block font-heading font-bold text-[16px] leading-snug mt-3 group-hover:text-mute transition-colors">{c.title}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
             </section>
           )}
 
@@ -345,6 +334,18 @@ export default function ResourcesIndex() {
                 <VideoCard key={v.id} id={v.id} title={v.title} />
               ))}
             </ul>
+            {moreClips.length > 0 && (
+              <>
+                <p className="text-[13px] font-semibold mt-12 lg:mt-16 border-t border-line pt-4">
+                  More clips from The Ready State Podcast with Kelly and Juliet Starrett
+                </p>
+                <ul className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-8">
+                  {moreClips.map(v => (
+                    <VideoCard key={v.id} id={v.id} title={v.title} />
+                  ))}
+                </ul>
+              </>
+            )}
           </section>
 
           <section className={rule} aria-labelledby="guides-heading">
@@ -359,7 +360,7 @@ export default function ResourcesIndex() {
             </div>
             <div className="mt-8 lg:mt-10 grid lg:grid-cols-12 gap-9 lg:gap-12">
               <a href={featured.href} className="group block lg:col-span-7">
-                <Picture photo={resourcesHero} sizes="(min-width: 1024px) 720px, 100vw" className="block w-full aspect-[3/2] object-cover rounded-lg bg-oat" eager />
+                <img src={guideArt(featured.alias)} alt={GUIDE_ALT[featured.alias] ?? ""} width={1200} height={800} loading="lazy" className="block w-full aspect-[3/2] object-cover rounded-lg bg-oat" />
                 <span className="block text-[13px] font-semibold mt-5">Featured guide. {featured.category}</span>
                 <span id="featured-heading" className="block font-heading font-bold text-[32px] leading-[1.04] tracking-[-0.02em] mt-2 lg:text-[44px] group-hover:text-mute transition-colors">
                   {featured.title}
