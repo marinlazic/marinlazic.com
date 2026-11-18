@@ -21,6 +21,27 @@ export interface Question {
   placeholder?: string;
   required?: boolean;
   conditional?: { questionId: string; value: string };
+  /** Show this question only when another answer is one of these values. */
+  showIf?: { questionId: string; anyOf: string[] };
+  /** Number questions: the range a real reading falls in. */
+  min?: number;
+  max?: number;
+}
+
+/** Whether a question is asked, given the answers so far. */
+export function isQuestionShown(q: Question, answers: Record<string, unknown>): boolean {
+  const matches = (questionId: string, values: string[]) => {
+    const dep = answers[questionId];
+    return Array.isArray(dep) ? dep.some(v => values.includes(v)) : values.includes(dep as string);
+  };
+  if (q.conditional && !matches(q.conditional.questionId, [q.conditional.value])) return false;
+  if (q.showIf && !matches(q.showIf.questionId, q.showIf.anyOf)) return false;
+  return true;
+}
+
+/** A simple shape check for an email address: something@something.tld, no spaces. */
+export function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
 }
 
 
@@ -144,23 +165,6 @@ export const QUESTIONS: Question[] = [
     placeholder: "your@email.com",
   },
 
-  // ── GOALS ──
-  {
-    id: "goals-detail",
-    section: "goals",
-    type: "text",
-    text: "Tell me more about what you want to achieve.",
-    subtext: "A specific example can help put your goals in context.",
-    placeholder: "What does success look like for you in 6 months?",
-  },
-  {
-    id: "tried-before",
-    section: "goals",
-    type: "text",
-    text: "What have you tried before that didn't work?",
-    subtext: "Previous approaches can help provide context.",
-    placeholder: "Previous programs, diets, coaches, approaches...",
-  },
 
   // ── SLEEP ──
   {
@@ -454,16 +458,6 @@ export const QUESTIONS: Question[] = [
       },
     ],
   },
-  {
-    id: "training-history",
-    section: "training",
-    type: "text",
-    text: "Briefly describe your training background.",
-    subtext:
-      "How long have you been training? Any sports background? What's your experience level?",
-    placeholder:
-      'e.g., "Played rugby for 10 years, gym on and off for 5 years, no coach"',
-  },
 
   // ── INJURIES ──
   {
@@ -488,25 +482,6 @@ export const QUESTIONS: Question[] = [
       },
       { label: "Multiple issues I'm managing", value: "multiple", score: 1 },
     ],
-  },
-  {
-    id: "injury-detail",
-    section: "injuries",
-    type: "text",
-    text: "Tell me about any injuries, surgeries, or chronic conditions.",
-    subtext:
-      "Include past or current issues relevant to training. A clinician should advise on diagnosis and treatment.",
-    placeholder:
-      "List any injuries, surgeries, or conditions we should know about...",
-  },
-  {
-    id: "medications",
-    section: "injuries",
-    type: "text",
-    text: "Are you currently taking any medications or supplements?",
-    subtext:
-      "This may be relevant to coaching context. Do not change prescribed treatment based on this assessment.",
-    placeholder: "List any medications or supplements...",
   },
 
   // ── NUTRITION ──
@@ -663,27 +638,36 @@ export const QUESTIONS: Question[] = [
     id: "resting-heart-rate",
     section: "recovery",
     type: "number",
+    showIf: { questionId: "has-whoop", anyOf: ["yes", "other-wearable"] },
+    min: 30,
+    max: 120,
     text: "What's your resting heart rate (RHR)?",
     subtext:
-      "Check your wearable's morning reading. If you don't know, type 0 and we'll skip this.",
+      "Check your wearable's morning reading. Tap I don't know to skip.",
     placeholder: "e.g. 58",
   },
   {
     id: "hrv",
     section: "recovery",
     type: "number",
+    showIf: { questionId: "has-whoop", anyOf: ["yes", "other-wearable"] },
+    min: 10,
+    max: 250,
     text: "What's your Heart Rate Variability (HRV)?",
     subtext:
-      "HRV is one recovery signal. Use the same device and method; individual trends matter more than comparisons. Type 0 if you do not know.",
+      "HRV is one recovery signal. Use the same device and method; individual trends matter more than comparisons. Tap I don't know to skip.",
     placeholder: "e.g. 45",
   },
   {
     id: "respiratory-rate",
     section: "recovery",
     type: "number",
+    showIf: { questionId: "has-whoop", anyOf: ["yes", "other-wearable"] },
+    min: 6,
+    max: 40,
     text: "What's your average respiratory rate during sleep?",
     subtext:
-      "Use a reading from the same wearable and method where possible. Wearable estimates are not medical tests. Type 0 if you do not know.",
+      "Use a reading from the same wearable and method where possible. Wearable estimates are not medical tests. Tap I don't know to skip.",
     placeholder: "e.g. 15",
   },
   {
@@ -755,6 +739,63 @@ export const QUESTIONS: Question[] = [
     ],
   },
 ];
+
+// Written questions that were in the quiz until 18 Nov 2026. They were taken
+// out to cut typing and to stop collecting health details (injuries,
+// medications) on a public form. Kept here so answers already on file still
+// show with their question in the dashboard.
+export const RETIRED_QUESTIONS: Question[] = [
+  {
+    id: "goals-detail",
+    section: "goals",
+    type: "text",
+    text: "Tell me more about what you want to achieve.",
+    subtext: "A specific example can help put your goals in context.",
+    placeholder: "What does success look like for you in 6 months?",
+  },
+  {
+    id: "tried-before",
+    section: "goals",
+    type: "text",
+    text: "What have you tried before that didn't work?",
+    subtext: "Previous approaches can help provide context.",
+    placeholder: "Previous programs, diets, coaches, approaches...",
+  },
+  {
+    id: "training-history",
+    section: "training",
+    type: "text",
+    text: "Briefly describe your training background.",
+    subtext:
+      "How long have you been training? Any sports background? What's your experience level?",
+    placeholder:
+      'e.g., "Played rugby for 10 years, gym on and off for 5 years, no coach"',
+  },
+  {
+    id: "injury-detail",
+    section: "injuries",
+    type: "text",
+    text: "Tell me about any injuries, surgeries, or chronic conditions.",
+    subtext:
+      "Include past or current issues relevant to training. A clinician should advise on diagnosis and treatment.",
+    placeholder:
+      "List any injuries, surgeries, or conditions we should know about...",
+  },
+  {
+    id: "medications",
+    section: "injuries",
+    type: "text",
+    text: "Are you currently taking any medications or supplements?",
+    subtext:
+      "This may be relevant to coaching context. Do not change prescribed treatment based on this assessment.",
+    placeholder: "List any medications or supplements...",
+  },
+];
+
+export const ALL_QUESTIONS: Question[] = [...QUESTIONS, ...RETIRED_QUESTIONS];
+
+/** Questions every visitor is asked. Wearable readings are extra, for people who have one. */
+export const BASE_QUESTION_COUNT = QUESTIONS.filter(q => !q.conditional && !q.showIf).length;
 
 export const SCORED_SECTIONS = [
   { id: "sleep", title: "Sleep" },
