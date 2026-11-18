@@ -325,6 +325,8 @@ export default function InformationPage() {
   const page =
     informationPages[normalisedLocation] ?? informationPages["/about"];
 
+  if (normalisedLocation === "/executive-health-performance") return <CoachingMagazine page={page} />;
+
   return (
     <div className="min-h-screen bg-ivory text-black flex flex-col">
       <Navigation />
@@ -483,6 +485,185 @@ export default function InformationPage() {
             </div>
           )}
         </div>
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
+// /executive-health-performance, laid out like a magazine feature: masthead,
+// big headline and standfirst, a lead picture, body copy in columns, a pull
+// quote, a fact box, results and how to start. Copy comes from
+// informationPages above. Pictures are in the program image style.
+const COACHING_WINS = [
+  {
+    img: "/images/site/win-trap-bar.svg",
+    alt: "A drawing of a trap bar seen from above, with a short bar and a taller bar under it",
+    stat: "85 kg to 130 kg",
+    lift: "Trap bar deadlift",
+    line: "85 kg for 6 in October 2022. A 130 kg single in November 2023.",
+    sessions: "676 sessions logged",
+  },
+  {
+    img: "/images/site/win-back-squat.svg",
+    alt: "A drawing of an empty bar above a loaded bar, with a short bar and a taller bar under it",
+    stat: "20 kg to 70 kg",
+    lift: "Back squat",
+    line: "The empty bar in December 2022. 70 kg for 2 in August 2024.",
+    sessions: "410 sessions logged",
+  },
+  {
+    img: "/images/site/win-kettlebell.svg",
+    alt: "A drawing of a small kettlebell beside a bigger one, with a short bar and a taller bar under it",
+    stat: "18 kg to 28 kg",
+    lift: "Kettlebell deadlift",
+    line: "18 kg for 10 to 28 kg for 5, since March 2026.",
+    sessions: "119 sessions logged",
+  },
+];
+const COACHING_METRICS = ["HRV", "Resting heart rate", "Strength markers", "Workload", "Sleep", "How training feels"];
+
+function CoachingMagazine({ page }: { page: InformationPageConfig }) {
+  const [one, informs, start] = page.sections;
+  const h2 = "font-heading font-bold text-[28px] leading-[1.1] tracking-[-0.02em] lg:text-[40px]";
+  const body = "text-[17px] leading-[1.62] text-body";
+  return (
+    <div className="min-h-screen bg-ivory text-black flex flex-col">
+      <Navigation />
+      <main className="flex-1 px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
+        <article className="max-w-[1280px] mx-auto">
+          <Breadcrumbs label={page.label} />
+          <div className="flex items-center justify-between gap-4 border-y border-ink py-3 text-[13px] font-semibold">
+            <span>{page.label}</span>
+            <span className="font-normal text-mute">Coaching</span>
+          </div>
+
+          <header className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-end pt-8 lg:pt-12">
+            <div className="lg:col-span-7">
+              <h1 className="font-heading font-bold text-[46px] leading-[0.98] tracking-[-0.035em] sm:text-7xl lg:text-[92px] lg:leading-[0.94]">
+                {page.h1}
+              </h1>
+              <p className="font-heading text-[21px] leading-[1.32] text-body mt-6 sm:text-2xl lg:mt-9 lg:text-[28px] max-w-[640px]">
+                {page.description}
+              </p>
+              {page.cta && (
+                <a href={page.cta.href} className="ml-btn ml-btn-dark mt-7 px-6">
+                  {page.cta.label}
+                </a>
+              )}
+            </div>
+            <figure className="lg:col-span-5">
+              <img
+                src="/images/site/coaching-hero.svg"
+                alt="A recovery dial with three rings and a week of bars, above a photo of a suit jacket hanging on a squat rack"
+                width={800}
+                height={1000}
+                loading="eager"
+                className="block w-full aspect-[4/5] rounded-lg bg-oat"
+              />
+              <figcaption className="ml-small mt-2.5">Training that fits around the job.</figcaption>
+            </figure>
+          </header>
+
+          <section className="mt-14 lg:mt-24 border-t border-ink pt-6 lg:pt-8 grid lg:grid-cols-12 gap-5 lg:gap-14">
+            <h2 className={`lg:col-span-4 ${h2}`}>{one.heading}</h2>
+            <div className={`lg:col-span-8 sm:columns-2 sm:gap-10 ${body}`}>
+              {one.content.map((p, i) => (
+                <p
+                  key={p}
+                  className={
+                    i === 0
+                      ? "mb-4 first-letter:float-left first-letter:font-heading first-letter:font-bold first-letter:text-[68px] first-letter:leading-[0.82] first-letter:mr-2.5 first-letter:mt-1 first-letter:text-ink"
+                      : "mb-4"
+                  }
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+          </section>
+
+          <figure className="mt-10 lg:mt-14">
+            <picture>
+              <source media="(min-width: 640px)" srcSet="/images/site/coaching-week-wide.svg" />
+              <img
+                src="/images/site/coaching-week-phone.svg"
+                alt="A week drawn as a planner: work blocks, three training sessions, recovery, sleep every night and one flight. Beside it, a photo of dress shoes next to running shoes."
+                width={1000}
+                height={1100}
+                loading="lazy"
+                className="block w-full h-auto aspect-[1000/1100] sm:aspect-[2260/900] rounded-lg bg-oat"
+              />
+            </picture>
+            <figcaption className="ml-small mt-2.5">
+              One week: work, three training sessions, recovery, sleep and a flight.
+            </figcaption>
+          </figure>
+
+          <blockquote className="mt-14 lg:mt-24 border-y border-line py-10 lg:py-16">
+            <p className="font-heading font-bold text-[30px] leading-[1.12] tracking-[-0.02em] sm:text-[44px] lg:text-[64px] lg:leading-[1.05] max-w-[1100px]">
+              Training is one part of performance. Sleep, recovery, stress and the demands outside the gym matter too.
+            </p>
+            <footer className="ml-small mt-5">Marin Lazic</footer>
+          </blockquote>
+
+          <section className="mt-14 lg:mt-24 border-t border-ink pt-6 lg:pt-8 grid lg:grid-cols-12 gap-6 lg:gap-14 items-start">
+            <div className="lg:col-span-7">
+              <h2 className={h2}>{informs.heading}</h2>
+              <div className={`mt-5 lg:mt-7 ${body} max-w-[640px]`}>
+                {informs.content.map(p => (
+                  <p key={p} className="mb-4">{p}</p>
+                ))}
+              </div>
+            </div>
+            <aside className="lg:col-span-5 bg-oat rounded-xl p-6 sm:p-7">
+              <p className="font-heading font-bold text-[19px]">The numbers you already have</p>
+              <ul className="mt-3">
+                {COACHING_METRICS.map((m, i) => (
+                  <li key={m} className="ml-row">
+                    <span>{m}</span>
+                    <span>{String(i + 1).padStart(2, "0")}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </section>
+
+          <section className="mt-14 lg:mt-24 border-t border-ink pt-6 lg:pt-8">
+            <div className="grid lg:grid-cols-12 gap-4 lg:gap-14 items-end">
+              <h2 className={`lg:col-span-4 ${h2}`}>Results</h2>
+              <p className={`lg:col-span-8 ${body} max-w-[640px]`}>
+                Three clients from one to one coaching, shared without names. The numbers come from their training logs.
+              </p>
+            </div>
+            <ul className="mt-8 lg:mt-11 grid sm:grid-cols-3 gap-9 sm:gap-5 lg:gap-8">
+              {COACHING_WINS.map(w => (
+                <li key={w.lift}>
+                  <img src={w.img} alt={w.alt} width={800} height={1000} loading="lazy" className="block w-full aspect-[4/5] rounded-lg bg-oat" />
+                  <p className="font-heading font-bold text-[32px] leading-none tracking-[-0.02em] mt-5 lg:text-[42px]">{w.stat}</p>
+                  <p className="text-[15px] font-semibold mt-2.5">{w.lift}</p>
+                  <p className="text-[15px] leading-normal text-body mt-1.5">{w.line}</p>
+                  <p className="ml-small mt-2">{w.sessions}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-14 lg:mt-24 border-t border-ink pt-6 lg:pt-8 grid lg:grid-cols-12 gap-5 lg:gap-14">
+            <h2 className={`lg:col-span-4 ${h2}`}>{start.heading}</h2>
+            <div className="lg:col-span-8 max-w-[640px]">
+              <p className={body}>{start.content[0]}</p>
+              {page.cta && (
+                <a href={page.cta.href} className="ml-btn ml-btn-dark mt-6 px-6">
+                  {page.cta.label}
+                </a>
+              )}
+              {start.content.slice(1).map(p => (
+                <p key={p} className="ml-small mt-7">{p}</p>
+              ))}
+            </div>
+          </section>
+        </article>
       </main>
       <SiteFooter />
     </div>
