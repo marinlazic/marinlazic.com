@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
@@ -46,7 +47,7 @@ import {
 } from "./email";
 import { generateAssessmentPDF } from "./pdf";
 import { storagePut, storageConfigured } from "./storage";
-import { calculateScores, getScoreBand } from "@shared/assessment";
+import { calculateScores, getScoreBand, isValidEmail } from "@shared/assessment";
 import { isTestEmail } from "@shared/testData";
 import { ENV } from "./_core/env";
 import { randomBytes } from "node:crypto";
@@ -283,8 +284,13 @@ export const appRouter = router({
         }
 
         const { answers, utmSource, utmMedium, utmCampaign } = input;
-        const email = (answers.email as string) || "";
+        const email = ((answers.email as string) || "").trim();
         const name = (answers.name as string) || "";
+        // A report can only be delivered to a real address. The quiz checks
+        // this on screen; this is the backstop.
+        if (!isValidEmail(email)) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Please enter a valid email address." });
+        }
 
         // Build a summary of scored answers for the lead record
         const scoreSummary = Object.entries(answers)
@@ -446,7 +452,7 @@ export const appRouter = router({
     saveProgress: publicProcedure
       .input(
         z.object({
-          email: z.string(),
+          email: z.string().refine(isValidEmail, "Please enter a valid email address."),
           name: z.string().optional(),
           answers: z.record(
             z.string(),

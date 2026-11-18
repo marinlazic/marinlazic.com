@@ -15,7 +15,7 @@ import {
 } from "../drizzle/schema";
 import { kitOverview } from "./kitStats";
 import { EMAIL_KIND_LABELS } from "./emailLog";
-import { QUESTIONS, calculateScores, getScoreBand, getScoreLabel } from "../shared/assessment";
+import { ALL_QUESTIONS, QUESTIONS, calculateScores, getScoreBand, getScoreLabel } from "../shared/assessment";
 import { runDiagnostics } from "./diagnostics";
 import { answersFromMessage, labelAnswer, leadKind, parseAnswers } from "./contactAnswers";
 import { importEvents, loadFollowups, logContact, refreshFollowups } from "./followup";
@@ -516,7 +516,7 @@ async function contactDetail(id: number) {
     }
   }
   const scores = Object.keys(answers).length ? calculateScores(answers) : null;
-  const answerList = QUESTIONS.filter(q => q.id !== "name" && q.id !== "email" && answers[q.id] !== undefined && answers[q.id] !== "")
+  const answerList = ALL_QUESTIONS.filter(q => q.id !== "name" && q.id !== "email" && answers[q.id] !== undefined && answers[q.id] !== "")
     .map(q => labelAnswer(q.id, answers[q.id]));
 
   type Item = { at: Date; kind: string; title: string; detail?: string | null };

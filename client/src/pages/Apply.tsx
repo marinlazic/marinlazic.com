@@ -35,8 +35,18 @@ export default function Apply() {
     } catch {
       // Confirmation still works when browser storage is unavailable.
     }
-    const prefillName = params.get("name");
-    const prefillEmail = params.get("email");
+    let prefillName = params.get("name");
+    let prefillEmail = params.get("email");
+    // The assessment results page hands these over in this tab, so they never sit in the web address.
+    try {
+      const carried = JSON.parse(sessionStorage.getItem("ml_apply_prefill") || "null");
+      if (carried) {
+        prefillName = prefillName || carried.name;
+        prefillEmail = prefillEmail || carried.email;
+      }
+    } catch {
+      // The form starts empty when browser storage is unavailable.
+    }
     if (prefillName) setName(prefillName);
     if (prefillEmail) setEmail(prefillEmail);
   }, []);
@@ -408,7 +418,7 @@ export default function Apply() {
       <footer className="border-t border-line py-6 mt-16">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
           <p className="text-[13px] text-mute">
-            Marin Lazic. Health and Performance Coach. Sydney, Australia.
+            Marin Lazic. Health and Performance Coach. Sydney, Australia. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.
           </p>
         </div>
       </footer>

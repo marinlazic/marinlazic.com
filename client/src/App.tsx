@@ -64,6 +64,7 @@ function Routes() {
       <Route path="/library/:slug" component={LibraryProgram} />
       <Route path="/resources/:slug" component={ResourcePage} />
       <Route path="/about" component={InformationPage} />
+      <Route path="/privacy" component={InformationPage} />
       <Route path="/executive-health-performance" component={InformationPage} />
       <Route path="/corporate-health-performance" component={InformationPage} />
       <Route

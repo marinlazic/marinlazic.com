@@ -68,7 +68,10 @@ export function SiteFooter({ className = "" }: { className?: string }) {
         </div>
       </div>
       <div className="ml-wrap pb-8 text-[13px] text-[#B0AEA5]">
-        &copy; {new Date().getFullYear()} Marin Lazic. All rights reserved.
+        &copy; {new Date().getFullYear()} Marin Lazic. All rights reserved.{" "}
+        <a href="/privacy" className="inline-block py-3 text-[#B0AEA5] underline underline-offset-2 hover:text-ivory transition-colors">
+          Privacy
+        </a>
       </div>
     </footer>
   );

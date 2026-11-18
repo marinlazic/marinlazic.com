@@ -1,9 +1,9 @@
 // Reading a contact's assessment answers back out of the places they live:
 // saved reports (JSON), progress rows (JSON text) and old lead messages
 // ("key: value | key: value"). Shared by the dashboard and the follow up model.
-import { QUESTIONS, calculateScores } from "../shared/assessment";
+import { ALL_QUESTIONS, calculateScores } from "../shared/assessment";
 
-export const QUESTION_BY_ID = new Map(QUESTIONS.map(q => [q.id, q]));
+export const QUESTION_BY_ID = new Map(ALL_QUESTIONS.map(q => [q.id, q]));
 
 // Leads come from four places. The source column says which.
 export function leadKind(source: string | null | undefined): "assessment" | "application" | "purchase" | "enquiry" {

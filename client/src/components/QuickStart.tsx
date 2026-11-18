@@ -4,7 +4,7 @@
 // from the home page) with these answers carried over.
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { QUESTIONS, QUICK_START_IDS } from "@shared/assessment";
+import { BASE_QUESTION_COUNT, QUESTIONS, QUICK_START_IDS } from "@shared/assessment";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
 export const QUICK_START_KEY = "ml_quick_start";
@@ -65,7 +65,7 @@ export function QuickStart({ placement, onDone, className = "" }: Props) {
       <div className="ml-meta">
         <span className="ml-tag">Free</span>
         <span>
-          Question {Math.min(step + 1, QUICK.length)} of {QUICK.length}, then {QUESTIONS.length - QUICK.length} more
+          Question {Math.min(step + 1, QUICK.length)} of {QUICK.length}, then {BASE_QUESTION_COUNT - QUICK.length} more
         </span>
       </div>
       <div className="mt-3 h-1 bg-line rounded-full overflow-hidden" aria-hidden="true">

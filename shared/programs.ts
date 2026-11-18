@@ -8,6 +8,11 @@
 // corporate programs add $40. The shown price covers Stripe fees, assuming
 // about 2% plus $0.30 a sale: price = round up((net + 0.30) / 0.98).
 // Net $99 shows as $102. All prices are AUD and GST is not added.
+// Whether prices show on the site. Marin's decision on 17 Nov 2026 was no
+// prices on the site, so this is off. Turn it on and the price shows on every
+// program page and on the assessment results, before the buyer reaches Bridge.
+export const SHOW_PROGRAM_PRICES = false;
+
 export function shownPrice(net: number) {
   return Math.ceil((net + 0.3) / 0.98);
 }

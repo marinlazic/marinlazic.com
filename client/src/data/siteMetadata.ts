@@ -63,6 +63,13 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     label: "About",
     modified: "2026-10-14",
   },
+  "/privacy": {
+    title: "Privacy | Marin Lazic",
+    description:
+      "What marinlazic.com collects, why, where it is kept and how to have it removed.",
+    label: "Privacy",
+    modified: "2026-11-18",
+  },
   "/executive-health-performance": {
     title: "Executive Health and Performance Coaching | Marin Lazic",
     description:
@@ -452,6 +459,7 @@ export function getPageMeta(url: string): HeadMeta {
   } else if (
     [
       "/about",
+      "/privacy",
       "/library",
       "/resources",
       "/recovery-guide",

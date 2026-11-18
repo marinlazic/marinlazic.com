@@ -51,6 +51,68 @@ export type InformationPageConfig = {
 };
 
 export const informationPages: Record<string, InformationPageConfig> = {
+  "/privacy": {
+    title: "Privacy | Marin Lazic",
+    h1: "Privacy",
+    description:
+      "What this site collects, why, where it is kept and how to have it removed.",
+    label: "Privacy",
+    sections: [
+      {
+        heading: "Who is responsible",
+        content: [
+          "This site is run by Marin Lazic, a health and performance coach based in Sydney, Australia. Questions about your information go to marin@marinlazic.coach.",
+        ],
+      },
+      {
+        heading: "What I collect",
+        content: [
+          "When you take the Performance Assessment: your first name, your email address and your answers. The answers cover sleep, stress, training, nutrition, recovery and whether you have any current injuries or pain. If you use a wearable you can add your resting heart rate, heart rate variability and respiratory rate. Those three are optional.",
+          "When you ask for the Recovery Guide, send an enquiry, request a call or apply for coaching: your name, your email address and whatever you write in the form.",
+          "When you browse: which pages you open, which buttons you press, the site that sent you here and the type of device. This is recorded against a random number kept in your browser tab for that visit.",
+          "If you buy a program, Bridge Athletic takes the payment on its own site. I see your name, your email address and what you bought. I do not see or keep your card details.",
+        ],
+      },
+      {
+        heading: "Why I collect it",
+        content: [
+          "To work out your score and write your report. To send you what you asked for. To reply to you. To send my weekly email if you signed up for it. To see which pages and emails are working.",
+        ],
+      },
+      {
+        heading: "Health information",
+        content: [
+          "Some assessment answers are about your health. I use them to prepare your score and report and, if you ask about coaching, to prepare for that conversation. The assessment is a coaching tool. It is not a medical assessment.",
+        ],
+      },
+      {
+        heading: "Who else handles it",
+        content: [
+          "I use other companies to run this site. Each one handles your information only to provide its service to me.",
+          "Vercel hosts the site and its files. Neon stores the database. Resend sends the emails that carry your report and guide. Kit sends my newsletter. Google's Gemini service helps write the assessment report from your first name and your answers. Bridge Athletic delivers programs and takes payment for them.",
+          "Some of these companies store information outside Australia, including in the United States.",
+          "I do not sell your information, and I do not pass it to anyone for their own marketing.",
+        ],
+      },
+      {
+        heading: "How long I keep it",
+        content: [
+          "The link to your saved report works for 90 days. I keep your contact details and answers while they are useful for coaching you or replying to you. Ask and I will delete them.",
+        ],
+      },
+      {
+        heading: "Your choices",
+        content: [
+          "Every newsletter has an unsubscribe link. You can ask to see, correct or delete the information I hold about you by emailing marin@marinlazic.coach. I will reply as soon as I can, and within 30 days.",
+          "If you are not happy with my answer, you can contact the Office of the Australian Information Commissioner at oaic.gov.au.",
+        ],
+      },
+      {
+        heading: "Changes",
+        content: ["Last updated 18 November 2026."],
+      },
+    ],
+  },
   "/about": {
     title: "About Marin Lazic | Strength, health and performance coaching",
     h1: "About Marin Lazic",
@@ -318,6 +380,9 @@ const INFO_TILES: Record<string, { src: string; alt: string; word: string; emoji
   "/about": { src: "/images/site/marin-paris-2024-1120.jpg", alt: "Marin Lazic standing in front of the Paris 2024 rings", word: "about", emoji: "\u{1F44B}", pin: "Sydney", aspect: "aspect-[4/5]", className: "max-w-[440px] lg:ml-auto" },
 };
 
+// Pages that are text only: a photo beside them would make no sense.
+const NO_TILE = ["/privacy"];
+
 export default function InformationPage() {
   const [location] = useLocation();
   const normalisedLocation =
@@ -354,7 +419,7 @@ export default function InformationPage() {
                 {page.description}
               </p>
             </div>
-            {!page.hero && (
+            {!page.hero && !NO_TILE.includes(normalisedLocation) && (
               <div className="lg:col-span-5">
                 {(() => {
                   const t = INFO_TILES[normalisedLocation] ?? INFO_TILES["/about"];

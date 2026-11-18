@@ -32,12 +32,16 @@ import { QuickStart, takeQuickStart } from "@/components/QuickStart";
 import { useSearch } from "wouter";
 import { getCampaignValue } from "@/lib/attribution";
 import {
+  BASE_QUESTION_COUNT,
   QUESTIONS,
+  isQuestionShown,
+  isValidEmail,
   calculateScores,
   getScoreBand as scoreBandOf,
   type Question,
   type Option,
 } from "@shared/assessment";
+import { SHOW_PROGRAM_PRICES, findProgram, programLength, programPath } from "@shared/programs";
 
 // ─── Types ──────────────────────────────────────────────
 interface Section {
@@ -62,13 +66,6 @@ const SECTIONS: Section[] = [
     title: "About You",
     subtitle: "A few details to put your responses in context",
     icon: <User className="w-5 h-5" />,
-    color: "#FF5A36",
-  },
-  {
-    id: "goals",
-    title: "Goals",
-    subtitle: "What would you like to work towards?",
-    icon: <Target className="w-5 h-5" />,
     color: "#FF5A36",
   },
   {
@@ -476,11 +473,7 @@ export function AnalysisSection({
 // The first question with no answer yet. Used when a quiz is resumed or carried over.
 function firstUnanswered(answers: Record<string, string | string[]>) {
   const i = QUESTIONS.findIndex(q => {
-    if (q.conditional) {
-      const dep = answers[q.conditional.questionId];
-      const shown = Array.isArray(dep) ? dep.includes(q.conditional.value) : dep === q.conditional.value;
-      if (!shown) return false;
-    }
+    if (!isQuestionShown(q, answers)) return false;
     const a = answers[q.id];
     return a === undefined || a === "" || (Array.isArray(a) && a.length === 0);
   });
@@ -512,6 +505,7 @@ export default function Assessment() {
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [reportUrl, setReportUrl] = useState<string | null>(null);
   const [validationError, setValidationError] = useState("");
+  const [showAllAreas, setShowAllAreas] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [resumeToken, setResumeToken] = useState<string | null>(null);
 
@@ -571,7 +565,7 @@ export default function Assessment() {
           name: (answers.name as string) || undefined,
           answers,
           answeredCount,
-          totalQuestions: QUESTIONS.length,
+          totalQuestions: QUESTIONS.filter(q => isQuestionShown(q, answers)).length,
           utmSource: utmSource || undefined,
           utmMedium: utmMedium || undefined,
           utmCampaign: utmCampaign || undefined,
@@ -589,22 +583,24 @@ export default function Assessment() {
 
   const question = QUESTIONS[currentQ];
   const totalQuestions = QUESTIONS.length;
-  const progress = ((currentQ + 1) / totalQuestions) * 100;
+  // What the person sees: only the questions they are asked.
+  const shownQuestions = QUESTIONS.filter(q => isQuestionShown(q, answers));
+  const shownTotal = shownQuestions.length;
+  const shownIndex = Math.max(0, shownQuestions.findIndex(q => q.id === question?.id));
+  const progress = ((shownIndex + 1) / shownTotal) * 100;
   const sectionId = question?.section || "";
   const section = SECTIONS.find(s => s.id === sectionId);
 
   // Check if we're at the start of a new section
   const isNewSection =
     currentQ === 0 || QUESTIONS[currentQ - 1]?.section !== sectionId;
-  const currentSectionIndex = SECTIONS.findIndex(s => s.id === sectionId);
+  // The three tap start is not counted as a section, so the count matches the list on the start page.
+  const QUIZ_SECTIONS = SECTIONS.filter(s => s.id !== "start");
+  const currentSectionIndex = QUIZ_SECTIONS.findIndex(s => s.id === sectionId);
 
   // Visible questions (skip conditional ones where condition isn't met)
-  function shouldShowQuestion(q: Question): boolean {
-    if (!q.conditional) return true;
-    const depAnswer = answers[q.conditional.questionId];
-    if (Array.isArray(depAnswer))
-      return depAnswer.includes(q.conditional.value);
-    return depAnswer === q.conditional.value;
+  function shouldShowQuestion(q: Question, current = answers): boolean {
+    return isQuestionShown(q, current);
   }
 
   function handleSelectAnswer(value: string) {
@@ -631,6 +627,18 @@ export default function Assessment() {
       setValidationError("This field is required.");
       return;
     }
+    if (question.id === "email" && !isValidEmail(textInput)) {
+      setValidationError("That email does not look right. Check it and try again, your report is sent there.");
+      return;
+    }
+    if (question.type === "number" && textInput.trim()) {
+      const n = Number(textInput);
+      const { min, max } = question;
+      if (!Number.isFinite(n) || (min !== undefined && n < min) || (max !== undefined && n > max)) {
+        setValidationError(`Enter a number between ${min} and ${max}, or tap I don't know.`);
+        return;
+      }
+    }
     const newAnswers = { ...answers, [question.id]: textInput.trim() };
     setAnswers(newAnswers);
     setTextInput("");
@@ -641,7 +649,7 @@ export default function Assessment() {
   function advanceToNext(currentAnswers: Record<string, string | string[]>) {
     let nextQ = currentQ + 1;
     while (nextQ < totalQuestions) {
-      if (shouldShowQuestion(QUESTIONS[nextQ])) break;
+      if (shouldShowQuestion(QUESTIONS[nextQ], currentAnswers)) break;
       nextQ++;
     }
     track("assessment_question", { question: currentQ + 1, questionId: question.id });
@@ -760,7 +768,8 @@ export default function Assessment() {
                 and any wearable data are indicative only and should be considered
                 in your personal context. For persistent fatigue, pain, sleep
                 concerns or other health concerns, speak with a GP or appropriate
-                clinician.
+                clinician. How your answers are used is on the{" "}
+                <a href="/privacy" className="underline underline-offset-2">privacy page</a>.
               </p>
             </div>
 
@@ -775,7 +784,7 @@ export default function Assessment() {
                   </div>
                 ))}
               </div>
-              <p className="ml-small mt-3.5">30 questions. A score, a category breakdown and a personal report at the end.</p>
+              <p className="ml-small mt-3.5">{BASE_QUESTION_COUNT} questions, nearly all one tap. A score, a category breakdown and a personal report at the end.</p>
             </div>
           </div>
         </main>
@@ -785,6 +794,8 @@ export default function Assessment() {
 
   // ─── Analyzing Screen ────────────────────────────────
   if (phase === "analyzing") {
+    // The score needs no waiting: it is worked out from the answers on this device.
+    const early = calculateScores(answers);
     return (
       <div className="min-h-screen bg-ivory flex flex-col">
         <header className="border-b border-line">
@@ -803,14 +814,26 @@ export default function Assessment() {
 
         <main className="flex-1 flex items-center justify-center px-5 py-16">
           <div className="max-w-lg w-full text-center">
-            <Loader2 className="w-12 h-12 animate-spin text-black mx-auto mb-8" />
-            <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Building Your Analysis
-            </h2>
-            <p className="text-base text-mute leading-relaxed mb-6">
-              Our AI is reviewing your answers and generating a personalised
-              performance report. This takes about 15 to 30 seconds.
+            <p className="text-[13px] text-mute font-medium mb-2">Your score</p>
+            <p className="font-heading text-6xl sm:text-7xl font-bold leading-none tracking-[-0.02em]">
+              {early.overallPct}
+              <span className="text-lg sm:text-xl text-mute font-medium tracking-normal"> out of 100</span>
             </p>
+            {early.weakest && (
+              <p className="text-base text-body mt-4">
+                Lowest area: {early.weakest.name}, {early.weakest.percentage}%.
+              </p>
+            )}
+            <div className="border-t border-line mt-8 pt-8">
+              <Loader2 className="w-7 h-7 animate-spin text-black mx-auto mb-5" />
+              <h2 className="font-heading text-xl sm:text-2xl font-bold tracking-tight mb-3">
+                Writing your report
+              </h2>
+              <p className="text-base text-mute leading-relaxed mb-6">
+                This usually takes 20 to 45 seconds. Keep this page open. A copy
+                goes to your email.
+              </p>
+            </div>
             <div className="flex flex-col gap-2 text-left max-w-sm mx-auto">
               {[
                 "Analysing sleep patterns",
@@ -840,13 +863,12 @@ export default function Assessment() {
   // ─── Results Screen ───────────────────────────────────
   if (phase === "results") {
     const userName = (answers["name"] as string) || "there";
-    const hasWhoop = answers["has-whoop"] as string;
 
     // Scores come from the shared scoring function so the screen, the PDF
     // and Kit all show the same numbers.
     const shared = calculateScores(answers);
     const scoredCategories = SECTIONS.filter(
-      s => !["start", "personal", "goals"].includes(s.id)
+      s => !["start", "personal"].includes(s.id)
     ).map(s => {
       const c = shared.categories.find(x => x.id === s.id);
       return {
@@ -875,6 +897,129 @@ export default function Assessment() {
     const strongest = [...scoredCategories].sort(
       (a, b) => b.percentage - a.percentage
     )[0];
+
+    // The next step depends on what the person told us. Ready to start: the
+    // call leads. Still deciding: a program and the free guide lead, and the
+    // call is offered after them.
+    const commitment = answers["commitment"] as string;
+    const readyNow = commitment === "ready" || commitment === "all-in";
+    const occupation = answers["occupation"] as string;
+    const matchedProgram =
+      occupation === "athlete"
+        ? undefined
+        : findProgram(
+            occupation === "executive" || occupation === "entrepreneur"
+              ? "leader-performance-program"
+              : "the-corporate-athlete"
+          );
+    const lowestTwo = [...scoredCategories]
+      .sort((a, b) => a.percentage - b.percentage)
+      .slice(0, 2)
+      .map(c => c.id);
+    const shownAreas = showAllAreas
+      ? scoredCategories
+      : scoredCategories.filter(c => lowestTwo.includes(c.id));
+    const applyHref = `/apply${utmSource || utmMedium || utmCampaign ? `?${[utmSource && `utm_source=${encodeURIComponent(utmSource)}`, utmMedium && `utm_medium=${encodeURIComponent(utmMedium)}`, utmCampaign && `utm_campaign=${encodeURIComponent(utmCampaign)}`].filter(Boolean).join("&")}` : ""}`;
+    // Name and email travel to the Apply form in this browser tab, not in the web address.
+    const carryToApply = () => {
+      try {
+        sessionStorage.setItem(
+          "ml_apply_prefill",
+          JSON.stringify({ name: answers.name || "", email: answers.email || "" })
+        );
+      } catch {
+        /* the form simply starts empty */
+      }
+    };
+
+    const programCard = (
+      <div className="bg-oat rounded-xl p-5 lg:p-8 flex flex-col">
+        <p className="text-[13px] text-mute font-medium mb-2">A program you follow on your phone</p>
+        {matchedProgram ? (
+          <>
+            <h3 className="font-heading font-bold text-[22px] leading-tight tracking-[-0.01em]">
+              {matchedProgram.name}
+            </h3>
+            <p className="text-[15px] leading-normal text-body mt-2">{matchedProgram.line}</p>
+            <p className="text-[13px] text-mute mt-3">
+              {programLength(matchedProgram)}
+              {SHOW_PROGRAM_PRICES ? `. A$${matchedProgram.price}, one payment.` : ""}
+            </p>
+            <a
+              href={programPath(matchedProgram)}
+              onClick={() => track("cta_click", { button: `results_program_${matchedProgram.slug}` })}
+              className={`inline-flex self-start items-center gap-2 rounded-lg px-6 py-3 min-h-[44px] text-[15px] font-medium transition-colors mt-5 ${readyNow ? "bg-stone text-ink hover:bg-[#D9D5C9]" : "bg-ink text-ivory hover:bg-[#3D3D3A]"}`}
+            >
+              See the program <ArrowRight className="w-3 h-3" />
+            </a>
+          </>
+        ) : (
+          <>
+            <h3 className="font-heading font-bold text-[22px] leading-tight tracking-[-0.01em]">
+              Programs by sport
+            </h3>
+            <p className="text-[15px] leading-normal text-body mt-2">
+              Strength programs for water polo, swimming, running and more, 4 to 8 weeks each.
+            </p>
+            <a
+              href="/library"
+              onClick={() => track("cta_click", { button: "results_program_library" })}
+              className={`inline-flex self-start items-center gap-2 rounded-lg px-6 py-3 min-h-[44px] text-[15px] font-medium transition-colors mt-5 ${readyNow ? "bg-stone text-ink hover:bg-[#D9D5C9]" : "bg-ink text-ivory hover:bg-[#3D3D3A]"}`}
+            >
+              Browse the library <ArrowRight className="w-3 h-3" />
+            </a>
+          </>
+        )}
+      </div>
+    );
+    const guideCard = (
+      <div className="bg-oat rounded-xl p-5 lg:p-8 flex flex-col">
+        <p className="text-[13px] text-mute font-medium mb-2">Free guide, 34 pages</p>
+        <h3 className="font-heading font-bold text-[22px] leading-tight tracking-[-0.01em]">
+          The Recovery Guide
+        </h3>
+        <p className="text-[15px] leading-normal text-body mt-2">
+          Match your recovery to the work you did, with times and temperatures.
+        </p>
+        <a
+          href="/recovery-guide"
+          onClick={() => track("cta_click", { button: "results_recovery_guide" })}
+          className="inline-flex self-start items-center gap-2 rounded-lg px-6 py-3 min-h-[44px] text-[15px] font-medium transition-colors mt-5 bg-stone text-ink hover:bg-[#D9D5C9]"
+        >
+          Get the guide <ArrowRight className="w-3 h-3" />
+        </a>
+      </div>
+    );
+    const applyCard = (
+      <div className="bg-oat rounded-xl p-5 lg:p-8 flex flex-col">
+        <p className="text-[13px] text-mute font-medium mb-2">1:1 coaching</p>
+        <h3 className="font-heading font-bold text-[22px] leading-tight tracking-[-0.01em]">
+          Apply for coaching
+        </h3>
+        <p className="text-[15px] leading-normal text-body mt-2">
+          A short form. I read each one myself and reply by email.
+        </p>
+        <a
+          href={applyHref}
+          onClick={() => {
+            carryToApply();
+            track("cta_click", { button: "results_apply_card" });
+          }}
+          className="inline-flex self-start items-center gap-2 rounded-lg px-6 py-3 min-h-[44px] text-[15px] font-medium transition-colors mt-5 bg-stone text-ink hover:bg-[#D9D5C9]"
+        >
+          Apply <ArrowRight className="w-3 h-3" />
+        </a>
+      </div>
+    );
+    const callBlock = (
+      <CallRequest
+        placement="assessment_results"
+        email={(answers.email as string) || ""}
+        name={(answers.name as string) || ""}
+        context={callContext(answers)}
+        heading={readyNow ? undefined : "Or talk it through with me."}
+      />
+    );
 
     // Radar chart calculations
     const radarSize = 280;
@@ -993,14 +1138,6 @@ export default function Assessment() {
                 {overallLabel.label}
               </motion.div>
             </motion.div>
-
-            {/* ── SHARE YOUR RESULTS ── */}
-            <ShareResults
-              userName={userName}
-              overallPct={overallPct}
-              strongest={strongest}
-              weakest={weakest}
-            />
 
             {/* ── RADAR CHART + QUICK STATS ── */}
             <motion.div
@@ -1201,6 +1338,45 @@ export default function Assessment() {
                 </div>
               </div>
             </motion.div>
+
+            {/* ── YOUR NEXT STEP: changes with the answers ── */}
+            <div className="border-t border-line pt-12 mb-16">
+              <h3 className="text-[13px] text-mute font-medium mb-3">Your next step</h3>
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight leading-tight mb-3 max-w-2xl">
+                Start with {weakest?.title}. It is your lowest score at {weakest?.percentage}%.
+              </h2>
+              <p className="text-base text-body leading-relaxed mb-8 max-w-2xl">
+                {readyNow
+                  ? "You said you are ready to start. The quickest way is to talk it through."
+                  : "Pick the size of step that suits you now."}
+              </p>
+              {readyNow ? (
+                <div className="grid gap-5">
+                  {callBlock}
+                  <div className="grid gap-5 md:grid-cols-2">
+                    {applyCard}
+                    {programCard}
+                  </div>
+                </div>
+              ) : (
+                <div className="grid gap-5">
+                  <div className="grid gap-5 md:grid-cols-2">
+                    {programCard}
+                    {guideCard}
+                  </div>
+                  {callBlock}
+                </div>
+              )}
+              {reportUrl && (
+                <p className="text-sm text-mute leading-relaxed mt-6 max-w-2xl">
+                  Your full report and the PDF are saved for 90 days at{" "}
+                  <a href={reportUrl} className="font-semibold text-black underline underline-offset-4 break-all">
+                    this link
+                  </a>
+                  . The same link is in your email.
+                </p>
+              )}
+            </div>
 
             {/* ── BIOMETRICS: HRV / RHR / RESPIRATORY RATE ── */}
             {(() => {
@@ -1407,10 +1583,10 @@ export default function Assessment() {
               className="border-t border-line pt-12 mb-16"
             >
               <h3 className="text-[13px] text-mute font-medium mb-8">
-                Detailed Breakdown
+                {showAllAreas ? "All six areas" : "Your two lowest areas"}
               </h3>
               <div className="space-y-8">
-                {scoredCategories.map((cat, i) => {
+                {shownAreas.map((cat, i) => {
                   const catLabel = getScoreLabel(cat.percentage);
                   const proTips: Record<
                     string,
@@ -1571,18 +1747,18 @@ export default function Assessment() {
                   );
                 })}
               </div>
+              {!showAllAreas && (
+                <button
+                  onClick={() => {
+                    setShowAllAreas(true);
+                    track("cta_click", { button: "results_show_all_areas" });
+                  }}
+                  className="mt-6 inline-flex items-center gap-2 bg-stone text-ink rounded-lg hover:bg-[#D9D5C9] px-6 py-3 min-h-[44px] text-[15px] font-medium transition-colors"
+                >
+                  Show all {scoredCategories.length} areas <ChevronDown className="w-3 h-3" />
+                </button>
+              )}
             </motion.div>
-
-            {/* Wearable note */}
-            {hasWhoop === "no" && (
-              <div className="bg-ivory border border-line p-6 sm:p-8 mb-16 rounded-lg">
-                <p className="text-sm text-mute leading-relaxed">
-                  If you use a wearable, its device-consistent trend can be one
-                  input alongside sleep, symptoms and training load. It does not
-                  make decisions on its own.
-                </p>
-              </div>
-            )}
 
             {/* AI Analysis - Collapsible */}
             <AnalysisSection
@@ -1590,98 +1766,56 @@ export default function Assessment() {
               analysisError={analysisError}
             />
 
-            {reportUrl && (
-              <div className="border border-line p-6 sm:p-8 mb-12">
-                <p className="text-[13px] text-mute font-medium mb-3">
-                  Your saved report
-                </p>
-                <p className="text-sm text-mute leading-relaxed mb-4">
-                  This page is not saved in your browser. Your report and the PDF are at the link below for 90 days, and the same link is in your email.
-                </p>
-                <a
-                  href={reportUrl}
-                  className="text-sm font-semibold text-black underline underline-offset-4 hover:text-mute transition-colors break-all"
-                >
-                  {reportUrl}
-                </a>
-              </div>
-            )}
-
-            {/* Short call */}
-            <div className="mb-16">
-              <CallRequest
-                placement="assessment_results"
-                email={(answers.email as string) || ""}
-                name={(answers.name as string) || ""}
-                context={callContext(answers)}
-              />
-            </div>
-
-            {/* ── This Is Where Most People Stop ── */}
+            {/* ── What 1:1 coaching includes ── */}
             <div className="border-t border-line pt-12 mb-16">
               <div className="bg-ink text-ivory rounded-xl p-8 sm:p-12">
                 <div className="max-w-2xl">
                   <h3 className="text-[13px] text-white/60 font-medium mb-4">
-                    What Happens Next
+                    1:1 coaching
                   </h3>
                   <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight mb-6 leading-tight">
-                    This Is Where Most People Stop
+                    What coaching with me includes
                   </h2>
-                  <div className="w-8 h-0.5 hidden mb-8" />
-                  <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-6">
-                    You have the data. You know what is holding you back. The
-                    difference between knowing and doing is having someone build
-                    the system for you and hold you accountable to it.
-                  </p>
-                  <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-8">
-                    Coaching is shaped around your assessment responses,
-                    training history and day to day context. It does not
-                    diagnose, treat or replace medical, allied health or
-                    dietetic care.
-                  </p>
-
-                  {/* What You Get */}
-                  <div className="border-t border-white/10 pt-8 mb-8">
-                    <h4 className="text-[13px] text-white/60 font-medium mb-5">
-                      What You Get
-                    </h4>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      {[
-                        "Periodised training program built from your data",
-                        "Sleep and recovery planning guidance",
-                        "Nutrition framework aligned to your goals",
-                        "Weekly coaching and program adjustments",
-                        "Wearable data analysis (WHOOP, Oura, etc.)",
-                        "Direct access to your coach",
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-ivory shrink-0 mt-0.5" />
-                          <span className="text-sm text-white/80">{item}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                    {[
+                      "Periodised training program built from your data",
+                      "Sleep and recovery planning guidance",
+                      "Nutrition framework aligned to your goals",
+                      "Weekly coaching and program adjustments",
+                      "Wearable data analysis (WHOOP, Oura, etc.)",
+                      "Direct access to your coach",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <CheckCircle className="w-4 h-4 text-ivory shrink-0 mt-0.5" />
+                        <span className="text-sm text-white/80">{item}</span>
+                      </div>
+                    ))}
                   </div>
-
-                  {/* CTA Button */}
                   <a
-                    href={`/apply?name=${encodeURIComponent((answers.name as string) || "")}&email=${encodeURIComponent((answers.email as string) || "")}${utmSource ? `&utm_source=${encodeURIComponent(utmSource)}` : ""}${utmMedium ? `&utm_medium=${encodeURIComponent(utmMedium)}` : ""}${utmCampaign ? `&utm_campaign=${encodeURIComponent(utmCampaign)}` : ""}`}
+                    href={applyHref}
+                    onClick={() => {
+                      carryToApply();
+                      track("cta_click", { button: "results_apply" });
+                    }}
                     className="inline-flex items-center gap-2 bg-ivory text-ink rounded-lg hover:bg-stone px-8 py-3.5 text-[15px] font-medium transition-colors mb-4"
                   >
                     Apply for Coaching
                   </a>
-                  <p className="text-xs text-white/60 mb-8">
-                    Short application. Each application is reviewed personally.
+                  <p className="text-xs text-white/60">
+                    Monthly, 3 month minimum. A short application. I read each one myself. Coaching does
+                    not diagnose, treat or replace medical, allied health or dietetic care.
                   </p>
-
-                  {/* Pricing */}
-                  <div className="border-t border-white/10 pt-6">
-                    <p className="text-xs text-white/60 mt-2">
-                      Limited spots available. Application required.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
+
+            {/* ── SHARE YOUR RESULTS ── */}
+            <ShareResults
+              userName={userName}
+              overallPct={overallPct}
+              strongest={strongest}
+              weakest={weakest}
+            />
 
             {/* Back to site */}
             <div className="border-t border-line pt-8 text-center">
@@ -1698,7 +1832,7 @@ export default function Assessment() {
         <footer className="border-t border-line py-6 mt-16">
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
             <p className="text-[13px] text-mute">
-              Marin Lazic. Health and Performance Coach. Sydney, Australia.
+              Marin Lazic. Health and Performance Coach. Sydney, Australia. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.
             </p>
           </div>
         </footer>
@@ -1719,7 +1853,7 @@ export default function Assessment() {
           </a>
           <div className="flex items-center gap-4">
             <span className="text-[13px] text-mute">
-              {currentQ + 1} / {totalQuestions}
+              {shownIndex + 1} / {shownTotal}
             </span>
           </div>
         </div>
@@ -1745,7 +1879,7 @@ export default function Assessment() {
               layout
             >
               {/* Section header - synced with current question */}
-              {isNewSection && section && (
+              {isNewSection && section && currentSectionIndex >= 0 && (
                 <div className="border border-line bg-ivory px-4 py-3 mb-6 flex items-center gap-3 rounded-lg">
                   <span style={{ color: section.color }}>{section.icon}</span>
                   <div>
@@ -1757,7 +1891,7 @@ export default function Assessment() {
                     </span>
                   </div>
                   <span className="ml-auto text-[13px] text-mute">
-                    Section {currentSectionIndex + 1} of {SECTIONS.length}
+                    Section {currentSectionIndex + 1} of {QUIZ_SECTIONS.length}
                   </span>
                 </div>
               )}
@@ -1866,6 +2000,10 @@ export default function Assessment() {
                   <input
                     type="number"
                     inputMode="numeric"
+                    autoFocus
+                    min={question.min}
+                    max={question.max}
+                    aria-label={question.text}
                     value={textInput}
                     onChange={e => {
                       setTextInput(e.target.value);
@@ -1908,6 +2046,33 @@ export default function Assessment() {
                   {question.id === "email" ? (
                     <input
                       type="email"
+                      name="email"
+                      autoComplete="email"
+                      inputMode="email"
+                      autoCapitalize="none"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      autoFocus
+                      aria-label={question.text}
+                      value={textInput}
+                      onChange={e => {
+                        setTextInput(e.target.value);
+                        setValidationError("");
+                      }}
+                      placeholder={question.placeholder}
+                      className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F] mb-4"
+                      onKeyDown={e => {
+                        if (e.key === "Enter") handleTextSubmit();
+                      }}
+                    />
+                  ) : question.id === "name" ? (
+                    <input
+                      type="text"
+                      name="given-name"
+                      autoComplete="given-name"
+                      autoCapitalize="words"
+                      autoFocus
+                      aria-label={question.text}
                       value={textInput}
                       onChange={e => {
                         setTextInput(e.target.value);
@@ -1921,6 +2086,8 @@ export default function Assessment() {
                     />
                   ) : (
                     <textarea
+                      autoFocus
+                      aria-label={question.text}
                       value={textInput}
                       onChange={e => {
                         setTextInput(e.target.value);
@@ -1938,8 +2105,17 @@ export default function Assessment() {
                     />
                   )}
                   {validationError && (
-                    <p className="text-black text-xs mb-4 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" /> {validationError}
+                    <p role="alert" className="text-black text-[13px] mb-4 flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {validationError}
+                    </p>
+                  )}
+                  {question.id === "email" && (
+                    <p className="text-[13px] text-mute mb-4">
+                      How your details are used is on the{" "}
+                      <a href="/privacy" target="_blank" rel="noopener" className="underline underline-offset-2 text-ink">
+                        privacy page
+                      </a>
+                      .
                     </p>
                   )}
                   <div className="flex gap-3">
