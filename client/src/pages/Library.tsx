@@ -10,6 +10,7 @@ import { Breadcrumbs, Navigation } from "./InformationPage";
 import { GuideSignup } from "@/components/GuideSignup";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { cardLine } from "@/data/programCards";
+import { ProgramThumb } from "@/components/ProgramThumb";
 
 export function LibraryFooter() {
   return <SiteFooter className="mt-[72px] lg:mt-[120px]" />;
@@ -192,7 +193,10 @@ export default function Library() {
                         <span className="ml-tag">{p.weeks} weeks</span>
                         <span>{s.title}</span>
                       </div>
-                      <h3 className="font-heading font-bold text-[19px] leading-[1.22] tracking-[-0.01em] mt-3.5">
+                      <a href={programPath(p)} aria-label={p.name} tabIndex={-1} className="block mt-3.5 rounded-lg">
+                        <ProgramThumb p={p} />
+                      </a>
+                      <h3 className="font-heading font-bold text-[19px] leading-[1.22] tracking-[-0.01em] mt-4">
                         <a href={programPath(p)} className="text-ink no-underline hover:underline underline-offset-2">{p.name}</a>
                       </h3>
                       <p className="text-[14.5px] leading-normal text-body mt-2">{cardLine(p)}</p>
@@ -223,7 +227,7 @@ export default function Library() {
                     </li>
                   ))}
                   {soon.map(u => (
-                    <li key={u.name} className="ml-card">
+                    <li key={u.name} className="ml-card self-start">
                       <div className="ml-meta">
                         <span className="ml-tag">Coming soon</span>
                         <span>{u.weeks} weeks</span>
@@ -246,7 +250,7 @@ export default function Library() {
                     </li>
                   ))}
                   {s.id === "corporate-athlete" ? (
-                    <li className="ml-card">
+                    <li className="ml-card self-start">
                       <div className="ml-meta">
                         <span className="ml-tag">6 weeks</span>
                         <span>For 10 or more people</span>

@@ -1,20 +1,25 @@
-// The program photo. The Nov 2026 redesign shows the photo on its own: no
-// big word, sticker or pin. The Thumb fields stay in shared/programs.ts.
-import type { Thumb } from "@shared/programs";
+// The program image: one drawing, one flat colour and one photo, 4:5.
+// Made 18 Nov 2026. The files live in client/public/images/library/programs.
+import { programArt, type Program } from "@shared/programs";
 
 // Kept for older imports. The yellow is no longer used on the site.
 export const THUMB_YELLOW = "#141413";
 
-export function ProgramThumb({ p, eager = false }: { p: Thumb; eager?: boolean }) {
+export function ProgramThumb({
+  p,
+  eager = false,
+}: {
+  p: Pick<Program, "slug" | "image" | "imageAlt">;
+  eager?: boolean;
+}) {
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-oat">
+    <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-stone">
       <img
-        src={p.image}
+        src={programArt(p)}
         alt={p.imageAlt}
         className="absolute inset-0 w-full h-full object-cover block"
-        style={{ objectPosition: p.focus }}
-        width={1000}
-        height={750}
+        width={800}
+        height={1000}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
       />

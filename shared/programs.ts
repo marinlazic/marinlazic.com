@@ -553,7 +553,39 @@ const LIVE_PROGRAMS: Program[] = PLANNED.filter(u => LIVE[u.name]).map(u => {
   };
 });
 
-export const PROGRAMS: Program[] = [...BASE_PROGRAMS, ...LIVE_PROGRAMS];
+// Program images, made 18 Nov 2026. One drawing, one flat colour and one photo
+// for each program. They replace the stock photos set above for every slug
+// listed here. The value is the alt text.
+//   /images/library/programs/<slug>.svg   what the site shows
+//   /images/library/programs/<slug>.webp  the same picture as a flat file, for search and sharing
+const PROGRAM_ART: Record<string, string> = {
+  "leader-performance-program": "A drawing of a squat rack with a loaded bar, with a photo of a barbell in a rack",
+  "travel-week-training": "A plan of a hotel room with a training space marked, with a photo of resistance bands on a hotel bed",
+  "the-corporate-athlete": "A grid of eight weeks with three sessions marked in each, with a photo of a loaded trap bar",
+  "perimenopause-strength": "A drawing of a dumbbell, beside a photo of two dumbbells",
+  "menopause-strength": "A drawing of a loaded barbell, with a photo of a loaded barbell on a platform",
+  "strength-for-bone-health": "A drawing of five weight plates, each bigger than the last, with a photo of a stack of iron plates",
+  "women-leaders-performance": "A drawing of a kettlebell, beside a photo of a kettlebell",
+  "strength-for-runners": "A plan of a running track, with a photo of the lane lines on a track",
+  "strength-for-golfers": "A drawing of a golf ball on a tee and its flight to the flag, with a photo of a golf ball on a tee",
+  "strength-for-tennis-players": "A drawing of a tennis racquet and ball, with a photo of a tennis ball on a clay court line",
+  "strength-for-boxing": "A drawing of a heavy bag swinging, with a photo of boxing gloves hanging on a wall",
+  "strength-for-swimmers": "A plan of a six lane pool, beside a photo of an ocean pool",
+  "ski-and-snowboard-pre-season": "A drawing of a pair of skis and a slalom line, with a photo of ski tracks in groomed snow",
+  "water-polo-hypertrophy": "A drawing of a water polo ball on the water, with a photo of a ball floating in a pool",
+  "water-polo-max-strength-and-power": "A plan of a water polo field with a shot at goal, beside a photo of a goal in a pool",
+};
+
+export const PROGRAMS: Program[] = [...BASE_PROGRAMS, ...LIVE_PROGRAMS].map(p =>
+  PROGRAM_ART[p.slug]
+    ? { ...p, image: `/images/library/programs/${p.slug}.webp`, imageAlt: PROGRAM_ART[p.slug] }
+    : p,
+);
+
+// The picture to show for a program. Falls back to its photo if it has no program image yet.
+export function programArt(p: Pick<Program, "slug" | "image">) {
+  return PROGRAM_ART[p.slug] ? `/images/library/programs/${p.slug}.svg` : p.image;
+}
 export const UPCOMING: Upcoming[] = PLANNED.filter(u => !LIVE[u.name]);
 
 export function programPath(p: Program) {
