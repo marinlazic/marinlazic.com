@@ -88,18 +88,19 @@ function Hero() {
         </span>
       </div>
       <figure className="mt-7 lg:mt-11">
-        <img
-          src="/images/site/home-hero-ocean-pool-1800.jpg"
-          srcSet="/images/site/home-hero-ocean-pool-1200.jpg 1200w, /images/site/home-hero-ocean-pool-1800.jpg 1800w"
-          sizes="(min-width: 1440px) 1312px, 100vw"
-          alt="The edge and ladder of an ocean pool in low sun"
-          width={1800}
-          height={1012}
-          loading="eager"
-          fetchPriority="high"
-          className="block w-full h-[300px] sm:h-[440px] lg:h-[580px] object-cover object-[50%_30%] rounded-lg bg-oat"
-        />
-        <figcaption className="ml-small mt-2.5">The ocean pool.</figcaption>
+        <picture>
+          <source media="(min-width: 640px)" srcSet="/images/site/home-hero-wide.svg" />
+          <img
+            src="/images/site/home-hero-phone.svg"
+            alt="Three drawings for training, sleep and recovery: a squat rack with a loaded bar, a moon over a night of sleep, and a line that dips then climbs past where it started. With them, photos of a trap bar and an ocean pool."
+            width={1000}
+            height={860}
+            loading="eager"
+            fetchPriority="high"
+            className="block w-full h-auto aspect-[1000/860] sm:aspect-[2260/1000] rounded-lg bg-oat"
+          />
+        </picture>
+        <figcaption className="ml-small mt-2.5">Training, sleep and recovery.</figcaption>
       </figure>
     </section>
   );
@@ -464,10 +465,8 @@ function About() {
       <div className="mt-7 lg:mt-11 flex flex-wrap items-start gap-6 lg:gap-[72px]">
         <figure className="flex-[0_0_168px] sm:flex-[0_0_260px] lg:flex-[0_0_330px]">
           <img
-            src="/images/site/marin-lazic-portrait-800.jpg"
-            srcSet="/images/site/marin-lazic-portrait-512.jpg 512w, /images/site/marin-lazic-portrait-800.jpg 800w"
-            sizes="(min-width: 1024px) 330px, (min-width: 640px) 260px, 168px"
-            alt="Marin Lazic"
+            src="/images/site/marin-about.svg"
+            alt="Marin Lazic, with a drawing of a stopwatch"
             width={800}
             height={1000}
             loading="lazy"
