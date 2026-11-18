@@ -2,6 +2,7 @@
 // cards, line graphics. The engine is unchanged: the same tracking events,
 // the same enquiry form, the same guide signup, the same destinations.
 import React, { useState, useEffect, useMemo } from "react";
+import { BASE_QUESTION_COUNT } from "@shared/assessment";
 import { motion, AnimatePresence } from "framer-motion";
 import { trpc } from "@/lib/trpc";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -83,7 +84,7 @@ function Hero() {
           Browse the program library <ArrowRight className="w-4 h-4" aria-hidden="true" />
         </a>
         <span className="text-sm text-mute sm:ml-2.5 basis-full sm:basis-auto">
-          30 questions. About 5 minutes. A personal report at the end.
+          {BASE_QUESTION_COUNT} questions. About 5 minutes. A personal report at the end.
         </span>
       </div>
       <figure className="mt-7 lg:mt-11">
@@ -114,7 +115,7 @@ function Ways() {
       kind: "Assessment",
       title: "The Performance Assessment",
       body: "Questions on your goals, sleep, stress, training, injuries, nutrition and recovery. You get a score, a category breakdown and a personal report.",
-      rows: [["Questions", "30"], ["Time", "About 5 minutes"]],
+      rows: [["Questions", String(BASE_QUESTION_COUNT)], ["Time", "About 5 minutes"]],
       cta: "Take the assessment",
       href: "/assessment",
       event: "ways_assessment",
@@ -250,7 +251,7 @@ function AssessmentPreview() {
         <div className="min-w-0">
           <h2 className="ml-h2">See where you stand.</h2>
           <p className="ml-lede mt-4 max-w-[520px]">
-            30 questions and a personal report to help you consider your
+            {BASE_QUESTION_COUNT} questions and a personal report to help you consider your
             training, recovery and daily habits. Start with three taps here.
           </p>
           <QuickStart placement="home" className="mt-6 max-w-[520px]" />

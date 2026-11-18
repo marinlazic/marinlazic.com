@@ -1,7 +1,7 @@
 // /library/:slug: one program. The Buy button goes to the Bridge checkout page.
 import { useRoute } from "wouter";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { findProgram, programLength } from "@shared/programs";
+import { SHOW_PROGRAM_PRICES, findProgram, programLength } from "@shared/programs";
 import NotFound from "./NotFound";
 import { Navigation } from "./InformationPage";
 import { LibraryFooter } from "./Library";
@@ -47,9 +47,15 @@ export default function LibraryProgram() {
                 >
                   Buy on Bridge
                 </a>
+                {SHOW_PROGRAM_PRICES && (
+                  <p className="font-heading font-bold text-2xl leading-none">
+                    A${p.price}
+                    <span className="block font-sans font-normal text-[13px] text-mute mt-1.5">One payment. No subscription.</span>
+                  </p>
+                )}
               </div>
               <p className="text-xs text-mute mt-4">
-                You check out on Bridge. The program then appears in the Bridge app.
+                You pay on Bridge, the app your program lives in. The checkout page is Bridge's, so it looks different to this site. The program then appears in the Bridge app.
               </p>
             </div>
           </div>

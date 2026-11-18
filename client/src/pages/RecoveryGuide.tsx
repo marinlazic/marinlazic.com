@@ -82,7 +82,7 @@ export default function RecoveryGuide() {
               <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-line pt-6 lg:pt-0 lg:pl-10">
                 <h2 className="text-[13px] text-mute font-medium mb-4">Want to know where you stand?</h2>
                 <p className="text-sm text-body leading-relaxed mb-5">
-                  The free assessment takes about ten minutes and scores your sleep, stress, training, nutrition and recovery, with a report on what to fix first.
+                  The free assessment takes about 5 minutes and scores your sleep, stress, training, nutrition and recovery, with a report on what to fix first.
                 </p>
                 <a href="/assessment" className="inline-flex bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] text-[15px] px-8 py-3.5 transition-colors font-medium">
                   Take the assessment

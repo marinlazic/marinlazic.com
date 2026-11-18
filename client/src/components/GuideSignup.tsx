@@ -98,7 +98,7 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
             <AlertCircle className="w-4 h-4" /> {error}
           </div>
         )}
-        <p className="ml-small mt-3">You also get my weekly email. Unsubscribe any time.</p>
+        <p className="ml-small mt-3">You also get my weekly email. Unsubscribe any time. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.</p>
       </aside>
     );
   }
@@ -111,7 +111,7 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
           <AlertCircle className="w-4 h-4" /> {error}
         </div>
       )}
-      <p className="ml-small mt-3">You also get my weekly email. Unsubscribe any time.</p>
+      <p className="ml-small mt-3">You also get my weekly email. Unsubscribe any time. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.</p>
     </div>
   );
 }
