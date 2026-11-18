@@ -88,17 +88,17 @@ function Hero() {
       </div>
       <figure className="mt-7 lg:mt-11">
         <img
-          src="/images/site/home-hero-paris-ball-2000.jpg"
-          srcSet="/images/site/home-hero-paris-ball-1200.jpg 1200w, /images/site/home-hero-paris-ball-2000.jpg 2000w"
+          src="/images/site/home-hero-ocean-pool-1800.jpg"
+          srcSet="/images/site/home-hero-ocean-pool-1200.jpg 1200w, /images/site/home-hero-ocean-pool-1800.jpg 1800w"
           sizes="(min-width: 1440px) 1312px, 100vw"
-          alt="A water polo match ball in the pool at Paris 2024"
-          width={2000}
-          height={1334}
+          alt="The edge and ladder of an ocean pool in low sun"
+          width={1800}
+          height={1012}
           loading="eager"
           fetchPriority="high"
-          className="block w-full h-[300px] sm:h-[440px] lg:h-[580px] object-cover object-[12%_80%] sm:object-[50%_86%] rounded-lg bg-oat"
+          className="block w-full h-[300px] sm:h-[440px] lg:h-[580px] object-cover object-[50%_30%] rounded-lg bg-oat"
         />
-        <figcaption className="ml-small mt-2.5">Paris 2024.</figcaption>
+        <figcaption className="ml-small mt-2.5">The ocean pool.</figcaption>
       </figure>
     </section>
   );
@@ -463,17 +463,17 @@ function About() {
       <div className="mt-7 lg:mt-11 flex flex-wrap items-start gap-6 lg:gap-[72px]">
         <figure className="flex-[0_0_168px] sm:flex-[0_0_260px] lg:flex-[0_0_330px]">
           <img
-            src="/images/site/marin-paris-2024-1120.jpg"
-            srcSet="/images/site/marin-paris-2024-640.jpg 640w, /images/site/marin-paris-2024-1120.jpg 1120w"
+            src="/images/site/marin-lazic-portrait-800.jpg"
+            srcSet="/images/site/marin-lazic-portrait-512.jpg 512w, /images/site/marin-lazic-portrait-800.jpg 800w"
             sizes="(min-width: 1024px) 330px, (min-width: 640px) 260px, 168px"
-            alt="Marin Lazic standing in front of the Paris 2024 rings"
-            width={1120}
-            height={1400}
+            alt="Marin Lazic"
+            width={800}
+            height={1000}
             loading="lazy"
             decoding="async"
             className="block w-full aspect-[4/5] object-cover rounded-lg bg-oat"
           />
-          <figcaption className="ml-small mt-2.5">Marin Lazic, Paris 2024.</figcaption>
+          <figcaption className="ml-small mt-2.5">Marin Lazic.</figcaption>
         </figure>
         <div className="flex-[1_1_300px] lg:flex-[1_1_560px] min-w-0 max-w-[760px]">
           <p className="font-heading font-semibold text-2xl lg:text-[34px] leading-[1.22] tracking-[-0.015em]">

@@ -227,7 +227,7 @@ const person = {
   "@id": "https://marinlazic.com/#person",
   name: "Marin Lazic",
   url: "https://marinlazic.com/about",
-  image: `${CANONICAL_ORIGIN}/images/site/marin-about-photo_5aa64d77.jpg`,
+  image: `${CANONICAL_ORIGIN}/images/site/marin-lazic-portrait-800.jpg`,
   jobTitle:
     "Performance Coach for Founders, Training and Recovery; Strength and Conditioning Coach, Australian Men's Water Polo Team; Founder, Otion",
   description:

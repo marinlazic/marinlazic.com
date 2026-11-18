@@ -44,16 +44,15 @@ export type GuideBlock =
 
 /** Marin's own photos, graded black and white. The builder and the page map them to files. */
 export type GuidePhoto =
-  | "hero" | "morning" | "olympic" | "walk" | "phone" | "floor" | "grass" | "pool" | "coach"
+  | "hero" | "morning" | "walk" | "phone" | "floor" | "grass" | "pool" | "coach"
   | "plate" | "sunrise" | "notes" | "marin"
   | "slam" | "muscles" | "engine" | "head"
-  | "paris" | "field" | "team" | "gym" | "pushup" | "boards" | "ice" | "boat" | "coast"
+  | "field" | "team" | "gym" | "pushup" | "boards" | "ice" | "boat" | "coast"
   | "wave" | "lane" | "dawn" | "netpool" | "squad" | "bondi" | "shore" | "ladder";
 
 export const GUIDE_PHOTOS: Record<GuidePhoto, string> = {
   hero: "/images/guide/hero.jpg",
   morning: "/images/guide/morning.jpg",
-  olympic: "/images/guide/olympic.jpg",
   walk: "/images/guide/walk.jpg",
   phone: "/images/guide/phone.jpg",
   floor: "/images/guide/floor.jpg",
@@ -68,7 +67,6 @@ export const GUIDE_PHOTOS: Record<GuidePhoto, string> = {
   muscles: "/images/guide/muscles.jpg",
   engine: "/images/guide/engine.jpg",
   head: "/images/guide/head.jpg",
-  paris: "/images/guide/paris.jpg",
   field: "/images/guide/field.jpg",
   team: "/images/guide/team.jpg",
   gym: "/images/guide/gym.jpg",
@@ -125,7 +123,7 @@ export const RECOVERY_GUIDE = {
       title: "You get stronger in the rest",
       kicker: "Work plus rest",
       opener: "morning",
-      side: "olympic",
+      side: "lane",
       blocks: [
         { type: "lead", text: "Training is a stress. The body does not get fitter during the session. It gets fitter afterwards, while it repairs the damage and builds a bit extra so the next session is easier." },
         { type: "p", text: "That means two things are true at the same time. Work without rest ends in overtraining, injury and illness. Rest without work changes nothing. The result you want sits between them: enough work to ask for change, enough rest to let it happen." },

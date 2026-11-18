@@ -122,7 +122,7 @@ export default function Speaking() {
         <div className="max-w-[1280px] mx-auto mb-12">
           <img
             src={HERO_PHOTO}
-            alt="Starting blocks on an empty track under stadium lights, with the Olympic rings above"
+            alt="Starting blocks on an empty track under stadium lights"
             className="w-full aspect-[2/1] object-cover block"
             width={1920}
             height={960}

@@ -314,8 +314,8 @@ export function Breadcrumbs({ label }: { label: string }) {
 const INFO_TILES: Record<string, { src: string; alt: string; word: string; emoji: string; pin: string; aspect?: string; className?: string; position?: string }> = {
   "/executive-health-performance": { src: "/images/guide/pushup.jpg", alt: "Athlete doing a push up in a gym", word: "lead", emoji: "\u{1F4BC}", pin: "One to one" },
   "/corporate-health-performance": { src: "/images/guide/floor.jpg", alt: "People training together on a gym floor", word: "team", emoji: "\u{1F3E2}", pin: "Your workplace" },
-  "/media": { src: "/images/guide/paris.jpg", alt: "Water polo at the Paris 2024 Olympic Games", word: "listen", emoji: "\u{1F3A5}", pin: "Media" },
-  "/about": { src: "/images/site/marin-paris-2024-1120.jpg", alt: "Marin Lazic standing in front of the Paris 2024 rings", word: "about", emoji: "\u{1F44B}", pin: "Sydney", aspect: "aspect-[4/5]", className: "max-w-[440px] lg:ml-auto" },
+  "/media": { src: "/images/guide/morning.jpg", alt: "Waves rolling onto a beach", word: "listen", emoji: "\u{1F3A5}", pin: "Media" },
+  "/about": { src: "/images/site/marin-lazic-portrait-800.jpg", alt: "Marin Lazic", word: "about", emoji: "\u{1F44B}", pin: "Sydney", aspect: "aspect-[4/5]", className: "max-w-[440px] lg:ml-auto" },
 };
 
 export default function InformationPage() {
