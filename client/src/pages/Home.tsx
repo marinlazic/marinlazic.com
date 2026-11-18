@@ -68,7 +68,11 @@ function Hero() {
           Men's Water Polo Team, at Paris 2024 and on the LA28 pathway.
         </p>
       </div>
-      <div className="mt-6 lg:mt-[30px] flex flex-wrap items-center gap-2.5">
+      {/* The visitor's problem, in Marin's own words. Chosen by Marin on 19 Nov 2026. */}
+      <p className="mt-5 lg:mt-6 font-heading font-bold text-[19px] leading-[1.3] sm:text-[21px] lg:text-[24px] tracking-[-0.01em] text-ink max-w-[34ch]">
+        You don't get an off season. So the plan has to fit inside your week.
+      </p>
+      <div className="mt-5 lg:mt-6 flex flex-wrap items-center gap-2.5">
         <a
           href="/assessment"
           onClick={() => track("cta_click", { button: "hero_assessment" })}
