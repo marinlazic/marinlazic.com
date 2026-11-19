@@ -894,6 +894,17 @@ export function getScoreBand(pct: number): string {
   return "0-39";
 }
 
+/**
+ * The words and dot colour shown beside a score. One source for the results
+ * page and the PDF report, so both say the same thing.
+ */
+export function getResponseLabel(pct: number): { label: string; color: string } {
+  if (pct >= 80) return { label: "More consistent responses", color: "#16a34a" };
+  if (pct >= 60) return { label: "Some consistent responses", color: "#FF5A36" };
+  if (pct >= 40) return { label: "Mixed responses", color: "#f59e0b" };
+  return { label: "Areas to review", color: "#121212" };
+}
+
 export function getScoreLabel(pct: number): string {
   if (pct >= 80) return "STRONG HABITS";
   if (pct >= 60) return "STEADY BASE";
