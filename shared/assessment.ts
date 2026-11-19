@@ -738,6 +738,38 @@ export const QUESTIONS: Question[] = [
       },
     ],
   },
+  // Not scored. It tells Marin what kind of help the person has in mind,
+  // which is also a read on budget, and it picks the next step on the
+  // results page. Added 19 Nov 2026.
+  {
+    id: "help-type",
+    section: "recovery",
+    type: "select",
+    text: "What kind of help would suit you best right now?",
+    subtext: "There is no wrong answer. It tells me which next step to show you.",
+    options: [
+      {
+        label: "A program I follow myself",
+        value: "program",
+        description: "Buy once, train from your phone",
+      },
+      {
+        label: "A small group with a coach",
+        value: "group",
+        description: "Train alongside a few others",
+      },
+      {
+        label: "1:1 coaching with me",
+        value: "one-to-one",
+        description: "A plan built around your week",
+      },
+      {
+        label: "Not sure yet",
+        value: "unsure",
+        description: "Show me the options",
+      },
+    ],
+  },
 ];
 
 // Written questions that were in the quiz until 18 Nov 2026. They were taken
