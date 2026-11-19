@@ -14,7 +14,6 @@ export const NAV_LEFT = [
 export const NAV_RIGHT = [
   { label: "About", href: "/about" },
   { label: "Speaking", href: "/speaking" },
-  { label: "Media", href: "/media" },
   { label: "Contact", href: "/#contact" },
 ];
 

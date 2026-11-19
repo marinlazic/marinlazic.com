@@ -58,7 +58,6 @@ function Routes() {
       <Route path="/hrv-program" component={HrvConditioning} />
       <Route path="/resources" component={ResourcesIndex} />
       <Route path="/recovery-guide" component={RecoveryGuide} />
-      <Route path="/media" component={InformationPage} />
       <Route path="/speaking" component={Speaking} />
       <Route path="/library" component={Library} />
       <Route path="/library/:slug" component={LibraryProgram} />

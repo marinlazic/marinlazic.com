@@ -57,7 +57,6 @@ describe("Site header layout and destinations", () => {
     expect(hrefs(right)).toEqual([
       "/about",
       "/speaking",
-      "/media",
       "/#contact",
       "/apply",
       "/assessment",

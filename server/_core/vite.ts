@@ -7,6 +7,7 @@ import { pathToFileURL } from "node:url";
 import { buildSsrPrefetch } from "./ssrCaller";
 import { composeHtml } from "../seoHtml";
 import {
+  ALIASES,
   canonicalPathFor,
   getPageMeta,
   PUBLIC_PAGES,
@@ -20,7 +21,7 @@ const normalizePublicUrl: RequestHandler = (req, res, next) => {
   let target = rawPath.replace(/^\/{2,}/, "/").replace(/\/+$/, "") || "/";
   if (target === "/index.html") target = "/";
   // Only known static segments are case-normalised. Dynamic identifiers are untouched.
-  const staticMatch = Object.keys(PUBLIC_PAGES).find(
+  const staticMatch = [...Object.keys(PUBLIC_PAGES), ...Object.keys(ALIASES)].find(
     p => p.toLowerCase() === target.toLowerCase()
   );
   if (staticMatch) target = staticMatch;

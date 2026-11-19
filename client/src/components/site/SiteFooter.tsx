@@ -10,7 +10,6 @@ const ROWS = [
   { label: "Resources", note: "Guides", href: "/resources" },
   { label: "Insights", note: "Articles", href: "/insights" },
   { label: "Speaking", note: "Enquire", href: "/speaking" },
-  { label: "Media", note: "Interviews", href: "/media" },
   { label: "About", note: "Marin", href: "/about" },
   { label: "Contact", note: "Email", href: "/#contact" },
 ];

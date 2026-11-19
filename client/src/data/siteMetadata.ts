@@ -3,7 +3,7 @@ import { articleCitations, articleWordCount } from "./articleMetadata";
 import { resources } from "../pages/ResourcePage";
 import { PROGRAMS, SECTIONS, findProgram, programPath } from "@shared/programs";
 import { HOME_FAQS, APPLY_FAQS } from "@shared/siteFaq";
-import { MEDIA_TITLE, MEDIA_DESCRIPTION, mediaSubjects, YOUTUBE_URL } from "./mediaData";
+import { mediaSubjects, YOUTUBE_URL } from "./mediaData";
 
 export const SITE_NAME = "Marin Lazic";
 export const CANONICAL_ORIGIN = "https://marinlazic.com";
@@ -105,14 +105,6 @@ export const PUBLIC_PAGES: Record<string, Page> = {
     label: "Resources",
     modified: "2026-10-18",
   },
-  "/media": {
-    title: MEDIA_TITLE,
-    description: MEDIA_DESCRIPTION,
-    socialTitle: MEDIA_TITLE,
-    socialDescription: MEDIA_DESCRIPTION,
-    label: "Media",
-    modified: "2026-10-15",
-  },
   "/speaking": {
     title: "Speaking: Performance Science for Business Leaders | Marin Lazic",
     description:
@@ -207,6 +199,8 @@ export const ALIASES: Record<string, string> = {
   "/book-a-call": "/call",
   "/blood-work": "/bloodwork",
   "/hrv-conditioning": "/hrv-program",
+  // The Media page was removed on 19 Nov 2026. The podcast and clips are on Resources.
+  "/media": "/resources",
 };
 export function resourcePath(resource: (typeof resources)[number]) {
   return `/resources/${resource.aliases?.[0] ?? resource.slug}`;
@@ -463,7 +457,6 @@ export function getPageMeta(url: string): HeadMeta {
       "/library",
       "/resources",
       "/recovery-guide",
-      "/media",
       "/speaking",
       "/executive-health-performance",
       "/corporate-health-performance",
@@ -476,19 +469,6 @@ export function getPageMeta(url: string): HeadMeta {
         { name: page!.label, path },
       ])
     );
-  }
-  if (path === "/media") {
-    (graph[2] as Record<string, unknown>).about = { "@id": PERSON_ID };
-    graph.push({
-      "@type": "ItemList",
-      "@id": `${CANONICAL_ORIGIN}/media#list`,
-      name: "Media and interviews with Marin Lazic",
-      itemListElement: mediaSubjects.map((item, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        item,
-      })),
-    });
   }
   if (path === "/") graph.push(faqGraph(HOME_FAQS, path));
   if (path === "/apply") graph.push(faqGraph(APPLY_FAQS, path));

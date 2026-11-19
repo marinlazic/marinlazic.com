@@ -8,15 +8,6 @@ import {
   resourceImagePath,
   type ResourcePhoto,
 } from "@/data/resourceImages";
-import {
-  MEDIA_CLOSING,
-  MEDIA_DESCRIPTION,
-  MEDIA_INTRO,
-  INSTAGRAM_URL,
-  SUBSTACK_URL,
-  YOUTUBE_URL,
-  mediaItems,
-} from "@/data/mediaData";
 
 export type InformationLink = {
   label: string;
@@ -286,39 +277,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
     ],
     cta: { label: "Browse resources", href: "/resources" },
   },
-  "/media": {
-    title: "Media and Interviews | Marin Lazic",
-    h1: "Media and interviews",
-    description: MEDIA_INTRO,
-    label: "Media",
-    sections: [
-      ...mediaItems.map(item => ({
-        heading: item.heading,
-        meta: item.meta,
-        content: item.paragraphs,
-        videos: item.videos,
-        links: item.links.map(l => ({ label: l.label, href: l.href, external: true })),
-      })),
-      {
-        heading: "My own channels",
-        content: [],
-        links: [
-          { label: "YouTube", href: YOUTUBE_URL, external: true, description: YOUTUBE_URL },
-          {
-            label: "Substack, long form writing on training and recovery",
-            href: SUBSTACK_URL,
-            external: true,
-            description: SUBSTACK_URL,
-          },
-          { label: "Instagram", href: INSTAGRAM_URL, external: true, description: INSTAGRAM_URL },
-        ],
-      },
-    ],
-    closing: MEDIA_CLOSING,
-  },
 };
-
-void MEDIA_DESCRIPTION;
 
 export function Picture({
   photo,
@@ -376,7 +335,6 @@ export function Breadcrumbs({ label }: { label: string }) {
 const INFO_TILES: Record<string, { src: string; alt: string; word: string; emoji: string; pin: string; aspect?: string; className?: string; position?: string }> = {
   "/executive-health-performance": { src: "/images/guide/pushup.jpg", alt: "Athlete doing a push up in a gym", word: "lead", emoji: "\u{1F4BC}", pin: "One to one" },
   "/corporate-health-performance": { src: "/images/guide/floor.jpg", alt: "People training together on a gym floor", word: "team", emoji: "\u{1F3E2}", pin: "Your workplace" },
-  "/media": { src: "/images/guide/morning.jpg", alt: "Waves rolling onto a beach", word: "listen", emoji: "\u{1F3A5}", pin: "Media" },
   "/about": { src: "/images/site/marin-about.svg", alt: "Marin Lazic, with a drawing of a stopwatch", word: "about", emoji: "\u{1F44B}", pin: "Sydney", aspect: "aspect-[4/5]", className: "max-w-[440px] lg:ml-auto" },
 };
 
