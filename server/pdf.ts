@@ -248,13 +248,16 @@ const HEADING_STEM: Record<string, string> = {
   recovery: "Recovery",
 };
 
-/** Cuts text at the end of a sentence where it can, never part way through a word. */
+/**
+ * Keeps whole sentences that fit in max characters. Only when the first
+ * sentence alone is too long does it cut at a word and add dots.
+ */
 function trimToSentence(text: string, max: number): string {
   if (text.length <= max) return text;
-  const cut = text.slice(0, max);
+  const cut = text.slice(0, max + 1);
   const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "), cut.lastIndexOf("! "));
-  if (end > max * 0.5) return cut.slice(0, end + 1);
-  return cut.slice(0, cut.lastIndexOf(" ")) + "...";
+  if (end >= 40) return cut.slice(0, end + 1);
+  return cut.slice(0, cut.lastIndexOf(" ", max)) + "...";
 }
 
 /**
@@ -408,7 +411,7 @@ function buildPdfHtml(params: {
     const stem = HEADING_STEM[cat.id] ?? cat.name.replace(/[&]/g, ".");
     const regex = new RegExp(`(?:#{1,3}\\s*(?:\\d+\\.?\\s*)?${stem}[^\\n]*\\n)([\\s\\S]*?)(?=\\n#{1,3}\\s|$)`, "i");
     const match = analysis.match(regex);
-    const excerpt = trimToSentence(tidy(match ? match[1] : "") || getCategorySummary(cat.id, cat.percentage), 270);
+    const excerpt = trimToSentence(tidy(match ? match[1] : "") || getCategorySummary(cat.id, cat.percentage), 240);
     return `<div class="analysis-row">
       <div class="analysis-name"><span>${esc(cat.name)}</span><span class="analysis-score"${cat.id === weakest?.id ? ` style="color:${SIGNAL}"` : ""}>${cat.percentage}</span></div>
       <div class="analysis-text">${esc(excerpt)}</div>
@@ -431,11 +434,11 @@ function buildPdfHtml(params: {
     trimToSentence(
       (firstPara ? tidy(firstPara) : "") ||
         `A driven professional who clearly values performance but the current systems are not matching the ambition.`,
-      300,
+      280,
     ),
   );
   // Page one shows the opening sentence only, never a line cut off part way.
-  const opening = trimToSentence(thirtySecondRead, 190);
+  const opening = trimToSentence(thirtySecondRead, 240);
 
   const included = [
     "Periodised training program built from your data",
@@ -515,7 +518,7 @@ function buildPdfHtml(params: {
   .ring-in .num { font-size: 60px; line-height: 1; letter-spacing: -0.03em; }
   .ring-in span:last-child { font-size: 11px; color: ${MUTE}; margin-top: 3px; }
   .hero .chip { margin-bottom: 12px; }
-  .hero .opening { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 18px; line-height: 1.32; letter-spacing: -0.01em; color: ${INK}; }
+  .hero .opening { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 17px; line-height: 1.32; letter-spacing: -0.01em; color: ${INK}; }
   .hero .small { margin-top: 10px; max-width: 400px; }
   .hero .small b { color: ${INK}; font-weight: 600; }
 

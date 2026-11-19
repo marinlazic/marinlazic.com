@@ -288,6 +288,16 @@ describe("buildPdfHtml", () => {
     expect(html).toContain("Your sleep is the biggest bottleneck.");
   });
 
+  it("opens page one with whole sentences, not a line cut part way", () => {
+    const para =
+      "G'day Sam. Thank you for completing the assessment. You are running a business as an entrepreneur, aiming to build strength, and doing it while running on five to six hours of broken sleep and caffeine. Right now, your foundation is shaky. There is a clear place to start and it will not take much time.";
+    const html = buildPdfHtml({ ...baseParams, analysis: `## Your Performance Profile\n\n${para}\n\n### Sleep Analysis\nSleep text.` });
+    const opening = html.match(/<p class="opening">([^<]*)<\/p>/)?.[1] ?? "";
+    expect(opening.startsWith("G&#39;day Sam.") || opening.startsWith("G'day Sam.")).toBe(true);
+    expect(opening.endsWith("broken sleep and caffeine.") || opening.endsWith("your foundation is shaky.")).toBe(true);
+    expect(opening).not.toContain("...");
+  });
+
   it("finds each area in the written analysis by its heading", () => {
     const html = buildPdfHtml({
       ...baseParams,
