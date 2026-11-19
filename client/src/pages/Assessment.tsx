@@ -37,6 +37,7 @@ import {
   isQuestionShown,
   isValidEmail,
   calculateScores,
+  getResponseLabel,
   getScoreBand as scoreBandOf,
   type Question,
   type Option,
@@ -883,14 +884,7 @@ export default function Assessment() {
     const overallPct = shared.overallPct;
 
     // Get score level label
-    const getScoreLabel = (pct: number) => {
-      if (pct >= 80)
-        return { label: "More consistent responses", color: "#16a34a" };
-      if (pct >= 60)
-        return { label: "Some consistent responses", color: "#FF5A36" };
-      if (pct >= 40) return { label: "Mixed responses", color: "#f59e0b" };
-      return { label: "Areas to review", color: "#121212" };
-    };
+    const getScoreLabel = getResponseLabel;
 
     const overallLabel = getScoreLabel(overallPct);
     const weakest = [...scoredCategories].sort(

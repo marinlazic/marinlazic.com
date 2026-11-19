@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { calculateScores, getScoreLabel, getScoreColour, getSolutions, getCategorySummary, buildPdfHtml, buildRadarSvg } from "./pdf";
-import { QUESTIONS, calculateScores as sharedCalculateScores } from "../shared/assessment";
+import { BASE_QUESTION_COUNT, QUESTIONS, calculateScores as sharedCalculateScores, getResponseLabel } from "../shared/assessment";
 
 describe("calculateScores", () => {
   it("returns 0 for empty answers", () => {
@@ -52,14 +52,17 @@ describe("getScoreLabel", () => {
 });
 
 describe("getScoreColour", () => {
-  it("returns green for 60+", () => {
-    expect(getScoreColour(65)).toBe("#4A7C59");
+  it("uses the same dot colours as the results page", () => {
+    for (const pct of [10, 39, 40, 59, 60, 79, 80, 100]) {
+      expect(getScoreColour(pct)).toBe(getResponseLabel(pct).color);
+    }
+    expect(getResponseLabel(85).label).toBe("More consistent responses");
+    expect(getResponseLabel(65).label).toBe("Some consistent responses");
+    expect(getResponseLabel(45).label).toBe("Mixed responses");
+    expect(getResponseLabel(20).label).toBe("Areas to review");
   });
-  it("returns olive for 50-59", () => {
-    expect(getScoreColour(55)).toBe("#8B7D3C");
-  });
-  it("returns red for below 50", () => {
-    expect(getScoreColour(40)).toBe("#C8102E");
+  it("never returns the old red", () => {
+    for (let pct = 0; pct <= 100; pct += 5) expect(getScoreColour(pct)).not.toMatch(/C8102E/i);
   });
 });
 
@@ -120,6 +123,32 @@ describe("getSolutions", () => {
     expect(solutions.nutrition.some((s) => s.toLowerCase().includes("drink to thirst"))).toBe(true);
   });
 
+  it("reads the quiz's current answer values", () => {
+    const lowest: Record<string, string | string[]> = {};
+    for (const q of QUESTIONS) {
+      const worst = q.options?.filter(o => o.score !== undefined).sort((a, b) => a.score! - b.score!)[0];
+      if (worst) lowest[q.id] = worst.value;
+    }
+    lowest["training-type"] = ["cardio"];
+    const s = getSolutions(lowest);
+    // Nobody who scored lowest should be told their habits are working.
+    for (const list of Object.values(s)) {
+      for (const line of list) expect(line).not.toMatch(/^Your answers describe/);
+    }
+    expect(s.injuries.join(" ")).not.toContain("No current injury was selected");
+    expect(s.injuries.some(l => l.toLowerCase().includes("qualified clinician"))).toBe(true);
+    expect(s.training.some(l => l.toLowerCase().includes("weekly training plan"))).toBe(true);
+    expect(s.training.some(l => l.toLowerCase().includes("resistance work"))).toBe(true);
+    expect(s.nutrition.some(l => l.toLowerCase().includes("energy dips"))).toBe(true);
+    expect(s.nutrition.some(l => l.toLowerCase().includes("drink to thirst"))).toBe(true);
+    expect(s.recovery.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("only says no injury was selected at a full injuries score", () => {
+    expect(getCategorySummary("injuries", 100)).toContain("No current issue was selected");
+    expect(getCategorySummary("injuries", 80)).not.toContain("No current issue was selected");
+  });
+
   it("provides stress solutions for reactive management", () => {
     const solutions = getSolutions({ "stress-management": "reactive" });
     expect(solutions.stress.some((s) => s.toLowerCase().includes("reflection"))).toBe(true);
@@ -167,7 +196,7 @@ describe("buildPdfHtml", () => {
       { name: "Recovery", id: "recovery", percentage: 45 },
     ],
     overallPct: 58,
-    overallLabel: "NEEDS WORK",
+    overallLabel: "FOCUS AREA",
     overallColour: "#8B7D3C",
     solutions: {
       sleep: ["Get more sleep"],
@@ -179,68 +208,98 @@ describe("buildPdfHtml", () => {
     },
   };
 
-  it("includes the user name in uppercase on page 1", () => {
+  it("opens with the name, like the results page", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("TEST USER");
+    expect(html).toContain("Test's performance profile");
+    expect(html).toContain("For Test User");
   });
 
-  it("includes the overall score and label", () => {
-    const html = buildPdfHtml(baseParams);
-    expect(html).toContain("58");
-    expect(html).toContain("NEEDS WORK");
+  it("falls back to a plain headline when no name was given", () => {
+    const html = buildPdfHtml({ ...baseParams, name: "Your Results" });
+    expect(html).toContain("<h1>Your performance profile</h1>");
+    expect(html).not.toContain("For Your Results");
   });
 
-  it("includes QUESTIONNAIRE COACHING SCORE section", () => {
+  it("escapes the name", () => {
+    const html = buildPdfHtml({ ...baseParams, name: "<b>Sam</b> O'Neil" });
+    expect(html).not.toContain("<b>Sam</b>");
+    expect(html).toContain("&lt;b&gt;Sam&lt;/b&gt;");
+  });
+
+  it("shows the overall score with the same words as the results page", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("QUESTIONNAIRE COACHING SCORE");
+    expect(html).toContain('<span class="num">58</span>');
+    expect(html).toContain("out of 100");
+    expect(html).toContain("Mixed responses");
   });
 
   it("includes score context without a recovery projection", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("Score Context");
+    expect(html).toContain("Score context.");
     expect(html).toContain("does not predict a health outcome or a recovery timeline");
   });
 
-  it("includes radar chart (FIG. 01)", () => {
+  it("includes the radar and the category scores", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("FIG. 01");
-    expect(html).toContain("PERFORMANCE RADAR");
+    expect(html).toContain("Performance radar");
     expect(html).toContain("<svg");
-  });
-
-  it("includes domain bars (FIG. 02)", () => {
-    const html = buildPdfHtml(baseParams);
-    expect(html).toContain("FIG. 02");
-    expect(html).toContain("DOMAIN SCORES");
+    expect(html).toContain("Category scores");
     expect(html).toContain("domain-bar-fill");
   });
 
-  it("includes ACTION PLAN page with protocols", () => {
+  it("marks only the lowest area with the signal colour", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("ACTION PLAN");
-    expect(html).toContain("Six focus areas");
-    expect(html).toContain("Choose what fits your week");
+    // Injuries & Health is lowest at 40.
+    expect(html).toContain('style="width:40%;background:#FF5A36"');
+    expect(html).toContain('style="width:80%;background:#141413"');
+    expect(html).not.toContain("width:45%;background:#FF5A36");
+  });
+
+  it("uses the site colours and none of the old red", () => {
+    const html = buildPdfHtml(baseParams);
+    expect(html).toContain("#FAF9F5");
+    expect(html).toContain("#141413");
+    expect(html).not.toMatch(/C8102E/i);
+  });
+
+  it("includes the action plan page", () => {
+    const html = buildPdfHtml(baseParams);
+    expect(html).toContain("Action plan");
+    expect(html).toContain("Six focus areas. Choose what fits your week.");
     expect(html).toContain("Get more sleep");
     expect(html).toContain("Meditate daily");
   });
 
-  it("includes COACH ANALYSIS page", () => {
+  it("includes the coach analysis page", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("COACH ANALYSIS");
+    expect(html).toContain("Coach analysis");
     expect(html).toContain("questionnaire responses");
-    expect(html).toContain("THE 30-SECOND READ");
-    expect(html).toContain("TOP 5 ACTIONS");
+    expect(html).toContain("The 30 second read");
+    expect(html).toContain("Top 5 actions for the next 30 days");
+    expect(html).toContain("Your sleep is the biggest bottleneck.");
   });
 
-  it("includes CTA page with coaching details", () => {
+  it("finds each area in the written analysis by its heading", () => {
+    const html = buildPdfHtml({
+      ...baseParams,
+      analysis:
+        "## Your Performance Profile\n\nA long enough opening paragraph that reads as the thirty second summary of the report.\n\n### Sleep Analysis\nSleep text here.\n\n### Injury & Health Considerations\nInjury text here.\n\n### Recovery Profile\nRecovery text here.\n\n### The Bottom Line\nClosing text.",
+    });
+    expect(html).toContain('<div class="analysis-text">Sleep text here.</div>');
+    expect(html).toContain('<div class="analysis-text">Injury text here.</div>');
+    expect(html).toContain('<div class="analysis-text">Recovery text here.</div>');
+  });
+
+  it("includes the next step page with the same coaching list as the site", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("NEXT STEP");
-    expect(html).toContain("Turn insight into");
-    expect(html).toContain("1:1 COACHING");
-    expect(html).toContain("3 month");
-    expect(html).toContain("Bridge Athletic");
+    expect(html).toContain("Next step");
+    expect(html).toContain("Turn insight into your next action.");
+    expect(html).toContain("What coaching with me includes");
+    expect(html).toContain("Monthly, 3 month minimum");
+    expect(html).toContain("Apply for coaching");
+    expect(html).toContain("marinlazic.com/apply");
     expect(html).toContain("marin@marinlazic.coach");
-    expect(html).toContain("APPLY FOR COACHING");
+    expect(html).not.toMatch(/limited spots/i);
   });
 
   it("includes report ID with correct format", () => {
@@ -248,32 +307,61 @@ describe("buildPdfHtml", () => {
     expect(html).toMatch(/ML-PRF-\d{6}-TU/);
   });
 
-  it("includes Google Fonts link for Inter", () => {
+  it("loads DM Sans and Inter, the site fonts", () => {
     const html = buildPdfHtml(baseParams);
     expect(html).toContain("fonts.googleapis.com");
+    expect(html).toContain("DM+Sans");
     expect(html).toContain("Inter");
   });
 
-  it("includes page numbers P. 01-04", () => {
+  it("numbers the four pages", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("P. 01 / 04");
-    expect(html).toContain("P. 02 / 04");
-    expect(html).toContain("P. 03 / 04");
-    expect(html).toContain("P. 04 / 04");
+    for (const n of [1, 2, 3, 4]) expect(html).toContain(`Page ${n} of 4`);
   });
 
-  it("includes strongest and priority domain stats", () => {
+  it("names the strongest area and the biggest opportunity", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("Strongest Domain");
-    expect(html).toContain("Priority Domain");
-    expect(html).toContain("Illustrative Reference");
+    expect(html).toContain("Strongest area");
+    expect(html).toContain("Biggest opportunity");
   });
 
-  it("shows the shared non-clinical scope note", () => {
+  it("counts the questions that were asked", () => {
     const html = buildPdfHtml(baseParams);
-    expect(html).toContain("This questionnaire coaching score reflects self-reported answers");
+    expect(html).toContain(`${BASE_QUESTION_COUNT} questions`);
+    expect(html).not.toContain("ITEM SURVEY");
+  });
+
+  it("shows the shared scope note on every page", () => {
+    const html = buildPdfHtml(baseParams);
+    expect(html.split("This questionnaire coaching score reflects self reported answers").length - 1).toBe(4);
     expect(html).toContain("It is not medical advice or a diagnosis");
     expect(html).toContain("persistent fatigue, pain, or sleep problems");
+  });
+
+  it("has no dashes in the words people read", () => {
+    const lowest: Record<string, string> = {};
+    for (const q of QUESTIONS) {
+      const worst = q.options?.filter(o => o.score !== undefined).sort((a, b) => a.score! - b.score!)[0];
+      if (worst) lowest[q.id] = worst.value;
+    }
+    for (const id of ["sleep", "stress", "training", "injuries", "nutrition", "recovery"]) {
+      for (const pct of [20, 55, 80, 100]) expect(getCategorySummary(id, pct)).not.toMatch(/[A-Za-z]-[A-Za-z]/);
+    }
+    for (const answers of [{}, lowest, { ...lowest, "has-whoop": "no" }]) {
+      for (const list of Object.values(getSolutions(answers))) {
+        for (const line of list) expect(line).not.toMatch(/[A-Za-z]-[A-Za-z]|[\u2013\u2014]/);
+      }
+    }
+    const html = buildPdfHtml({ ...baseParams, solutions: getSolutions(lowest) });
+    const text = html
+      .replace(/<style[\s\S]*?<\/style>/g, "")
+      .replace(/<svg[\s\S]*?<\/svg>/g, "")
+      .replace(/<[^>]+>/g, " ")
+      // The report ID and web addresses keep theirs.
+      .replace(/ML-PRF-\d{6}-[A-Z]*/g, "")
+      .replace(/marinlazic\.com\/\S*/g, "");
+    expect(text).not.toMatch(/[\u2013\u2014]/);
+    expect(text).not.toMatch(/[A-Za-z]-[A-Za-z]/);
   });
 });
 
