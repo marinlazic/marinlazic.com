@@ -42,6 +42,7 @@ import {
   type Option,
 } from "@shared/assessment";
 import { SHOW_PROGRAM_PRICES, findProgram, programLength, programPath } from "@shared/programs";
+import { AREA_TIPS, STRENGTH_FROM, STRENGTH_LINE } from "@/data/areaTips";
 
 // ─── Types ──────────────────────────────────────────────
 interface Section {
@@ -1600,52 +1601,47 @@ export default function Assessment() {
                   const catLabel = getScoreLabel(cat.percentage);
                   const proTips: Record<
                     string,
-                    { tip: string; context: string; graph: number[] }
+                    { context: string; graph: number[] }
                   > = {
                     sleep: {
-                      tip: "Consider a regular wind-down routine and note what helps your sleep feel more settled. Persistent sleep concerns are best discussed with a clinician.",
                       context:
                         "Use your recent routines and experience as context, not a universal sleep target.",
                       graph: [40, 55, 65, 75, 85, 100],
                     },
                     stress: {
-                      tip: "Choose a short, practical way to pause during the day, such as a walk, breathing practice or a conversation with someone you trust.",
                       context:
                         "Stress responses are individual and should be considered alongside your circumstances.",
                       graph: [30, 45, 55, 60, 70, 85],
                     },
                     training: {
-                      tip: "Build training gradually and choose a routine you can sustain. Adjust it around your experience, schedule and any clinician or allied health advice.",
                       context:
                         "The score reflects your answers, not a universal training standard.",
                       graph: [20, 40, 55, 70, 80, 95],
                     },
                     injuries: {
-                      tip: "Do not train through pain that persists or affects movement. Seek guidance from an appropriate clinician or allied health professional before changing activity around an injury.",
                       context:
                         "This is coaching context only, not injury assessment or diagnosis.",
                       graph: [50, 55, 60, 70, 80, 90],
                     },
                     nutrition: {
-                      tip: "Focus on a regular eating pattern that suits your training, preferences and daily life. For individual nutrition care, speak with an accredited practising dietitian.",
                       context:
                         "Nutrition needs are individual and are not set by this score.",
                       graph: [25, 40, 55, 65, 80, 95],
                     },
                     recovery: {
-                      tip: "Use regular check-ins on sleep, symptoms, training load and device-consistent trends when planning recovery. Wearable data are one input, not a decision-maker.",
                       context:
                         "Your personal trend is more relevant than a universal wearable threshold.",
                       graph: [35, 45, 55, 65, 80, 95],
                     },
                   };
                   const catTip = proTips[cat.id] || {
-                    tip: "Focus on a small, practical habit that fits your current routine.",
                     context:
                       "This score summarises your answers and is not a health benchmark.",
                     graph: [30, 45, 55, 65, 75, 90],
                   };
                   const barLabels = ["", "", "", "", "", ""];
+                  const areaTip = AREA_TIPS[cat.id];
+                  const isStrength = cat.percentage >= STRENGTH_FROM;
 
                   return (
                     <motion.div
@@ -1740,17 +1736,33 @@ export default function Assessment() {
                           </p>
                         </div>
 
-                        {/* Pro Tip */}
-                        <div className="bg-ivory border border-line p-4 rounded-lg">
-                          <div className="flex items-center gap-2 mb-2">
+                        {/* Start here: what it looks like, why, what to do first, how long to give it */}
+                        <div className="bg-ivory border border-line p-4 sm:p-5 rounded-lg">
+                          <div className="flex items-center gap-2 mb-3">
                             <Zap className="w-3.5 h-3.5 text-black" />
-                            <span className="text-[11px] text-ink font-bold">
-                              Pro Tip
+                            <span className="text-[13px] text-ink font-bold">
+                              {isStrength || !areaTip ? "Keep going" : "Start here"}
                             </span>
                           </div>
-                          <p className="text-xs text-mute leading-relaxed">
-                            {catTip.tip}
-                          </p>
+                          {isStrength || !areaTip ? (
+                            <p className="text-[14px] text-body leading-relaxed">{STRENGTH_LINE}</p>
+                          ) : (
+                            <dl className="space-y-3">
+                              {(
+                                [
+                                  ["What it often looks like", areaTip.looks],
+                                  ["Why it happens", areaTip.why],
+                                  ["Do this first", areaTip.first],
+                                  ["Give it", areaTip.give],
+                                ] as const
+                              ).map(([label, text]) => (
+                                <div key={label}>
+                                  <dt className="text-[13px] text-mute font-medium">{label}</dt>
+                                  <dd className="text-[14px] text-ink leading-[1.45] mt-0.5">{text}</dd>
+                                </div>
+                              ))}
+                            </dl>
+                          )}
                         </div>
                       </div>
                     </motion.div>
