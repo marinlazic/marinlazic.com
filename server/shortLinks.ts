@@ -38,6 +38,12 @@ export const SHORT_CHANNELS: Record<string, { source: string; medium: string }> 
   wa: { source: "whatsapp", medium: "message" },
   qr: { source: "qr", medium: "print" },
   bio: { source: "instagram", medium: "bio" },
+  // Profile links, so each profile can point at the assessment with its own tag.
+  x: { source: "x", medium: "social" },
+  libio: { source: "linkedin", medium: "bio" },
+  ytbio: { source: "youtube", medium: "bio" },
+  xbio: { source: "x", medium: "bio" },
+  subbio: { source: "substack", medium: "bio" },
 };
 
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 60);
