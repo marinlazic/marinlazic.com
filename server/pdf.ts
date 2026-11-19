@@ -704,7 +704,7 @@ function buildPdfHtml(params: {
     <div class="incl">
       ${included.map(item => `<div><svg viewBox="0 0 16 16" fill="none" stroke="${PAPER}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.6"/><path d="M5.2 8.2l2 2 3.6-4.2"/></svg><span>${item}</span></div>`).join("")}
     </div>
-    <a class="btn" href="https://www.marinlazic.com/apply?utm_source=assessment&amp;utm_medium=pdf&amp;utm_campaign=results">Apply for coaching &rarr;</a>
+    <a class="btn" href="https://www.marinlazic.com/apply?utm_source=assessment&amp;utm_medium=pdf&amp;utm_campaign=results">Apply for coaching <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
     <p class="fine">Monthly, 3 month minimum. A short application. I read each one myself. Coaching does not diagnose, treat or replace medical, allied health or dietetic care.</p>
   </div>
 
