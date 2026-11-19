@@ -3,17 +3,12 @@
 // The enquiry form posts to leads.submit like the home page form, with
 // speaking: true so Kit tags speaking_enquiry and the confirmation reads right.
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { WordTile } from "@/components/WordTile";
-import { PageBand } from "@/components/PageBand";
 import { useState } from "react";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Breadcrumbs, Navigation } from "./InformationPage";
 
-const HERO_PHOTO = "/images/articles/article-olympic-gpLGKvxLbp5dFAxegeMPbR.webp";
-const BAND_PHOTO =
-  "/images/articles/article-executive-fitness-7smAuKbB8VnoomqQR4MdYo.webp";
 
 const FACTS = [
   { big: "Paris 2024", small: "Olympic Games" },
@@ -117,72 +112,71 @@ export default function Speaking() {
   return (
     <div className="min-h-screen bg-ivory text-black flex flex-col">
       <Navigation />
-      <PageBand src="/images/guide/field.jpg" alt="A team training on a field" word="speak" emoji={"\u{1F3A4}"} pin="Speaking" position="center" />
-      <main className="flex-1 px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
-        <div className="max-w-[1280px] mx-auto mb-12">
-          <img
-            src={HERO_PHOTO}
-            alt="Starting blocks on an empty track under stadium lights"
-            className="w-full aspect-[2/1] object-cover block"
-            width={1920}
-            height={960}
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-
+      <main className="flex-1 px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
         <div className="max-w-[1280px] mx-auto">
           <Breadcrumbs label="Speaking" />
-          <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
-          <p className="text-[13px] text-black font-semibold mb-4">
-            Speaking
-          </p>
-          <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-[-0.03em] leading-[0.93] mb-6 max-w-4xl">
-            Olympic level performance science for business leaders
-          </h1>
-          <p className="text-base sm:text-lg text-black/65 leading-relaxed max-w-2xl mb-8">
-            The systems used to prepare athletes for the Paris 2024 Olympics,
-            applied to founders, CEOs and executives. How you manage your
-            biology decides how you perform.
-          </p>
-          <div className="flex flex-wrap gap-4 mb-16">
-            <a
-              href="#enquire"
-              onClick={() => track("cta_click", { button: "speaking_hero_enquire" })}
-              className="inline-flex bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] text-[15px] px-8 py-4 transition-colors font-medium"
-            >
-              Enquire about an event
-            </a>
-            <a
-              href="#sessions"
-              className="inline-flex text-ink text-[15px] px-8 py-4 transition-colors font-medium bg-stone rounded-lg hover:bg-[#D9D5C9]"
-            >
-              See the sessions
-            </a>
+          <div className="flex items-center justify-between gap-4 border-y border-ink py-3 text-[13px] font-semibold">
+            <span>Speaking</span>
+            <span className="font-normal text-mute">Keynotes and workshops</span>
           </div>
+          <header className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-end pt-8 lg:pt-12 mb-14 lg:mb-24">
+            <div className="lg:col-span-7">
+              <h1 className="font-heading font-bold text-[44px] leading-[0.98] tracking-[-0.035em] sm:text-7xl lg:text-[84px] lg:leading-[0.95]">
+                Olympic level performance science for business leaders
+              </h1>
+              <p className="font-heading text-[21px] leading-[1.32] text-body mt-6 sm:text-2xl lg:mt-9 lg:text-[27px] max-w-[640px]">
+                The systems used to prepare athletes for the Paris 2024 Olympics,
+                applied to founders, CEOs and executives. How you manage your
+                biology decides how you perform.
+              </p>
+              <div className="flex flex-wrap gap-3 mt-7">
+                <a
+                  href="#enquire"
+                  onClick={() => track("cta_click", { button: "speaking_hero_enquire" })}
+                  className="ml-btn ml-btn-dark px-6"
+                >
+                  Enquire about an event
+                </a>
+                <a href="#sessions" className="ml-btn px-6">
+                  See the sessions
+                </a>
+              </div>
+            </div>
+            <figure className="lg:col-span-5">
+              <img
+                src="/images/site/speaking-hero.svg"
+                alt="A drawing of a microphone on a stand"
+                width={800}
+                height={1000}
+                loading="eager"
+                className="block w-full aspect-[4/5] rounded-lg bg-oat"
+              />
+              <figcaption className="ml-small mt-2.5">Board meetings, retreats and leadership summits.</figcaption>
+            </figure>
+          </header>
 
-          <div className="space-y-16">
-            <section id="about" className="border-t border-line pt-7">
+          <div className="space-y-14 lg:space-y-24">
+            <section id="about" className="border-t border-ink pt-6 lg:pt-8">
               <h2 className="text-[13px] text-mute font-medium mb-5">
                 About
               </h2>
-              <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-6">
+              <p className="font-heading font-bold text-[30px] leading-[1.08] tracking-[-0.02em] lg:text-[46px] max-w-[900px] mb-6">
                 Performance is biology.
               </p>
               <div className="space-y-4 max-w-2xl">
-                <p className="text-sm sm:text-base text-body leading-relaxed">
+                <p className="text-[17px] text-body leading-[1.62]">
                   Marin is the Strength and Conditioning Coach for the Australian
                   Men's Water Polo Team and founder of Otion. He has prepared
                   athletes for the Paris 2024 Olympic Games, three World
                   Championships (2023, 2024 and 2025) and the 2022 World Cup.
                 </p>
-                <p className="text-sm sm:text-base text-body leading-relaxed">
+                <p className="text-[17px] text-body leading-[1.62]">
                   Founders and executives break down in the same ways athletes
                   do. Stress is biology, not a mindset problem. Ignore it and it
                   shows up in your decisions, your energy and eventually your
                   business.
                 </p>
-                <p className="text-sm sm:text-base text-body leading-relaxed">
+                <p className="text-[17px] text-body leading-[1.62]">
                   The Australian team crosses more time zones than most
                   nations. Marin built protocols around eye training, breathing
                   and movement that cut recovery time, reduce illness and limit
@@ -194,7 +188,7 @@ export default function Speaking() {
                 {FACTS.map(f => (
                   <li key={f.big} className="border-t border-line pt-4">
                     <span className="block w-2.5 h-2.5 hidden mb-4" aria-hidden="true" />
-                    <span className="block font-heading font-bold text-xl sm:text-2xl tracking-[-0.02em]">
+                    <span className="block font-heading font-bold text-[30px] leading-none tracking-[-0.03em] lg:text-[44px]">
                       {f.big}
                     </span>
                     <span className="block text-[13px] text-mute mt-1">
@@ -205,14 +199,14 @@ export default function Speaking() {
               </ul>
             </section>
 
-            <section id="sessions" className="border-t border-line pt-7 scroll-mt-8">
+            <section id="sessions" className="border-t border-ink pt-6 lg:pt-8 scroll-mt-8">
               <h2 className="text-[13px] text-mute font-medium mb-5">
                 Speaking topics
               </h2>
-              <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-4">
+              <p className="font-heading font-bold text-[30px] leading-[1.08] tracking-[-0.02em] lg:text-[46px] max-w-[900px] mb-4">
                 Sessions built for leaders
               </p>
-              <p className="text-sm sm:text-base text-body leading-relaxed max-w-2xl mb-10">
+              <p className="text-[17px] text-body leading-[1.62] max-w-2xl mb-10">
                 Each session is for founders, CEOs and executives who want
                 practical content they can use that week. Not motivation.
                 Systems.
@@ -224,10 +218,10 @@ export default function Speaking() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
-                      <h3 className="font-heading font-bold text-lg tracking-[-0.01em] mb-2">
+                      <h3 className="font-heading font-bold text-[21px] leading-tight tracking-[-0.01em] mb-2">
                         {s.title}
                       </h3>
-                      <p className="text-sm text-body leading-relaxed">{s.body}</p>
+                      <p className="text-[15.5px] text-body leading-normal">{s.body}</p>
                     </div>
                   </li>
                 ))}
@@ -239,28 +233,30 @@ export default function Speaking() {
               </p>
             </section>
 
-            <img
-              src={BAND_PHOTO}
-              alt="A man in a suit setting up to deadlift a loaded barbell in a dim gym"
-              className="w-full aspect-[2/1] object-cover block"
-              width={1920}
-              height={960}
-              loading="lazy"
-              decoding="async"
-            />
+            <figure>
+              <img
+                src="/images/site/speaking-wide.svg"
+                alt="A drawing of a room from above: one speaker at the front and four rows of seats"
+                width={2260}
+                height={900}
+                loading="lazy"
+                className="block w-full h-auto aspect-[2260/900] rounded-lg bg-oat"
+              />
+              <figcaption className="ml-small mt-2.5">One speaker, one room, things to use that week.</figcaption>
+            </figure>
 
-            <section id="credentials" className="border-t border-line pt-7">
+            <section id="credentials" className="border-t border-ink pt-6 lg:pt-8">
               <h2 className="text-[13px] text-mute font-medium mb-5">
                 Credentials
               </h2>
-              <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-6">
+              <p className="font-heading font-bold text-[30px] leading-[1.08] tracking-[-0.02em] lg:text-[46px] max-w-[900px] mb-6">
                 Built on real experience
               </p>
               <ul className="max-w-2xl border-t border-line">
                 {CREDENTIALS.map(c => (
                   <li
                     key={c}
-                    className="flex gap-4 border-b border-line py-4 text-sm sm:text-base text-black/75 leading-relaxed"
+                    className="flex gap-4 border-b border-line py-4 text-[17px] text-body leading-snug"
                   >
                     <span className="w-2 h-2 bg-ink rounded-full mt-2 shrink-0" aria-hidden="true" />
                     {c}
@@ -276,16 +272,16 @@ export default function Speaking() {
               </p>
             </section>
 
-            <section id="enquire" className="border-t border-line pt-7 scroll-mt-8">
+            <section id="enquire" className="border-t border-ink pt-6 lg:pt-8 scroll-mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div className="lg:col-span-7">
                   <h2 className="text-[13px] text-mute font-medium mb-5">
                     Contact
                   </h2>
-                  <p className="font-heading text-2xl sm:text-3xl font-bold tracking-[-0.02em] mb-4">
+                  <p className="font-heading font-bold text-[30px] leading-[1.08] tracking-[-0.02em] lg:text-[46px] max-w-[900px] mb-4">
                     Enquire about an event
                   </p>
-                  <p className="text-sm sm:text-base text-body leading-relaxed max-w-xl mb-8">
+                  <p className="text-[17px] text-body leading-[1.62] max-w-xl mb-8">
                     A board meeting, corporate retreat or leadership summit. Tell
                     me about the event and I will reply by email within one
                     business day.
@@ -369,7 +365,6 @@ export default function Speaking() {
                     </form>
                   )}
                 </div>
-                <div className="hidden lg:block lg:col-span-5"><WordTile src="/images/guide/team.jpg" alt="A team talk on the pool deck" word="invite" emoji={"\u{1F3A4}"} pin="Speaking" aspect="aspect-[4/3]" /></div>
               </div>
             </section>
           </div>

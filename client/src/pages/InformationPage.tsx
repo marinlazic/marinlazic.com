@@ -391,6 +391,7 @@ export default function InformationPage() {
     informationPages[normalisedLocation] ?? informationPages["/about"];
 
   if (normalisedLocation === "/executive-health-performance") return <CoachingMagazine page={page} />;
+  if (MAGAZINE_PAGES[normalisedLocation]) return <MagazineInfo page={page} extra={MAGAZINE_PAGES[normalisedLocation]} />;
 
   return (
     <div className="min-h-screen bg-ivory text-black flex flex-col">
@@ -849,6 +850,145 @@ function CoachingMagazine({ page }: { page: InformationPageConfig }) {
               {legal && <p className="ml-small mt-7">{legal}</p>}
             </div>
           </section>
+        </article>
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
+// The magazine layout for plain information pages. The words come from
+// informationPages above. A section with five or more paragraphs is set as a
+// list of rows, with the first sentence of each in bold.
+const MAGAZINE_PAGES: Record<string, { note: string; img: string; alt: string; caption: string; quote?: string }> = {
+  "/corporate-health-performance": {
+    note: "For teams",
+    img: "/images/site/corporate-hero.svg",
+    alt: "A drawing of a meeting table from above with eight chairs, one of them marked",
+    caption: "Shaped around the company and its people.",
+  },
+  "/about": {
+    note: "Coach and founder",
+    img: "/images/site/marin-about.svg",
+    alt: "Marin Lazic, with a drawing of a stopwatch",
+    caption: "Marin Lazic.",
+    quote: "Training is one part of performance. Sleep, recovery, stress and the demands outside the gym matter too.",
+  },
+};
+
+function MagazineInfo({ page, extra }: { page: InformationPageConfig; extra: (typeof MAGAZINE_PAGES)[string] }) {
+  const h2 = "font-heading font-bold text-[30px] leading-[1.08] tracking-[-0.02em] lg:text-[46px]";
+  const body = "text-[17px] leading-[1.62] text-body";
+  const rule = "mt-14 lg:mt-24 border-t border-ink pt-6 lg:pt-8";
+  const split = (t: string) => {
+    const dot = t.indexOf(". ");
+    const comma = t.indexOf(", ");
+    const i = dot > 0 && dot < 110 ? dot : comma > 0 && comma < 110 ? comma : -1;
+    return i > 0 ? [t.slice(0, i + 1), t.slice(i + 2)] : [t, ""];
+  };
+  return (
+    <div className="min-h-screen bg-ivory text-black flex flex-col">
+      <Navigation />
+      <main className="flex-1 px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
+        <article className="max-w-[1280px] mx-auto">
+          <Breadcrumbs label={page.label} />
+          <div className="flex items-center justify-between gap-4 border-y border-ink py-3 text-[13px] font-semibold">
+            <span>{page.label}</span>
+            <span className="font-normal text-mute">{extra.note}</span>
+          </div>
+
+          <header className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-end pt-8 lg:pt-12">
+            <div className="lg:col-span-7">
+              <h1 className="font-heading font-bold text-[46px] leading-[0.98] tracking-[-0.035em] sm:text-7xl lg:text-[92px] lg:leading-[0.94]">
+                {page.h1}
+              </h1>
+              <p className="font-heading text-[21px] leading-[1.32] text-body mt-6 sm:text-2xl lg:mt-9 lg:text-[27px] max-w-[640px]">
+                {page.description}
+              </p>
+              {page.cta && (
+                <a href={page.cta.href} className="ml-btn ml-btn-dark mt-7 px-6">
+                  {page.cta.label}
+                </a>
+              )}
+            </div>
+            <figure className="lg:col-span-5">
+              <img src={extra.img} alt={extra.alt} width={800} height={1000} loading="eager" className="block w-full aspect-[4/5] rounded-lg bg-oat" />
+              <figcaption className="ml-small mt-2.5">{extra.caption}</figcaption>
+            </figure>
+          </header>
+
+          {page.sections.map((sec, i) => (
+            <div key={sec.heading}>
+              <section className={`${rule} grid lg:grid-cols-12 gap-5 lg:gap-14`}>
+                <h2 className={`lg:col-span-4 ${h2}`}>{sec.heading}</h2>
+                <div className="lg:col-span-8">
+                  {sec.content.length >= 5 ? (
+                    <ul className="border-t border-line">
+                      {sec.content.map(t => {
+                        const [lead, rest] = split(t);
+                        return (
+                          <li key={t} className="border-b border-line py-4">
+                            <p className="text-[16px] leading-normal text-body max-w-[720px]">
+                              <span className="font-heading font-bold text-[18px] text-ink">{lead}</span>
+                              {rest ? ` ${rest}` : ""}
+                            </p>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <div className={`${body} max-w-[680px]`}>
+                      {sec.content.map((t, k) => (
+                        <p
+                          key={t}
+                          className={
+                            i === 0 && k === 0
+                              ? "mb-4 first-letter:float-left first-letter:font-heading first-letter:font-bold first-letter:text-[68px] first-letter:leading-[0.82] first-letter:mr-2.5 first-letter:mt-1 first-letter:text-ink"
+                              : "mb-4"
+                          }
+                        >
+                          {t}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                  {sec.links && (
+                    <div className="flex flex-wrap gap-3 mt-5">
+                      {sec.links.map(l => (
+                        <a
+                          key={l.href}
+                          href={l.href}
+                          className="ml-btn px-6 h-auto py-3 text-left"
+                          {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        >
+                          {l.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </section>
+              {i === 0 && extra.quote && (
+                <blockquote className="mt-14 lg:mt-24 border-y border-line py-10 lg:py-16">
+                  <p className="font-heading font-bold text-[30px] leading-[1.12] tracking-[-0.02em] sm:text-[44px] lg:text-[60px] lg:leading-[1.05] max-w-[1100px]">
+                    {extra.quote}
+                  </p>
+                  <footer className="ml-small mt-5">Marin Lazic</footer>
+                </blockquote>
+              )}
+            </div>
+          ))}
+
+          {page.cta && (
+            <section className={`${rule} grid lg:grid-cols-12 gap-5 lg:gap-14 items-center`}>
+              <h2 className={`lg:col-span-8 ${h2}`}>{page.cta.label}.</h2>
+              <div className="lg:col-span-4 lg:text-right">
+                <a href={page.cta.href} className="ml-btn ml-btn-dark px-6">
+                  {page.cta.label}
+                </a>
+              </div>
+            </section>
+          )}
         </article>
       </main>
       <SiteFooter />
