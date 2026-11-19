@@ -1,11 +1,69 @@
-import { PageBand } from "@/components/PageBand";
-import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+// /apply: the coaching application. Same magazine layout as the coaching,
+// corporate and about pages: masthead rule, large headline, a drawing, then
+// sections with a large heading beside the content.
+import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { trpc } from "@/lib/trpc";
 import { APPLY_FAQS } from "@shared/siteFaq";
 import { getCampaignValue } from "@/lib/attribution";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { CheckCircle, Loader2, ArrowRight } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { SiteFooter } from "@/components/site/SiteFooter";
+import { Breadcrumbs, Navigation } from "./InformationPage";
+
+const H1 =
+  "font-heading font-bold text-[46px] leading-[0.98] tracking-[-0.035em] sm:text-7xl lg:text-[92px] lg:leading-[0.94]";
+const STANDFIRST =
+  "font-heading text-[21px] leading-[1.32] text-body mt-6 sm:text-2xl lg:mt-9 lg:text-[27px] max-w-[640px]";
+const H2 = "font-heading font-bold text-[30px] leading-[1.08] tracking-[-0.02em] lg:text-[46px]";
+const RULE = "mt-14 lg:mt-24 border-t border-ink pt-6 lg:pt-8";
+const LABEL = "block font-heading font-bold text-[17px] leading-snug text-ink mb-2.5";
+const FIELD = "ml-input focus:outline-none focus:border-ink focus:ring-1 focus:ring-ink transition-colors";
+const FIELD_ERROR = "border-red-600";
+const ERROR = "text-red-700 text-[13px] mt-2";
+
+const PROOF = [
+  "Strength and Conditioning Coach for the Australian Men's Water Polo Team, including preparation for Paris 2024.",
+  "Your training and recovery plan is shaped around your goals, current fitness and available time.",
+  "The coaching scope, communication and availability are agreed before you start.",
+];
+
+function Picture() {
+  return (
+    <figure className="lg:col-span-5">
+      <picture>
+        <source media="(min-width: 1024px)" srcSet="/images/site/apply-hero.svg" />
+        <img
+          src="/images/site/apply-wide.svg"
+          alt="A drawing of a short form on a clipboard, with a pencil beside it"
+          width={1200}
+          height={800}
+          loading="eager"
+          className="block w-full aspect-[3/2] lg:aspect-[4/5] rounded-lg bg-oat"
+        />
+      </picture>
+      <figcaption className="ml-small mt-2.5">I read every application myself.</figcaption>
+    </figure>
+  );
+}
+
+function Shell({ note, children }: { note: string; children: ReactNode }) {
+  return (
+    <div className="min-h-screen bg-ivory text-black flex flex-col">
+      <Navigation />
+      <main className="flex-1 px-5 py-10 sm:px-8 sm:py-14 lg:px-12">
+        <div className="max-w-[1280px] mx-auto">
+          <Breadcrumbs label="Apply for coaching" />
+          <div className="flex items-center justify-between gap-4 border-y border-ink py-3 text-[13px] font-semibold">
+            <span>Coaching application</span>
+            <span className="font-normal text-mute">{note}</span>
+          </div>
+          {children}
+        </div>
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -114,314 +172,243 @@ export default function Apply() {
     }
   }
 
-  // ─── Confirmation Screen (persistent, not a toast) ──────
+  // The confirmation stays on the page. It is not a toast.
   if (submitted) {
     return (
-      <div className="min-h-screen bg-ivory flex flex-col">
-        <header className="border-b border-line">
-          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
-            <a
-              href="/"
-              className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
-            >
-              Marin Lazic
+      <Shell note="Application received">
+        <header className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-end pt-8 lg:pt-12">
+          <div className="lg:col-span-7">
+            <h1 className={H1}>Application received</h1>
+            <p className={STANDFIRST}>You will hear from me personally by email.</p>
+            <p className="text-[17px] leading-[1.62] text-body mt-4">Check your inbox.</p>
+            <a href="/" className="ml-btn mt-7 px-6">
+              Back to site
             </a>
-            <span className="text-[13px] text-mute">
-              Application Received
-            </span>
           </div>
+          <Picture />
         </header>
-
-        <PageBand src="/images/guide/coach.jpg" alt="Coach working with athletes at the pool" word="apply" emoji={"\u{1F4DD}"} pin="Coaching" position="center 30%" />
-        <main className="flex-1 flex items-center justify-center px-5 py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="max-w-lg w-full text-center"
-          >
-            <CheckCircle className="w-16 h-16 text-black mx-auto mb-8" />
-            <h1 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-              Application Received
-            </h1>
-            <div className="w-12 h-[2px] hidden mx-auto mb-8" />
-            <p className="text-lg text-mute leading-relaxed mb-4">
-              You will hear from me personally by email.
-            </p>
-            <p className="text-base text-mute leading-relaxed mb-10">
-              Check your inbox.
-            </p>
-            <a
-              href="/"
-              className="inline-flex items-center gap-2 px-8 py-4 text-[15px] font-medium text-ink hover:text-black transition-colors bg-stone rounded-lg hover:bg-[#D9D5C9]"
-            >
-              Back to Site
-            </a>
-          </motion.div>
-        </main>
-      </div>
+      </Shell>
     );
   }
 
-  // ─── Application Form ──────────────────────────────────
+  const invalid = (field: string) => Boolean(touched[field] && errors[field]);
+
   return (
-    <div className="min-h-screen bg-ivory flex flex-col">
-      <header className="border-b border-line">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
-          <a
-            href="/"
-            className="font-heading font-bold text-[20px] tracking-[-0.01em] text-ink no-underline"
-          >
-            Marin Lazic
+    <Shell note="No sales call">
+      <header className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-end pt-8 lg:pt-12">
+        <div className="lg:col-span-7">
+          <h1 className={H1}>Apply for coaching</h1>
+          <p className={STANDFIRST}>Short application. Personal email follow up.</p>
+          <a href="#application" className="ml-btn ml-btn-dark mt-7 px-6">
+            Start the application
           </a>
-          <span className="text-[13px] text-mute">
-            Coaching Application
-          </span>
         </div>
+        <Picture />
       </header>
 
-      <PageBand src="/images/guide/coach.jpg" alt="Coach working with athletes at the pool" word="apply" emoji={"\u{1F4DD}"} pin="Coaching" position="center 30%" />
-      <main className="flex-1 flex items-center justify-center px-5 py-12 sm:py-16">
-        <div className="max-w-2xl w-full">
-          {/* Headline */}
-          <div className="w-3 h-3 hidden mb-8" aria-hidden="true" />
-          <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[0.95] mb-4">
-            Apply for Coaching
-          </h1>
-          <p className="text-base text-mute leading-relaxed mb-8 max-w-xl">
-            Short application. Personal email follow up.
+      <section
+        id="application"
+        aria-labelledby="application-heading"
+        className={`${RULE} grid lg:grid-cols-12 gap-8 lg:gap-14 items-start scroll-mt-24`}
+      >
+        <div className="lg:col-span-4 lg:sticky lg:top-24">
+          <h2 id="application-heading" className={H2}>
+            The application
+          </h2>
+          <ul className="mt-6 border-t border-line">
+            {PROOF.map(t => (
+              <li key={t} className="border-b border-line py-3.5 text-[15px] leading-normal text-body">
+                {t}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-[15px] font-semibold text-ink">
+            Availability is confirmed after your application
           </p>
+        </div>
 
-          {/* Proof Block */}
-          <div className="border-l-2 border-ink pl-5 mb-8 space-y-2">
-            <p className="text-sm text-body leading-relaxed">
-              Strength and Conditioning Coach for the Australian Men's Water
-              Polo Team, including preparation for Paris 2024.
-            </p>
-            <p className="text-sm text-body leading-relaxed">
-              Your training and recovery plan is shaped around your goals,
-              current fitness and available time.
-            </p>
-            <p className="text-sm text-body leading-relaxed">
-              The coaching scope, communication and availability are agreed
-              before you start.
-            </p>
-          </div>
-
-          {/* Scarcity line */}
-          <div className="mb-12 flex items-center gap-3">
-            <div className="w-2 h-2 bg-ink rounded-full rounded-full animate-pulse" />
-            <p className="text-[13px] text-black font-semibold">
-              Availability is confirmed after your application
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-8" noValidate>
-            {/* Name */}
+        <form onSubmit={handleSubmit} className="lg:col-span-8 max-w-[680px] w-full space-y-8" noValidate>
+          <div className="grid sm:grid-cols-2 gap-8 sm:gap-5">
             <div>
-              <label className="block text-[13px] text-mute font-medium mb-2">
+              <label htmlFor="apply-name" className={LABEL}>
                 Name *
               </label>
               <input
+                id="apply-name"
                 type="text"
+                autoComplete="name"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 onBlur={() => handleBlur("name")}
                 placeholder="Your name"
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] ${
-                  touched.name && errors.name
-                    ? "border-red-500"
-                    : "border-[#C9C6BA] focus:border-black"
-                }`}
+                aria-invalid={invalid("name")}
+                className={`${FIELD} ${invalid("name") ? FIELD_ERROR : ""}`}
               />
-              {touched.name && errors.name && (
-                <p className="text-red-600 text-xs mt-2">{errors.name}</p>
+              {invalid("name") && (
+                <p className={ERROR} role="alert">
+                  {errors.name}
+                </p>
               )}
             </div>
-
-            {/* Email */}
             <div>
-              <label className="block text-[13px] text-mute font-medium mb-2">
+              <label htmlFor="apply-email" className={LABEL}>
                 Email *
               </label>
               <input
+                id="apply-email"
                 type="email"
+                autoComplete="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 onBlur={() => handleBlur("email")}
                 placeholder="your@email.com"
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] ${
-                  touched.email && errors.email
-                    ? "border-red-500"
-                    : "border-[#C9C6BA] focus:border-black"
-                }`}
+                aria-invalid={invalid("email")}
+                className={`${FIELD} ${invalid("email") ? FIELD_ERROR : ""}`}
               />
-              {touched.email && errors.email && (
-                <p className="text-red-600 text-xs mt-2">{errors.email}</p>
+              {invalid("email") && (
+                <p className={ERROR} role="alert">
+                  {errors.email}
+                </p>
               )}
             </div>
+          </div>
 
-            {/* Q1: 90-day goal */}
-            <div>
-              <label className="block text-[13px] text-mute font-medium mb-2">
-                What do you want to change in the next 90 days? *
-              </label>
-              <textarea
-                value={q1}
-                onChange={e => setQ1(e.target.value)}
-                onBlur={() => handleBlur("q1")}
-                placeholder="Be specific. What does success look like?"
-                rows={3}
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] resize-none ${
-                  touched.q1 && errors.q1
-                    ? "border-red-500"
-                    : "border-[#C9C6BA] focus:border-black"
-                }`}
-              />
-              {touched.q1 && errors.q1 && (
-                <p className="text-red-600 text-xs mt-2">{errors.q1}</p>
-              )}
-            </div>
-
-            {/* Q2: Biggest obstacle */}
-            <div>
-              <label className="block text-[13px] text-mute font-medium mb-2">
-                What is your biggest obstacle right now? *
-              </label>
-              <textarea
-                value={q2}
-                onChange={e => setQ2(e.target.value)}
-                onBlur={() => handleBlur("q2")}
-                placeholder="What is holding you back from where you want to be?"
-                rows={3}
-                className={`w-full border px-5 py-4 text-sm focus:outline-none transition-colors bg-transparent placeholder:text-[#8A887F] resize-none ${
-                  touched.q2 && errors.q2
-                    ? "border-red-500"
-                    : "border-[#C9C6BA] focus:border-black"
-                }`}
-              />
-              {touched.q2 && errors.q2 && (
-                <p className="text-red-600 text-xs mt-2">{errors.q2}</p>
-              )}
-            </div>
-
-            {/* Q3: Investment readiness */}
-            <div>
-              <label className="block text-[13px] text-mute font-medium mb-2">
-                Coaching is a monthly commitment with a minimum of 3
-                months. Are you ready to invest at that level? *
-              </label>
-              <div className="space-y-3 mt-3">
-                {[
-                  { label: "Yes", value: "yes" },
-                  { label: "I have questions", value: "questions" },
-                  { label: "No", value: "no" },
-                ].map(opt => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => {
-                      setQ3(opt.value as "yes" | "questions" | "no");
-                      setTouched(prev => ({ ...prev, q3: true }));
-                      setErrors(prev => {
-                        const next = { ...prev };
-                        delete next.q3;
-                        return next;
-                      });
-                    }}
-                    className={`w-full text-left border rounded-lg px-5 py-4 transition-colors duration-200 flex items-center justify-between min-h-[52px] ${
-                      q3 === opt.value
-                        ? "border-ink bg-ink text-white"
-                        : "border-line bg-oat hover:border-ink/50"
-                    }`}
-                  >
-                    <span
-                      className={`text-sm font-medium ${q3 === opt.value ? "text-white" : "text-black"}`}
-                    >
-                      {opt.label}
-                    </span>
-                    {q3 === opt.value && (
-                      <CheckCircle className="w-4 h-4 text-white shrink-0" />
-                    )}
-                  </button>
-                ))}
-              </div>
-              {touched.q3 && errors.q3 && (
-                <p className="text-red-600 text-xs mt-2">{errors.q3}</p>
-              )}
-            </div>
-
-            {/* Q4: Anything else */}
-            <div>
-              <label className="block text-[13px] text-mute font-medium mb-2">
-                Anything else I should know?
-              </label>
-              <textarea
-                value={q4}
-                onChange={e => setQ4(e.target.value)}
-                placeholder="Optional. Injuries, timeline, questions."
-                rows={3}
-                className="w-full border border-[#C9C6BA] px-5 py-4 text-sm focus:outline-none focus:border-black transition-colors bg-transparent placeholder:text-[#8A887F] resize-none"
-              />
-            </div>
-
-            {/* Form-level error */}
-            {errors.form && (
-              <p className="text-red-600 text-sm">{errors.form}</p>
+          <div>
+            <label htmlFor="apply-q1" className={LABEL}>
+              What do you want to change in the next 90 days? *
+            </label>
+            <textarea
+              id="apply-q1"
+              value={q1}
+              onChange={e => setQ1(e.target.value)}
+              onBlur={() => handleBlur("q1")}
+              placeholder="Be specific. What does success look like?"
+              rows={3}
+              aria-invalid={invalid("q1")}
+              className={`${FIELD} resize-none ${invalid("q1") ? FIELD_ERROR : ""}`}
+            />
+            {invalid("q1") && (
+              <p className={ERROR} role="alert">
+                {errors.q1}
+              </p>
             )}
+          </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={submitApplication.isPending}
-              className="w-full sm:w-auto bg-ink text-ivory rounded-lg hover:bg-[#3D3D3A] px-10 py-4 text-[15px] font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[52px]"
-            >
-              {submitApplication.isPending ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" /> Submitting...
-                </>
-              ) : (
-                <>
-                  Submit Application <ArrowRight className="w-3 h-3" />
-                </>
-              )}
-            </button>
+          <div>
+            <label htmlFor="apply-q2" className={LABEL}>
+              What is your biggest obstacle right now? *
+            </label>
+            <textarea
+              id="apply-q2"
+              value={q2}
+              onChange={e => setQ2(e.target.value)}
+              onBlur={() => handleBlur("q2")}
+              placeholder="What is holding you back from where you want to be?"
+              rows={3}
+              aria-invalid={invalid("q2")}
+              className={`${FIELD} resize-none ${invalid("q2") ? FIELD_ERROR : ""}`}
+            />
+            {invalid("q2") && (
+              <p className={ERROR} role="alert">
+                {errors.q2}
+              </p>
+            )}
+          </div>
 
-            {/* Reassurance line */}
-            <p className="text-sm text-mute leading-relaxed max-w-lg">
-              I read every application myself and reply by email. No sales call.
-              If coaching is not right for you, I will tell you straight.
+          <div role="group" aria-labelledby="apply-q3-label">
+            <p id="apply-q3-label" className={LABEL}>
+              Coaching is a monthly commitment with a minimum of 3 months. Are you ready to invest at that level? *
             </p>
-          </form>
-          <section
-            className="mt-16 border-t border-line pt-10"
-            aria-labelledby="application-questions"
-          >
-            <h2
-              id="application-questions"
-              className="font-heading font-bold text-xl mb-6"
-            >
-              Application questions
-            </h2>
-            <div className="space-y-6">
-              {APPLY_FAQS.map(f => (
-                <div key={f.q}>
-                  <h3 className="text-sm font-semibold mb-2">{f.q}</h3>
-                  <p className="text-sm text-mute leading-relaxed">{f.a}</p>
-                </div>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {[
+                { label: "Yes", value: "yes" },
+                { label: "I have questions", value: "questions" },
+                { label: "No", value: "no" },
+              ].map(opt => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  aria-pressed={q3 === opt.value}
+                  onClick={() => {
+                    setQ3(opt.value as "yes" | "questions" | "no");
+                    setTouched(prev => ({ ...prev, q3: true }));
+                    setErrors(prev => {
+                      const next = { ...prev };
+                      delete next.q3;
+                      return next;
+                    });
+                  }}
+                  className={`min-h-12 rounded-lg border px-4 py-3 text-base font-medium text-left sm:text-center transition-colors ${
+                    q3 === opt.value
+                      ? "border-ink bg-ink text-ivory"
+                      : "border-line bg-oat text-ink hover:border-ink"
+                  }`}
+                >
+                  {opt.label}
+                </button>
               ))}
             </div>
-          </section>
-        </div>
-      </main>
+            {invalid("q3") && (
+              <p className={ERROR} role="alert">
+                {errors.q3}
+              </p>
+            )}
+          </div>
 
-      <footer className="border-t border-line py-6 mt-16">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 text-center">
-          <p className="text-[13px] text-mute">
-            Marin Lazic. Health and Performance Coach. Sydney, Australia. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.
+          <div>
+            <label htmlFor="apply-q4" className={LABEL}>
+              Anything else I should know?
+            </label>
+            <textarea
+              id="apply-q4"
+              value={q4}
+              onChange={e => setQ4(e.target.value)}
+              placeholder="Optional. Injuries, timeline, questions."
+              rows={3}
+              className={`${FIELD} resize-none`}
+            />
+          </div>
+
+          {errors.form && (
+            <p className="text-red-700 text-[15px]" role="alert">
+              {errors.form}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={submitApplication.isPending}
+            className="ml-btn ml-btn-dark w-full sm:w-auto px-8 disabled:cursor-not-allowed"
+          >
+            {submitApplication.isPending ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" /> Submitting...
+              </>
+            ) : (
+              "Submit application"
+            )}
+          </button>
+
+          <p className="text-[15px] leading-relaxed text-mute max-w-lg">
+            I read every application myself and reply by email. No sales call. If coaching is not right for you, I
+            will tell you straight.
           </p>
+        </form>
+      </section>
+
+      <section className={`${RULE} grid lg:grid-cols-12 gap-5 lg:gap-14`} aria-labelledby="application-questions">
+        <h2 id="application-questions" className={`lg:col-span-4 ${H2}`}>
+          Application questions
+        </h2>
+        <div className="lg:col-span-8 border-t border-line">
+          {APPLY_FAQS.map(f => (
+            <div key={f.q} className="border-b border-line py-5">
+              <h3 className="font-heading font-bold text-[20px] leading-snug text-ink">{f.q}</h3>
+              <p className="text-[17px] leading-[1.62] text-body mt-2 max-w-[680px]">{f.a}</p>
+            </div>
+          ))}
         </div>
-      </footer>
-    </div>
+      </section>
+    </Shell>
   );
 }
