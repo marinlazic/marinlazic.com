@@ -319,6 +319,8 @@ describe("buildPdfHtml", () => {
     expect(html).toContain("marinlazic.com/apply");
     expect(html).toContain("marin@marinlazic.coach");
     expect(html).not.toMatch(/limited spots/i);
+    // The arrow is drawn, not typed: the report fonts on the server have no arrow character.
+    expect(html).not.toMatch(/&rarr;|\u2192/);
   });
 
   it("includes report ID with correct format", () => {
