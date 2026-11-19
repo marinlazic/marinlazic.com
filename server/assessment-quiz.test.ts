@@ -48,9 +48,16 @@ describe("assessment quiz rules", () => {
     }
   });
 
-  it("counts 22 questions for someone without a wearable", () => {
-    expect(BASE_QUESTION_COUNT).toBe(22);
-    expect(QUESTIONS.filter(q => isQuestionShown(q, { "has-whoop": "no" }))).toHaveLength(22);
-    expect(QUESTIONS.filter(q => isQuestionShown(q, { "has-whoop": "yes" }))).toHaveLength(25);
+  it("counts 23 questions for someone without a wearable", () => {
+    expect(BASE_QUESTION_COUNT).toBe(23);
+    expect(QUESTIONS.filter(q => isQuestionShown(q, { "has-whoop": "no" }))).toHaveLength(23);
+    expect(QUESTIONS.filter(q => isQuestionShown(q, { "has-whoop": "yes" }))).toHaveLength(26);
+  });
+
+  it("ends by asking what kind of help would suit, without scoring it", () => {
+    const last = QUESTIONS[QUESTIONS.length - 1];
+    expect(last.id).toBe("help-type");
+    expect(last.options?.map(o => o.value)).toEqual(["program", "group", "one-to-one", "unsure"]);
+    expect(last.options?.every(o => o.score === undefined)).toBe(true);
   });
 });

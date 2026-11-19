@@ -489,7 +489,8 @@ function callContext(answers: Record<string, string | string[]>) {
   };
   const role = label("occupation");
   const goal = label("primary-goal");
-  return [scoreContext(scores.overallPct, scores.categories), role ? `Role: ${role}.` : "", goal ? `Main goal: ${goal}.` : ""]
+  const help = label("help-type");
+  return [scoreContext(scores.overallPct, scores.categories), role ? `Role: ${role}.` : "", goal ? `Main goal: ${goal}.` : "", help ? `Help wanted: ${help}.` : ""]
     .filter(Boolean)
     .join(" ");
 }
@@ -902,7 +903,12 @@ export default function Assessment() {
     // call leads. Still deciding: a program and the free guide lead, and the
     // call is offered after them.
     const commitment = answers["commitment"] as string;
-    const readyNow = commitment === "ready" || commitment === "all-in";
+    // What they said would suit them comes first: 1:1 gets the call, a
+    // program gets the program. Otherwise it goes on how ready they are.
+    const helpType = answers["help-type"] as string;
+    const readyNow =
+      helpType === "one-to-one" ||
+      (helpType !== "program" && (commitment === "ready" || commitment === "all-in"));
     const occupation = answers["occupation"] as string;
     const matchedProgram =
       occupation === "athlete"
@@ -1346,9 +1352,13 @@ export default function Assessment() {
                 Start with {weakest?.title}. It is your lowest score at {weakest?.percentage}%.
               </h2>
               <p className="text-base text-body leading-relaxed mb-8 max-w-2xl">
-                {readyNow
-                  ? "You said you are ready to start. The quickest way is to talk it through."
-                  : "Pick the size of step that suits you now."}
+                {helpType === "one-to-one"
+                  ? "You said 1:1 coaching would suit you best. The quickest way is to talk it through."
+                  : helpType === "program"
+                    ? "You said a program would suit you best. This is the one that fits your answers."
+                    : readyNow
+                      ? "You said you are ready to start. The quickest way is to talk it through."
+                      : "Pick the size of step that suits you now."}
               </p>
               {readyNow ? (
                 <div className="grid gap-5">
