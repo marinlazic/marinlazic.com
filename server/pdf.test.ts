@@ -255,6 +255,15 @@ describe("buildPdfHtml", () => {
     expect(html).not.toContain("width:45%;background:#FF5A36");
   });
 
+  it("picks the first area in quiz order when the lowest scores tie, like the results page", () => {
+    const tied = baseParams.categories.map(c => ({ ...c, percentage: c.id === "injuries" ? 80 : 40 }));
+    const html = buildPdfHtml({ ...baseParams, categories: tied });
+    expect(html).toMatch(/Biggest opportunity<\/div>\s*<div class="num">Sleep<\/div>/);
+    expect(html).toMatch(/Strongest area<\/div>\s*<div class="num">Injuries &amp; Health<\/div>/);
+    // One signal bar on page one and one on the action plan, both for Sleep.
+    expect(html.split("width:40%;background:#FF5A36").length - 1).toBe(2);
+  });
+
   it("uses the site colours and none of the old red", () => {
     const html = buildPdfHtml(baseParams);
     expect(html).toContain("#FAF9F5");

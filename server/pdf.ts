@@ -257,9 +257,12 @@ function trimToSentence(text: string, max: number): string {
   return cut.slice(0, cut.lastIndexOf(" ")) + "...";
 }
 
-/** The area the report points at first. The lowest score, the same pick as the results page. */
+/**
+ * The area the report points at first: the lowest score. When areas tie, the
+ * first one in quiz order wins, the same pick the results page makes.
+ */
 function lowestArea(categories: CategoryScore[]): CategoryScore | undefined {
-  return [...categories].sort((a, b) => b.percentage - a.percentage)[categories.length - 1];
+  return [...categories].sort((a, b) => a.percentage - b.percentage)[0];
 }
 
 // ─── Build SVG Radar Chart ────────────────────────────
@@ -362,9 +365,8 @@ function buildPdfHtml(params: {
     return `<span class="chip"><i style="background:${l.color}"></i>${l.label}</span>`;
   };
 
-  const sorted = [...categories].sort((a, b) => b.percentage - a.percentage);
-  const strongest = sorted[0];
-  const weakest = sorted[sorted.length - 1];
+  const strongest = [...categories].sort((a, b) => b.percentage - a.percentage)[0];
+  const weakest = lowestArea(categories);
   const barColour = (cat: CategoryScore) => (cat.id === weakest?.id ? SIGNAL : INK);
 
   const radarSvg = buildRadarSvg(categories);
