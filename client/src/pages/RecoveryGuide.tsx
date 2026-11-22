@@ -55,9 +55,9 @@ export default function RecoveryGuide() {
                   <article key={t.title} className="min-w-0">
                     <div className="relative aspect-[4/3] bg-black overflow-hidden">
                       <img src={GUIDE_PHOTOS[t.photo]} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-                      <h3 className="absolute left-4 bottom-3 text-white font-heading font-bold text-xl tracking-[-0.02em]">{t.title}</h3>
                     </div>
-                    <p className="text-[13px] text-mute mt-4 mb-1">What causes it</p>
+                    <h3 className="font-heading font-bold text-xl tracking-[-0.02em] mt-4">{t.title}</h3>
+                    <p className="text-[13px] text-mute mt-3 mb-1">What causes it</p>
                     <p className="text-sm text-body leading-relaxed">{t.cause}</p>
                     <p className="text-[13px] text-mute mt-3 mb-1">What it feels like</p>
                     <p className="text-sm text-body leading-relaxed">{t.feel}</p>
