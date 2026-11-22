@@ -32,29 +32,128 @@ function getResendClient(): Resend {
   return resendClient;
 }
 
+// ─── Site look ──────────────────────────────────────────
+// Every email uses the same colours and type as marinlazic.com
+// (client/src/index.css) and the PDF report (server/pdf.ts): ivory paper, ink
+// type, oat cards, hairlines, an ink button. Email clients that cannot load
+// DM Sans or Inter fall back to Helvetica or Arial.
+const PAPER = "#FAF9F5";
+const INK = "#141413";
+const BODY = "#3D3D3A";
+const MUTE = "#5E5D59";
+const OAT = "#F0EEE6";
+const LINE = "#DDDBD0";
+const HEAD_FONT = "'DM Sans','Inter',Helvetica,Arial,sans-serif";
+const BODY_FONT = "'Inter',Helvetica,Arial,sans-serif";
+const P_STYLE = `color:${BODY}; font-size:16px; line-height:1.6; margin:0 0 16px 0; font-family:${BODY_FONT};`;
+
+const esc = (value: unknown) =>
+  String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+/** The site's main button: ink, rounded, sentence case, an arrow. */
+function emailButton(label: string, href: string): string {
+  return `<a href="${href}" style="display:inline-block; background-color:${INK}; color:${PAPER}; font-size:15px; font-weight:500; line-height:1; text-decoration:none; padding:15px 24px; border-radius:8px; font-family:${BODY_FONT};">${label} &rarr;</a>`;
+}
+
+/** An oat card, the same block the site uses for an offer or a note. */
+function emailCard(inner: string): string {
+  return `<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:${OAT}; border-radius:12px;"><tr><td style="padding:26px 26px 28px 26px;">${inner}</td></tr></table>`;
+}
+
+/** A small label over a block of text, for the notes Marin receives. */
+function emailNote(label: string, text: string): string {
+  return `<div style="margin:16px 0 0 0;">${emailCard(
+    `<p style="color:${MUTE}; font-size:13px; font-weight:500; margin:0 0 6px 0; font-family:${BODY_FONT};">${label}</p><p style="color:${INK}; font-size:15px; line-height:1.6; margin:0; font-family:${BODY_FONT};">${text}</p>`,
+  )}</div>`;
+}
+
+/** Label and value rows with hairlines, like the detail rows on the site. */
+function emailRows(rows: Array<[string, string] | null | false | "">): string {
+  const cells = rows
+    .filter((r): r is [string, string] => Array.isArray(r))
+    .map(
+      ([k, v]) =>
+        `<tr><td style="padding:11px 16px 11px 0; border-top:1px solid ${LINE}; color:${MUTE}; font-size:13px; width:140px; vertical-align:top; font-family:${BODY_FONT};">${k}</td><td style="padding:11px 0; border-top:1px solid ${LINE}; color:${INK}; font-size:15px; font-family:${BODY_FONT};">${v}</td></tr>`,
+    )
+    .join("");
+  return `<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse:collapse; border-bottom:1px solid ${LINE};">${cells}</table>`;
+}
+
+/**
+ * The frame every email shares: the Marin Lazic wordmark with a short label,
+ * a hairline, the content, then a quiet footer.
+ */
+function emailShell(opts: { title: string; label?: string; content: string; footer?: string }): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>${opts.title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0; padding:0; background-color:${PAPER}; font-family:${BODY_FONT};">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:${PAPER};">
+    <tr>
+      <td align="center" style="padding:28px 16px 40px 16px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="width:100%; max-width:600px; background-color:${PAPER};">
+          <tr>
+            <td style="padding:0 8px 16px 8px; border-bottom:1px solid ${LINE};">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+                <td style="font-family:${HEAD_FONT}; font-size:19px; font-weight:700; color:${INK}; letter-spacing:-0.2px;">Marin Lazic</td>
+                <td align="right" style="font-family:${BODY_FONT}; font-size:13px; font-weight:500; color:${MUTE};">${opts.label ?? ""}</td>
+              </tr></table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:32px 8px 0 8px;">
+              ${opts.content}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:36px 8px 0 8px;">
+              <p style="border-top:1px solid ${LINE}; padding-top:16px; color:${MUTE}; font-size:13px; line-height:1.5; margin:0; font-family:${BODY_FONT};">${opts.footer ?? "Marin Lazic | Health &amp; Performance Coach"} | <a href="https://www.marinlazic.com" style="color:${MUTE}; text-decoration:underline;">marinlazic.com</a></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+const greeting = (firstName: string) =>
+  `<p style="color:${INK}; font-size:26px; font-weight:700; line-height:1.15; letter-spacing:-0.4px; margin:0 0 18px 0; font-family:${HEAD_FONT};">Hi ${esc(firstName)},</p>`;
+
 // ─── Markdown to HTML Converter ─────────────────────────
 function markdownToHtml(md: string): string {
   let html = md;
 
   // Headers
-  html = html.replace(/^### (.+)$/gm, '<h3 style="color:#1a1a1a; font-size:20px; font-weight:700; margin:28px 0 12px 0; font-family:\'DM Sans\',\'Inter\',sans-serif;">$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2 style="color:#1a1a1a; font-size:24px; font-weight:700; margin:32px 0 16px 0; font-family:\'DM Sans\',\'Inter\',sans-serif;">$1</h2>');
+  html = html.replace(/^### (.+)$/gm, `<h3 style="color:${INK}; font-size:19px; font-weight:700; line-height:1.25; letter-spacing:-0.2px; margin:28px 0 10px 0; font-family:${HEAD_FONT};">$1</h3>`);
+  html = html.replace(/^## (.+)$/gm, `<h2 style="color:${INK}; font-size:24px; font-weight:700; line-height:1.2; letter-spacing:-0.4px; margin:32px 0 14px 0; font-family:${HEAD_FONT};">$1</h2>`);
 
   // Bold
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g, `<strong style="color:${INK};">$1</strong>`);
 
   // Italic
   html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
   // Blockquotes
-  html = html.replace(/^> (.+)$/gm, '<blockquote style="border-left:3px solid #C8102E; padding-left:16px; margin:16px 0; color:#4a4a4a; font-style:italic;">$1</blockquote>');
+  html = html.replace(/^> (.+)$/gm, `<blockquote style="background-color:${OAT}; border-radius:8px; padding:14px 18px; margin:16px 0; color:${INK}; font-size:16px; line-height:1.55; font-family:${BODY_FONT};">$1</blockquote>`);
 
   // Unordered lists
-  html = html.replace(/^- (.+)$/gm, '<li style="margin:4px 0; color:#333;">$1</li>');
+  html = html.replace(/^- (.+)$/gm, `<li style="margin:6px 0; color:${BODY}; font-size:16px; line-height:1.55; font-family:${BODY_FONT};">$1</li>`);
   html = html.replace(/(<li[^>]*>.*<\/li>\n?)+/g, (match) => `<ul style="padding-left:20px; margin:12px 0;">${match}</ul>`);
 
   // Paragraphs (lines that are not already wrapped in HTML tags)
-  html = html.replace(/^(?!<[hublq])((?!<).+)$/gm, '<p style="color:#333; font-size:15px; line-height:1.7; margin:10px 0; font-family:\'Inter\',sans-serif;">$1</p>');
+  html = html.replace(/^(?!<[hublq])((?!<).+)$/gm, `<p style="color:${BODY}; font-size:16px; line-height:1.6; margin:10px 0; font-family:${BODY_FONT};">$1</p>`);
 
   // Clean up empty paragraphs
   html = html.replace(/<p[^>]*>\s*<\/p>/g, '');
@@ -70,86 +169,26 @@ function buildAssessmentEmailHtml(name: string, email: string, analysis: string,
     ? "Your full report is also attached as a PDF for easy reference."
     : "Your full report is below.";
   const reportLinkBlock = reportUrl
-    ? `<p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;"><a href="${reportUrl}" style="color:#C8102E; font-weight:600; text-decoration:none;">View your report online</a>. The link works for 90 days and includes the PDF download.</p>`
+    ? `<p style="${P_STYLE}"><a href="${reportUrl}" style="color:${INK}; font-weight:600; text-decoration:underline;">View your report online</a>. The link works for 90 days and includes the PDF download.</p>`
     : "";
+  const applyHref = `https://www.marinlazic.com/apply?email=${encodeURIComponent(email)}&name=${encodeURIComponent(firstName)}&utm_source=assessment&utm_medium=email&utm_campaign=results`;
 
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your ML Performance Assessment Results</title>
-</head>
-<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Inter','DM Sans',Helvetica,Arial,sans-serif;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f5f5f5;">
-    <tr>
-      <td align="center" style="padding:32px 16px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:4px; overflow:hidden;">
-          
-          <!-- Header -->
-          <tr>
-            <td style="background-color:#1a1a1a; padding:32px 40px; text-align:left;">
-              <span style="font-family:'DM Sans','Inter',sans-serif; font-size:28px; font-weight:700; color:#ffffff; letter-spacing:-0.5px;">ML<span style="color:#C8102E;">.</span></span>
-              <p style="color:#999; font-size:12px; margin:8px 0 0 0; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:1px;">Performance Assessment Results</p>
-            </td>
-          </tr>
-
-          <!-- Intro -->
-          <tr>
-            <td style="padding:40px 40px 24px 40px;">
-              <p style="color:#1a1a1a; font-size:18px; font-weight:600; margin:0 0 16px 0; font-family:'DM Sans','Inter',sans-serif;">Hi ${firstName},</p>
-              <p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;">Here is your personalised performance analysis based on your recent assessment. This is the same framework I use with Olympic athletes and high-performing executives. ${pdfLine}</p>
-              <p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;">Read it carefully. There are specific protocols in here you can start implementing today.</p>
+  return emailShell({
+    title: "Your ML Performance Assessment Results",
+    label: "Performance Assessment Results",
+    content: `${greeting(firstName)}
+              <p style="${P_STYLE}">Here is your personalised performance analysis based on your recent assessment. This is the same framework I use with Olympic athletes and high-performing executives. ${pdfLine}</p>
+              <p style="${P_STYLE}">Read it carefully. There are specific protocols in here you can start implementing today.</p>
               ${reportLinkBlock}
-            </td>
-          </tr>
-
-          <!-- Divider -->
-          <tr>
-            <td style="padding:0 40px;">
-              <div style="height:2px; background-color:#C8102E; width:48px;"></div>
-            </td>
-          </tr>
-
-          <!-- Analysis Content -->
-          <tr>
-            <td style="padding:24px 40px 32px 40px;">
+              <div style="border-top:1px solid ${LINE}; margin:26px 0 0 0; padding-top:4px;">
               ${analysisHtml}
-            </td>
-          </tr>
-
-          <!-- CTA Section -->
-          <tr>
-            <td style="padding:0 40px 40px 40px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f8f8f8; border-radius:4px; border-left:3px solid #C8102E;">
-                <tr>
-                  <td style="padding:28px 24px;">
-                    <p style="color:#1a1a1a; font-size:18px; font-weight:700; margin:0 0 12px 0; font-family:'DM Sans','Inter',sans-serif;">Ready to Go Further?</p>
-                    <p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 20px 0; font-family:'Inter',sans-serif;">If you want a personalised program built around these results, the same system I use with Olympic athletes, apply below. I work with a limited number of clients and every program is built from your data, your goals, and your life.</p>
-                    <a href="https://www.marinlazic.com/apply?email=${encodeURIComponent(email)}&name=${encodeURIComponent(firstName)}&utm_source=assessment&utm_medium=email&utm_campaign=results" style="display:inline-block; background-color:#C8102E; color:#ffffff; font-size:14px; font-weight:600; text-decoration:none; padding:12px 28px; border-radius:2px; font-family:'DM Sans','Inter',sans-serif; letter-spacing:0.5px;">APPLY FOR COACHING</a>
-                    <p style="color:#666; font-size:13px; margin:12px 0 0 0; font-family:'Inter',sans-serif;">Short application. I reply personally within 24 hours.</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background-color:#1a1a1a; padding:24px 40px; text-align:center;">
-              <p style="color:#999; font-size:12px; margin:0 0 4px 0; font-family:'Inter',sans-serif;">Marin Lazic | Health & Performance Coach</p>
-              <p style="color:#666; font-size:11px; margin:0; font-family:'Inter',sans-serif;">
-                <a href="https://www.marinlazic.com" style="color:#999; text-decoration:none;">marinlazic.com</a>
-              </p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+              </div>
+              <div style="margin:32px 0 0 0;">${emailCard(`
+                <p style="color:${INK}; font-size:22px; font-weight:700; line-height:1.2; letter-spacing:-0.3px; margin:0 0 10px 0; font-family:${HEAD_FONT};">Ready to go further?</p>
+                <p style="${P_STYLE} margin:0 0 20px 0;">If you want a personalised program built around these results, the same system I use with Olympic athletes, apply below. I work with a limited number of clients and every program is built from your data, your goals, and your life.</p>
+                ${emailButton("Apply for coaching", applyHref)}
+                <p style="color:${MUTE}; font-size:13px; line-height:1.5; margin:14px 0 0 0; font-family:${BODY_FONT};">Short application. I reply personally within 24 hours.</p>`)}</div>`,
+  });
 }
 
 // ─── Send Assessment Results Email ──────────────────────
@@ -269,51 +308,22 @@ export async function sendApplicationNotificationEmail(params: {
     const resend = getResendClient();
     const investmentLabel = params.q3_investment === "yes" ? "Yes, ready to invest" : params.q3_investment === "questions" ? "Has questions first" : "Not ready";
 
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"></head>
-<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Inter',sans-serif;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f5f5f5;">
-    <tr>
-      <td align="center" style="padding:32px 16px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:4px;">
-          <tr>
-            <td style="background-color:#1a1a1a; padding:24px 32px;">
-              <span style="font-size:24px; font-weight:700; color:#fff;">ML<span style="color:#C8102E;">.</span></span>
-              <span style="color:#999; font-size:12px; margin-left:16px; text-transform:uppercase; letter-spacing:1px;">New Coaching Application</span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:32px;">
-              <h2 style="color:#1a1a1a; margin:0 0 24px 0; font-size:22px;">Application from ${params.applicantName}</h2>
-              <table style="width:100%; border-collapse:collapse;">
-                <tr><td style="padding:8px 0; color:#666; font-size:13px; width:140px;">Email</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.applicantEmail}</td></tr>
-                <tr><td style="padding:8px 0; color:#666; font-size:13px;">Investment</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${investmentLabel}</td></tr>
-                ${params.assessmentScore ? `<tr><td style="padding:8px 0; color:#666; font-size:13px;">Assessment Score</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px; font-weight:600;">${params.assessmentScore}%</td></tr>` : ""}
-                ${params.primaryGoal ? `<tr><td style="padding:8px 0; color:#666; font-size:13px;">Primary Goal</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.primaryGoal}</td></tr>` : ""}
-                ${params.weakestArea ? `<tr><td style="padding:8px 0; color:#666; font-size:13px;">Focus Area</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.weakestArea}</td></tr>` : ""}
-              </table>
-              <div style="margin:24px 0; padding:20px; background:#f8f8f8; border-left:3px solid #C8102E;">
-                <p style="color:#666; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px 0;">90-Day Goal</p>
-                <p style="color:#1a1a1a; font-size:15px; line-height:1.6; margin:0;">${params.q1_90day_goal}</p>
-              </div>
-              <div style="margin:24px 0; padding:20px; background:#f8f8f8; border-left:3px solid #1a1a1a;">
-                <p style="color:#666; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px 0;">Biggest Obstacle</p>
-                <p style="color:#1a1a1a; font-size:15px; line-height:1.6; margin:0;">${params.q2_obstacle}</p>
-              </div>
-              ${params.q4_anything_else ? `<div style="margin:24px 0; padding:20px; background:#f8f8f8; border-left:3px solid #666;">
-                <p style="color:#666; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px 0;">Additional Notes</p>
-                <p style="color:#1a1a1a; font-size:15px; line-height:1.6; margin:0;">${params.q4_anything_else}</p>
-              </div>` : ""}
-              <p style="color:#666; font-size:13px; margin:24px 0 0 0;">Reply directly to this email to respond to the applicant.</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+    const html = emailShell({
+      title: "New coaching application",
+      label: "New coaching application",
+      footer: "Reply directly to this email to respond to the applicant",
+      content: `<h2 style="color:${INK}; margin:0 0 20px 0; font-size:26px; line-height:1.15; letter-spacing:-0.4px; font-family:${HEAD_FONT};">Application from ${esc(params.applicantName)}</h2>
+              ${emailRows([
+                ["Email", esc(params.applicantEmail)],
+                ["Investment", investmentLabel],
+                params.assessmentScore ? ["Assessment Score", `<strong>${params.assessmentScore}%</strong>`] : null,
+                params.primaryGoal ? ["Primary Goal", esc(params.primaryGoal)] : null,
+                params.weakestArea ? ["Focus Area", esc(params.weakestArea)] : null,
+              ])}
+              ${emailNote("90 day goal", esc(params.q1_90day_goal))}
+              ${emailNote("Biggest obstacle", esc(params.q2_obstacle))}
+              ${params.q4_anything_else ? emailNote("Additional notes", esc(params.q4_anything_else)) : ""}`,
+    });
 
     const { data, error } = await sendLogged(resend, "owner_application", {
       from: "Marin Lazic <results@marinlazic.com>",
@@ -358,53 +368,27 @@ export async function sendAssessmentNotificationEmail(params: {
   try {
     const resend = getResendClient();
 
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"></head>
-<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Inter',sans-serif;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f5f5f5;">
-    <tr>
-      <td align="center" style="padding:32px 16px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:4px;">
-          <tr>
-            <td style="background-color:#1a1a1a; padding:24px 32px;">
-              <span style="font-size:24px; font-weight:700; color:#fff;">ML<span style="color:#C8102E;">.</span></span>
-              <span style="color:#999; font-size:12px; margin-left:16px; text-transform:uppercase; letter-spacing:1px;">New Assessment Completed</span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:32px;">
-              <h2 style="color:#1a1a1a; margin:0 0 24px 0; font-size:22px;">New Assessment: ${params.name || params.email}</h2>
-              <table style="width:100%; border-collapse:collapse;">
-                <tr><td style="padding:8px 0; color:#666; font-size:13px; width:120px;">Name</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.name}</td></tr>
-                <tr><td style="padding:8px 0; color:#666; font-size:13px;">Email</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.email}</td></tr>
-                <tr><td style="padding:8px 0; color:#666; font-size:13px;">Role</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.occupation}</td></tr>
-                <tr><td style="padding:8px 0; color:#666; font-size:13px;">Primary Goal</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.primaryGoal}</td></tr>
-                <tr><td style="padding:8px 0; color:#666; font-size:13px;">Commitment</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.commitment}</td></tr>
-                <tr><td style="padding:8px 0; color:#666; font-size:13px;">Wearable</td><td style="padding:8px 0; color:#1a1a1a; font-size:15px;">${params.wearable}</td></tr>
-              </table>
-              ${params.utmLine ? `<p style="color:#666; font-size:12px; margin:16px 0 0 0;">Source: ${params.utmLine}</p>` : ""}
-              <div style="margin:24px 0; padding:20px; background:#f8f8f8; border-left:3px solid #C8102E;">
-                <p style="color:#666; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px 0;">Goals</p>
-                <p style="color:#1a1a1a; font-size:15px; line-height:1.6; margin:0;">${params.goalsDetail}</p>
-              </div>
-              <div style="margin:24px 0; padding:20px; background:#f8f8f8; border-left:3px solid #1a1a1a;">
-                <p style="color:#666; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:0 0 8px 0;">Injuries</p>
-                <p style="color:#1a1a1a; font-size:15px; line-height:1.6; margin:0;">${params.injuries}</p>
-              </div>
-              <details style="margin:16px 0;">
-                <summary style="color:#666; font-size:13px; cursor:pointer;">Full answers (click to expand)</summary>
-                <p style="color:#333; font-size:13px; line-height:1.6; margin:8px 0 0 0; white-space:pre-wrap;">${params.scoreSummary.slice(0, 2000)}</p>
-              </details>
-              <p style="color:#666; font-size:13px; margin:24px 0 0 0;">Reply directly to this email to respond to the lead.</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+    const html = emailShell({
+      title: "New assessment completed",
+      label: "New assessment completed",
+      footer: "Reply directly to this email to respond to the lead",
+      content: `<h2 style="color:${INK}; margin:0 0 20px 0; font-size:26px; line-height:1.15; letter-spacing:-0.4px; font-family:${HEAD_FONT};">New assessment: ${esc(params.name || params.email)}</h2>
+              ${emailRows([
+                ["Name", esc(params.name)],
+                ["Email", esc(params.email)],
+                ["Role", esc(params.occupation)],
+                ["Primary Goal", esc(params.primaryGoal)],
+                ["Commitment", esc(params.commitment)],
+                ["Wearable", esc(params.wearable)],
+              ])}
+              ${params.utmLine ? `<p style="color:${MUTE}; font-size:13px; margin:14px 0 0 0; font-family:${BODY_FONT};">Source: ${esc(params.utmLine)}</p>` : ""}
+              ${emailNote("Goals", esc(params.goalsDetail))}
+              ${emailNote("Injuries", esc(params.injuries))}
+              <details style="margin:18px 0 0 0;">
+                <summary style="color:${MUTE}; font-size:13px; cursor:pointer; font-family:${BODY_FONT};">Full answers (click to expand)</summary>
+                <p style="color:${BODY}; font-size:13px; line-height:1.6; margin:8px 0 0 0; white-space:pre-wrap; font-family:${BODY_FONT};">${esc(params.scoreSummary.slice(0, 2000))}</p>
+              </details>`,
+    });
 
     const { data, error } = await sendLogged(resend, "owner_assessment", {
       from: "Marin Lazic <results@marinlazic.com>",
@@ -441,39 +425,13 @@ export async function sendApplicantConfirmationEmail(params: {
     const resend = getResendClient();
     const firstName = params.applicantName.split(" ")[0] || "there";
 
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"></head>
-<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Inter',sans-serif;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f5f5f5;">
-    <tr>
-      <td align="center" style="padding:32px 16px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:4px;">
-          <tr>
-            <td style="background-color:#1a1a1a; padding:24px 32px;">
-              <span style="font-size:24px; font-weight:700; color:#fff;">ML<span style="color:#C8102E;">.</span></span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:32px;">
-              <p style="color:#1a1a1a; font-size:16px; line-height:1.7; margin:0 0 16px 0;">Hi ${firstName},</p>
-              <p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0;">I have your application. I read every one personally and will reply within 24 hours. Nothing else to do for now.</p>
-              <p style="color:#333; font-size:15px; line-height:1.7; margin:0;">Marin</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="background-color:#1a1a1a; padding:16px 32px; text-align:center;">
-              <p style="color:#666; font-size:11px; margin:0; font-family:'Inter',sans-serif;">
-                <a href="https://www.marinlazic.com" style="color:#999; text-decoration:none;">marinlazic.com</a>
-              </p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+    const html = emailShell({
+      title: "Got your application",
+      label: "Coaching application",
+      content: `${greeting(firstName)}
+              <p style="${P_STYLE}">I have your application. I read every one personally and will reply within 24 hours. Nothing else to do for now.</p>
+              <p style="${P_STYLE} margin:24px 0 0 0;">Marin</p>`,
+    });
 
     const { data, error } = await sendLogged(resend, "application_confirmation", {
       from: "Marin Lazic <results@marinlazic.com>",
@@ -498,30 +456,14 @@ export async function sendApplicantConfirmationEmail(params: {
 
 // ─── Shared plain email layout ──────────────────────────
 function plainEmailHtml(firstName: string, paragraphs: string[], cta?: { label: string; href: string }): string {
-  const body = paragraphs
-    .map(
-      p =>
-        `<p style="color:#333; font-size:15px; line-height:1.7; margin:0 0 16px 0; font-family:'Inter',sans-serif;">${p}</p>`
-    )
-    .join("");
-  const button = cta
-    ? `<p style="margin:24px 0 0 0;"><a href="${cta.href}" style="display:inline-block; background-color:#C8102E; color:#ffffff; font-size:14px; font-weight:600; text-decoration:none; padding:12px 28px; border-radius:2px; font-family:'DM Sans','Inter',sans-serif; letter-spacing:0.5px;">${cta.label}</a></p>`
-    : "";
-  return `<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Inter','DM Sans',Helvetica,Arial,sans-serif;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f5f5f5;"><tr><td align="center" style="padding:32px 16px;">
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:4px; overflow:hidden;">
-      <tr><td style="background-color:#1a1a1a; padding:24px 40px;"><span style="font-family:'DM Sans','Inter',sans-serif; font-size:28px; font-weight:700; color:#ffffff; letter-spacing:-0.5px;">ML<span style="color:#C8102E;">.</span></span></td></tr>
-      <tr><td style="padding:36px 40px 32px 40px;">
-        <p style="color:#1a1a1a; font-size:18px; font-weight:600; margin:0 0 16px 0; font-family:'DM Sans','Inter',sans-serif;">Hi ${firstName},</p>
+  const body = paragraphs.map(p => `<p style="${P_STYLE}">${p}</p>`).join("");
+  const button = cta ? `<p style="margin:26px 0 0 0;">${emailButton(cta.label, cta.href)}</p>` : "";
+  return emailShell({
+    title: "Marin Lazic",
+    content: `${greeting(firstName)}
         ${body}${button}
-        <p style="color:#333; font-size:15px; line-height:1.7; margin:24px 0 0 0; font-family:'Inter',sans-serif;">Marin</p>
-      </td></tr>
-      <tr><td style="background-color:#1a1a1a; padding:20px 40px; text-align:center;"><p style="color:#999; font-size:12px; margin:0; font-family:'Inter',sans-serif;">Marin Lazic | <a href="https://marinlazic.com" style="color:#999; text-decoration:none;">marinlazic.com</a></p></td></tr>
-    </table>
-  </td></tr></table>
-</body></html>`;
+        <p style="${P_STYLE} margin:26px 0 0 0;">Marin</p>`,
+  });
 }
 
 const RESULTS_SENDER = "Marin Lazic <results@marinlazic.com>";
@@ -624,7 +566,7 @@ export async function sendRecoveryGuideEmail(params: { email: string; firstName?
           "Here is the Recovery Guide. It is attached, and it is also at the link below if the attachment does not come through.",
           "The short version: a heavy lifting day, a long run and a week of back to back meetings each leave a different kind of fatigue, and each needs a different fix. The guide shows you how to tell them apart and what to do about each one, with the numbers.",
           "Start with the thirty second morning check in section 09, and keep section 07 for the days something goes sideways. Do it for two weeks and you will see your pattern.",
-          "If you want to know where you stand across sleep, stress, training and recovery, the free assessment takes about ten minutes. Reply to this email if you have a question. I read every one.",
+          "If you want to know where you stand across sleep, stress, training and recovery, the free assessment takes about five minutes. Reply to this email if you have a question. I read every one.",
         ],
         { label: "Open the guide", href: link }
       ),

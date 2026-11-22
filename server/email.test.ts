@@ -93,10 +93,10 @@ describe("sendAssessmentResultsEmail", () => {
 
     const sentHtml = mockSend.mock.calls[0][0].html;
     expect(sentHtml).toContain("/apply");
-    expect(sentHtml).toContain("APPLY FOR COACHING");
+    expect(sentHtml).toContain("Apply for coaching");
   });
 
-  it("includes ML branding in the email", async () => {
+  it("uses the site look and the Marin Lazic wordmark", async () => {
     mockSend.mockResolvedValue({
       data: { id: "email_123" },
       error: null,
@@ -109,9 +109,15 @@ describe("sendAssessmentResultsEmail", () => {
     });
 
     const sentHtml = mockSend.mock.calls[0][0].html;
-    expect(sentHtml).toContain("ML");
+    expect(sentHtml).toContain("Marin Lazic");
     expect(sentHtml).toContain("marinlazic.com");
     expect(sentHtml).toContain("Performance Assessment Results");
+    // The site look: ivory paper, ink type and button, none of the old red or the ML. mark.
+    expect(sentHtml).toContain("#FAF9F5");
+    expect(sentHtml).toContain("#141413");
+    expect(sentHtml).not.toMatch(/C8102E/i);
+    expect(sentHtml).not.toContain("#1a1a1a");
+    expect(sentHtml).not.toMatch(/ML<span/);
   });
 
   it("returns false when email is empty", async () => {
@@ -150,6 +156,20 @@ describe("sendAssessmentResultsEmail", () => {
     });
 
     expect(result).toBe(false);
+  });
+
+  it("escapes the name in the greeting", async () => {
+    mockSend.mockResolvedValue({ data: { id: "email_123" }, error: null });
+
+    await sendAssessmentResultsEmail({
+      email: "test@example.com",
+      name: "<b>Sam</b>",
+      analysis: "## Test",
+    });
+
+    const sentHtml = mockSend.mock.calls[0][0].html;
+    expect(sentHtml).toContain("Hi &lt;b&gt;Sam&lt;/b&gt;,");
+    expect(sentHtml).not.toContain("Hi <b>Sam</b>,");
   });
 
   it("uses first name only in the greeting", async () => {
