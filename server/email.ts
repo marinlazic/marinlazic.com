@@ -567,6 +567,7 @@ export async function sendRecoveryGuideEmail(params: { email: string; firstName?
           "The short version: a heavy lifting day, a long run and a week of back to back meetings each leave a different kind of fatigue, and each needs a different fix. The guide shows you how to tell them apart and what to do about each one, with the numbers.",
           "Start with the thirty second morning check in section 09, and keep section 07 for the days something goes sideways. Do it for two weeks and you will see your pattern.",
           "If you want to know where you stand across sleep, stress, training and recovery, the free assessment takes about five minutes. Reply to this email if you have a question. I read every one.",
+          `Get one short piece every Tuesday on training, recovery and sleep. <a href="https://marinlazic.substack.com/subscribe?utm_source=marinlazic.com&utm_medium=guide_email" style="color:${INK}; font-weight:600; text-decoration:underline;">Subscribe on Substack</a>.`,
         ],
         { label: "Open the guide", href: link }
       ),

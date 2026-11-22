@@ -80,7 +80,7 @@ export const informationPages: Record<string, InformationPageConfig> = {
         heading: "Who else handles it",
         content: [
           "I use other companies to run this site. Each one handles your information only to provide its service to me.",
-          "Vercel hosts the site and its files. Neon stores the database. Resend sends the emails that carry your report and guide. Kit sends my newsletter. Google's Gemini service helps write the assessment report from your first name and your answers. Bridge Athletic delivers programs and takes payment for them.",
+          "Vercel hosts the site and its files. Neon stores the database. Resend sends the emails that carry your report and guide. Kit keeps my email list. Substack sends my Tuesday newsletter. Google's Gemini service helps write the assessment report from your first name and your answers. Bridge Athletic delivers programs and takes payment for them.",
           "Some of these companies store information outside Australia, including in the United States.",
           "I do not sell your information, and I do not pass it to anyone for their own marketing.",
         ],

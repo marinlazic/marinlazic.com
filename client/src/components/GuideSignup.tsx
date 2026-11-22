@@ -1,12 +1,14 @@
 // The Recovery Guide signup. One component, two sizes: "panel" for the home
 // page and the guide's own page, "inline" for the end of an article or
-// resource. The PDF goes out by email; the person joins the Kit list.
+// resource. The PDF goes out by email; the person joins the Kit list, and the
+// Tuesday newsletter itself is sent from Substack.
 import { useState } from "react";
 import { AlertCircle, Check } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { getAttribution } from "@/lib/attribution";
 import { getSessionId } from "@/hooks/useAnalytics";
 import { RECOVERY_GUIDE } from "@shared/recoveryGuide";
+import { NewsletterLine } from "@/components/NewsletterLine";
 
 export function GuideSignup({ placement, variant = "panel", className = "" }: { placement: string; variant?: "panel" | "inline"; className?: string }) {
   const [firstName, setFirstName] = useState("");
@@ -41,15 +43,18 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
   };
 
   const form = done ? (
-    <div className="flex items-start gap-3 text-sm">
-      <Check className="w-4 h-4 mt-0.5 shrink-0" />
-      <p>
-        Sent. Check your inbox for "Your Recovery Guide". If it is not there in a minute, look in promotions or spam, or{" "}
-        <a className="underline hover:text-black/60" href={RECOVERY_GUIDE.pdfPath} target="_blank" rel="noopener noreferrer">
-          open the guide here
-        </a>
-        .
-      </p>
+    <div>
+      <div className="flex items-start gap-3 text-sm">
+        <Check className="w-4 h-4 mt-0.5 shrink-0" />
+        <p>
+          Sent. Check your inbox for "Your Recovery Guide". If it is not there in a minute, look in promotions or spam, or{" "}
+          <a className="underline hover:text-black/60" href={RECOVERY_GUIDE.pdfPath} target="_blank" rel="noopener noreferrer">
+            open the guide here
+          </a>
+          .
+        </p>
+      </div>
+      <NewsletterLine placement={`guide_${placement}`} className="mt-4" />
     </div>
   ) : (
     <form onSubmit={submit} className="flex flex-col sm:flex-row sm:flex-wrap gap-2" aria-label="Get the Recovery Guide">
@@ -98,7 +103,7 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
             <AlertCircle className="w-4 h-4" /> {error}
           </div>
         )}
-        <p className="ml-small mt-3">You also get my weekly email. Unsubscribe any time. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.</p>
+        <p className="ml-small mt-3">You also get my Tuesday newsletter, sent from Substack. Unsubscribe any time. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.</p>
       </aside>
     );
   }
@@ -111,7 +116,7 @@ export function GuideSignup({ placement, variant = "panel", className = "" }: { 
           <AlertCircle className="w-4 h-4" /> {error}
         </div>
       )}
-      <p className="ml-small mt-3">You also get my weekly email. Unsubscribe any time. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.</p>
+      <p className="ml-small mt-3">You also get my Tuesday newsletter, sent from Substack. Unsubscribe any time. <a href="/privacy" className="underline underline-offset-2">Privacy</a>.</p>
     </div>
   );
 }

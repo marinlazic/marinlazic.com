@@ -28,6 +28,7 @@ import {
 import { toast } from "sonner";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { CallRequest, scoreContext } from "@/components/CallRequest";
+import { NewsletterLine } from "@/components/NewsletterLine";
 import { QuickStart, takeQuickStart } from "@/components/QuickStart";
 import { useSearch } from "wouter";
 import { getCampaignValue } from "@/lib/attribution";
@@ -1781,6 +1782,7 @@ export default function Assessment() {
               analysisResult={analysisResult}
               analysisError={analysisError}
             />
+            <NewsletterLine placement="assessment_results" className="mb-12" />
 
             {/* ── What 1:1 coaching includes ── */}
             <div className="border-t border-line pt-12 mb-16">

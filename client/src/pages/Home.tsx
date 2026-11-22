@@ -13,6 +13,7 @@ import { HOME_FAQS } from "@shared/siteFaq";
 import { GuideSignup } from "@/components/GuideSignup";
 import { QuickStart } from "@/components/QuickStart";
 import { RECOVERY_GUIDE } from "@shared/recoveryGuide";
+import { postDate, postLine, SUBSTACK_SNAPSHOT, SUBSTACK_URL, substackSubscribeUrl } from "@/data/mediaData";
 import { PROGRAMS, SECTIONS, programPath } from "@shared/programs";
 import { cardLine } from "@/data/programCards";
 import { SiteNav } from "@/components/site/SiteNav";
@@ -573,6 +574,72 @@ function LatestInsights() {
   );
 }
 
+// ─── The newsletter: the same block as the Resources page ─
+function Newsletter() {
+  const { track } = useAnalytics();
+  const live = trpc.articles.latest.useQuery({ limit: 3 }, { staleTime: 10 * 60 * 1000, retry: false });
+  const posts = (live.data && live.data.length ? live.data : SUBSTACK_SNAPSHOT).slice(0, 3);
+  return (
+    <section id="newsletter">
+      <Label
+        right={
+          <a
+            href={SUBSTACK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("cta_click", { button: "newsletter_read_all" })}
+            className="underline underline-offset-2"
+          >
+            Read every post
+          </a>
+        }
+      >
+        The newsletter
+      </Label>
+      <Heading title="New pieces by email.">
+        Short pieces on training, recovery, sleep and performance. One every Tuesday. More than 680 readers get them by
+        email. Free.
+      </Heading>
+      <a
+        href={substackSubscribeUrl("home")}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => track("cta_click", { button: "newsletter_subscribe_home" })}
+        className="ml-btn ml-btn-dark mt-6 px-6"
+      >
+        Subscribe on Substack <ArrowRight className="w-4 h-4" aria-hidden="true" />
+      </a>
+      <div className="mt-7 lg:mt-11 grid gap-3 lg:gap-4 md:grid-cols-3">
+        {posts.map((post, idx) => (
+          <article key={post.link} className="ml-card">
+            <div className="ml-meta flex-wrap">
+              <span className="ml-tag">Newsletter</span>
+              {postDate(post.pubDate) && <span>{postDate(post.pubDate)}</span>}
+            </div>
+            <h3 className="ml-h3 mt-3.5">{post.title}</h3>
+            {postLine(post.title, post.description) && (
+              <p className="text-[14.5px] leading-normal text-body mt-2 line-clamp-3">
+                {postLine(post.title, post.description)}
+              </p>
+            )}
+            <div className="mt-auto pt-5">
+              <a
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => track("cta_click", { button: `newsletter_post_${idx}` })}
+                className="ml-btn w-full"
+              >
+                Read on Substack <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ─── Free guide: email sign up ───────────────────────────
 function FreeGuide() {
   return (
@@ -993,6 +1060,7 @@ export default function Home() {
         <Services />
         <About />
         <LatestInsights />
+        <Newsletter />
         <FreeGuide />
         <FAQ />
         <Contact />

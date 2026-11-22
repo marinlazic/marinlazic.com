@@ -19,7 +19,7 @@ const TILE_WORDS: Record<string, { word: string; emoji: string }> = {
 };
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
-import { mediaItems, READY_STATE_URL, SUBSTACK_URL, YOUTUBE_URL } from "@/data/mediaData";
+import { mediaItems, postDate, postLine, READY_STATE_URL, SUBSTACK_SNAPSHOT, SUBSTACK_URL, YOUTUBE_URL } from "@/data/mediaData";
 import { GuideSignup } from "@/components/GuideSignup";
 import { featuredResource, popularResources, resourceCards, startHereResources, type ResourceCard } from "@/data/resourceIndex";
 
@@ -75,16 +75,6 @@ function Card({ card }: { card: ResourceCard }) {
 // a cover story (The Ready State Podcast with Kelly and Juliet Starrett),
 // the newsletter from Substack, videos from YouTube, then the guides.
 
-// Shown until the live Substack feed answers, and if it fails. Taken from the
-// feed on 19 Nov 2026.
-const SUBSTACK_SNAPSHOT = [
-  { title: "Right Supplement, Wrong Hour", description: "A two-minute guide to when to take what, and why the harder questions are dose and source.", link: "https://marinlazic.substack.com/p/when-to-take-vitamins-supplements", pubDate: "Mon, 31 Aug 2026 06:42:14 GMT", image: "https://substack-post-media.s3.amazonaws.com/public/images/2bb4dca4-4895-48e3-9d99-363240cc3b5b_2000x1342.jpeg" as string | null },
-  { title: "I Was 23, In The Best Shape Of My Life, And I Could Not Swim", description: "What I told Kelly and Juliet Starrett on The Ready State Podcast.", link: "https://marinlazic.substack.com/p/happy-athletes-perform-better-so", pubDate: "Sun, 16 Aug 2026 21:06:03 GMT", image: "https://substackcdn.com/image/fetch/$s_!ln4r!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0b690c8e-28b5-4190-933c-c62de5edf59c_4032x2268.heic" },
-  { title: "Your Training is Useless Without This One Simple Thing", description: "Why the smartest thing you can do for your performance is strategically do less", link: "https://marinlazic.substack.com/p/your-training-is-useless-without", pubDate: "Tue, 03 Mar 2026 00:51:33 GMT", image: "https://substack-post-media.s3.amazonaws.com/public/images/6be0bf89-a9ba-48b3-a344-f60addca0133_1200x627.png" },
-  { title: "Your Physio Said Rest. Here's Why That Might Be Terrible Advice.", description: "", link: "https://marinlazic.substack.com/p/your-p-hysio-said-rest-heres-why", pubDate: "Sat, 28 Feb 2026 01:02:26 GMT", image: "https://substackcdn.com/image/fetch/$s_!E6IG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0a270899-1e94-4d33-ba4b-244b60a8e223_1179x649.jpeg" },
-  { title: "WHAT IS YOUR WEEKLY HRV TREND TELLING YOU?…", description: "Are you actually using it?", link: "https://marinlazic.substack.com/p/what-is-your-weekly-hrv-trend-telling", pubDate: "Sun, 22 Feb 2026 01:24:22 GMT", image: "https://substackcdn.com/image/fetch/$s_!EyNI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18df2dbc-cd3e-43a6-802a-6f2bf714cb87_1179x1023.png" },
-  { title: "Corporate Athlete Test, 7 Kettlebell Benchmarks That Actually Matter", description: "", link: "https://marinlazic.substack.com/p/corporate-athlete-test-7-kettlebell", pubDate: "Sun, 15 Feb 2026 23:17:19 GMT", image: "https://substackcdn.com/image/fetch/$s_!mw3Q!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1a31e6c2-4f45-482b-8940-90d2685567aa_1168x784.jpeg" },
-];
 
 // Hand picked from youtube.com/@MarinLazic so that team and match clips stay
 // off the site. Add an id here to show another video.
@@ -110,12 +100,6 @@ const GUIDE_ALT: Record<string, string> = {
   sleep: "A bed under a crescent moon",
 };
 
-const postDate = (d: string) => {
-  const t = new Date(d);
-  return Number.isNaN(t.getTime())
-    ? ""
-    : t.toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Sydney" });
-};
 // Substack's image address takes a width. Ask for a small copy where we can.
 const postImg = (u: string | null, w: number) =>
   u && u.includes("substackcdn.com/image/fetch/$s_") && !/,w_\d+/.test(u)
@@ -144,7 +128,6 @@ function PostImage({ src, w, className }: { src: string | null; w: number; class
   );
 }
 
-const postLine = (title: string, d: string) => (d && d.length <= 170 && d.trim() !== title.trim() ? d : "");
 
 function PlayPill() {
   return (

@@ -3,6 +3,7 @@ import { Download, ArrowLeft } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { AnalysisSection } from "./Assessment";
 import { CallRequest, scoreContext } from "@/components/CallRequest";
+import { NewsletterLine } from "@/components/NewsletterLine";
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
@@ -98,6 +99,7 @@ export default function Report() {
       )}
 
       <AnalysisSection analysisResult={report.analysis} analysisError={null} />
+      <NewsletterLine placement="report_page" className="mb-10" />
 
       <div className="border-t border-line pt-10 mt-4">
         <CallRequest
