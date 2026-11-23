@@ -758,7 +758,7 @@ function CoachingMagazine({ page }: { page: InformationPageConfig }) {
             <footer className="ml-small mt-5">Marin Lazic</footer>
           </blockquote>
 
-          <section className={rule}>
+          <section id="results" className={`${rule} scroll-mt-24`}>
             <div className="grid lg:grid-cols-12 gap-4 lg:gap-14 items-end">
               <div className="lg:col-span-5">
                 <p className={kicker}>Actual results</p>
