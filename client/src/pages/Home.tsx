@@ -110,6 +110,44 @@ function Hero() {
   );
 }
 
+// ─── Client results ──────────────────────────────────────
+// Three numbers from the coaching page (COACHING_RESULTS and COACHING_PROOF in
+// InformationPage.tsx). Every number is from the clients' Bridge training
+// logs, pulled on 18 Oct 2026 (project doc marinlazic-client-results). No
+// names, ages or injuries. Do not add a number that is not in that doc.
+const HOME_RESULTS = [
+  { stat: "85 kg to 130 kg", what: "Trap bar deadlift", who: "Client one. Four years, 676 sessions." },
+  { stat: "20 kg to 70 kg", what: "Back squat", who: "Client two. Four years, 410 sessions." },
+  { stat: "109 of 117", what: "Planned sessions done", who: "Client three. First year." },
+];
+
+function ClientResults() {
+  const { track } = useAnalytics();
+  return (
+    <section id="results" aria-label="Client results">
+      <Label right="From their own training logs in Bridge">Client results</Label>
+      <ul className="grid md:grid-cols-3 gap-x-8 mt-6 lg:mt-9">
+        {HOME_RESULTS.map(w => (
+          <li key={w.who} className="border-t border-ink pt-4 pb-6 md:pb-0">
+            <p className="font-heading font-bold text-[34px] leading-none tracking-[-0.02em] lg:text-[46px]">{w.stat}</p>
+            <p className="text-[15px] font-semibold mt-3">{w.what}</p>
+            <p className="ml-small mt-1">{w.who}</p>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-2 md:mt-7">
+        <a
+          href="/executive-health-performance#results"
+          onClick={() => track("cta_click", { button: "home_client_results" })}
+          className="inline-flex items-center gap-2 min-h-11 text-base font-medium text-ink underline underline-offset-4 decoration-line hover:decoration-ink"
+        >
+          See how they got there <ArrowRight className="w-4 h-4" aria-hidden="true" />
+        </a>
+      </div>
+    </section>
+  );
+}
+
 // ─── Three ways in ───────────────────────────────────────
 function Ways() {
   const { track } = useAnalytics();
@@ -986,6 +1024,7 @@ export default function Home() {
       <Nav />
       <main className="ml-wrap">
         <Hero />
+        <ClientResults />
         <Ways />
         <Season />
         <AssessmentPreview />
