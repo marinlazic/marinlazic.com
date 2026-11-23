@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "tsx scripts/migrate.ts && tsx scripts/generate-seo.ts && NODE_ENV=production vite build && NODE_ENV=production vite build --config vite.config.ssr.ts && pnpm run build:server && node scripts/postbuild.mjs",
+    "build": "tsx scripts/migrate.ts && tsx scripts/build-studio-rules.mts && tsx scripts/generate-seo.ts && NODE_ENV=production vite build && NODE_ENV=production vite build --config vite.config.ssr.ts && pnpm run build:server && node scripts/postbuild.mjs",
     "start": "NODE_ENV=production tsx server/_core/index.ts",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
@@ -13,7 +13,8 @@
     "build:server": "esbuild server/_core/app.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/server/app.js",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:import": "tsx scripts/import-manus-csv.ts"
+    "db:import": "tsx scripts/import-manus-csv.ts",
+    "studio:rules": "tsx scripts/build-studio-rules.mts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

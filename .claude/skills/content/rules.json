@@ -1,0 +1,23 @@
+{
+  "banned": [
+    "elevate", "delve", "hustle and bustle", "revolutioni[sz]e", "foster", "realm", "remnant",
+    "subsequently", "nestled", "enigma", "whispering", "a testament to", "metamorphosis",
+    "indelible", "leverage", "synergy", "synergi[sz]e", "scalable", "scalability", "optimi[sz]e",
+    "empower", "innovative", "disruptive", "robust", "seamless", "holistic", "cutting-edge",
+    "next-generation", "user-centric", "agile", "dynamic", "frictionless", "value-driven",
+    "data-driven", "mission-critical", "thought leadership", "turnkey", "paradigm shift",
+    "game-changer", "game changer", "ecosystem", "deep dive", "move the needle", "circle back",
+    "actionable insights", "ideation", "pain point", "deliverables", "quick win", "elevator pitch",
+    "framework", "drill down", "unlock", "dive into", "journey", "supercharge", "level up",
+    "crush it", "biohack", "unleash", "transform your life", "ultimate guide", "in conclusion",
+    "to sum up", "hope this helps", "in today's fast-paced world", "let's be honest", "here's the thing",
+    "not just \\w+,? but", "limited spots"
+  ],
+  "usSpelling": [
+    ["optimize", "optimise"], ["organization", "organisation"], ["organize", "organise"],
+    ["recognize", "recognise"], ["color", "colour"], ["behavior", "behaviour"], ["center", "centre"],
+    ["favorite", "favourite"], ["analyze", "analyse"], ["realize", "realise"],
+    ["prioritize", "prioritise"], ["minimize", "minimise"], ["maximize", "maximise"], ["labor", "labour"]
+  ],
+  "fillerAdverbs": ["very", "really", "truly", "incredibly", "absolutely"]
+}

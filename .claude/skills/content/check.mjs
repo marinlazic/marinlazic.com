@@ -10,26 +10,10 @@ if (!dir) {
   process.exit(2);
 }
 
-const BANNED = [
-  "elevate", "delve", "hustle and bustle", "revolutioni[sz]e", "foster", "realm", "remnant",
-  "subsequently", "nestled", "enigma", "whispering", "a testament to", "metamorphosis",
-  "indelible", "leverage", "synergy", "synergi[sz]e", "scalable", "scalability", "optimi[sz]e",
-  "empower", "innovative", "disruptive", "robust", "seamless", "holistic", "cutting-edge",
-  "next-generation", "user-centric", "agile", "dynamic", "frictionless", "value-driven",
-  "data-driven", "mission-critical", "thought leadership", "turnkey", "paradigm shift",
-  "game-changer", "game changer", "ecosystem", "deep dive", "move the needle", "circle back",
-  "actionable insights", "ideation", "pain point", "deliverables", "quick win", "elevator pitch",
-  "framework", "drill down", "unlock", "dive into", "journey", "supercharge", "level up",
-  "crush it", "biohack", "unleash", "transform your life", "ultimate guide", "in conclusion",
-  "to sum up", "hope this helps", "in today's fast-paced world", "let's be honest", "here's the thing",
-  "not just \\w+,? but", "limited spots",
-];
-const US = [
-  ["optimize", "optimise"], ["organization", "organisation"], ["organize", "organise"],
-  ["recognize", "recognise"], ["color", "colour"], ["behavior", "behaviour"], ["center", "centre"],
-  ["favorite", "favourite"], ["program(me)?s? ", null], ["analyze", "analyse"], ["realize", "realise"],
-  ["prioritize", "prioritise"], ["minimize", "minimise"], ["maximize", "maximise"], ["labor", "labour"],
-];
+const RULES = JSON.parse(readFileSync(new URL("./rules.json", import.meta.url), "utf8"));
+const BANNED = RULES.banned;
+const US = RULES.usSpelling;
+const ADVERB = new RegExp(`\\b(${RULES.fillerAdverbs.join("|")})\\b`, "i");
 const LIMITS = {
   "01-linkedin-post.md": { chars: 3000, label: "LinkedIn post body" },
   "06-x-post.md": { perLine: 280, label: "X post" },
@@ -71,7 +55,7 @@ for (const f of files) {
       const caps = words.filter(w => /^[A-Z]/.test(w)).length;
       if (words.length >= 3 && caps >= 3 && caps / words.length > 0.6) hit(f, n, "heading looks like Title Case. Use sentence case.");
     }
-    if (/\b(very|really|truly|incredibly|absolutely)\b/i.test(line)) hit(f, n, `filler adverb "${line.match(/\b(very|really|truly|incredibly|absolutely)\b/i)[0]}".`);
+    if (ADVERB.test(line)) hit(f, n, `filler adverb "${line.match(ADVERB)[0]}".`);
   });
 
   const lim = LIMITS[f];

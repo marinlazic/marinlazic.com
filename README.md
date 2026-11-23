@@ -6,5 +6,6 @@ Performance coaching site for Marin Lazic. React (Vite) front end with server re
 - `pnpm test` runs the test suite, `pnpm check` type checks, `pnpm build` builds everything.
 - Migrations live in `drizzle/migrations` and run at the start of every build.
 - Every push to `main` deploys to production.
+- `/admin` is the password protected dashboard (`ADMIN_PASSWORD`). Its Studio section turns one idea into content for every channel; the rules are in `.claude/skills/content` and `content/README.md` explains both ways to use them.
 
 The runbook with every service, variable and the cutover steps is kept in the Claude project for this site.

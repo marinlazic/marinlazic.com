@@ -25,6 +25,8 @@ export const SHORT_DESTINATIONS: Record<string, string> = {
   s: "/speaking",
   r: "/resources",
   i: "/insights",
+  l: "/library",
+  ap: "/apply",
 };
 
 /** Where the post lives. The key is the first path segment. */

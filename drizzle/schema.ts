@@ -229,3 +229,63 @@ export const contactFollowups = pgTable("contact_followups", {
 });
 
 export type ContactFollowup = typeof contactFollowups.$inferSelect;
+
+// ─── Studio: one idea into every channel ───────────────────────────────────
+
+/** One idea Marin typed into the Studio, with the core the pieces are made from. */
+export const contentIdeas = pgTable("content_ideas", {
+  id: serial("id").primaryKey(),
+  slug: varchar("slug", { length: 80 }).notNull().unique(),
+  title: varchar("title", { length: 200 }).notNull(),
+  idea: text("idea").notNull(),
+  core: text("core"),
+  cta: varchar("cta", { length: 80 }).notNull().default("assessment"),
+  status: varchar("status", { length: 20 }).notNull().default("draft"), // draft | ready | archived
+  error: text("error"),
+  createdAt: ts("created_at").defaultNow().notNull(),
+  updatedAt: ts("updated_at").defaultNow().notNull().$onUpdate(() => new Date()),
+});
+
+export type ContentIdea = typeof contentIdeas.$inferSelect;
+
+/** One idea shaped for one channel. The body is markdown ready to paste. */
+export const contentPieces = pgTable("content_pieces", {
+  id: serial("id").primaryKey(),
+  ideaId: integer("idea_id").notNull().references(() => contentIdeas.id, { onDelete: "cascade" }),
+  channel: varchar("channel", { length: 40 }).notNull(),
+  title: varchar("title", { length: 300 }),
+  body: text("body").notNull().default(""),
+  meta: jsonb("meta").$type<Record<string, unknown>>().notNull().default({}),
+  checks: jsonb("checks").$type<{ line: number; message: string }[]>().notNull().default([]),
+  status: varchar("status", { length: 20 }).notNull().default("pending"), // pending | generating | draft | ready | posted | skipped | failed
+  error: text("error"),
+  postedAt: ts("posted_at"),
+  url: varchar("url", { length: 500 }),
+  createdAt: ts("created_at").defaultNow().notNull(),
+  updatedAt: ts("updated_at").defaultNow().notNull().$onUpdate(() => new Date()),
+}, table => [
+  uniqueIndex("content_pieces_idea_channel_idx").on(table.ideaId, table.channel),
+]);
+
+export type ContentPiece = typeof contentPieces.$inferSelect;
+
+/** Numbers Marin reads off each platform for a posted piece. Each row is one reading; the latest counts. */
+export const contentStats = pgTable("content_stats", {
+  id: serial("id").primaryKey(),
+  pieceId: integer("piece_id").notNull().references(() => contentPieces.id, { onDelete: "cascade" }),
+  recordedAt: ts("recorded_at").defaultNow().notNull(),
+  impressions: integer("impressions").notNull().default(0),
+  likes: integer("likes").notNull().default(0),
+  comments: integer("comments").notNull().default(0),
+  shares: integer("shares").notNull().default(0),
+  saves: integer("saves").notNull().default(0),
+  clicks: integer("clicks").notNull().default(0),
+  followers: integer("followers").notNull().default(0),
+  subscribers: integer("subscribers").notNull().default(0),
+  replies: integer("replies").notNull().default(0),
+  notes: text("notes"),
+}, table => [
+  index("content_stats_piece_idx").on(table.pieceId),
+]);
+
+export type ContentStat = typeof contentStats.$inferSelect;

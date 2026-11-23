@@ -24,6 +24,8 @@ import { describePurge, removeContact } from "./testData";
 import { AI_CRAWLERS, crawlerById, matchAiReferrer } from "./aiCrawlers";
 import { runGeoScore } from "./geoScore";
 import { ENV } from "./_core/env";
+import * as studio from "./studio";
+import { CHANNEL_IDS, CTAS } from "../shared/studioChannels";
 
 export { answersFromMessage, labelAnswer, leadKind };
 
@@ -994,5 +996,69 @@ export const adminRouter = router({
         return { ...r, assessment, leadId: lead?.id ?? null, status: lead?.status ?? null, followUpAt: lead?.followUpAt ?? null };
       });
     }),
+  }),
+
+  // ─── Studio: one idea into every channel ─────────────────────────────────
+  studio: router({
+    list: adminProcedure.query(() => studio.listIdeas()),
+    get: adminProcedure.input(z.object({ id: z.number().int() })).query(({ input }) => studio.getIdea(input.id)),
+    create: adminProcedure
+      .input(
+        z.object({
+          idea: z.string().trim().min(10).max(20_000),
+          cta: z.string().refine(v => Boolean(CTAS[v]), "Unknown call to action"),
+          channels: z.array(z.string()).min(1).refine(a => a.every(c => CHANNEL_IDS.includes(c)), "Unknown channel"),
+        })
+      )
+      .mutation(({ input }) => studio.createIdea(input)),
+    generatePiece: adminProcedure
+      .input(z.object({ pieceId: z.number().int(), direction: z.string().trim().max(2000).optional() }))
+      .mutation(({ input }) => studio.generatePiece(input.pieceId, input.direction || undefined)),
+    updatePiece: adminProcedure
+      .input(
+        z.object({
+          id: z.number().int(),
+          title: z.string().max(300).optional(),
+          body: z.string().max(60_000).optional(),
+          meta: z.record(z.string(), z.unknown()).optional(),
+          status: z.enum(["draft", "ready", "posted", "skipped"]).optional(),
+          url: z.string().max(500).nullable().optional(),
+          postedAt: z.coerce.date().nullable().optional(),
+        })
+      )
+      .mutation(({ input }) => studio.updatePiece(input)),
+    updateIdea: adminProcedure
+      .input(
+        z.object({
+          id: z.number().int(),
+          title: z.string().max(200).optional(),
+          core: z.string().max(60_000).optional(),
+          cta: z.string().optional(),
+          status: z.enum(["draft", "ready", "archived"]).optional(),
+        })
+      )
+      .mutation(({ input }) => studio.updateIdea(input)),
+    addChannels: adminProcedure
+      .input(z.object({ ideaId: z.number().int(), channels: z.array(z.string()).min(1) }))
+      .mutation(({ input }) => studio.addChannels(input.ideaId, input.channels)),
+    delete: adminProcedure.input(z.object({ id: z.number().int() })).mutation(({ input }) => studio.deleteIdea(input.id)),
+    addStats: adminProcedure
+      .input(
+        z.object({
+          pieceId: z.number().int(),
+          impressions: z.number().int().min(0).optional(),
+          likes: z.number().int().min(0).optional(),
+          comments: z.number().int().min(0).optional(),
+          shares: z.number().int().min(0).optional(),
+          saves: z.number().int().min(0).optional(),
+          clicks: z.number().int().min(0).optional(),
+          followers: z.number().int().min(0).optional(),
+          subscribers: z.number().int().min(0).optional(),
+          replies: z.number().int().min(0).optional(),
+          notes: z.string().max(2000).nullable().optional(),
+        })
+      )
+      .mutation(({ input }) => studio.addStats(input)),
+    stats: adminProcedure.input(daysInput).query(({ input }) => studio.platformStats(input?.days ?? 30)),
   }),
 });

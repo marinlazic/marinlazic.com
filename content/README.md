@@ -1,6 +1,16 @@
 # Content
 
-One idea in, every channel out. Each folder here is one idea, made on one day, shaped for every channel Marin publishes on.
+One idea in, every channel out. There are two ways to run it.
+
+## In the dashboard
+
+Sign in at marinlazic.com/admin and open Studio. Type the idea, pick where it sends people and which channels, and press Write. The core is written first, then each piece, three at a time. Each piece has a preview in the site look, a copy button, a tracked link, an edit box, a rewrite box that takes a note, a Mark posted form and a Numbers form. The "What is working" tab adds up the numbers by platform and joins them to what the site recorded from the tracked links: visits, assessments and applications.
+
+The dashboard uses the same rules as the command below. They live in `.claude/skills/content/` and are copied into `server/studioRules.generated.ts` at build time. After editing the style guide or a channel spec, run `pnpm studio:rules` and commit the result, or the test suite will tell you.
+
+## In Claude Code
+
+Each folder here is one idea, made on one day, shaped for every channel Marin publishes on.
 
 How to make a new one, in Claude Code:
 
